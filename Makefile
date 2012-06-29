@@ -7,6 +7,10 @@ SERVER_DIR := $(SRC_DIR)/server
 SERVER_SRCS := $(shell find $(SERVER_DIR) -name "*.cpp")
 SERVER_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(SERVER_SRCS))
 
+COMMON_DIR := $(SRC_DIR)/common
+COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cpp")
+COMMON_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
+
 TARGETS := server
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
@@ -14,11 +18,12 @@ OUTPUT := $(TARGETS) $(BUILD_DIR)
 WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
-	-Wsign-compare -Wold-style-cast -Woverloaded-virtual \
-	-Wsign-promo -Wsynth -fno-exceptions -fno-rtti -fcheck-new
+	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth \
+	-fno-exceptions -fno-rtti -fcheck-new
+	#-Wold-style-cast
 
 LIBS :=
-IDIRS := -I$(SRC)
+IDIRS := -I$(SRC_DIR)
 CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x
 
 .PHONY: dirs clean all
@@ -29,7 +34,7 @@ $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo CXX $@
 	@$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
 
-server: $(SERVER_OBJS)
+server: $(SERVER_OBJS) $(COMMON_OBJS)
 	@echo LN $@
 	@$(CXX) $^ -o $@ $(LIBS)
 
