@@ -7,11 +7,15 @@ SERVER_DIR := $(SRC_DIR)/server
 SERVER_SRCS := $(shell find $(SERVER_DIR) -name "*.cpp")
 SERVER_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(SERVER_SRCS))
 
+CLIENT_DIR := $(SRC_DIR)/client
+CLIENT_SRCS := $(shell find $(CLIENT_DIR) -name "*.cpp")
+CLIENT_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CLIENT_SRCS))
+
 COMMON_DIR := $(SRC_DIR)/common
 COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cpp")
 COMMON_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 
-TARGETS := server
+TARGETS := server client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
@@ -35,6 +39,10 @@ $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
 
 server: $(SERVER_OBJS) $(COMMON_OBJS)
+	@echo LN $@
+	@$(CXX) $^ -o $@ $(LIBS)
+
+client: $(CLIENT_OBJS) $(COMMON_OBJS)
 	@echo LN $@
 	@$(CXX) $^ -o $@ $(LIBS)
 
