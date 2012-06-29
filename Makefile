@@ -26,7 +26,7 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-fno-exceptions -fno-rtti -fcheck-new
 	#-Wold-style-cast
 
-LIBS :=
+LIBS := -lpthread
 IDIRS := -I$(SRC_DIR)
 CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x
 
