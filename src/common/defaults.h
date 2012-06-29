@@ -1,0 +1,3 @@
+#define SERVER_PORT 4666
+#define SERVER_ADDR "127.0.0.1"
+
