@@ -6,6 +6,8 @@
 
 #include "common/google.h"
 
+struct sockaddr_in;
+
 class ThreadPool
 {
 public:
@@ -13,17 +15,19 @@ public:
 
   bool Init();
   void Destroy();
-  bool HasFreeWorker();
+  bool AssignConnection(struct sockaddr_in*);
 
 private:
   DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 
-  unsigned nthreads_;
-  unsigned nfree_;
-  pthread_t* threads_;
+  unsigned FindFreeWorker();
 
-  // FIXME?
+  unsigned nthreads_;
+  unsigned npipes_;
+  pthread_t* threads_;
+  bool* free_threads_;
   int* pipes_;
+  struct sockaddr_in* sockaddrs_;
 };
 
 #endif

@@ -28,7 +28,7 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 
 LIBS := -lpthread
 IDIRS := -I$(SRC_DIR)
-CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x
+CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x -O3
 
 .PHONY: dirs clean all
 

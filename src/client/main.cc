@@ -26,14 +26,16 @@ int main(void)
     die("inet_aton");
 
   connect(fd, reinterpret_cast<struct sockaddr*>(&sad), sizeof(sad));
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
-  send(fd, "LOL\n", 5, 0);
+  send(fd, "0\n", 3, 0);
+  send(fd, "1\n", 3, 0);
+  send(fd, "2\n", 3, 0);
+  send(fd, "3\n", 3, 0);
+  send(fd, "4\n", 3, 0);
+  send(fd, "5\n", 3, 0);
+  send(fd, "6\n", 3, 0);
+  send(fd, "7\n", 3, 0);
+  send(fd, "8\n", 3, 0);
+  send(fd, "9\n", 3, 0);
 
   close(fd);
 
