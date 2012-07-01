@@ -16,7 +16,7 @@ ThreadPool::ThreadPool(unsigned nthreads):
 {
 }
 
-bool ThreadPool::Init() {
+void ThreadPool::Init() {
   threads_ = new pthread_t[nthreads_];
   assert(threads_ != nullptr);
 
@@ -34,8 +34,6 @@ bool ThreadPool::Init() {
   for (unsigned i = 0; i < nthreads_; ++i) {
     pthread_create(&threads_[i], nullptr, create_slave, &pipes_[i*4]);
   }
-
-  return true;
 }
 
 void ThreadPool::SetNonBlocking(int fd)

@@ -15,14 +15,13 @@
 #define BUFLEN 512
 #define MAX_CLIENTS 5
 
-
 int main(void) {
   struct sockaddr_in si_me, si_other;
   int fd;
   char buf[BUFLEN];
   socklen_t slen = sizeof(si_other);
 
-  ThreadPool thread_pool(10);
+  ThreadPool thread_pool(MAX_CLIENTS);
   thread_pool.Init();
 
 	std::cout << "Setting up udp socket on port " << SERVER_PORT << std::endl;

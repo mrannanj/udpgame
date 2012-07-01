@@ -8,12 +8,11 @@
 
 struct sockaddr_in;
 
-class ThreadPool
-{
+class ThreadPool {
 public:
   explicit ThreadPool(unsigned);
 
-  bool Init();
+  void Init();
   void Destroy();
   bool AssignConnection(struct sockaddr_in*);
 

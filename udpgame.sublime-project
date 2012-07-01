@@ -1,0 +1,18 @@
+{
+	"folders":
+	[
+		{
+			"path": "./"
+		}
+	],
+  "settings":
+    {
+       "sublimeclang_options":
+       [
+         "-Wall",
+         "-Wextra",
+         "-I${folder:${project_path:udpgame.sublime-project}}/src",
+         "-std=c++0x"
+       ]
+    }
+}
