@@ -6,6 +6,21 @@
 #define SLAVE_READ 2
 #define MASTER_WRITE 3
 
-void* slave(void*);
+class Slave {
+public:
+  explicit Slave(int*);
+  ~Slave();
+
+  void Serve();
+
+private:
+  void InitReadFds();
+  void SignalReady();
+  void GetTask();
+
+  int* pipes_;
+};
+
+void* create_slave(void*);
 
 #endif

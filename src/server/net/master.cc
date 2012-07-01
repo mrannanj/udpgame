@@ -16,8 +16,7 @@
 #define MAX_CLIENTS 5
 
 
-int main(void)
-{
+int main(void) {
   struct sockaddr_in si_me, si_other;
   int fd;
   char buf[BUFLEN];
@@ -38,8 +37,7 @@ int main(void)
   if (0 > bind(fd, reinterpret_cast<const sockaddr*>(&si_me), sizeof(si_me)))
     die("bind");
 
-  for (;;)
-  {
+  for (;;) {
     memset(&buf, 0, sizeof(buf));
     if (0 > recvfrom(fd, buf, BUFLEN, 0, reinterpret_cast<sockaddr*>(&si_other), &slen))
       die("recvfrom");

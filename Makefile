@@ -1,4 +1,4 @@
-CXX := g++
+CXX := clang++
 
 BUILD_DIR := build
 SRC_DIR := src
@@ -23,7 +23,7 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
 	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth \
-	-fno-exceptions -fno-rtti -fcheck-new
+	-fno-exceptions -fno-rtti \
 	#-Wold-style-cast
 
 LIBS := -lpthread

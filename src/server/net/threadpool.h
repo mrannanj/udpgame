@@ -21,6 +21,7 @@ private:
   DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 
   unsigned FindFreeWorker();
+  void SetNonBlocking(int);
 
   unsigned nthreads_;
   unsigned npipes_;
@@ -30,3 +31,4 @@ private:
 };
 
 #endif
+
