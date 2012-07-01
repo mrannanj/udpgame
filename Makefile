@@ -4,16 +4,16 @@ BUILD_DIR := build
 SRC_DIR := src
 
 SERVER_DIR := $(SRC_DIR)/server
-SERVER_SRCS := $(shell find $(SERVER_DIR) -name "*.cpp")
-SERVER_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(SERVER_SRCS))
+SERVER_SRCS := $(shell find $(SERVER_DIR) -name "*.cc")
+SERVER_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(SERVER_SRCS))
 
 CLIENT_DIR := $(SRC_DIR)/client
-CLIENT_SRCS := $(shell find $(CLIENT_DIR) -name "*.cpp")
-CLIENT_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CLIENT_SRCS))
+CLIENT_SRCS := $(shell find $(CLIENT_DIR) -name "*.cc")
+CLIENT_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(CLIENT_SRCS))
 
 COMMON_DIR := $(SRC_DIR)/common
-COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cpp")
-COMMON_OBJS := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
+COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cc")
+COMMON_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 
 TARGETS := server client
 
@@ -34,7 +34,7 @@ CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x
 
 all: dirs $(TARGETS)
 
-$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	@echo CXX $@
 	@$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
 
