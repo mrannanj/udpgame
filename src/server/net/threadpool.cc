@@ -11,7 +11,6 @@ ThreadPool::ThreadPool(unsigned nthreads):
   nthreads_(nthreads),
   npipes_(nthreads*4),
   threads_(nullptr),
-  free_threads_(nullptr),
   pipes_(nullptr),
   sockaddrs_(nullptr)
 {
@@ -21,10 +20,6 @@ bool ThreadPool::Init()
 {
   threads_ = new pthread_t[nthreads_];
   assert(threads_ != nullptr);
-
-  free_threads_ = new bool[nthreads_];
-  assert(threads_ != nullptr);
-  for (unsigned i = 0; i < nthreads_; ++i) free_threads_[i] = false;
 
   pipes_ = new int[npipes_];
   assert(pipes_ != nullptr);
@@ -51,8 +46,6 @@ void ThreadPool::Destroy()
 {
   assert(threads_ != nullptr);
   delete[] threads_;
-  assert(free_threads_ != nullptr);
-  delete[] free_threads_;
   assert(pipes_ != nullptr);
   for (unsigned i = 0; i < npipes_; ++i)
     close(pipes_[i]);
@@ -72,10 +65,9 @@ unsigned ThreadPool::FindFreeWorker()
   for (unsigned i = 0; i < nthreads_; ++i)
   {
     char c;
-    if (free_threads_[i] || (1 == read(pipes_[4*i+MASTER_READ], &c, 1)))
+    if (1 == read(pipes_[4*i+MASTER_READ], &c, 1))
     {
       std::cout << "assigning thread: " << i << std::endl;
-      free_threads_[i] = false;
       c = 'm';
       assert(1 == write(pipes_[4*i+MASTER_WRITE], &c, 1));
       return i;

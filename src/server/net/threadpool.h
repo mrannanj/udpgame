@@ -25,7 +25,6 @@ private:
   unsigned nthreads_;
   unsigned npipes_;
   pthread_t* threads_;
-  bool* free_threads_;
   int* pipes_;
   struct sockaddr_in* sockaddrs_;
 };
