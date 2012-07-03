@@ -1,18 +1,15 @@
 #include <assert.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <iostream>
 #include <netinet/in.h>
+#include <string.h>
 
 #include "server/net/threadpool.h"
 #include "server/net/slave.h"
 
 ThreadPool::ThreadPool(unsigned nthreads):
   nthreads_(nthreads),
-  npipes_(nthreads*4),
-  threads_(nullptr),
-  pipes_(nullptr),
-  sockaddrs_(nullptr)
+  slaves_(nullptr)
 {
 }
 
@@ -20,56 +17,44 @@ void ThreadPool::Init() {
   threads_ = new pthread_t[nthreads_];
   assert(threads_ != nullptr);
 
-  pipes_ = new int[npipes_];
-  assert(pipes_ != nullptr);
-  for (unsigned i = 0; i < npipes_; i += 4) {
-    assert(pipe(&pipes_[i]) == 0);
-    assert(pipe(&pipes_[i+2]) == 0);
-    SetNonBlocking(pipes_[i+MASTER_READ]);
+  slaves_ = new Slave[nthreads_];
+  assert(slaves_ != nullptr);
+  for (unsigned i = 0; i < nthreads_; ++i) {
+    slaves_[i].Init();
   }
-
-  sockaddrs_ = new struct sockaddr_in[nthreads_];
-  assert(sockaddrs_ != nullptr);
 
   for (unsigned i = 0; i < nthreads_; ++i) {
-    pthread_create(&threads_[i], nullptr, create_slave, &pipes_[i*4]);
+    pthread_create(&threads_[i], nullptr, create_slave, &slaves_[i]);
   }
 }
 
-void ThreadPool::SetNonBlocking(int fd)
-{
-  int flags = fcntl(fd, F_GETFL, 0);
-  assert(flags != -1);
-  assert(fcntl(fd, F_SETFL, flags | O_NONBLOCK) == 0);
-}
 
 void ThreadPool::Destroy() {
   assert(threads_ != nullptr);
   delete[] threads_;
-  assert(pipes_ != nullptr);
-  for (unsigned i = 0; i < npipes_; ++i)
-    close(pipes_[i]);
-  delete[] pipes_;
+  assert(slaves_ != nullptr);
+  for (unsigned i = 0; i < nthreads_; ++i) {
+    slaves_[i].Destroy();
+    pthread_join(threads_[i], NULL);
+  }
 }
 
-bool ThreadPool::AssignConnection(struct sockaddr_in*) {
+Slave* ThreadPool::AssignConnection(sockaddr_in* sa_client) {
   unsigned thread = FindFreeWorker();
   if (thread == nthreads_)
-    return false;
-  return true;
+    return nullptr;
+  Slave& s = slaves_[thread];
+  memcpy(&s.sa_client_, &sa_client, sizeof(*sa_client));
+  int c = 'm';
+  assert(1 == write(s.getMasterWritePipe(), &c, 1));
+  return &s;
 }
 
 unsigned ThreadPool::FindFreeWorker() {
   for (unsigned i = 0; i < nthreads_; ++i) {
     char c;
-    if (1 == read(pipes_[4*i+MASTER_READ], &c, 1)) {
-      std::cout << "assigning thread: " << i << std::endl;
-      c = 'm';
-      assert(1 == write(pipes_[4*i+MASTER_WRITE], &c, 1));
+    if (1 == read(slaves_[i].getMasterReadPipe(), &c, 1))
       return i;
-    }
   }
-
-  std::cout << "no threads free" << std::endl;
   return nthreads_;
 }

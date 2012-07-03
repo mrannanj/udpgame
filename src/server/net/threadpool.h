@@ -7,6 +7,7 @@
 #include "common/google.h"
 
 struct sockaddr_in;
+class Slave;
 
 class ThreadPool {
 public:
@@ -14,7 +15,7 @@ public:
 
   void Init();
   void Destroy();
-  bool AssignConnection(struct sockaddr_in*);
+  Slave* AssignConnection(struct sockaddr_in*);
 
 private:
   DISALLOW_COPY_AND_ASSIGN(ThreadPool);
@@ -23,10 +24,8 @@ private:
   void SetNonBlocking(int);
 
   unsigned nthreads_;
-  unsigned npipes_;
   pthread_t* threads_;
-  int* pipes_;
-  struct sockaddr_in* sockaddrs_;
+  Slave* slaves_;
 };
 
 #endif

@@ -11,6 +11,7 @@
        [
          "-Wall",
          "-Wextra",
+         "-pedantic",
          "-I${folder:${project_path:udpgame.sublime-project}}/src",
          "-std=c++0x"
        ]

@@ -1,24 +1,35 @@
 #ifndef SERVER_NET_SLAVE_H
-#define SERVER_NET_SLAVE_H  
+#define SERVER_NET_SLAVE_H
 
-#define MASTER_READ 0
-#define SLAVE_WRITE 1
-#define SLAVE_READ 2
-#define MASTER_WRITE 3
+#include <netinet/in.h>
 
 class Slave {
 public:
-  explicit Slave(int*);
+  Slave();
   ~Slave();
 
+  void Init();
+  void Destroy();
+
+  int getMasterReadPipe() const;
+  int getMasterWritePipe() const;
+  uint16_t getListeningPort();
+
   void Serve();
+
+  struct sockaddr_in sa_me_;
+  struct sockaddr_in sa_client_;
 
 private:
   void InitReadFds();
   void SignalReady();
   void GetTask();
+  void SetNonBlocking(int);
+  void SayHi();
 
-  int* pipes_;
+  int socket_fd_;
+  int read_p_[2];
+  int write_p_[2];
 };
 
 void* create_slave(void*);

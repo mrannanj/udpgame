@@ -11,6 +11,7 @@
 #include "common/defaults.h"
 
 #include "server/net/threadpool.h"
+#include "server/net/slave.h"
 
 #define BUFLEN 512
 #define MAX_CLIENTS 5
@@ -40,12 +41,20 @@ int main(void) {
     memset(&buf, 0, sizeof(buf));
     if (0 > recvfrom(fd, buf, BUFLEN, 0, reinterpret_cast<sockaddr*>(&si_other), &slen))
       die("recvfrom");
+    std::cout << "Got message from " << inet_ntoa(si_other.sin_addr) << std::endl;
 
-    if (thread_pool.AssignConnection(&si_other))
-      std::cout << "accepted " << inet_ntoa(si_other.sin_addr) << std::endl;
-    else
-      std::cout << "rejected " << inet_ntoa(si_other.sin_addr) << std::endl;
-    std::cout << "it said: " << buf << std::endl;
+    if (strncmp("HI", buf, 2) == 0) {
+      Slave* slave = thread_pool.AssignConnection(&si_other);
+      if (slave == nullptr) {
+        std::cout << "Server is full, disconnecting client. " << std::endl;
+        continue;
+      }
+      sprintf(buf, "OK %hu\n", slave->getListeningPort());
+      sendto(fd, buf, strlen(buf), 0, (const sockaddr*)&si_other, slen);
+      continue;
+    }
+    const char byemsg[] = "BYE";
+    sendto(fd, byemsg, strlen(byemsg), 0, (const sockaddr*)&si_other, slen);
   }
 
   thread_pool.Destroy();
