@@ -3,6 +3,8 @@
 
 #include <netinet/in.h>
 
+#include "common/google.h"
+
 class Slave {
 public:
   Slave();
@@ -21,6 +23,8 @@ public:
   struct sockaddr_in sa_client_;
 
 private:
+  DISALLOW_COPY_AND_ASSIGN(Slave);
+
   void InitReadFds();
   void SignalReady();
   void GetTask();
