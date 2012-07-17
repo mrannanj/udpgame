@@ -26,9 +26,9 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-fno-exceptions -fno-rtti \
 	#-Wold-style-cast
 
-LIBS := -lpthread
-IDIRS := -I$(SRC_DIR)
-CFLAGS := $(CFLAGS) $(IDIRS) $(WARNINGS) -Werror -std=c++0x -g
+LIBS := -lpthread $(shell sdl-config --libs) $(shell pkg-config --libs glew)
+CFLAGS := $(shell sdl-config --cflags) $(shell pkg-config --cflags glew)
+CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARNINGS) -Werror -std=c++0x -g
 
 .PHONY: dirs clean all
 

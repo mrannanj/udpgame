@@ -12,6 +12,9 @@
          "-Wall",
          "-Wextra",
          "-pedantic",
+         "-I/usr/include/SDL",
+         "-D_GNU_SOURCE=1",
+         "-D_REENTRANT",
          "-I${folder:${project_path:udpgame.sublime-project}}/src",
          "-std=c++0x"
        ]
