@@ -18,6 +18,7 @@ void Game::Init() {
   area_.units_[1].dir_ = 2.0f;
 
   graphics_.Init();
+  input_reader_.Init();
 }
 
 void Game::UpdateVertices() {
@@ -35,15 +36,14 @@ void Game::UpdateVertices() {
 
 void Game::Run()
 {
-  SDL_Event windowEvent;
+  Actions actions;
+
   while (true)
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (input_reader_.ReadInput(actions))
+      break;
 
-    if (SDL_PollEvent(&windowEvent ))
-    {
-      if (windowEvent.type == SDL_QUIT) break;
-    }
     UpdateVertices();
     graphics_.DrawTriangles(vertices_, 12);
 

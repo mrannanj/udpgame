@@ -5,6 +5,7 @@
 #include "common/google.h"
 
 #include "client/view/graphics.h"
+#include "client/input/input_reader.h"
 
 class Game {
 public:
@@ -20,6 +21,7 @@ private:
   Area area_;
   float vertices_[12];
   Graphics graphics_; // FIXME
+  InputReader input_reader_;
 };
 
 #endif

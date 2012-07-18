@@ -5,7 +5,7 @@
 
 struct Unit {
   real pos_[2];
-  int dir_;
+  real dir_;
 };
 
 #endif
