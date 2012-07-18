@@ -25,5 +25,5 @@ void Graphics::InitTriangles() {
 
 void Graphics::DrawTriangles(float vertices[], size_t n) {
   glBufferData(GL_ARRAY_BUFFER, sizeof(float)*n, vertices, GL_STREAM_DRAW);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
 }
