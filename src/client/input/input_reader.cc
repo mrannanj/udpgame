@@ -11,8 +11,10 @@ void InputReader::Init()
 }
 
 bool InputReader::ReadInput(Actions& a) {
+  memset(&a, 0, sizeof a);
   bool quit = false;
   SDL_Event e;
+
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       quit = true;

@@ -34,6 +34,18 @@ void Game::UpdateVertices() {
   }
 }
 
+void Game::UpdatePlayer(Actions& a) {
+  Unit& u = area_.units_[0];
+  if (a.actions & Commands::MOVE_FORWARD)
+    u.pos_[1] += 0.05f;
+  if (a.actions & Commands::MOVE_BACK)
+    u.pos_[1] -= 0.05f;
+  if (a.actions & Commands::MOVE_LEFT)
+    u.pos_[0] -= 0.05f;
+  if (a.actions & Commands::MOVE_RIGHT)
+    u.pos_[0] += 0.05f;
+}
+
 void Game::Run()
 {
   Actions actions;
@@ -43,6 +55,7 @@ void Game::Run()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (input_reader_.ReadInput(actions))
       break;
+    UpdatePlayer(actions);
 
     UpdateVertices();
     graphics_.DrawTriangles(vertices_, 12);

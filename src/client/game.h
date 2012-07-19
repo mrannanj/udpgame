@@ -17,6 +17,7 @@ private:
   DISALLOW_COPY_AND_ASSIGN(Game);
 
   void UpdateVertices();
+  void UpdatePlayer(Actions&);
 
   Area area_;
   float vertices_[12];
