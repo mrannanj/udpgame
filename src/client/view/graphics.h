@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include "common/google.h"
 
+class World;
+
 class Graphics {
   public:
   Graphics();
@@ -11,6 +13,7 @@ class Graphics {
   void Init();
   void InitTriangles();
   void DrawTriangles(float[], size_t);
+  void DrawWorld(const World&);
 
   private:
   DISALLOW_COPY_AND_ASSIGN(Graphics);

@@ -11,7 +11,7 @@ void InputReader::Init()
 }
 
 bool InputReader::ReadInput(Actions& a) {
-  memset(&a, 0, sizeof a);
+  memset(&a, 0, sizeof(Actions));
   bool quit = false;
   SDL_Event e;
 
@@ -27,12 +27,12 @@ bool InputReader::ReadInput(Actions& a) {
 void InputReader::CheckKeyboard(Actions& a)
 {
   if (key_state_[SDLK_a])
-    a.actions |= Commands::MOVE_LEFT;
+    a.commands |= Action::MOVE_LEFT;
   if (key_state_[SDLK_d])
-    a.actions |= Commands::MOVE_RIGHT;
+    a.commands |= Action::MOVE_RIGHT;
   if (key_state_[SDLK_w])
-    a.actions |= Commands::MOVE_FORWARD;
+    a.commands |= Action::MOVE_FORWARD;
   if (key_state_[SDLK_s])
-    a.actions |= Commands::MOVE_BACK;
+    a.commands |= Action::MOVE_BACK;
 }
 

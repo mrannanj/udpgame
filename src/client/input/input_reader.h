@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-#include "client/input/commands.h"
+#include "common/world/actions.h"
 #include "common/google.h"
 
 //! InputReader translates input from keyboard and mouse to in-game commands.
