@@ -22,12 +22,14 @@ OUTPUT := $(TARGETS) $(BUILD_DIR)
 WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
-	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth \
-	-fno-exceptions -fno-rtti \
-	#-Wold-style-cast
+	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth
 
-LIBS := -lpthread $(shell sdl-config --libs) $(shell pkg-config --libs glew)
-CFLAGS := $(shell sdl-config --cflags) $(shell pkg-config --cflags glew)
+LIBS := -lpthread -lm $(shell sdl-config --libs) $(shell pkg-config --libs glew)
+LIBS += $(shell sdl-config --libs)
+LIBS += $(shell pkg-config --libs glew)
+
+CFLAGS := -fno-exceptions -fno-rtti
+CFLAGS += $(shell sdl-config --cflags) $(shell pkg-config --cflags glew)
 CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARNINGS) -Werror -std=c++0x -g
 
 .PHONY: dirs clean all

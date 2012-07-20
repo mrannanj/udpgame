@@ -11,14 +11,20 @@ class Graphics {
   Graphics();
 
   void Init();
-  void InitTriangles();
-  void DrawTriangles(float[], size_t);
+  void Destroy();
+
   void DrawWorld(const World&);
 
   private:
   DISALLOW_COPY_AND_ASSIGN(Graphics);
+
+  void InitTriangles();
+  void DestroyTriangles();
+  void DrawTriangles(float[], size_t);
+
   GLuint vao_units_;
   GLuint vbo_units_;
+  GLuint triangle_program_;
 };
 
 #endif

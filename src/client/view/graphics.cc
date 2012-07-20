@@ -1,5 +1,7 @@
 #include <alloca.h>
 #include <iostream>
+#include <math.h>
+#include <SDL.h>
 
 #include "client/view/graphics.h"
 #include "client/view/video.h"
@@ -12,6 +14,19 @@ void Graphics::Init() {
   InitTriangles();
 }
 
+void Graphics::Destroy() {
+  DestroyTriangles();
+}
+
+void Graphics::DestroyTriangles() {
+  glDeleteProgram(triangle_program_);
+  //glDeleteShader( fragmentShader );
+  //glDeleteShader( vertexShader );
+
+  glDeleteBuffers(1, &vbo_units_);
+  glDeleteVertexArrays(1, &vao_units_);
+}
+
 void Graphics::InitTriangles() {
   glGenVertexArrays(1, &vao_units_);
   glBindVertexArray(vao_units_);
@@ -19,10 +34,10 @@ void Graphics::InitTriangles() {
   glGenBuffers(1, &vbo_units_);
   glBindBuffer(GL_ARRAY_BUFFER, vbo_units_);
 
-  GLuint prog = LoadShaders("resources/shaders/first.vert",
+  triangle_program_ = LoadShaders("resources/shaders/first.vert",
     "resources/shaders/first.frag");
 
-  GLint posAttrib = glGetAttribLocation(prog, "position");
+  GLint posAttrib = glGetAttribLocation(triangle_program_, "position");
   glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(posAttrib);
 }
@@ -37,8 +52,8 @@ void Graphics::DrawWorld(const World& w) {
   float* vs = (float*) alloca(sizeof(float) * entities.size() * 6);
   float* p = vs;
   float size = 0.2f;
-  for (auto it = entities.begin(); it != entities.end(); ++it) {
-    const Entity& e = it->second;
+  for (const auto& kv : entities) {
+    const Entity& e = kv.second;
     vs[0] = e.x_;
     vs[1] = e.y_ + size;
     vs[2] = e.x_ + size;

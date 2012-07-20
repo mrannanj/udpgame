@@ -19,16 +19,16 @@ int main(void)
   EntityId player_id = world.SpawnEntity();
 
   for (;;) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     if (input_reader.ReadInput(actions)) break;
     world.SetEntityInput(player_id, actions);
     world.Tick(0.1f);
-    graphics.DrawWorld(world);
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    graphics.DrawWorld(world);
     SDL_GL_SwapBuffers();
   }
 
+  graphics.Destroy();
   SDL_Quit();
   return 0;
 }
