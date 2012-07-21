@@ -4,50 +4,36 @@
 #include <SDL.h>
 
 #include "client/view/graphics.h"
-#include "client/view/video.h"
+#include "client/view/shader_loader.h"
 #include "common/world/world.h"
 
 Graphics::Graphics() {
 }
 
 void Graphics::Init() {
-  InitTriangles();
+  InitVideo();
+  quad_drawer_.Init();
+}
+
+void Graphics::InitVideo() {
+  SDL_Init(SDL_INIT_EVERYTHING);
+
+  SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
+  SDL_WM_SetCaption("udpgame", 0);
+
+  glewExperimental = GL_TRUE;
+  glewInit();
 }
 
 void Graphics::Destroy() {
-  DestroyTriangles();
 }
 
-void Graphics::DestroyTriangles() {
-  glDeleteProgram(triangle_program_);
-  //glDeleteShader( fragmentShader );
-  //glDeleteShader( vertexShader );
-
-  glDeleteBuffers(1, &vbo_units_);
-  glDeleteVertexArrays(1, &vao_units_);
-}
-
-void Graphics::InitTriangles() {
-  glGenVertexArrays(1, &vao_units_);
-  glBindVertexArray(vao_units_);
-
-  glGenBuffers(1, &vbo_units_);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo_units_);
-
-  triangle_program_ = LoadShaders("resources/shaders/first.vert",
-    "resources/shaders/first.frag");
-
-  GLint posAttrib = glGetAttribLocation(triangle_program_, "position");
-  glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-  glEnableVertexAttribArray(posAttrib);
-}
-
-void Graphics::DrawTriangles(float* vertices, size_t n) {
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float)*6*n, vertices, GL_STREAM_DRAW);
-  glDrawArrays(GL_TRIANGLES, 0, 3*(GLsizei)n);
-}
-
-void Graphics::DrawWorld(const World& w) {
+void Graphics::DrawWorld(const World& /*w*/) {
+  float q[] = {-0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f};
+  quad_drawer_.DrawQuads(q, 1);
+  float t[] = {0.0f, 1.0f, 0.5f, 0.5f, -0.5f, 0.5f};
+  triangle_drawer_.DrawTriangles(t, 1);
+#if 0
   const std::map<EntityId, Entity>& entities = w.entities();
   float* vs = (float*) alloca(sizeof(float) * entities.size() * 6);
   float* p = vs;
@@ -63,5 +49,6 @@ void Graphics::DrawWorld(const World& w) {
     p += 6;
   }
   DrawTriangles(vs, entities.size());
+#endif
 }
 

@@ -10,17 +10,7 @@
 #include <SDL.h>
 #include <GL/glew.h>
 
-#include "client/view/video.h"
-
-void InitVideo() {
-  SDL_Init(SDL_INIT_EVERYTHING);
-
-  SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
-  SDL_WM_SetCaption("udpgame", 0);
-
-  glewExperimental = GL_TRUE;
-  glewInit();
-}
+#include "client/view/shader_loader.h"
 
 size_t mmap_file(const char* filename, int* fd, void** p) {
   *fd = open(filename, 0, O_RDONLY);
@@ -56,24 +46,26 @@ glGetShaderInfoLog( vertexShader, 512, NULL, buffer );
 std::cout << buffer << std::endl;
 #endif
 
-GLuint LoadShaders(const char* vertexFile, const char* fragFile) {
+GLuint LoadShaders(const char* vertexFile, const char* fragFile,
+  GLuint* vert, GLuint* frag)
+{
   GLint status;
 
-  GLuint vert = AddShaderSource(vertexFile, GL_VERTEX_SHADER);
-  glCompileShader(vert);
-  glGetShaderiv(vert, GL_COMPILE_STATUS, &status);
+  *vert = AddShaderSource(vertexFile, GL_VERTEX_SHADER);
+  glCompileShader(*vert);
+  glGetShaderiv(*vert, GL_COMPILE_STATUS, &status);
   std::cout << "vertex shader " << vertexFile << ": " << status << std::endl;
   assert(status == 1);
 
-  GLuint frag = AddShaderSource(fragFile, GL_FRAGMENT_SHADER);
-  glCompileShader(frag);
-  glGetShaderiv(frag, GL_COMPILE_STATUS, &status );
+  *frag = AddShaderSource(fragFile, GL_FRAGMENT_SHADER);
+  glCompileShader(*frag);
+  glGetShaderiv(*frag, GL_COMPILE_STATUS, &status );
   std::cout << "fragment shader " << fragFile << ": " << status << std::endl;
   assert(status == 1);
 
   GLuint prog = glCreateProgram();
-  glAttachShader(prog, vert);
-  glAttachShader(prog, frag);
+  glAttachShader(prog, *vert);
+  glAttachShader(prog, *frag);
   glBindFragDataLocation(prog, 0, "outColor");
   glLinkProgram(prog);
   glUseProgram(prog);

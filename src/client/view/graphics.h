@@ -3,6 +3,8 @@
 
 #include <GL/glew.h>
 #include "common/google.h"
+#include "client/view/quad_drawer.h"
+#include "client/view/triangle_drawer.h"
 
 class World;
 
@@ -18,13 +20,10 @@ class Graphics {
   private:
   DISALLOW_COPY_AND_ASSIGN(Graphics);
 
-  void InitTriangles();
-  void DestroyTriangles();
-  void DrawTriangles(float[], size_t);
+  void InitVideo();
 
-  GLuint vao_units_;
-  GLuint vbo_units_;
-  GLuint triangle_program_;
+  QuadDrawer quad_drawer_;
+  TriangleDrawer triangle_drawer_;
 };
 
 #endif

@@ -1,6 +1,5 @@
 #include <SDL.h>
 
-#include "client/view/video.h"
 #include "client/input/input_reader.h"
 #include "client/view/graphics.h"
 #include "common/world/world.h"
@@ -12,9 +11,8 @@ int main(void)
   Graphics graphics;
   World world;
 
-  InitVideo();
-  world.Init();
   graphics.Init();
+  world.Init();
   input_reader.Init();
   EntityId player_id = world.SpawnEntity();
 
