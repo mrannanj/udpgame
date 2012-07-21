@@ -13,6 +13,9 @@ Graphics::Graphics() {
 void Graphics::Init() {
   InitVideo();
   quad_drawer_.Init();
+  quad_drawer_.SetColor(0.0f, 1.0f, 1.0f);
+  triangle_drawer_.Init();
+  triangle_drawer_.SetColor(1.0f, 0.0f, 0.0f);
 }
 
 void Graphics::InitVideo() {

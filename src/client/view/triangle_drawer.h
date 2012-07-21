@@ -8,15 +8,16 @@
 class TriangleDrawer {
 public:
   TriangleDrawer();
+  DISALLOW_COPY_AND_ASSIGN(TriangleDrawer);
 
   void Init();
   void Destroy();
   void DrawTriangles(float*, size_t);
+  void SetColor(float, float, float);
 
-  private:
-  DISALLOW_COPY_AND_ASSIGN(TriangleDrawer);
-
-  ShaderProgram sp;
+private:
+  ShaderProgram sp_;
+  GLint color_uniform_;
 };
 
 #endif

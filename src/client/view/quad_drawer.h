@@ -12,11 +12,13 @@ public:
   void Init();
   void Destroy();
   void DrawQuads(float*, size_t);
+  void SetColor(float, float, float);
 
   private:
   DISALLOW_COPY_AND_ASSIGN(QuadDrawer);
 
-  ShaderProgram sp;
+  ShaderProgram sp_;
+  GLint color_uniform_;
 };
 
 #endif

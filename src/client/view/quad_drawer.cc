@@ -1,15 +1,23 @@
 #include "client/view/quad_drawer.h"
 
 QuadDrawer::QuadDrawer():
-  sp()
+  sp_()
 {
 }
 
 void QuadDrawer::Init() {
-  sp.Init("resources/shaders/simple.vert", "resources/shaders/simple.frag");
+  sp_.Init("resources/shaders/simple.vert", "resources/shaders/quad.frag");
+  color_uniform_ = glGetUniformLocation(sp_.shader_program, "quadColor");
+}
+
+void QuadDrawer::SetColor(float r, float g, float b) {
+  glUniform3f(color_uniform_, r, g, b);
 }
 
 void QuadDrawer::DrawQuads(float* vertices, size_t n) {
+  glUseProgram(sp_.shader_program);
+  glBindVertexArray(sp_.vertex_array);
+  glBindBuffer(GL_ARRAY_BUFFER, sp_.vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float)*8*n, vertices, GL_STREAM_DRAW);
   glDrawArrays(GL_QUADS, 0, 4*(GLsizei)n);
 }
