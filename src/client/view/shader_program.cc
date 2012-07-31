@@ -14,10 +14,6 @@ void ShaderProgram::Init(
 
   shader_program = LoadShaders(vertex_file, fragment_file,
     &vertex_shader, &fragment_shader);
-
-  GLint pos_attrib = glGetAttribLocation(shader_program, "position");
-  glVertexAttribPointer(pos_attrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-  glEnableVertexAttribArray(pos_attrib);
 }
 
 void ShaderProgram::Destroy() {

@@ -12,10 +12,14 @@ Graphics::Graphics() {
 
 void Graphics::Init() {
   InitVideo();
+#if 0
   quad_drawer_.Init();
   quad_drawer_.SetColor(0.0f, 1.0f, 1.0f);
   triangle_drawer_.Init();
   triangle_drawer_.SetColor(1.0f, 0.0f, 0.0f);
+#endif
+  GLuint texture = texture_manager_.LoadImage("resources/images/face.png");
+  textured_quad_drawer_.Init(texture);
 }
 
 void Graphics::InitVideo() {
@@ -36,6 +40,7 @@ void Graphics::DrawWorld(const World& /*w*/) {
   quad_drawer_.DrawQuads(q, 1);
   float t[] = {0.0f, 1.0f, 0.5f, 0.5f, -0.5f, 0.5f};
   triangle_drawer_.DrawTriangles(t, 1);
+  textured_quad_drawer_.Draw();
 #if 0
   const std::map<EntityId, Entity>& entities = w.entities();
   float* vs = (float*) alloca(sizeof(float) * entities.size() * 6);

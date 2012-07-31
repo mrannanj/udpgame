@@ -55,7 +55,12 @@ GLuint LoadShaders(const char* vertexFile, const char* fragFile,
   glCompileShader(*vert);
   glGetShaderiv(*vert, GL_COMPILE_STATUS, &status);
   std::cout << "vertex shader " << vertexFile << ": " << status << std::endl;
-  assert(status == 1);
+  if (status != 1) {
+    char buffer[513];
+    glGetShaderInfoLog(*vert, 512, NULL, buffer );
+    std::cout << buffer << std::endl;
+    exit(1);
+  }
 
   *frag = AddShaderSource(fragFile, GL_FRAGMENT_SHADER);
   glCompileShader(*frag);

@@ -7,6 +7,11 @@ QuadDrawer::QuadDrawer():
 
 void QuadDrawer::Init() {
   sp_.Init("resources/shaders/simple.vert", "resources/shaders/quad.frag");
+
+  GLint pos_attrib = glGetAttribLocation(sp_.shader_program, "position");
+  glVertexAttribPointer(pos_attrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(pos_attrib);
+
   color_uniform_ = glGetUniformLocation(sp_.shader_program, "quadColor");
 }
 
