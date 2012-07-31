@@ -24,12 +24,15 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
 	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth
 
-LIBS := -lpthread -lm $(shell sdl-config --libs) $(shell pkg-config --libs glew)
+PKGS := glew SDL_image
+
+LIBS := -lpthread -lm
 LIBS += $(shell sdl-config --libs)
-LIBS += $(shell pkg-config --libs glew)
+LIBS += $(shell pkg-config --libs $(PKGS))
 
 CFLAGS := -fno-exceptions -fno-rtti
-CFLAGS += $(shell sdl-config --cflags) $(shell pkg-config --cflags glew)
+CFLAGS += $(shell sdl-config --cflags)
+CFLAGS += $(shell pkg-config --cflags $(PKGS))
 CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARNINGS) -Werror -std=c++0x -g
 
 .PHONY: dirs clean all
