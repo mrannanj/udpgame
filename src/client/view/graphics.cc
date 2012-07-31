@@ -18,8 +18,8 @@ void Graphics::Init() {
   triangle_drawer_.Init();
   triangle_drawer_.SetColor(1.0f, 0.0f, 0.0f);
 #endif
-  GLuint texture = texture_manager_.LoadImage("resources/images/face.png");
-  textured_quad_drawer_.Init(texture);
+  GLuint font_texture = texture_manager_.LoadImage("resources/images/font.bmp");
+  text_renderer_.Init(font_texture);
 }
 
 void Graphics::InitVideo() {
@@ -36,12 +36,13 @@ void Graphics::Destroy() {
 }
 
 void Graphics::DrawWorld(const World& /*w*/) {
+  text_renderer_.DrawText(-0.5f, 0.5f, 0.1f, "!0123456789!");
+
+#if 0
   float q[] = {-0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f};
   quad_drawer_.DrawQuads(q, 1);
   float t[] = {0.0f, 1.0f, 0.5f, 0.5f, -0.5f, 0.5f};
   triangle_drawer_.DrawTriangles(t, 1);
-  textured_quad_drawer_.Draw();
-#if 0
   const std::map<EntityId, Entity>& entities = w.entities();
   float* vs = (float*) alloca(sizeof(float) * entities.size() * 6);
   float* p = vs;

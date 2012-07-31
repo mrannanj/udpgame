@@ -39,13 +39,6 @@ GLuint AddShaderSource(const char* filename, int type) {
   return shader;
 }
 
-#if 0
-// FIXME: print compile errors
-char buffer[513];
-glGetShaderInfoLog( vertexShader, 512, NULL, buffer );
-std::cout << buffer << std::endl;
-#endif
-
 GLuint LoadShaders(const char* vertexFile, const char* fragFile,
   GLuint* vert, GLuint* frag)
 {
