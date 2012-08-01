@@ -22,8 +22,11 @@ void TextRenderer::Init(GLuint font_texture) {
   glBindTexture(GL_TEXTURE_2D, font_texture);
   glUniform1i(glGetUniformLocation(sp_.shader_program, "tex" ), 0);
 
-  GLint color_uniform = glGetUniformLocation(sp_.shader_program, "color");
-  glUniform3f(color_uniform, 1.0f, 0.5f, 0.5f);
+  GLint fg_color = glGetUniformLocation(sp_.shader_program, "fg_color");
+  glUniform4f(fg_color, 1.0f, 1.0f, 1.0f, 1.0f);
+
+  GLint bg_color = glGetUniformLocation(sp_.shader_program, "bg_color");
+  glUniform4f(bg_color, 0.3f, 0.3f, 0.0f, 0.5f);
 }
 
 void TextRenderer::DrawText(float top_x, float top_y, float size, const std::string& s) const {

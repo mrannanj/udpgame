@@ -59,7 +59,12 @@ GLuint LoadShaders(const char* vertexFile, const char* fragFile,
   glCompileShader(*frag);
   glGetShaderiv(*frag, GL_COMPILE_STATUS, &status );
   std::cout << "fragment shader " << fragFile << ": " << status << std::endl;
-  assert(status == 1);
+  if (status != 1) {
+    char buffer[513];
+    glGetShaderInfoLog(*frag, 512, NULL, buffer );
+    std::cout << buffer << std::endl;
+    exit(1);
+  }
 
   GLuint prog = glCreateProgram();
   glAttachShader(prog, *vert);
