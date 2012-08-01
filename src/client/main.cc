@@ -1,32 +1,35 @@
 #include <SDL.h>
 
 #include "client/input/input_reader.h"
-#include "client/view/graphics.h"
-#include "common/world/world.h"
+#include "client/state_stack.h"
+#include "client/main_menu.h"
 
 int main(void)
 {
-  Actions actions;
-  InputReader input_reader;
-  Graphics graphics;
-  World world;
+  SDL_Init(SDL_INIT_EVERYTHING);
 
-  graphics.Init();
-  world.Init();
+  SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
+  SDL_WM_SetCaption("udpgame", 0);
+
+  glewExperimental = GL_TRUE;
+  glewInit();
+
+  InputReader input_reader;
+  Renderer renderer;
+  StateStack state_stack;
+  MainMenu main_menu;
+
   input_reader.Init();
-  EntityId player_id = world.SpawnEntity();
+  renderer.Init();
+  state_stack.PushState(&main_menu);
 
   for (;;) {
-    if (input_reader.ReadInput(actions)) break;
-    world.SetEntityInput(player_id, actions);
-    world.Tick(0.1f);
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    graphics.DrawWorld(world);
+    if (state_stack.Update(&input_reader, 1.0f)) break;
+    state_stack.Draw(renderer);
     SDL_GL_SwapBuffers();
   }
 
-  graphics.Destroy();
   SDL_Quit();
   return 0;
 }

@@ -26,7 +26,7 @@ void TextRenderer::Init(GLuint font_texture) {
   glUniform3f(color_uniform, 1.0f, 0.5f, 0.5f);
 }
 
-void TextRenderer::DrawText(float top_x, float top_y, float size, const std::string& s) {
+void TextRenderer::DrawText(float top_x, float top_y, float size, const std::string& s) const {
   size_t nchar = s.size();
   size_t arr_size = nchar * vertex_elem_size_ * 4;
   float letter_size = 1.0f / 16;

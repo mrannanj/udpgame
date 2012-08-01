@@ -11,8 +11,7 @@ public:
   TextRenderer();
 
   void Init(GLuint);
-  void Destroy();
-  void DrawText(float, float, float, const std::string&);
+  void DrawText(float, float, float, const std::string&) const;
 
   private:
   DISALLOW_COPY_AND_ASSIGN(TextRenderer);
