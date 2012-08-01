@@ -12,12 +12,6 @@ Graphics::Graphics() {
 
 void Graphics::Init() {
   InitVideo();
-#if 0
-  quad_drawer_.Init();
-  quad_drawer_.SetColor(0.0f, 1.0f, 1.0f);
-  triangle_drawer_.Init();
-  triangle_drawer_.SetColor(1.0f, 0.0f, 0.0f);
-#endif
   GLuint font_texture = texture_manager_.LoadImage("resources/images/font.bmp");
   text_renderer_.Init(font_texture);
 }
@@ -33,10 +27,11 @@ void Graphics::InitVideo() {
 }
 
 void Graphics::Destroy() {
+  texture_manager_.FreeTextures();
 }
 
 void Graphics::DrawWorld(const World& /*w*/) {
-  text_renderer_.DrawText(-0.5f, 0.5f, 0.1f, "!0123456789!");
+  text_renderer_.DrawText(-1.0f, -0.9f, 0.1f, "udpgame");
 
 #if 0
   float q[] = {-0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f};
