@@ -1,9 +1,9 @@
 #ifndef CLIENT_MAIN_MENU_H
 #define CLIENT_MAIN_MENU_H
 
-#include "client/game_state.h"
+#include "client/screen.h"
 
-class MainMenu: public GameState
+class MainMenu: public Screen
 {
 public:
   bool Update(InputReader*, Real);

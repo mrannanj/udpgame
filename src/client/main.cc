@@ -1,7 +1,7 @@
 #include <SDL.h>
 
 #include "client/input/input_reader.h"
-#include "client/state_stack.h"
+#include "client/screen_stack.h"
 #include "client/main_menu.h"
 
 int main(void)
@@ -16,17 +16,17 @@ int main(void)
 
   InputReader input_reader;
   Renderer renderer;
-  StateStack state_stack;
+  ScreenStack screen_stack;
   MainMenu main_menu;
 
   input_reader.Init();
   renderer.Init();
-  state_stack.PushState(&main_menu);
+  screen_stack.PushScreen(&main_menu);
 
   for (;;) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (state_stack.Update(&input_reader, 1.0f)) break;
-    state_stack.Draw(renderer);
+    if (screen_stack.Update(&input_reader, 1.0f)) break;
+    screen_stack.Draw(renderer);
     SDL_GL_SwapBuffers();
   }
 
