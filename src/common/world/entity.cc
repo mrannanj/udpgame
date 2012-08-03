@@ -1,15 +1,14 @@
 #include "common/world/entity.h"
-#include "common/world/actions.h"
 
 Entity::Entity():
   x_(0.0f),
   y_(0.0f),
-  dir_(0.0f),
-  actions_()
+  dir_(0.0f)
 {
 }
 
 void Entity::Tick(Real /* dt */) {
+#if 0
   if (actions_.commands & Action::MOVE_FORWARD)
     y_ += SPEED;
   if (actions_.commands & Action::MOVE_BACK)
@@ -18,5 +17,6 @@ void Entity::Tick(Real /* dt */) {
     x_ -= SPEED;
   if (actions_.commands & Action::MOVE_RIGHT)
     x_ += SPEED;
+#endif
 }
 

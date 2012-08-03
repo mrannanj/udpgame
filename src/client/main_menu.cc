@@ -1,9 +1,10 @@
 #include "client/main_menu.h"
+#include "client/input/input.h"
 
-bool MainMenu::Update(InputReader* input, Real) {
-  if (!input) return 0;
-  Actions a;
-  return input->ReadInput(a);
+bool MainMenu::Update(InputReader* input_reader, Real) {
+  if (!input_reader) return 0;
+  Input input;
+  return input_reader->ReadInput(input);
 }
 
 void MainMenu::Draw(const Renderer& r) {

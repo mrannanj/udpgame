@@ -13,7 +13,7 @@ public:
   void Init();
 
   EntityId SpawnEntity();
-  void SetEntityInput(EntityId, Actions&);
+  void SetEntityInput(EntityId);
   void Tick(Real);
 
   const std::map<EntityId, Entity>& entities() const;

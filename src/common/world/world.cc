@@ -18,9 +18,9 @@ EntityId World::SpawnEntity() {
   return id;
 }
 
-void World::SetEntityInput(EntityId id, Actions& a) {
-  Entity& e = entities_[id];
-  memcpy(&e.actions_, &a, sizeof(a));
+void World::SetEntityInput(EntityId) {
+  //Entity& e = entities_[id];
+  //memcpy(&e.actions_, &a, sizeof(a));
 }
 
 void World::Tick(Real dt) {
