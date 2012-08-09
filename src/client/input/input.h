@@ -15,6 +15,8 @@ struct Input {
   unsigned actions_;
   int mouse_x_;
   int mouse_y_;
+  float gl_mouse_x_;
+  float gl_mouse_y_;
 };
 
 #endif

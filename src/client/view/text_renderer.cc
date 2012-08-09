@@ -25,11 +25,15 @@ void TextRenderer::Init(GLuint font_texture) {
   GLint fg_color = glGetUniformLocation(sp_.shader_program, "fg_color");
   glUniform4f(fg_color, 1.0f, 1.0f, 1.0f, 1.0f);
 
-  GLint bg_color = glGetUniformLocation(sp_.shader_program, "bg_color");
-  glUniform4f(bg_color, 0.3f, 0.3f, 0.0f, 0.5f);
+  bg_color_uni_ = glGetUniformLocation(sp_.shader_program, "bg_color");
+  glUniform4f(bg_color_uni_, 0.3f, 0.3f, 0.0f, 0.5f);
 }
 
-void TextRenderer::DrawText(float top_x, float top_y, float size, const std::string& s) const {
+void TextRenderer::DrawText(float top_x, float top_y, float size,
+  const std::string& s, const Color& bg) const
+{
+  glUniform4f(bg_color_uni_, bg.r, bg.g, bg.b, 0.5f);
+
   size_t nchar = s.size();
   size_t arr_size = nchar * vertex_elem_size_ * 4;
   float letter_size = 1.0f / 16;

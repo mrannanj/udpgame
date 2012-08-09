@@ -1,18 +1,23 @@
 #include <SDL.h>
 
+#include "client/view/window.h"
 #include "client/input/input_reader.h"
 #include "client/screen_stack.h"
 #include "client/main_menu.h"
 
-int main(void)
-{
+void InitVideo() {
   SDL_Init(SDL_INIT_EVERYTHING);
 
-  SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
+  SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
   SDL_WM_SetCaption("udpgame", 0);
 
   glewExperimental = GL_TRUE;
   glewInit();
+}
+
+int main(void)
+{
+  InitVideo();
 
   InputReader input_reader;
   Renderer renderer;

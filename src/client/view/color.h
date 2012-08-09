@@ -8,8 +8,8 @@ struct Color {
   float b;
 };
 
-Color Red(1.0f, 0.0f, 0.0f);
-Color Green(0.0f, 1.0f, 0.0f);
-Color Blue(0.0f, 0.0f, 1.0f);
+extern Color Red;
+extern Color Green;
+extern Color Blue;
 
 #endif

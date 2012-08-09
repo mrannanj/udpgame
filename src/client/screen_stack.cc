@@ -4,7 +4,6 @@ ScreenStack::ScreenStack():
   top_(0),
   active_(0)
 {
-
 }
 
 void ScreenStack::PushScreen(Screen* screen) {

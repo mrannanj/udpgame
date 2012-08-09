@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "client/input/input.h"
+#include "client/view/window.h"
 
 InputReader::InputReader() {}
 
@@ -16,9 +17,10 @@ void InputReader::Destroy() {
   delete[] actions_;
 }
 
-void InputReader::CheckMouseState(Input& input)
-{
+void InputReader::CheckMouseState(Input& input) {
   SDL_GetMouseState(&input.mouse_x_, &input.mouse_y_);
+  input.gl_mouse_x_ = gl_pos_x(input.mouse_x_);
+  input.gl_mouse_y_ = gl_pos_y(input.mouse_y_);
 }
 
 bool InputReader::ReadInput(Input& i) {
