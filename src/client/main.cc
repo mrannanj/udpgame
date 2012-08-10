@@ -1,11 +1,12 @@
 #include <SDL.h>
 
 #include "client/view/window.h"
-#include "client/input/input_reader.h"
-#include "client/screen_stack.h"
-#include "client/main_menu.h"
+#include "client/controller/input/input_reader.h"
+#include "client/controller/screen_stack.h"
+#include "client/controller/main_menu.h"
 
-void InitVideo() {
+void InitVideo()
+{
   SDL_Init(SDL_INIT_EVERYTHING);
 
   SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
@@ -21,20 +22,22 @@ int main(void)
 
   InputReader input_reader;
   Renderer renderer;
-  ScreenStack screen_stack;
-  MainMenu main_menu;
 
   input_reader.Init();
   renderer.Init();
-  screen_stack.PushScreen(&main_menu);
+  g_screen_stack.push_back(&g_main_menu);
 
   for (;;) {
+    if (g_screen_stack.empty()) break;
+    Screen* screen = g_screen_stack.back();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (screen_stack.Update(&input_reader, 1.0f)) break;
-    screen_stack.Draw(renderer);
+    screen->Update(input_reader, 1.0f);
+    screen->Draw(renderer);
     SDL_GL_SwapBuffers();
   }
 
   SDL_Quit();
   return 0;
 }
+

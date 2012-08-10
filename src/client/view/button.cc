@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "client/view/button.h"
-#include "client/input/input.h"
+#include "client/controller/input/input.h"
 #include "client/view/renderer.h"
 #include "client/view/color.h"
 
@@ -13,16 +13,20 @@ Button::Button(float x, float y, float size, const std::string& text):
   text_(text),
   bg_color_(&Green)
 {
-
 }
 
-void Button::Update(const Input& i)
+bool Button::Update(const Input& i)
 {
-  if (MouseOver(i.gl_mouse_x_, i.gl_mouse_y_)) {
+  if (MouseOver(i.gl_mouse_x_, i.gl_mouse_y_))
+  {
     bg_color_ = &Blue;
+    if (i.mouse_buttons_) {
+      return true;
+    }
   } else {
     bg_color_ = &Green;
   }
+  return false;
 }
 
 void Button::Draw(const Renderer& r) const

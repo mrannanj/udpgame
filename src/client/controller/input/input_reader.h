@@ -1,5 +1,5 @@
-#ifndef CLIENT_INPUT_READER_H
-#define CLIENT_INPUT_READER_H
+#ifndef CLIENT_CONTROLLER_INPUT_READER_H
+#define CLIENT_CONTROLLER_INPUT_READER_H
 
 #include <SDL.h>
 
@@ -15,11 +15,12 @@ class InputReader
 	void Init();
   void Destroy();
 
-	bool ReadInput(Input&);
+	void ReadInput(Input&);
 
 	private:
 	DISALLOW_COPY_AND_ASSIGN(InputReader);
 
+	void InitActions();
 	unsigned CheckKeyboard(unsigned);
 	void CheckMouseState(Input&);
 
