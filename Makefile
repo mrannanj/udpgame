@@ -24,14 +24,12 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
 	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth
 
-PKGS := glew SDL_image
+PKGS := glew SDL_image sdl
 
 LIBS := -lpthread -lm
-LIBS += $(shell sdl-config --libs)
 LIBS += $(shell pkg-config --libs $(PKGS))
 
 CFLAGS := -fno-exceptions -fno-rtti
-CFLAGS += $(shell sdl-config --cflags)
 CFLAGS += $(shell pkg-config --cflags $(PKGS))
 CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARNINGS) -Werror -std=c++0x -g
 

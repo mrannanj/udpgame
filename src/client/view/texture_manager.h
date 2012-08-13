@@ -7,11 +7,11 @@
 
 #include "common/google.h"
 
-//! TextureManager loads bitmaps to opengl
 class TextureManager
 {
 public:
   TextureManager();
+  ~TextureManager();
 
   GLuint LoadImage(const std::string&);
   GLuint GetTexture(const std::string&);

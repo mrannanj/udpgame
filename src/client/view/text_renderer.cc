@@ -1,12 +1,15 @@
 #include "client/view/text_renderer.h"
 
-TextRenderer::TextRenderer():
-  sp_()
+TextRenderer::TextRenderer(GLuint font_texture):
+  sp_("resources/shaders/text.vert", "resources/shaders/text.frag")
 {
+  Init(font_texture);
 }
 
 void TextRenderer::Init(GLuint font_texture) {
-  sp_.Init("resources/shaders/text.vert", "resources/shaders/text.frag");
+  glUseProgram(sp_.shader_program);
+  glBindFragDataLocation(sp_.shader_program, 0, "frag_color");
+
   vertex_elem_size_ = 4 * sizeof(float);
 
   GLint posAttrib = glGetAttribLocation(sp_.shader_program, "position");
@@ -27,11 +30,15 @@ void TextRenderer::Init(GLuint font_texture) {
 
   bg_color_uni_ = glGetUniformLocation(sp_.shader_program, "bg_color");
   glUniform4f(bg_color_uni_, 0.3f, 0.3f, 0.0f, 0.5f);
+  glUseProgram(0);
 }
 
 void TextRenderer::DrawText(float top_x, float top_y, float size,
   const std::string& s, const Color& bg) const
 {
+  glUseProgram(sp_.shader_program);
+  glBindVertexArray(sp_.vertex_array);
+  glBindBuffer(GL_ARRAY_BUFFER, sp_.vertex_buffer);
   glUniform4f(bg_color_uni_, bg.r, bg.g, bg.b, 0.5f);
 
   size_t nchar = s.size();
@@ -74,11 +81,8 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
     p += 16;
     x += size;
   }
-
-  glUseProgram(sp_.shader_program);
-  glBindVertexArray(sp_.vertex_array);
-  glBindBuffer(GL_ARRAY_BUFFER, sp_.vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, arr_size, vertices, GL_STREAM_DRAW);
   glDrawArrays(GL_QUADS, 0, 4*(GLsizei)nchar);
+  glUseProgram(0);
 }
 

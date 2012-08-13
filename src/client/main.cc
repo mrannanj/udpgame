@@ -24,7 +24,6 @@ int main(void)
   Renderer renderer;
 
   input_reader.Init();
-  renderer.Init();
   g_screen_stack.push_back(&g_main_menu);
 
   for (;;) {

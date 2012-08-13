@@ -6,10 +6,9 @@
 
 class ShaderProgram {
 public:
-  ShaderProgram();
+  ShaderProgram(const char*, const char*);
   DISALLOW_COPY_AND_ASSIGN(ShaderProgram);
 
-  void Init(const char*, const char*);
   void Destroy();
 
   GLuint vertex_array;

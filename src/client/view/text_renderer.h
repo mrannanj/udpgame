@@ -10,13 +10,14 @@
 
 class TextRenderer {
 public:
-  TextRenderer();
+  TextRenderer(GLuint);
+  DISALLOW_COPY_AND_ASSIGN(TextRenderer);
 
-  void Init(GLuint);
   void DrawText(float, float, float, const std::string&, const Color&) const;
 
 private:
-  DISALLOW_COPY_AND_ASSIGN(TextRenderer);
+  void Init(GLuint);
+
   ShaderProgram sp_;
   size_t vertex_elem_size_;
   GLint bg_color_uni_;

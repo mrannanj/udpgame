@@ -69,9 +69,7 @@ GLuint LoadShaders(const char* vertexFile, const char* fragFile,
   GLuint prog = glCreateProgram();
   glAttachShader(prog, *vert);
   glAttachShader(prog, *frag);
-  glBindFragDataLocation(prog, 0, "outColor");
   glLinkProgram(prog);
-  glUseProgram(prog);
 
   return prog;
 }

@@ -1,10 +1,10 @@
 #version 130
 
-uniform vec3 triangleColor;
-out vec4 outColor;
+uniform vec3 color;
+out vec4 frag_color;
 
 void main()
 {
-  outColor = vec4(triangleColor, 1.0);
+  frag_color = vec4(color, 1.0);
 }
 

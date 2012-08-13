@@ -1,10 +1,9 @@
 #include "client/view/shader_program.h"
 #include "client/view/shader_loader.h"
 
-ShaderProgram::ShaderProgram() {}
-
-void ShaderProgram::Init(
-  const char* vertex_file, const char* fragment_file)
+ShaderProgram::ShaderProgram(
+  const char* vertex_file,
+  const char* fragment_file)
 {
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);

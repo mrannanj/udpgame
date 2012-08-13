@@ -2,16 +2,17 @@
 #define CLIENT_VIEW_RENDERER_H
 
 #include "client/view/text_renderer.h"
+#include "client/view/triangle_renderer.h"
 #include "client/view/texture_manager.h"
 
 class Renderer {
 public:
   Renderer();
-  void Init();
-  void Destroy();
+  DISALLOW_COPY_AND_ASSIGN(Renderer);
 
   TextureManager texture_manager;
   TextRenderer text_renderer;
+  TriangleRenderer triangle_renderer;
 };
 
 #endif

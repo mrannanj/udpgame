@@ -12,6 +12,12 @@ TextureManager::TextureManager()
 {
 }
 
+TextureManager::~TextureManager()
+{
+  for (const auto& kv : textures_)
+    glDeleteTextures(1, &kv.second);
+}
+
 GLuint TextureManager::LoadImage(const std::string& fn)
 {
   assert(textures_.find(fn) == textures_.end());
@@ -42,12 +48,6 @@ GLuint TextureManager::LoadImage(const std::string& fn)
   textures_[fn] = texture;
 
   return texture;
-}
-
-void TextureManager::FreeTextures()
-{
-  for (const auto& kv : textures_)
-    glDeleteTextures(1, &kv.second);
 }
 
 GLuint TextureManager::GetTexture(const std::string& fn)
