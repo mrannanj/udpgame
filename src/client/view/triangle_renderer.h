@@ -4,10 +4,10 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "common/google.h"
-#include "client/view/shader_program.h"
+#include "client/view/shader.h"
 
 
-class TriangleRenderer {
+class TriangleRenderer : public Shader {
 public:
   TriangleRenderer();
   DISALLOW_COPY_AND_ASSIGN(TriangleRenderer);
@@ -19,7 +19,6 @@ public:
   void Off() const;
 
 private:
-  ShaderProgram sp_;
   GLint color_uniform_;
   GLint mvp_uniform_;
 };

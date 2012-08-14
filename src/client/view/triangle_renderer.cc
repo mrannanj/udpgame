@@ -2,29 +2,29 @@
 #include "client/view/triangle_renderer.h"
 
 TriangleRenderer::TriangleRenderer():
-  sp_("resources/shaders/triangle.vert", "resources/shaders/triangle.frag")
+  Shader("resources/shaders/triangle.vert", "resources/shaders/triangle.frag")
 {
   Init();
 }
 
 void TriangleRenderer::Init()
 {
-  glUseProgram(sp_.shader_program);
-  glBindFragDataLocation(sp_.shader_program, 0, "frag_color");
+  glUseProgram(shader_program);
+  glBindFragDataLocation(shader_program, 0, "frag_color");
 
-  GLint position = glGetAttribLocation(sp_.shader_program, "position");
+  GLint position = glGetAttribLocation(shader_program, "position");
   glVertexAttribPointer(position, 2, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(position);
 
-  color_uniform_ = glGetUniformLocation(sp_.shader_program, "color");
-  mvp_uniform_ = glGetUniformLocation(sp_.shader_program, "mvp");
+  color_uniform_ = glGetUniformLocation(shader_program, "color");
+  mvp_uniform_ = glGetUniformLocation(shader_program, "mvp");
   glUseProgram(0);
 }
 
 void TriangleRenderer::On() const {
-  glUseProgram(sp_.shader_program);
-  glBindVertexArray(sp_.vertex_array);
-  glBindBuffer(GL_ARRAY_BUFFER, sp_.vertex_buffer);
+  glUseProgram(shader_program);
+  glBindVertexArray(vertex_array);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 }
 
 void TriangleRenderer::Off() const {

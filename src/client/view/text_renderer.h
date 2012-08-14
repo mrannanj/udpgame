@@ -6,9 +6,9 @@
 
 #include "common/google.h"
 #include "client/view/color.h"
-#include "client/view/shader_program.h"
+#include "client/view/shader.h"
 
-class TextRenderer {
+class TextRenderer : public Shader {
 public:
   TextRenderer(GLuint);
   DISALLOW_COPY_AND_ASSIGN(TextRenderer);
@@ -18,7 +18,6 @@ public:
 private:
   void Init(GLuint);
 
-  ShaderProgram sp_;
   size_t vertex_elem_size_;
   GLint bg_color_uni_;
   Color* bg_color_;

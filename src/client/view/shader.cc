@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <assert.h>
 #include <fcntl.h>
 #include <iostream>
 #include <sys/mman.h>
@@ -10,7 +9,29 @@
 #include <SDL.h>
 #include <GL/glew.h>
 
-#include "client/view/shader_loader.h"
+#include "client/view/shader.h"
+
+Shader::Shader(
+  const char* vertex_file,
+  const char* fragment_file)
+{
+  glGenVertexArrays(1, &vertex_array);
+  glBindVertexArray(vertex_array);
+
+  glGenBuffers(1, &vertex_buffer);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+
+  shader_program = LoadShader(vertex_file, fragment_file,
+    &vertex_shader, &fragment_shader);
+}
+
+Shader::~Shader() {
+  glDeleteProgram(shader_program);
+  glDeleteShader(fragment_shader);
+  glDeleteShader(vertex_shader);
+  glDeleteBuffers(1, &vertex_buffer);
+  glDeleteVertexArrays(1, &vertex_array);
+}
 
 size_t mmap_file(const char* filename, int* fd, void** p) {
   *fd = open(filename, 0, O_RDONLY);
@@ -39,7 +60,7 @@ GLuint AddShaderSource(const char* filename, int type) {
   return shader;
 }
 
-GLuint LoadShaders(const char* vertexFile, const char* fragFile,
+GLuint Shader::LoadShader(const char* vertexFile, const char* fragFile,
   GLuint* vert, GLuint* frag)
 {
   GLint status;
