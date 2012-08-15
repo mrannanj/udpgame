@@ -6,5 +6,6 @@
 
 float gl_pos_x(int);
 float gl_pos_y(int);
+void open_window();
 
 #endif

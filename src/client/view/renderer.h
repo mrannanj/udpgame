@@ -6,7 +6,8 @@
 #include "client/view/triangle_renderer.h"
 #include "client/view/texture_manager.h"
 
-class Renderer {
+class Renderer
+{
 public:
   Renderer();
   DISALLOW_COPY_AND_ASSIGN(Renderer);
@@ -15,8 +16,6 @@ public:
   TextRenderer text_renderer;
   TriangleRenderer triangle_renderer;
   CubeRenderer cube_renderer;
-
-  GLuint face_texture;
 };
 
 #endif

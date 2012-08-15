@@ -7,18 +7,28 @@
 
 #include "common/google.h"
 
+namespace Texture {
+  enum Enum {
+    GRASS,
+    FONT,
+    SIZE
+  };
+}
+
 class TextureManager
 {
 public:
   TextureManager();
   ~TextureManager();
+  DISALLOW_COPY_AND_ASSIGN(TextureManager);
 
-  GLuint LoadImage(const std::string&);
-  GLuint GetTexture(const std::string&);
+  GLuint operator[](Texture::Enum) const;
 
 private:
-  DISALLOW_COPY_AND_ASSIGN(TextureManager);
-  std::map<std::string, GLuint> textures_;
+  void LoadTextures();
+  GLuint LoadTexture(const std::string&);
+
+  GLuint m_textures[Texture::SIZE];
 };
 
 #endif

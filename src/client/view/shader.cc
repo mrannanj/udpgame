@@ -36,10 +36,6 @@ void Shader::On() const {
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 }
 
-void Shader::Off() const {
-  glUseProgram(0);
-}
-
 size_t Shader::MmapFile(const char* filename, int* fd, void** p) {
   *fd = open(filename, 0, O_RDONLY);
   assert(*fd >= 0);

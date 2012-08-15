@@ -11,7 +11,6 @@ public:
   DISALLOW_COPY_AND_ASSIGN(Shader);
 
   void On() const;
-  void Off() const;
 
 protected:
   GLuint vertex_array;

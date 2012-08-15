@@ -31,6 +31,7 @@ bool Button::Update(const Input& i)
 
 void Button::Draw(const Renderer& r) const
 {
+  r.text_renderer.On();
   r.text_renderer.DrawText(x_, y_, size_, text_, *bg_color_);
 }
 

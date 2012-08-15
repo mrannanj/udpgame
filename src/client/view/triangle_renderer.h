@@ -6,7 +6,6 @@
 #include "common/google.h"
 #include "client/view/shader.h"
 
-
 class TriangleRenderer : public Shader {
 public:
   TriangleRenderer();

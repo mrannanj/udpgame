@@ -5,20 +5,9 @@
 #include "client/controller/screen_stack.h"
 #include "client/controller/main_menu.h"
 
-void InitVideo()
-{
-  SDL_Init(SDL_INIT_EVERYTHING);
-
-  SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
-  SDL_WM_SetCaption("udpgame", 0);
-
-  glewExperimental = GL_TRUE;
-  glewInit();
-}
-
 int main(void)
 {
-  InitVideo();
+  open_window();
 
   InputReader input_reader;
   Renderer renderer;
@@ -26,8 +15,8 @@ int main(void)
   input_reader.Init();
   g_screen_stack.push_back(&g_main_menu);
 
-  for (;;) {
-    if (g_screen_stack.empty()) break;
+  while(!g_screen_stack.empty())
+  {
     Screen* screen = g_screen_stack.back();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -39,4 +28,3 @@ int main(void)
   SDL_Quit();
   return 0;
 }
-

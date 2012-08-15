@@ -11,8 +11,8 @@ public:
   void Update(InputReader&, Real);
   void Draw(const Renderer&);
 private:
-  Button quit_;
-  Button start_;
+  Button m_quit;
+  Button m_start;
 };
 
 extern MainMenu g_main_menu;

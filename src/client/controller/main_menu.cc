@@ -6,8 +6,8 @@
 #include "client/controller/game_screen.h"
 
 MainMenu::MainMenu():
-  quit_(-0.2f, 0.3f, 0.1f, "quit"),
-  start_(-0.2f, 0.5f, 0.1f, "start")
+  m_quit(-0.2f, 0.3f, 0.1f, "quit"),
+  m_start(-0.2f, 0.5f, 0.1f, "start")
 {
 }
 
@@ -20,19 +20,20 @@ void MainMenu::Update(InputReader& input_reader, Real)
     g_screen_stack.pop_back();
   }
 
-  if (quit_.Update(input)) {
+  if (m_quit.Update(input)) {
     g_screen_stack.clear();
   }
 
-  if (start_.Update(input)) {
+  if (m_start.Update(input)) {
     g_screen_stack.push_back(&g_game_screen);
   }
 }
 
 void MainMenu::Draw(const Renderer& r)
 {
-  quit_.Draw(r);
-  start_.Draw(r);
+  m_quit.Draw(r);
+  m_start.Draw(r);
+  r.text_renderer.On();
   r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game!", Blue);
 }
 

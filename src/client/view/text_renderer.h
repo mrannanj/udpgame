@@ -8,11 +8,13 @@
 #include "client/view/color.h"
 #include "client/view/shader.h"
 
-class TextRenderer : public Shader {
+class TextRenderer : public Shader
+{
 public:
   TextRenderer(GLuint);
   DISALLOW_COPY_AND_ASSIGN(TextRenderer);
 
+  void On() const;
   void DrawText(float, float, float, const std::string&, const Color&) const;
 
 private:

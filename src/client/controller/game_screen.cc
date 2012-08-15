@@ -31,19 +31,11 @@ void GameScreen::Draw(const Renderer& r)
   glm::mat4 model = glm::mat4(1.0f);  // Changes for each model !
   // Our ModelViewProjection : multiplication of our 3 matrices
   glm::mat4 mvp = projection * view * model;
-  float v[] = { 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.0f };
-  float v2[] = { -0.0f, -0.5f, -0.5f, -0.0f, 0.5f, -0.0f };
+  r.text_renderer.On();
   r.text_renderer.DrawText(-0.5f, -0.9f, 0.1f, "game", Red);
-  r.triangle_renderer.On();
-  r.triangle_renderer.SetColor(1.0f, 0.5f, 0.2f);
-  r.triangle_renderer.DrawTriangles(v, 1, mvp);
-  r.triangle_renderer.SetColor(0.0f, 0.5f, 0.2f);
-  r.triangle_renderer.DrawTriangles(v2, 1, mvp);
-  r.triangle_renderer.Off();
   r.cube_renderer.On();
-  r.cube_renderer.SetTexture(r.face_texture);
+  r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
   r.cube_renderer.DrawCube(mvp);
-  r.cube_renderer.Off();
 }
 
 GameScreen g_game_screen;

@@ -24,7 +24,7 @@ WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
 	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth
 
-PKGS := glew SDL_image sdl
+PKGS := glew SDL_image sdl glu
 
 LIBS := -lpthread -lm
 LIBS += $(shell pkg-config --libs $(PKGS))
