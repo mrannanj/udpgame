@@ -12,7 +12,6 @@ int main(void)
   InputReader input_reader;
   Renderer renderer;
 
-  input_reader.Init();
   g_screen_stack.push_back(&g_main_menu);
 
   while(!g_screen_stack.empty())

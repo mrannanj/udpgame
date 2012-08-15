@@ -8,7 +8,7 @@ namespace Action {
     MOVE_LEFT = 2,
     MOVE_RIGHT = 4,
     MOVE_FORWARD = 8,
-    MOVE_BACK = 16,
+    MOVE_BACK = 16
   };
 }
 

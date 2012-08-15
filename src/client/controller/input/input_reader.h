@@ -12,16 +12,16 @@ class InputReader
 {
 	public:
 	InputReader();
-	void Init();
+	~InputReader();
+	DISALLOW_COPY_AND_ASSIGN(InputReader);
   void Destroy();
 
 	void ReadInput(Input&);
 
 	private:
-	DISALLOW_COPY_AND_ASSIGN(InputReader);
 
-	void InitActions();
-	unsigned CheckKeyboard(unsigned);
+	void init_actions();
+	void check_keyboard(Input&);
 	void CheckMouseState(Input&);
 
 	int num_keys_;
