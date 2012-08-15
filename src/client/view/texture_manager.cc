@@ -53,8 +53,7 @@ GLuint TextureManager::LoadImage(const std::string& fn)
 GLuint TextureManager::GetTexture(const std::string& fn)
 {
   std::map<std::string, GLuint>::const_iterator kv = textures_.find(fn);
-  if (kv != textures_.end())
-    return kv->second;
-  return LoadImage(fn);
+  assert(kv != textures_.end());
+  return kv->second;
 }
 

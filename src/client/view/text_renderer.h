@@ -16,8 +16,9 @@ public:
   void DrawText(float, float, float, const std::string&, const Color&) const;
 
 private:
-  void Init(GLuint);
+  void Init();
 
+  GLuint m_font_texture;
   size_t vertex_elem_size_;
   GLint bg_color_uni_;
   Color* bg_color_;

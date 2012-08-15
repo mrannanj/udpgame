@@ -21,16 +21,6 @@ void TriangleRenderer::Init()
   glUseProgram(0);
 }
 
-void TriangleRenderer::On() const {
-  glUseProgram(shader_program);
-  glBindVertexArray(vertex_array);
-  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-}
-
-void TriangleRenderer::Off() const {
-  glUseProgram(0);
-}
-
 void TriangleRenderer::SetColor(float r, float g, float b) const {
   glUniform3f(color_uniform_, r, g, b);
 }

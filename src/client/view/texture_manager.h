@@ -15,7 +15,6 @@ public:
 
   GLuint LoadImage(const std::string&);
   GLuint GetTexture(const std::string&);
-  void FreeTextures();
 
 private:
   DISALLOW_COPY_AND_ASSIGN(TextureManager);

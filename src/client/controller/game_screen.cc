@@ -40,6 +40,10 @@ void GameScreen::Draw(const Renderer& r)
   r.triangle_renderer.SetColor(0.0f, 0.5f, 0.2f);
   r.triangle_renderer.DrawTriangles(v2, 1, mvp);
   r.triangle_renderer.Off();
+  r.cube_renderer.On();
+  r.cube_renderer.SetTexture(r.face_texture);
+  r.cube_renderer.DrawCube(mvp);
+  r.cube_renderer.Off();
 }
 
 GameScreen g_game_screen;

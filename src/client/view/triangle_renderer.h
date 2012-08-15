@@ -15,8 +15,6 @@ public:
   void Init();
   void DrawTriangles(float*, size_t, const glm::mat4&) const;
   void SetColor(float, float, float) const;
-  void On() const;
-  void Off() const;
 
 private:
   GLint color_uniform_;

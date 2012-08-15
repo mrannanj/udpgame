@@ -1,12 +1,14 @@
 #include "client/view/text_renderer.h"
 
 TextRenderer::TextRenderer(GLuint font_texture):
-  Shader("resources/shaders/text.vert", "resources/shaders/text.frag")
+  Shader("resources/shaders/text.vert", "resources/shaders/text.frag"),
+  m_font_texture(font_texture)
 {
-  Init(font_texture);
+  Init();
 }
 
-void TextRenderer::Init(GLuint font_texture) {
+void TextRenderer::Init()
+{
   glUseProgram(shader_program);
   glBindFragDataLocation(shader_program, 0, "frag_color");
 
@@ -20,10 +22,6 @@ void TextRenderer::Init(GLuint font_texture) {
   glEnableVertexAttribArray(texAttrib);
   glVertexAttribPointer(texAttrib, 2,
     GL_FLOAT, GL_FALSE, vertex_elem_size_, (void*)(2 * sizeof(float)));
-
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, font_texture);
-  glUniform1i(glGetUniformLocation(shader_program, "tex" ), 0);
 
   GLint fg_color = glGetUniformLocation(shader_program, "fg_color");
   glUniform4f(fg_color, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -40,6 +38,10 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
   glBindVertexArray(vertex_array);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   glUniform4f(bg_color_uni_, bg.r, bg.g, bg.b, 0.5f);
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, m_font_texture);
+  glUniform1i(glGetUniformLocation(shader_program, "texture" ), 0);
 
   size_t nchar = s.size();
   size_t arr_size = nchar * vertex_elem_size_ * 4;

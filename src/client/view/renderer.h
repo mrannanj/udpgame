@@ -2,6 +2,7 @@
 #define CLIENT_VIEW_RENDERER_H
 
 #include "client/view/text_renderer.h"
+#include "client/view/cube_renderer.h"
 #include "client/view/triangle_renderer.h"
 #include "client/view/texture_manager.h"
 
@@ -13,6 +14,9 @@ public:
   TextureManager texture_manager;
   TextRenderer text_renderer;
   TriangleRenderer triangle_renderer;
+  CubeRenderer cube_renderer;
+
+  GLuint face_texture;
 };
 
 #endif
