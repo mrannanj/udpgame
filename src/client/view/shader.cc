@@ -11,9 +11,7 @@
 
 #include "client/view/shader.h"
 
-Shader::Shader(
-  const char* vertex_file,
-  const char* fragment_file)
+Shader::Shader(const char* vertex_file, const char* fragment_file)
 {
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);
@@ -21,8 +19,7 @@ Shader::Shader(
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
-  shader_program = LoadShader(vertex_file, fragment_file,
-    &vertex_shader, &fragment_shader);
+  LoadShader(vertex_file, fragment_file);
 }
 
 Shader::~Shader() {
@@ -33,7 +30,17 @@ Shader::~Shader() {
   glDeleteVertexArrays(1, &vertex_array);
 }
 
-size_t mmap_file(const char* filename, int* fd, void** p) {
+void Shader::On() const {
+  glUseProgram(shader_program);
+  glBindVertexArray(vertex_array);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+}
+
+void Shader::Off() const {
+  glUseProgram(0);
+}
+
+size_t Shader::MmapFile(const char* filename, int* fd, void** p) {
   *fd = open(filename, 0, O_RDONLY);
   assert(*fd >= 0);
   off_t size_off = lseek(*fd, 0, SEEK_END);
@@ -43,55 +50,52 @@ size_t mmap_file(const char* filename, int* fd, void** p) {
   return size;
 }
 
-void unmmap_file(size_t size, int fd, void* p) {
+void Shader::UnmmapFile(size_t size, int fd, void* p) {
   assert(0 == munmap(p, size));
   assert(0 == close(fd));
 }
 
-GLuint AddShaderSource(const char* filename, int type) {
+GLuint Shader::AddShaderSource(const char* filename, int type) {
   int fd;
   const char *s = nullptr;
   assert(type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER);
 
   GLuint shader = glCreateShader(type);
-  size_t size = mmap_file(filename, &fd, (void**)&s);
+  size_t size = MmapFile(filename, &fd, (void**)&s);
   glShaderSource(shader, 1, &s, nullptr);
-  unmmap_file(size, fd, (void*)s);
+  UnmmapFile(size, fd, (void*)s);
   return shader;
 }
 
-GLuint Shader::LoadShader(const char* vertexFile, const char* fragFile,
-  GLuint* vert, GLuint* frag)
+void Shader::LoadShader(const char* vertexFile, const char* fragFile)
 {
   GLint status;
 
-  *vert = AddShaderSource(vertexFile, GL_VERTEX_SHADER);
-  glCompileShader(*vert);
-  glGetShaderiv(*vert, GL_COMPILE_STATUS, &status);
+  vertex_shader = AddShaderSource(vertexFile, GL_VERTEX_SHADER);
+  glCompileShader(vertex_shader);
+  glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &status);
   std::cout << "vertex shader " << vertexFile << ": " << status << std::endl;
   if (status != 1) {
     char buffer[513];
-    glGetShaderInfoLog(*vert, 512, NULL, buffer );
+    glGetShaderInfoLog(vertex_shader, 512, NULL, buffer );
     std::cout << buffer << std::endl;
     exit(1);
   }
 
-  *frag = AddShaderSource(fragFile, GL_FRAGMENT_SHADER);
-  glCompileShader(*frag);
-  glGetShaderiv(*frag, GL_COMPILE_STATUS, &status );
+  fragment_shader = AddShaderSource(fragFile, GL_FRAGMENT_SHADER);
+  glCompileShader(fragment_shader);
+  glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &status );
   std::cout << "fragment shader " << fragFile << ": " << status << std::endl;
   if (status != 1) {
     char buffer[513];
-    glGetShaderInfoLog(*frag, 512, NULL, buffer );
+    glGetShaderInfoLog(fragment_shader, 512, NULL, buffer );
     std::cout << buffer << std::endl;
     exit(1);
   }
 
-  GLuint prog = glCreateProgram();
-  glAttachShader(prog, *vert);
-  glAttachShader(prog, *frag);
-  glLinkProgram(prog);
-
-  return prog;
+  shader_program = glCreateProgram();
+  glAttachShader(shader_program, vertex_shader);
+  glAttachShader(shader_program, fragment_shader);
+  glLinkProgram(shader_program);
 }
 

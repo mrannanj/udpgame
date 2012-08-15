@@ -10,6 +10,9 @@ public:
   ~Shader();
   DISALLOW_COPY_AND_ASSIGN(Shader);
 
+  void On() const;
+  void Off() const;
+
 protected:
   GLuint vertex_array;
   GLuint vertex_buffer;
@@ -18,8 +21,10 @@ protected:
   GLuint shader_program;
 
 private:
-  GLuint LoadShader(const char*, const char*, GLuint*, GLuint*);
-
+  void LoadShader(const char*, const char*);
+  GLuint AddShaderSource(const char*, int);
+  size_t MmapFile(const char*, int*, void**);
+  void UnmmapFile(size_t, int, void*);
 };
 
 #endif
