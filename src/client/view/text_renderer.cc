@@ -61,11 +61,11 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
     p[2] = col * letter_size;
     p[3] = row * letter_size;
 
-    // top right
-    p[4] = x + size;
-    p[5] = top_y;
-    p[6] = (col+1) * letter_size;
-    p[7] = row * letter_size;
+    // bottom left
+    p[4] = x;
+    p[5] = top_y - size;
+    p[6] = col * letter_size;
+    p[7] = (row+1) * letter_size;
 
     // bottom right
     p[8] = x + size;
@@ -73,11 +73,11 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
     p[10] = (col+1) * letter_size;
     p[11] = (row+1) * letter_size;
 
-    // bottom left
-    p[12] = x;
-    p[13] = top_y - size;
-    p[14] = col * letter_size;
-    p[15] = (row+1) * letter_size;
+    // top right
+    p[12] = x + size;
+    p[13] = top_y;
+    p[14] = (col+1) * letter_size;
+    p[15] = row * letter_size;
 
     p += 16;
     x += size;

@@ -7,7 +7,7 @@
 
 class Screen {
 public:
-  virtual void On() = 0;
+  virtual void Activate() = 0;
   virtual void Update(InputManager&, Real) = 0;
   virtual void Draw(const Renderer&) = 0;
 };

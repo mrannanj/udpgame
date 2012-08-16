@@ -9,7 +9,7 @@ GameScreen::GameScreen()
 {
 }
 
-void GameScreen::On()
+void GameScreen::Activate()
 {
   grab_mouse();
 }
@@ -18,8 +18,8 @@ void GameScreen::Update(InputManager& input_reader, Real)
 {
   Input input;
   input_reader.ReadInput(input);
-  if (input.actions_ & Action::ESCAPE) {
-    g_screen_stack.pop_back();
+  if (input.escape) {
+    g_screen_stack.pop();
   }
   m_camera.handle_input(input);
   m_camera.update();
@@ -27,8 +27,7 @@ void GameScreen::Update(InputManager& input_reader, Real)
 
 void GameScreen::Draw(const Renderer& r)
 {
-  glm::mat4 model = glm::mat4(1.0f);  // Changes for each model !
-  // Our ModelViewProjection : multiplication of our 3 matrices
+  glm::mat4 model = glm::mat4(1.0f);
   glm::mat4 mvp = m_camera.get_view_projection_matrix() * model;
   r.cube_renderer.On();
   r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);

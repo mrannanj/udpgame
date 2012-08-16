@@ -6,7 +6,7 @@
 #include "client/controller/screen_stack.h"
 
 SDLKey binded_keys[] = {
-  SDLK_ESCAPE, SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_LCTRL
+  SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_LCTRL
 };
 
 InputManager::InputManager()
@@ -24,7 +24,6 @@ InputManager::~InputManager()
 void InputManager::init_actions() {
   actions_ = new unsigned[num_keys_];
   memset(actions_, 0, sizeof(*actions_) * (unsigned)num_keys_);
-  actions_[SDLK_ESCAPE] = Action::ESCAPE;
   actions_[SDLK_w] = Action::MOVE_FORWARD;
   actions_[SDLK_s] = Action::MOVE_BACK;
   actions_[SDLK_d] = Action::MOVE_RIGHT;
@@ -52,7 +51,8 @@ void InputManager::ReadInput(Input& i)
         g_screen_stack.clear();
         break;
       case SDL_KEYDOWN:
-        i.actions_ |= actions_[e.key.keysym.sym];
+        if (e.key.keysym.sym == SDLK_ESCAPE)
+          i.escape = true;
         break;
       case SDL_MOUSEMOTION:
         handle_mouse_motion(e, i);

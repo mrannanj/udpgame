@@ -16,8 +16,8 @@ void MainMenu::Update(InputManager& input_manager, Real)
   Input input;
   input_manager.ReadInput(input);
 
-  if (input.actions_ & Action::ESCAPE) {
-    g_screen_stack.pop_back();
+  if (input.escape) {
+    g_screen_stack.pop();
   }
 
   if (m_quit.Update(input)) {
@@ -25,7 +25,7 @@ void MainMenu::Update(InputManager& input_manager, Real)
   }
 
   if (m_start.Update(input)) {
-    g_screen_stack.push_back(&g_game_screen);
+    g_screen_stack.push(&g_game_screen);
   }
 }
 
@@ -37,7 +37,7 @@ void MainMenu::Draw(const Renderer& r)
   r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game!", Blue);
 }
 
-void MainMenu::On()
+void MainMenu::Activate()
 {
   release_mouse();
 }

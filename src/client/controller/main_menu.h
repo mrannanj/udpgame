@@ -10,7 +10,8 @@ public:
   MainMenu();
   void Update(InputManager&, Real);
   void Draw(const Renderer&);
-  void On();
+  void Activate();
+
 private:
   Button m_quit;
   Button m_start;

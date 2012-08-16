@@ -12,14 +12,15 @@ int main(void)
   InputManager input_manager;
   Renderer renderer;
 
-  g_screen_stack.push_back(&g_main_menu);
+  g_screen_stack.push(&g_main_menu);
 
   while(!g_screen_stack.empty())
   {
     Screen* screen = g_screen_stack.back();
+    if (g_screen_stack.check_dirty())
+      screen->Activate();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    screen->On();
     screen->Update(input_manager, 1.0f);
     screen->Draw(renderer);
     SDL_GL_SwapBuffers();

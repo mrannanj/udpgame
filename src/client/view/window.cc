@@ -14,7 +14,7 @@ void open_window()
   glewInit();
 
   glEnable(GL_DEPTH_TEST);
-  //glEnable(GL_CULL_FACE);
+  glEnable(GL_CULL_FACE);
 }
 
 float gl_pos_x(int x)

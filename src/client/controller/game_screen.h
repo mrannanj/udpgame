@@ -9,7 +9,7 @@ public:
   GameScreen();
   void Update(InputManager&, Real);
   void Draw(const Renderer&);
-  void On();
+  void Activate();
 private:
   Camera m_camera;
 };

@@ -5,6 +5,23 @@
 
 #include <vector>
 
-extern std::vector<Screen*> g_screen_stack;
+class ScreenStack
+{
+public:
+  ScreenStack();
+
+  void push(Screen*);
+  bool empty() const;
+  Screen* back();
+  void pop();
+  void clear();
+  bool check_dirty();
+
+private:
+  std::vector<Screen*> m_screen_stack;
+  bool m_dirty;
+};
+
+extern ScreenStack g_screen_stack;
 
 #endif

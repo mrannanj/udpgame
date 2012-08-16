@@ -15,6 +15,7 @@ namespace Action {
 }
 
 struct Input {
+  bool escape;
   unsigned actions_;
   int mouse_buttons_;
   int mouse_x_;
