@@ -3,26 +3,22 @@
 
 #include <map>
 #include "common/google.h"
-#include "common/world/entity.h"
-#include "common/world/entity_id.h"
-#include "common/world/id_generator.h"
+
+#define WORLD_MAX_X 25
+#define WORLD_MAX_Y 25
+#define WORLD_MAX_Z 25
 
 class World {
 public:
   World();
-  void Init();
-
-  EntityId SpawnEntity();
-  void SetEntityInput(EntityId);
-  void Tick(Real);
-
-  const std::map<EntityId, Entity>& entities() const;
-
-private:
   DISALLOW_COPY_AND_ASSIGN(World);
 
-  IdGenerator idgen_;
-  std::map<EntityId, Entity> entities_;
+  const char* blocks() const;
+  unsigned block_index(unsigned x, unsigned y, unsigned z);
+  char block(unsigned x, unsigned y, unsigned z);
+
+private:
+  char m_blocks[WORLD_MAX_X][WORLD_MAX_Y][WORLD_MAX_Z];
 };
 
 #endif

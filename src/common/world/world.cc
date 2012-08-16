@@ -3,32 +3,24 @@
 #include <GL/glew.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "common/world/world.h"
 
 World::World() {
+  memset(m_blocks, 0, WORLD_MAX_X*WORLD_MAX_Y*WORLD_MAX_Z);
+  for (unsigned x = 0; x < WORLD_MAX_X; ++x)
+    for (unsigned z = 0; z < WORLD_MAX_Z; ++z)
+      m_blocks[x][0][z] = (char)(x ^ z);
 }
 
-void World::Init() {
+unsigned World::block_index(unsigned x, unsigned y, unsigned z) {
+  assert(x < WORLD_MAX_X);
+  assert(y < WORLD_MAX_Y);
+  assert(z < WORLD_MAX_Z);
+  return (x * WORLD_MAX_Y * WORLD_MAX_Z) + (y * WORLD_MAX_Z) + z;
 }
 
-EntityId World::SpawnEntity() {
-  EntityId id = idgen_.NextId();
-  entities_[id] = Entity();
-  return id;
-}
-
-void World::SetEntityInput(EntityId) {
-  //Entity& e = entities_[id];
-  //memcpy(&e.actions_, &a, sizeof(a));
-}
-
-void World::Tick(Real dt) {
-  for (auto it = entities_.begin(); it != entities_.end(); ++it) {
-    it->second.Tick(dt);
-  }
-}
-
-const std::map<EntityId, Entity>& World::entities() const {
-  return entities_;
+char World::block(unsigned x, unsigned y, unsigned z) {
+  return m_blocks[x][y][z];
 }

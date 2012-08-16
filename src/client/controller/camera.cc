@@ -9,8 +9,8 @@
 
 Camera::Camera():
   m_vertical_angle(0.0f),
-  m_horizontal_angle(-3.14f/2.0f),
-  m_position(5.0f, 0.0f, 0.0f),
+  m_horizontal_angle(0.0f),
+  m_position(10.0f, 2.0f, 10.0f),
   m_center(0.0f, 0.0f, 0.0f),
   m_up(0.0f, 1.0f, 0.0f)
 {

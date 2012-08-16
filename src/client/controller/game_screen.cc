@@ -4,6 +4,7 @@
 #include "client/controller/input/input.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 GameScreen::GameScreen()
 {
@@ -27,11 +28,23 @@ void GameScreen::Update(InputManager& input_reader, Real)
 
 void GameScreen::Draw(const Renderer& r)
 {
-  glm::mat4 model = glm::mat4(1.0f);
-  glm::mat4 mvp = m_camera.get_view_projection_matrix() * model;
+  glm::mat4 vp_matrix = m_camera.get_view_projection_matrix();
+
   r.cube_renderer.On();
   r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
-  r.cube_renderer.DrawCube(mvp);
+
+  for (unsigned x = 0; x < WORLD_MAX_X; ++x) {
+    for (unsigned y = 0; y < WORLD_MAX_Y; ++y) {
+      for (unsigned z = 0; z < WORLD_MAX_Z; ++z) {
+        char block = m_world.block(x,y,z);
+        if (block > 8)
+        {
+          glm::mat4 model = glm::translate(glm::mat4(1.0f),glm::vec3((float)x,(float)y,(float)z));
+          r.cube_renderer.DrawCube(vp_matrix * model);
+        }
+      }
+    }
+  }
 }
 
 GameScreen g_game_screen;
