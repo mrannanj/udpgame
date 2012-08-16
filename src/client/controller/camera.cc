@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "client/view/window.h"
@@ -61,6 +62,7 @@ void Camera::handle_input(const Input& input)
     m_position.y -= move_speed;
   }
 
+  std::cout << pos_and_angle() << std::endl;
 }
 
 void Camera::update()
@@ -73,4 +75,16 @@ void Camera::update()
 const glm::mat4& Camera::get_view_projection_matrix() const
 {
   return m_view_projection;
+}
+
+std::string Camera::pos_and_angle() const
+{
+  std::stringstream ss;
+  ss.precision(2);
+  ss << "(" << m_position.x <<
+    "," << m_position.y <<
+    "," << m_position.z <<
+    "|" << m_horizontal_angle <<
+    "," << m_vertical_angle << ")";
+  return ss.str();
 }

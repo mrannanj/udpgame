@@ -1,6 +1,7 @@
 #ifndef CLIENT_CONTROLLER_CAMERA_H
 #define CLIENT_CONTROLLER_CAMERA_H
 
+#include <string>
 #include <glm/glm.hpp>
 
 #include "common/google.h"
@@ -16,6 +17,7 @@ public:
   void handle_input(const Input&);
   void update();
   const glm::mat4& get_view_projection_matrix() const;
+  std::string pos_and_angle() const;
 
 private:
   float m_vertical_angle;
