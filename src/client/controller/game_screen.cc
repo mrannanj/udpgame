@@ -37,9 +37,12 @@ void GameScreen::Draw(const Renderer& r)
     for (unsigned y = 0; y < WORLD_MAX_Y; ++y) {
       for (unsigned z = 0; z < WORLD_MAX_Z; ++z) {
         char block = m_world.block(x,y,z);
-        if (block > 8)
+        if (block)
         {
-          glm::mat4 model = glm::translate(glm::mat4(1.0f),glm::vec3((float)x,(float)y,(float)z));
+          glm::mat4 model = glm::translate(
+            glm::mat4(1.0f),
+            glm::vec3((float)x,(float)y,(float)z)
+          );
           r.cube_renderer.DrawCube(vp_matrix * model);
         }
       }

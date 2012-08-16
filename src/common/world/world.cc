@@ -11,7 +11,7 @@ World::World() {
   memset(m_blocks, 0, WORLD_MAX_X*WORLD_MAX_Y*WORLD_MAX_Z);
   for (unsigned x = 0; x < WORLD_MAX_X; ++x)
     for (unsigned z = 0; z < WORLD_MAX_Z; ++z)
-      m_blocks[x][0][z] = (char)(x ^ z);
+      m_blocks[x][0][z] = x % 4 + z % 2;
 }
 
 unsigned World::block_index(unsigned x, unsigned y, unsigned z) {
