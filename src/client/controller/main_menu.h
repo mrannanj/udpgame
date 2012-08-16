@@ -8,8 +8,9 @@ class MainMenu: public Screen
 {
 public:
   MainMenu();
-  void Update(InputReader&, Real);
+  void Update(InputManager&, Real);
   void Draw(const Renderer&);
+  void On();
 private:
   Button m_quit;
   Button m_start;

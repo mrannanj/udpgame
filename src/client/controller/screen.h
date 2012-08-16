@@ -3,11 +3,12 @@
 
 #include "common/world/real.h"
 #include "client/view/renderer.h"
-#include "client/controller/input/input_reader.h"
+#include "client/controller/input/input_manager.h"
 
 class Screen {
 public:
-  virtual void Update(InputReader&, Real) = 0;
+  virtual void On() = 0;
+  virtual void Update(InputManager&, Real) = 0;
   virtual void Draw(const Renderer&) = 0;
 };
 

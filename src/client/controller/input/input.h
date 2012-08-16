@@ -8,7 +8,9 @@ namespace Action {
     MOVE_LEFT = 2,
     MOVE_RIGHT = 4,
     MOVE_FORWARD = 8,
-    MOVE_BACK = 16
+    MOVE_BACK = 16,
+    JUMP = 32,
+    CROUCH = 64
   };
 }
 
@@ -17,6 +19,8 @@ struct Input {
   int mouse_buttons_;
   int mouse_x_;
   int mouse_y_;
+  int mouse_delta_x;
+  int mouse_delta_y;
   float gl_mouse_x_;
   float gl_mouse_y_;
 };

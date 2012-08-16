@@ -1,23 +1,27 @@
-#include "client/controller/input/input_reader.h"
+#include "client/controller/input/input_manager.h"
 
 #include <iostream>
 #include "client/controller/input/input.h"
 #include "client/view/window.h"
 #include "client/controller/screen_stack.h"
 
-InputReader::InputReader()
+SDLKey binded_keys[] = {
+  SDLK_ESCAPE, SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_LCTRL
+};
+
+InputManager::InputManager()
 {
   key_state_ = SDL_GetKeyState(&num_keys_);
   //SDL_EnableKeyRepeat(0,0);
   init_actions();
 }
 
-InputReader::~InputReader()
+InputManager::~InputManager()
 {
   delete[] actions_;
 }
 
-void InputReader::init_actions() {
+void InputManager::init_actions() {
   actions_ = new unsigned[num_keys_];
   memset(actions_, 0, sizeof(*actions_) * (unsigned)num_keys_);
   actions_[SDLK_ESCAPE] = Action::ESCAPE;
@@ -25,9 +29,11 @@ void InputReader::init_actions() {
   actions_[SDLK_s] = Action::MOVE_BACK;
   actions_[SDLK_d] = Action::MOVE_RIGHT;
   actions_[SDLK_a] = Action::MOVE_LEFT;
+  actions_[SDLK_SPACE] = Action::JUMP;
+  actions_[SDLK_LCTRL] = Action::CROUCH;
 }
 
-void InputReader::CheckMouseState(Input& input)
+void InputManager::check_mouse(Input& input)
 {
   Uint8 mouse_buttons = SDL_GetMouseState(&input.mouse_x_, &input.mouse_y_);
   input.mouse_buttons_ = SDL_BUTTON(1) & mouse_buttons;
@@ -35,7 +41,7 @@ void InputReader::CheckMouseState(Input& input)
   input.gl_mouse_y_ = gl_pos_y(input.mouse_y_);
 }
 
-void InputReader::ReadInput(Input& i)
+void InputManager::ReadInput(Input& i)
 {
   memset(&i, 0, sizeof(Input));
   SDL_Event e;
@@ -48,23 +54,28 @@ void InputReader::ReadInput(Input& i)
       case SDL_KEYDOWN:
         i.actions_ |= actions_[e.key.keysym.sym];
         break;
+      case SDL_MOUSEMOTION:
+        handle_mouse_motion(e, i);
+        break;
     }
   }
   check_keyboard(i);
-  CheckMouseState(i);
+  check_mouse(i);
 }
 
-void InputReader::check_keyboard(Input& i)
+void InputManager::handle_mouse_motion(SDL_Event& e, Input &i)
 {
-  if (key_state_[SDLK_w]) {
-    i.actions_ |= actions_[SDLK_w];
-  } else if (key_state_[SDLK_s]) {
-    i.actions_ |= actions_[SDLK_s];
-  }
-  if (key_state_[SDLK_a]) {
-    i.actions_ |= actions_[SDLK_a];
-  } else if (key_state_[SDLK_d]) {
-    i.actions_ |= actions_[SDLK_d];
+  i.mouse_delta_x += e.motion.xrel;
+  i.mouse_delta_y += e.motion.yrel;
+}
+
+void InputManager::check_keyboard(Input& i)
+{
+  constexpr size_t n = sizeof(binded_keys)/sizeof(SDLKey);
+  for (unsigned k = 0; k < n; ++k) {
+    SDLKey key = binded_keys[k];
+    if (key_state_[key])
+      i.actions_ |= actions_[key];
   }
 }
 

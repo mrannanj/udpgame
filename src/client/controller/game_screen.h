@@ -7,8 +7,9 @@
 struct GameScreen : public Screen {
 public:
   GameScreen();
-  void Update(InputReader&, Real);
+  void Update(InputManager&, Real);
   void Draw(const Renderer&);
+  void On();
 private:
   Camera m_camera;
 };

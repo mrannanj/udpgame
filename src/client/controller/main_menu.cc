@@ -11,10 +11,10 @@ MainMenu::MainMenu():
 {
 }
 
-void MainMenu::Update(InputReader& input_reader, Real)
+void MainMenu::Update(InputManager& input_manager, Real)
 {
   Input input;
-  input_reader.ReadInput(input);
+  input_manager.ReadInput(input);
 
   if (input.actions_ & Action::ESCAPE) {
     g_screen_stack.pop_back();
@@ -35,6 +35,11 @@ void MainMenu::Draw(const Renderer& r)
   m_start.Draw(r);
   r.text_renderer.On();
   r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game!", Blue);
+}
+
+void MainMenu::On()
+{
+  release_mouse();
 }
 
 MainMenu g_main_menu;

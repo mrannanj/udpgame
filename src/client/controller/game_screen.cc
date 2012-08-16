@@ -1,3 +1,4 @@
+#include "client/view/window.h"
 #include "client/controller/game_screen.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/input/input.h"
@@ -8,7 +9,12 @@ GameScreen::GameScreen()
 {
 }
 
-void GameScreen::Update(InputReader& input_reader, Real)
+void GameScreen::On()
+{
+  grab_mouse();
+}
+
+void GameScreen::Update(InputManager& input_reader, Real)
 {
   Input input;
   input_reader.ReadInput(input);
