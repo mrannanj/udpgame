@@ -8,7 +8,7 @@ class MainMenu: public Screen
 {
 public:
   MainMenu();
-  void Update(InputManager&, Real);
+  void Update(InputManager&, float);
   void Draw(const Renderer&);
   void Activate();
 

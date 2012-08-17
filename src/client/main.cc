@@ -1,9 +1,13 @@
 #include <SDL.h>
+#include <iostream>
 
 #include "client/view/window.h"
 #include "client/controller/input/input_manager.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/main_menu.h"
+
+constexpr float fps = 60.0f;
+constexpr float frame_time = 1.0f/fps;
 
 int main(void)
 {
@@ -21,7 +25,7 @@ int main(void)
       screen->Activate();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    screen->Update(input_manager, 1.0f);
+    screen->Update(input_manager, frame_time);
     screen->Draw(renderer);
     SDL_GL_SwapBuffers();
   }

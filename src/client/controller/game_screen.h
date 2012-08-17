@@ -2,18 +2,19 @@
 #define CLIENT_CONTROLLER_GAME_SCREEN_H
 
 #include "client/controller/screen.h"
-#include "client/controller/camera.h"
-#include "common/world/world.h"
+#include "client/controller/perspective.h"
+#include "common/world/entity_manager.h"
 
-struct GameScreen : public Screen {
+struct GameScreen : public Screen
+{
 public:
   GameScreen();
-  void Update(InputManager&, Real);
+  void Update(InputManager&, float);
   void Draw(const Renderer&);
   void Activate();
 private:
-  Camera m_camera;
-  World m_world;
+  Perspective m_perspective;
+  EntityManager m_entity_manager;
 };
 
 extern GameScreen g_game_screen;

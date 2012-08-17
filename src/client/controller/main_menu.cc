@@ -11,7 +11,7 @@ MainMenu::MainMenu():
 {
 }
 
-void MainMenu::Update(InputManager& input_manager, Real)
+void MainMenu::Update(InputManager& input_manager, float)
 {
   Input input;
   input_manager.ReadInput(input);

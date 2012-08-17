@@ -10,7 +10,10 @@ namespace Action {
     MOVE_FORWARD = 8,
     MOVE_BACK = 16,
     JUMP = 32,
-    CROUCH = 64
+    CROUCH = 64,
+    SPAWN_UNIT = 128,
+    SWITCH_UNIT = 256,
+    CAMERA_MODE = 512
   };
 }
 

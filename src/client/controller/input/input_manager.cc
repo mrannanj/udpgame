@@ -51,8 +51,7 @@ void InputManager::ReadInput(Input& i)
         g_screen_stack.clear();
         break;
       case SDL_KEYDOWN:
-        if (e.key.keysym.sym == SDLK_ESCAPE)
-          i.escape = true;
+        handle_keydown(e, i);
         break;
       case SDL_MOUSEMOTION:
         handle_mouse_motion(e, i);
@@ -61,6 +60,18 @@ void InputManager::ReadInput(Input& i)
   }
   check_keyboard(i);
   check_mouse(i);
+}
+
+void InputManager::handle_keydown(SDL_Event& e, Input& i)
+{
+  if (e.key.keysym.sym == SDLK_ESCAPE)
+    i.actions_ |= Action::ESCAPE;
+  else if (e.key.keysym.sym == SDLK_F8)
+    i.actions_ |= Action::SPAWN_UNIT;
+  else if (e.key.keysym.sym == SDLK_TAB)
+    i.actions_ |= Action::SWITCH_UNIT;
+  else if (e.key.keysym.sym == SDLK_F7)
+    i.actions_ |= Action::CAMERA_MODE;
 }
 
 void InputManager::handle_mouse_motion(SDL_Event& e, Input &i)

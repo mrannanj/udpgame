@@ -14,7 +14,6 @@ class InputManager
 	InputManager();
 	~InputManager();
 	DISALLOW_COPY_AND_ASSIGN(InputManager);
-  void Destroy();
 
 	void ReadInput(Input&);
 
@@ -22,6 +21,7 @@ class InputManager
 
 	void init_actions();
 	void handle_mouse_motion(SDL_Event&, Input&);
+	void handle_keydown(SDL_Event&, Input&);
 	void check_keyboard(Input&);
 	void check_mouse(Input&);
 
