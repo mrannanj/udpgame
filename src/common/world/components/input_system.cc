@@ -1,5 +1,7 @@
 #include "common/world/components/input_system.h"
 
+constexpr float HALF_PI = (float)M_PI/2.0f;
+
 void InputSystem::add_input(EntityId id, const Input& input)
 {
   InputC input_comp;
@@ -13,6 +15,7 @@ void InputSystem::add_input(EntityId id, const Input& input)
 void InputSystem::tick(float)
 {
   float move_speed = 1.5f;
+  float jump_velocity = 5.0f;
 
   for (InputC& i : m_inputs)
   {
@@ -20,25 +23,22 @@ void InputSystem::tick(float)
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;
 
-    glm::vec3 direction = glm::vec3(
-      cos(p->vertical_angle) * sin(p->horizontal_angle),
-      sin(p->vertical_angle),
-      cos(p->vertical_angle) * cos(p->horizontal_angle)
-    );
+    glm::vec3 forward = glm::vec3(
+      sin(p->horizontal_angle), 0.0f, cos(p->horizontal_angle));
 
     glm::vec3 right = glm::vec3(
-      sin(p->horizontal_angle - 3.14f/2.0f),
-      0,
-      cos(p->horizontal_angle - 3.14f/2.0f)
+      sin(p->horizontal_angle - HALF_PI),
+      0.0f,
+      cos(p->horizontal_angle - HALF_PI)
     );
 
     if (i.actions & Action::MOVE_FORWARD)
     {
-      p->velocity += direction * move_speed;
+      p->velocity += forward * move_speed;
     }
     else if (i.actions & Action::MOVE_BACK)
     {
-      p->velocity -= direction * move_speed;
+      p->velocity -= forward * move_speed;
     }
     if (i.actions & Action::MOVE_RIGHT)
     {
@@ -50,7 +50,7 @@ void InputSystem::tick(float)
     }
     if (i.actions & Action::JUMP && p->on_ground)
     {
-      p->velocity.y += 10.0f;
+      p->velocity.y += jump_velocity;
       p->on_ground = false;
     }
   }
