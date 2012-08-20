@@ -1,6 +1,7 @@
 #include "common/world/components/input_system.h"
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
+constexpr float PI = (float)M_PI;
 
 void InputSystem::add_input(EntityId id, const Input& input)
 {
@@ -22,6 +23,10 @@ void InputSystem::tick(float)
     PhysicsC* p = g_physics_system.get(i.id);
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;
+    if (p->vertical_angle < -HALF_PI)
+      p->vertical_angle = -HALF_PI;
+    else if (p->vertical_angle > HALF_PI)
+      p->vertical_angle = HALF_PI;
 
     glm::vec3 forward = glm::vec3(
       sin(p->horizontal_angle), 0.0f, cos(p->horizontal_angle));

@@ -108,6 +108,7 @@ void Perspective::tick()
     if (p)
     {
       m_position = p->position;
+      m_position.y += 0.7f;
       m_vertical_angle = p->vertical_angle;
       m_horizontal_angle = p->horizontal_angle;
       m_direction = glm::vec3(

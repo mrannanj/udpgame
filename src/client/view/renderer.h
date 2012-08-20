@@ -3,7 +3,6 @@
 
 #include "client/view/text_renderer.h"
 #include "client/view/cube_renderer.h"
-#include "client/view/triangle_renderer.h"
 #include "client/view/texture_manager.h"
 
 class Renderer
@@ -14,7 +13,6 @@ public:
 
   TextureManager texture_manager;
   TextRenderer text_renderer;
-  TriangleRenderer triangle_renderer;
   CubeRenderer cube_renderer;
 };
 

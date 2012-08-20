@@ -4,9 +4,10 @@
 #include "client/controller/game_screen.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/input/input.h"
+#include "client/view/world_renderer.h"
+#include "common/world/components/grid.h"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 GameScreen::GameScreen()
 {
@@ -38,29 +39,13 @@ void GameScreen::Update(InputManager& input_reader, float dt)
 
 void GameScreen::Draw(const Renderer& r)
 {
-  glm::mat4 vp_matrix = m_perspective.get_view_projection_matrix();
-
   r.text_renderer.On();
-  r.text_renderer.DrawText(-0.9f, -0.8f, 0.1f, m_perspective.pos_string(), Green);
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, m_perspective.pos_string(), Green);
 
-  r.cube_renderer.On();
-  r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
+  glm::mat4 vp = m_perspective.get_view_projection_matrix();
 
-  for (unsigned x = 0; x < WORLD_MAX_X; ++x) {
-    for (unsigned y = 0; y < WORLD_MAX_Y; ++y) {
-      for (unsigned z = 0; z < WORLD_MAX_Z; ++z) {
-        char block = m_entity_manager.m_blocks[x][y][z];
-        if (block)
-        {
-          glm::mat4 model = glm::translate(
-            glm::mat4(1.0f),
-            glm::vec3((float)x,(float)y,(float)z)
-          );
-          r.cube_renderer.DrawCube(vp_matrix * model);
-        }
-      }
-    }
-  }
+  draw_grid(r, g_grid, vp);
+  draw_units(r, g_physics_system, vp);
 }
 
 GameScreen g_game_screen;

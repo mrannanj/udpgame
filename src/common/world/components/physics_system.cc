@@ -1,5 +1,6 @@
 #include <assert.h>
 #include "common/world/components/physics_system.h"
+#include "common/world/components/grid.h"
 
 PhysicsC* PhysicsSystem::get(EntityId id)
 {
@@ -38,13 +39,13 @@ void PhysicsSystem::tick(float dt)
     p.velocity.y -= GRAVITY * dt;
     p.velocity.x *= FRICTION;
     p.velocity.z *= FRICTION;
-    p.position += p.velocity * dt;
-    if (p.position.y < MIN_Y) {
-      p.position.y = MIN_Y;
-      p.velocity.y = 0.0f;
-      p.on_ground = true;
-    }
+    g_grid.check_collision(p, dt);
   }
+}
+
+const std::vector<PhysicsC>& PhysicsSystem::physics_components() const
+{
+  return m_physics_components;
 }
 
 PhysicsSystem g_physics_system;

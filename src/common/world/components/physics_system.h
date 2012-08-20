@@ -8,7 +8,6 @@
 
 #define FRICTION 0.8f
 #define GRAVITY 10.0f
-#define MIN_Y 2.0f
 
 class PhysicsSystem
 {
@@ -17,6 +16,7 @@ public:
   void add(PhysicsC&);
   void tick(float);
   EntityId next_id(EntityId);
+  const std::vector<PhysicsC>& physics_components() const;
 private:
   std::vector<PhysicsC> m_physics_components;
 };

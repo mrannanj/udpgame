@@ -11,6 +11,7 @@ namespace Texture {
   enum Enum {
     GRASS,
     FONT,
+    FACE,
     SIZE
   };
 }

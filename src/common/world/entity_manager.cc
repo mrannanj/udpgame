@@ -12,10 +12,6 @@
 
 EntityManager::EntityManager()
 {
-  memset(m_blocks, 0, WORLD_MAX_X*WORLD_MAX_Y*WORLD_MAX_Z);
-  for (unsigned x = 0; x < WORLD_MAX_X; ++x)
-    for (unsigned z = 0; z < WORLD_MAX_Z; ++z)
-      m_blocks[x][0][z] = x % 4 + z % 2;
 }
 
 void EntityManager::spawn_entity()
@@ -23,6 +19,9 @@ void EntityManager::spawn_entity()
   PhysicsC p;
   memset(&p, 0, sizeof(p));
   p.id = m_idgen.NextId();
+  p.position = glm::vec3(3.0f, 5.0f, 1.0f);
+  p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
+  p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   g_physics_system.add(p);
   std::cout << "spawned entity " << p.id << " at "
     << "(" << p.position.x << "," << p.position.y << "," << p.position.z << ")"
@@ -31,6 +30,6 @@ void EntityManager::spawn_entity()
 
 void EntityManager::tick(float dt)
 {
-  g_input_system.tick(dt);
   g_physics_system.tick(dt);
+  g_input_system.tick(dt);
 }
