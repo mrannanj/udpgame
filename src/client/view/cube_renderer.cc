@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "client/view/cube_renderer.h"
 
 float cube_vertices[] =
@@ -86,7 +87,7 @@ void CubeRenderer::SetTexture(GLuint texture) const
 
 void CubeRenderer::DrawCube(const glm::mat4& mvp) const
 {
-  glUniformMatrix4fv(m_mvp_uniform, 1, GL_FALSE, (float*)&mvp);
+  glUniformMatrix4fv(m_mvp_uniform, 1, GL_FALSE, glm::value_ptr(mvp));
 
   glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36*8, cube_vertices, GL_STREAM_DRAW);
   glDrawArrays(GL_TRIANGLES, 0, 36);

@@ -24,8 +24,9 @@ int main(void)
     if (g_screen_stack.check_dirty())
       screen->Activate();
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     screen->Update(input_manager, frame_time);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     screen->Draw(renderer);
     SDL_GL_SwapBuffers();
   }
