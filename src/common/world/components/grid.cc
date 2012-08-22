@@ -2,9 +2,6 @@
 #include "common/world/components/grid.h"
 #include <iostream>
 
-constexpr unsigned first = 0;
-constexpr unsigned last = 1;
-
 Grid::Grid()
 {
   memset(m_grid, 0, GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z);
@@ -31,41 +28,33 @@ char Grid::block(unsigned x, unsigned y, unsigned z) const
   return m_grid[x][y][z];
 }
 
-void inline go_towards(unsigned to, unsigned& x)
+void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const
 {
-  if (x != to)
-    x < to ? ++x: --x;
-}
-
-void Grid::overlapping_indices(const PhysicsC& p, unsigned* ind) const
-{
-  unsigned* pi = ind;
   for (unsigned a = 0; a < 3; ++a)
   {
-    pi = ind + a*2;
     if (p.velocity[a] < 0.0f) {
-      pi[first] = (unsigned)(p.next_bb_min[a]);
-      pi[last] = (unsigned)(p.bb_max[a]);
+      ind[a][0] = (unsigned)(p.next_bb_min[a]);
+      ind[a][1] = (unsigned)(p.bb_max[a]);
     } else {
-      pi[first] = (unsigned)(p.bb_min[a]);
-      pi[last] = (unsigned)(p.next_bb_max[a]);
+      ind[a][0] = (unsigned)(p.bb_min[a]);
+      ind[a][1] = (unsigned)(p.next_bb_max[a]);
     }
   }
 }
 
-void Grid::cubes_passed_through(PhysicsC& p, float dt) const
+void Grid::handle_grid_collisions(PhysicsC& p, float dt) const
 {
   p.next_position = p.position + p.velocity * dt;
   mind_world_limits(p);
   p.update_bbs();
   p.update_next_bbs();
 
-  unsigned ind[6];
+  unsigned ind[3][2];
   overlapping_indices(p, ind);
 
-  for (unsigned x = ind[first]; x <= ind[last]; ++x) {
-    for (unsigned y = ind[2+first]; y <= ind[2+last]; ++y) {
-      for (unsigned z = ind[4+first]; z <= ind[4+last]; ++z) {
+  for (unsigned x = ind[0][0]; x <= ind[0][1]; ++x) {
+    for (unsigned y = ind[1][0]; y <= ind[1][1]; ++y) {
+      for (unsigned z = ind[2][0]; z <= ind[2][1]; ++z) {
         if (m_grid[x][y][z])
         {
           correct_position(p,x,y,z);
@@ -74,43 +63,6 @@ void Grid::cubes_passed_through(PhysicsC& p, float dt) const
     }
   }
 }
-
-float inline min(float a, float b)
-{
-  return (a < b) ? a : b;
-}
-
-float inline max(float a, float b)
-{
-  return (a > b) ? a : b;
-}
-
-#if 0
-//ugly
-float Grid::time_to_hit(const PhysicsC& p, unsigned* c) const
-{
-  float t = -1.0f;
-  for (unsigned a = 0; a < 3; ++a)
-  {
-    if ((unsigned)p.position[a] == c[a])
-      return FLT_MAX;
-    if ((unsigned)p.velocity[a] == 0.0f)
-      return 0.0f;
-    float v = p.velocity[a];
-    float s = p.position[a];
-    float point = (float)c[a];
-    float t1 = (point-s)/v;
-    float t2 = ((point-s) + BLOCK_SIZE)/v;
-    if (t1 > 0.0f)
-      t = min(t1, t);
-    if (t2 > 0.0f)
-      t = min(t2, t);
-    assert(t1 > 0.0f && t2 > 0.0f);
-  }
-  assert(t > 0.0f);
-  return t;
-}
-#endif
 
 void Grid::correct_position(PhysicsC& p, unsigned x, unsigned y, unsigned z) const
 {
@@ -171,7 +123,7 @@ void Grid::mind_world_limits(PhysicsC& p) const
 
 void Grid::check_collision(PhysicsC& p, float dt) const
 {
-  cubes_passed_through(p, dt);
+  handle_grid_collisions(p, dt);
   p.position = p.next_position;
   p.update_bbs();
   p.update_next_bbs();

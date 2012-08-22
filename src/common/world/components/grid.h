@@ -23,7 +23,7 @@ class Grid
 public:
   Grid();
 
-  void cubes_passed_through(PhysicsC& c, float) const;
+  void handle_grid_collisions(PhysicsC&, float) const;
   void check_collision(PhysicsC&, float) const;
   void correct_position(PhysicsC&, unsigned, unsigned, unsigned) const;
   void obey_lower_limits(PhysicsC&, const glm::vec3&) const;
@@ -32,9 +32,8 @@ public:
   void bb_max(unsigned, unsigned, unsigned, glm::vec3&) const;
   void block_center(int, int, int, glm::vec3&) const;
   char block(unsigned, unsigned, unsigned) const;
-  void mind_world_limits(PhysicsC& p) const;
-  //float time_to_hit(const PhysicsC& p, unsigned* c) const;
-  void overlapping_indices(const PhysicsC&, unsigned*) const;
+  void mind_world_limits(PhysicsC&) const;
+  void overlapping_indices(const PhysicsC&, unsigned[3][2]) const;
 
   char m_grid[GRID_SIZE_X][GRID_SIZE_Y][GRID_SIZE_Z];
 };
