@@ -45,8 +45,9 @@ void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const
 void Grid::handle_grid_collisions(PhysicsC& p, float dt) const
 {
   p.next_position = p.position + p.velocity * dt;
-  mind_world_limits(p);
   p.update_bbs();
+  p.update_next_bbs();
+  mind_world_limits(p);
   p.update_next_bbs();
 
   unsigned ind[3][2];
@@ -116,7 +117,7 @@ void Grid::mind_world_limits(PhysicsC& p) const
   {
     if (p.next_bb_min[a] < grid_bot[a])
       p.next_position[a] = grid_bot[a] + p.dimensions[a];
-    else if (p.next_bb_min[a] > grid_top[a])
+    else if (p.next_bb_max[a] > grid_top[a])
       p.next_position[a] = grid_top[a] - p.dimensions[a];
   }
 }
