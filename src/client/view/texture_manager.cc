@@ -25,6 +25,7 @@ void TextureManager::LoadTextures() {
   m_textures[Texture::GRASS] = LoadTexture("resources/images/grass.png");
   m_textures[Texture::FONT] = LoadTexture("resources/images/font.png");
   m_textures[Texture::FACE] = LoadTexture("resources/images/face.png");
+  m_textures[Texture::HEAD] = LoadTexture("resources/images/head.png");
 }
 
 GLuint TextureManager::LoadTexture(const std::string& fn)

@@ -34,7 +34,7 @@ float rad_to_degree(float r)
 void draw_units(const Renderer& r, const PhysicsSystem& ps, const glm::mat4& vp)
 {
   r.cube_renderer.On();
-  r.cube_renderer.SetTexture(r.texture_manager[Texture::FACE]);
+  r.cube_renderer.SetTexture(r.texture_manager[Texture::HEAD]);
 
   for (const PhysicsC& p : ps.physics_components())
   {

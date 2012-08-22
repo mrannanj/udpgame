@@ -12,6 +12,7 @@ namespace Texture {
     GRASS,
     FONT,
     FACE,
+    HEAD,
     SIZE
   };
 }
