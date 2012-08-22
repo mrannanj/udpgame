@@ -142,7 +142,7 @@ void Grid::correct_position(PhysicsC& p, unsigned x, unsigned y, unsigned z) con
   }
   assert(axis != 4);
 
-  p.next_position[axis] += smallest_overlap;
+  p.next_position[axis] += smallest_overlap * 1.001f;
   p.velocity[axis] = 0.0f;
   if (axis == 1) p.on_ground = true;
 }
