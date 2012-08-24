@@ -15,12 +15,12 @@ Button::Button(float x, float y, float size, const std::string& text):
 {
 }
 
-bool Button::Update(const Input& i)
+bool Button::Update(Input& i)
 {
-  if (MouseOver(i.gl_mouse_x_, i.gl_mouse_y_))
+  if (MouseOver(i.gl_mouse_x, i.gl_mouse_y))
   {
     bg_color_ = &Blue;
-    if (i.mouse_buttons_) {
+    if (i.consume_mouse_click(Mouse::LEFT)) {
       return true;
     }
   } else {

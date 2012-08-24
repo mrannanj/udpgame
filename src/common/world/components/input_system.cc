@@ -7,7 +7,7 @@ void InputSystem::add_input(EntityId id, const Input& input)
 {
   InputC input_comp;
   input_comp.id = id;
-  input_comp.actions = input.actions_;
+  input_comp.actions = input.continous_actions;
   input_comp.vertical_angle_delta = (float)input.mouse_delta_y * 0.01f;
   input_comp.horizontal_angle_delta = (float)input.mouse_delta_x * 0.01f;
   m_inputs.push_back(input_comp);
@@ -37,23 +37,23 @@ void InputSystem::tick(float)
       cos(p->horizontal_angle - HALF_PI)
     );
 
-    if (i.actions & Action::MOVE_FORWARD)
+    if (i.actions & ContinousAction::MOVE_FORWARD)
     {
       p->velocity += forward * move_speed;
     }
-    else if (i.actions & Action::MOVE_BACK)
+    else if (i.actions & ContinousAction::MOVE_BACK)
     {
       p->velocity -= forward * move_speed;
     }
-    if (i.actions & Action::MOVE_RIGHT)
+    if (i.actions & ContinousAction::MOVE_RIGHT)
     {
       p->velocity += right * move_speed;
     }
-    else if (i.actions & Action::MOVE_LEFT)
+    else if (i.actions & ContinousAction::MOVE_LEFT)
     {
       p->velocity -= right * move_speed;
     }
-    if (i.actions & Action::JUMP && p->on_ground)
+    if (i.actions & ContinousAction::JUMP && p->on_ground)
     {
       p->velocity.y += jump_velocity;
       p->on_ground = false;

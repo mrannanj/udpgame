@@ -27,7 +27,7 @@ void draw_grid(const Renderer& r, const Grid& g, const glm::mat4& vp)
 
 float rad_to_degree(float r)
 {
-  static float rad_in_degrees = (180.0f/(float)M_PI);
+  constexpr float rad_in_degrees = (180.0f/(float)M_PI);
   return rad_in_degrees * r;
 }
 

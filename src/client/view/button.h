@@ -11,7 +11,7 @@ class Button {
 public:
   Button(float, float, float, const std::string&);
 
-  bool Update(const Input&);
+  bool Update(Input&);
   void Draw(const Renderer&) const;
 
 private:

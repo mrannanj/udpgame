@@ -32,13 +32,13 @@ void Perspective::switch_camera_mode()
   std::cout << "Freelook: " << m_freelook << std::endl;
 }
 
-void Perspective::handle_input(const Input& input)
+void Perspective::handle_input(Input& i)
 {
-  if (input.actions_ & Action::CAMERA_MODE)
+  if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
   {
     switch_camera_mode();
   }
-  if (input.actions_ & Action::SWITCH_UNIT)
+  if (i.consume_discrete_action(DiscreteAction::SWITCH_UNIT))
   {
     jump_to_next_unit();
   }
@@ -47,11 +47,11 @@ void Perspective::handle_input(const Input& input)
   {
     if (g_physics_system.get(m_follow_id))
     {
-      g_input_system.add_input(m_follow_id, input);
+      g_input_system.add_input(m_follow_id, i);
     }
     return;
   }
-  handle_freelook_input(input);
+  handle_freelook_input(i);
 }
 
 void Perspective::handle_freelook_input(const Input& input)
@@ -73,29 +73,25 @@ void Perspective::handle_freelook_input(const Input& input)
   );
   m_up = glm::cross(right, m_direction);
 
-  if (input.actions_ & Action::MOVE_FORWARD)
+  if (input.continous_actions & ContinousAction::MOVE_FORWARD)
   {
     m_position += m_direction * move_speed;
   }
-  else if (input.actions_ & Action::MOVE_BACK)
+  else if (input.continous_actions & ContinousAction::MOVE_BACK)
   {
     m_position -= m_direction * move_speed;
   }
-  if (input.actions_ & Action::MOVE_RIGHT)
+  if (input.continous_actions & ContinousAction::MOVE_RIGHT)
   {
     m_position += right * move_speed;
   }
-  else if (input.actions_ & Action::MOVE_LEFT)
+  else if (input.continous_actions & ContinousAction::MOVE_LEFT)
   {
     m_position -= right * move_speed;
   }
-  if (input.actions_ & Action::JUMP)
+  if (input.continous_actions & ContinousAction::JUMP)
   {
     m_position.y += move_speed;
-  }
-  else if (input.actions_ & Action::CROUCH)
-  {
-    m_position.y -= move_speed;
   }
 }
 

@@ -13,6 +13,13 @@ void ScreenStack::push(Screen* s)
   m_screen_stack.push_back(s);
 }
 
+void ScreenStack::switch_state(Screen* s)
+{
+  m_dirty = true;
+  m_screen_stack.clear();
+  m_screen_stack.push_back(s);
+}
+
 bool ScreenStack::empty() const {
   return m_screen_stack.empty();
 }

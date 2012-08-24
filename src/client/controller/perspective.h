@@ -15,7 +15,7 @@ public:
   Perspective();
   DISALLOW_COPY_AND_ASSIGN(Perspective);
 
-  void handle_input(const Input&);
+  void handle_input(Input&);
   void tick();
   const glm::mat4& get_view_projection_matrix() const;
   std::string pos_string() const;

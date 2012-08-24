@@ -14,7 +14,7 @@ public:
 
 private:
   Button m_quit;
-  Button m_start;
+  Button m_connect;
 };
 
 extern MainMenu g_main_menu;

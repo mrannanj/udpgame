@@ -5,6 +5,7 @@
 #include "client/controller/screen_stack.h"
 #include "client/controller/input/input.h"
 #include "client/view/world_renderer.h"
+#include "client/controller/main_menu.h"
 #include "common/world/components/grid.h"
 
 #include <glm/glm.hpp>
@@ -21,13 +22,13 @@ void GameScreen::Activate()
 void GameScreen::Update(InputManager& input_reader, float dt)
 {
   Input input;
-  input_reader.ReadInput(input);
-  if (input.actions_ & Action::ESCAPE)
+  input_reader.read_input(input);
+  if (input.consume_discrete_action(DiscreteAction::ESCAPE))
   {
-    g_screen_stack.pop();
+    g_screen_stack.switch_state(&g_main_menu);
     return;
   }
-  if (input.actions_ & Action::SPAWN_UNIT)
+  if (input.consume_discrete_action(DiscreteAction::SPAWN_UNIT))
   {
     m_entity_manager.spawn_entity();
   }

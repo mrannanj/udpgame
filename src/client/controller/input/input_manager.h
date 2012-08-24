@@ -15,19 +15,22 @@ class InputManager
 	~InputManager();
 	DISALLOW_COPY_AND_ASSIGN(InputManager);
 
-	void ReadInput(Input&);
+	void read_input(Input&) const;
 
 	private:
 
-	void init_actions();
-	void handle_mouse_motion(SDL_Event&, Input&);
-	void handle_keydown(SDL_Event&, Input&);
-	void check_keyboard(Input&);
-	void check_mouse(Input&);
+	void init_key_to_action();
+	void mouse_button_down(const SDL_Event&, Input&) const;
+	void mouse_button_up(const SDL_Event&, Input&) const;
+	void mouse_motion(const SDL_Event&, Input&) const;
+	//void keydown(const SDL_Event&, Input&) const;
+	void keyup(const SDL_Event&, Input&) const;
+	void check_keyboard(Input&) const;
+	void check_mouse(Input&) const;
 
-	int num_keys_;
-	Uint8* key_state_;
-  unsigned* actions_;
+	int m_num_keys;
+	Uint8* m_key_state;
+  unsigned* m_key_to_action;
 };
 
 #endif
