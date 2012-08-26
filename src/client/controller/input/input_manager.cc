@@ -13,7 +13,8 @@ SDLKey binded_keys[] =
 InputManager::InputManager()
 {
   m_key_state = SDL_GetKeyState(&m_num_keys);
-  //SDL_EnableKeyRepeat(0,0);
+  SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL*6);
+  SDL_EnableUNICODE(1);
   init_key_to_action();
 }
 
@@ -57,6 +58,9 @@ void InputManager::read_input(Input& i) const
         break;
       case SDL_KEYUP:
         keyup(e, i);
+        break;
+      case SDL_KEYDOWN:
+        i.keydown_symbol = e.key.keysym.unicode;
         break;
       case SDL_MOUSEMOTION:
         mouse_motion(e, i);

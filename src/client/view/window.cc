@@ -13,6 +13,7 @@ void open_window()
   glewExperimental = GL_TRUE;
   glewInit();
 
+  glEnable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
 }

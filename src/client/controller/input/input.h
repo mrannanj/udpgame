@@ -32,6 +32,7 @@ struct Input {
   unsigned mouse_click;
   unsigned continous_actions;
   unsigned keypress;
+  int keydown_symbol;
   unsigned mouse_buttons;
   int mouse_x;
   int mouse_y;
