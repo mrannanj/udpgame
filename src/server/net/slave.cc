@@ -9,7 +9,7 @@
 #include "common/die.h"
 
 #include "server/net/slave.h"
-#include "server/net/sockethelper.h"
+#include "common/net/sockethelper.h"
 
 #define MAXBUF 512
 

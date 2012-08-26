@@ -14,7 +14,7 @@
 #include "server/net/threadpool.h"
 #include "server/net/slave.h"
 
-#include "server/net/sockethelper.h"
+#include "common/net/sockethelper.h"
 
 Master::Master():
   fd_(-1),

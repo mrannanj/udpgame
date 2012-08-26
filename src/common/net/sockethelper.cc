@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "server/net/sockethelper.h"
+#include "common/net/sockethelper.h"
 
 int listen_udp(uint16_t port, sockaddr_in* sa_me) {
   int fd;
