@@ -3,7 +3,6 @@
 int main(void)
 {
   Master master;
-  master.Init();
-  master.Serve();
+  master.serve();
   return 0;
 }

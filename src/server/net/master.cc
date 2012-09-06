@@ -17,43 +17,32 @@
 #include "common/net/sockethelper.h"
 
 Master::Master():
-  fd_(-1),
-  thread_pool_(MAX_CLIENTS)
+  m_fd(listen_udp(SERVER_PORT, &m_si_me))
 {
 }
 
-void Master::Init() {
-  thread_pool_.Init();
-  fd_ = listen_udp(SERVER_PORT, &si_me_);
-}
-
-void Master::Serve() {
+void Master::serve() {
   char buf[BUFLEN];
-  sockaddr_in si_client;
-  socklen_t slen = sizeof(si_client);
 
   for (;;) {
+    sockaddr_in si_client;
+    socklen_t slen = sizeof(si_client);
     memset(&buf, 0, sizeof(buf));
-    if (0 > recvfrom(fd_, buf, BUFLEN, 0, reinterpret_cast<sockaddr*>(&si_client), &slen))
+    if (0 > recvfrom(m_fd, buf, BUFLEN, 0, reinterpret_cast<sockaddr*>(&si_client), &slen))
       die("recvfrom");
-    std::cout << "Got message from " << inet_ntoa(si_client.sin_addr) << std::endl;
 
-    if (strncmp("HI", buf, 2) == 0) {
-      Slave* slave = thread_pool_.AssignConnection(&si_client);
-      if (slave == nullptr) {
-        std::cout << "Server is full, disconnecting client. " << std::endl;
-        continue;
-      }
-      sprintf(buf, "OK %hu\n", slave->getListeningPort());
-      sendto(fd_, buf, strlen(buf), 0, (const sockaddr*)&si_client, slen);
-      continue;
+    if (strncmp("PING", buf, 4) == 0) {
+      const char byemsg[] = "PONG";
+      sendto(m_fd, byemsg, sizeof(byemsg), 0, (const sockaddr*)&si_client, slen);
+      std::cout << "PING from " << inet_ntoa(si_client.sin_addr) << std::endl;
     }
-    const char byemsg[] = "BYE";
-    sendto(fd_, byemsg, strlen(byemsg), 0, (const sockaddr*)&si_client, slen);
+    else
+    {
+      std::cout << "unknown message from " << inet_ntoa(si_client.sin_addr) << std::endl;
+    }
   }
 }
 
-void Master::Destroy() {
-  thread_pool_.Destroy();
-  close(fd_);
+Master::~Master() {
+  close(m_fd);
 }
