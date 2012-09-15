@@ -26,6 +26,7 @@ void ConnectMenu::Update(InputManager& input_manager, float)
   }
 
   if (m_go.Update(input)) {
+    g_game_screen.m_server_addr = m_address.text();
     g_screen_stack.push(&g_game_screen);
   }
 
