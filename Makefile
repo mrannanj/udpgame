@@ -1,5 +1,3 @@
-CXX := clang++
-
 BUILD_DIR := build
 SRC_DIR := src
 
@@ -19,19 +17,23 @@ TARGETS := server client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-WARNINGS := -W -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
-	-Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline \
-	-Wconversion -Wcast-qual -Wcast-align -Wunused -Wundef \
-	-Wsign-compare -Woverloaded-virtual -Wsign-promo -Wsynth
+ifeq ($(CXX), g++)
+	WARN := -Wall -Wextra
+else ifeq ($(CXX), clang++)
+	WARN := -Weverything -Wno-padded -Wno-missing-noreturn
+	WARN := -Wno-global-constructors -Wno-exit-time-destructors
+endif
+
+WARN += -pedantic -Wno-unused-parameter
 
 PKGS := glew SDL_image sdl glu
 
-LIBS := -lpthread -lm
+LIBS := -lpthread -lm -lrt
 LIBS += $(shell pkg-config --libs $(PKGS))
 
 CFLAGS := -fno-exceptions -fno-rtti
 CFLAGS += $(shell pkg-config --cflags $(PKGS))
-CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARNINGS) -Werror -std=c++0x -g
+CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -Werror -std=c++0x -g
 
 .PHONY: dirs clean all
 
