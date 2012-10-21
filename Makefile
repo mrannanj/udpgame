@@ -1,3 +1,4 @@
+MAKEFLAGS := -j4 -s
 BUILD_DIR := build
 SRC_DIR := src
 
@@ -40,20 +41,20 @@ CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -Werror -std=c++0x -g
 all: dirs $(TARGETS)
 
 $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
-	@echo CXX $@
-	@$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
+	echo CXX $@
+	$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
 
 server: $(SERVER_OBJS) $(COMMON_OBJS)
-	@echo LN $@
-	@$(CXX) $^ -o $@ $(LIBS)
+	echo LN $@
+	$(CXX) $^ -o $@ $(LIBS)
 
 client: $(CLIENT_OBJS) $(COMMON_OBJS)
-	@echo LN $@
-	@$(CXX) $^ -o $@ $(LIBS)
+	echo LN $@
+	$(CXX) $^ -o $@ $(LIBS)
 
 clean:
-	@$(RM) -r $(OUTPUT)
+	$(RM) -r $(OUTPUT)
 
 dirs:
-	@mkdir -p $(patsubst %, $(BUILD_DIR)/%, $(shell find $(SRC_DIR) -type d))
+	mkdir -p $(patsubst %, $(BUILD_DIR)/%, $(shell find $(SRC_DIR) -type d))
 
