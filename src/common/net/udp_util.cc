@@ -5,9 +5,10 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "common/net/sockethelper.h"
+#include "common/net/udp_util.h"
 
-int listen_udp(uint16_t port, sockaddr_in* sa_me) {
+int open_udp_fd(uint16_t port, sockaddr_in* sa_me)
+{
   int fd;
 
   assert (0 <= (fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)));

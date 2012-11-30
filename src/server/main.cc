@@ -1,8 +1,7 @@
 #include <signal.h>
 
+#include "common/net/net_conf.h"
 #include "server/server.h"
-
-#define PORT 4666
 
 static int quit = 0;
 
@@ -15,7 +14,7 @@ int main(void)
 {
   signal(SIGINT, handle_sigint);
 
-  Server server(PORT, quit);
+  Server server(SERVER_PORT, quit);
   server.listen();
   return 0;
 }
