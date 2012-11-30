@@ -14,6 +14,7 @@ void Server::listen()
   while (!m_quit)
   {
     m_tick_timer.start_tick();
+    m_udp_socket.pump_messages();
     m_tick_timer.end_tick();
   }
   std::cout << "quitting" << std::endl;
