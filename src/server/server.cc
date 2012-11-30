@@ -2,9 +2,9 @@
 
 #include "server/server.h"
 
-Server::Server(int port, unsigned ticks_per_sec, int& quit):
+Server::Server(uint16_t port, unsigned ticks_per_sec, int& quit):
   m_tick_timer(ns_per_tick(ticks_per_sec)),
-  m_port(port),
+  m_udp_socket(port),
   m_quit(quit)
 {
 }
