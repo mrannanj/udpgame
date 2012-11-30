@@ -1,10 +1,11 @@
 #include "common/util/timespec.h"
 
 #define GIGA 1000000000
+#define MEGA 1000000
 
 std::ostream& operator<<(std::ostream& out, const timespec& ts)
 {
-  long t = (ts.tv_sec * GIGA + ts.tv_nsec)/1000000;
+  long t = (ts.tv_sec * GIGA + ts.tv_nsec)/MEGA;
   out << t << " ms";
   return out;
 }

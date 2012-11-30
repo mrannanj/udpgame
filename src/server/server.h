@@ -6,10 +6,11 @@
 class Server
 {
 public:
-  Server(int, int&);
+  Server(int, unsigned, int&);
   void listen();
 
 private:
+  unsigned long m_ns_per_tick;
   TickTimer m_tick_timer;
   int m_port;
   int& m_quit;

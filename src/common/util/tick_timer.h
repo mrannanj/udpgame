@@ -20,5 +20,7 @@ private:
   timespec m_target;
 };
 
+unsigned long ns_per_tick(unsigned);
+
 #endif
 

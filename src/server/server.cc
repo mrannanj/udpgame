@@ -2,12 +2,8 @@
 
 #include "server/server.h"
 
-constexpr int TICKS_PER_SEC = 20;
-constexpr unsigned long NS_PER_TICK = (unsigned long)
-  (1000000000 * (1.0f/TICKS_PER_SEC));
-
-Server::Server(int port, int& quit):
-  m_tick_timer(NS_PER_TICK),
+Server::Server(int port, unsigned ticks_per_sec, int& quit):
+  m_tick_timer(ns_per_tick(ticks_per_sec)),
   m_port(port),
   m_quit(quit)
 {

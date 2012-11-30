@@ -1,6 +1,6 @@
 #include <signal.h>
 
-#include "common/net/net_conf.h"
+#include "common/config.h"
 #include "server/server.h"
 
 static int quit = 0;
@@ -14,7 +14,7 @@ int main(void)
 {
   signal(SIGINT, handle_sigint);
 
-  Server server(SERVER_PORT, quit);
+  Server server(SERVER_PORT, TICKS_PER_SEC, quit);
   server.listen();
   return 0;
 }

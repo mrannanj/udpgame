@@ -3,6 +3,8 @@
 #include "common/util/tick_timer.h"
 #include "common/util/timespec.h"
 
+#define GIGA 1000000000
+
 TickTimer::TickTimer(long tick_time)
 {
   m_tick_time.tv_sec = 0;
@@ -31,5 +33,10 @@ void TickTimer::end_tick()
     timespec diff(m_end - m_target);
     std::cout << ", went " << diff << " overtime" << std::endl;
   }
+}
+
+unsigned long ns_per_tick(unsigned ticks_per_sec)
+{
+  return (unsigned long)(GIGA * (1.0f/ticks_per_sec));
 }
 

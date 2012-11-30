@@ -1,3 +1,4 @@
 #define SERVER_PORT 4666
 #define SERVER_ADDR "127.0.0.1"
+#define TICKS_PER_SEC 20
 
