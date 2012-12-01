@@ -7,3 +7,13 @@ Connection::Connection(const sockaddr_in& sa, const timespec& ts):
 {
 }
 
+ConnectionState Connection::state() const
+{
+  return m_state;
+}
+
+std::ostream& operator<<(std::ostream& out, const Connection& c)
+{
+  return out << "connection";
+}
+

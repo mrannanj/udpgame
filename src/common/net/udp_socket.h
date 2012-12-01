@@ -9,7 +9,6 @@ public:
   UDPSocket(uint16_t);
   ~UDPSocket();
   int fd() const;
-  void pump_messages();
 
 private:
   void set_nonblocking();

@@ -4,17 +4,17 @@
 #include <arpa/inet.h>
 
 #include "common/util/tick_timer.h"
-#include "common/net/udp_socket.h"
+#include "server/connection_manager.h"
 
 class Server
 {
 public:
-  Server(uint16_t, unsigned, int&);
+  Server(unsigned, int&);
   void listen();
 
 private:
   TickTimer m_tick_timer;
-  UDPSocket m_udp_socket;
+  ConnectionManager m_connection_manager;
   int& m_quit;
 };
 

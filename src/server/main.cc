@@ -14,7 +14,7 @@ int main(void)
 {
   signal(SIGINT, handle_sigint);
 
-  Server server(SERVER_PORT, TICKS_PER_SEC, quit);
+  Server server(TICKS_PER_SEC, quit);
   server.listen();
   return 0;
 }

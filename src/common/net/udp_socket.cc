@@ -10,8 +10,6 @@
 
 #include "common/net/udp_socket.h"
 
-#define BUF_SIZE 1024
-
 UDPSocket::UDPSocket(uint16_t port):
   m_port(port),
   m_fd(-1)
@@ -41,21 +39,5 @@ void UDPSocket::set_nonblocking()
 int UDPSocket::fd() const
 {
   return m_fd;
-}
-
-void UDPSocket::pump_messages()
-{
-  ssize_t nread = 0;
-  char buf[BUF_SIZE];
-  sockaddr_storage peer_addr;
-  socklen_t peer_addr_len = sizeof(sockaddr_storage);
-  for (;;)
-  {
-    nread = recvfrom(m_fd, buf, BUF_SIZE, 0,
-      (sockaddr*)&peer_addr, &peer_addr_len);
-    if (nread == -1) break;
-    buf[nread] = '\0';
-    std::cout << "A Wild Message Appears: " << buf << std::endl;
-  }
 }
 

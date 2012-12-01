@@ -6,8 +6,7 @@
 std::ostream& operator<<(std::ostream& out, const timespec& ts)
 {
   long t = (ts.tv_sec * GIGA + ts.tv_nsec)/MEGA;
-  out << t << " ms";
-  return out;
+  return out << t;
 }
 
 void normalize(timespec& ts)
