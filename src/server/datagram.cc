@@ -3,44 +3,43 @@
 #include <netinet/in.h>
 #include <cassert>
 #include <alloca.h>
+#include <cctype>
+#include <cstring>
 
 #include "server/datagram.h"
 #include "common/util/timespec.h"
 
-void escape_newlines(const char *from, char* const to)
+unsigned subst_nonprintables(char *s)
 {
-  const char* fp = from;
-  char* tp = to;
-
-  while (*fp)
+  unsigned n = 0;
+  for (; *s; ++s)
   {
-    if (*fp != '\n')
+    if (!isprint(*s))
     {
-      *tp++ = *fp++;
-    }
-    else
-    {
-      *tp++ = '\\';
-      *tp++ = 'n';
-      ++fp;
+      *s = 'X';
+      ++n;
     }
   }
-  *tp = '\0';
+  return n;
 }
 
 std::ostream& operator<<(std::ostream& out, const Datagram& d)
 {
-  char addr_str[INET6_ADDRSTRLEN];
-  int err = getnameinfo((sockaddr*)d.sa, d.sa_len, addr_str,
-      INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST);
+  char addr[INET6_ADDRSTRLEN];
+  char port[NI_MAXSERV];
+  int err = getnameinfo((sockaddr*)d.sa, d.sa_len, addr,
+      INET6_ADDRSTRLEN, port, NI_MAXSERV,
+      NI_NUMERICSERV | NI_NUMERICHOST | NI_DGRAM);
   assert(err == 0);
-  char* msg = (char*)alloca(d.len*2);
-  escape_newlines(d.buf, msg);
+  char* printable_msg = (char*)alloca(d.len+1);
+  memcpy(printable_msg, d.buf, d.len+1);
+  printable_msg[d.len] = '\0';
+  unsigned np = subst_nonprintables(printable_msg);
 
-  out << "Datagram from: " << addr_str << std::endl;
+  out << "Datagram from: " << addr << ":" << port << std::endl;
   out << "Datagram timestamp: " << *(d.ts) << std::endl;
-  out << "Datagram length: " << d.len << std::endl;
-  out << "Datagram message: '" << msg << '\'';
+  out << "Datagram len(np): " << d.len << "(" << np << ")" << std::endl;
+  out << "Datagram message: '" << printable_msg << '\'';
   return out;
 }
 
