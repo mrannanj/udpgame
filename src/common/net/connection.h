@@ -7,21 +7,17 @@
 
 enum class ConnectionState
 {
-  INACTIVE,
   CONNECTED,
-  STALE
+  STALE,
+  DISCONNECTED
 };
 
-class Connection
+struct Connection
 {
-public:
-  Connection(const sockaddr_in&, const timespec&);
-  ConnectionState state() const;
-
-private:
-  ConnectionState m_state;
-  sockaddr_in m_sockaddr;
-  timespec m_last_received_time;
+  timespec ts;
+  ConnectionState state;
+  sockaddr_storage sa;
+  socklen_t sa_len;
 };
 
 std::ostream& operator<<(std::ostream& out, const Connection& c);
