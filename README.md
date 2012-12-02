@@ -1,7 +1,7 @@
 udpgame
 =======
 
-Dependencies for ubuntu:
+Deps for Ubuntu:
 
-    apt-get install libglew-dev libsdl-image1.2-dev libglm-dev
+    sudo apt-get install libglew-dev libsdl-image1.2-dev libglm-dev
 
