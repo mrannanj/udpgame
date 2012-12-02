@@ -7,7 +7,7 @@ class ClientConnection
 {
 public:
   ClientConnection();
-  void init();
+  void initiate_connection();
   void tick();
 
 private:

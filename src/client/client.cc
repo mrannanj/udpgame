@@ -10,6 +10,7 @@ Client::Client(unsigned ticks_per_sec, int& quit):
 
 void Client::keepalive()
 {
+  m_client_connection.initiate_connection();
   while (!m_quit)
   {
     m_tick_timer.start_tick();
