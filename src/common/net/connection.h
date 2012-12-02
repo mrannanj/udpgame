@@ -20,7 +20,5 @@ struct Connection
   socklen_t sa_len;
 };
 
-std::ostream& operator<<(std::ostream& out, const Connection& c);
-
 #endif
 
