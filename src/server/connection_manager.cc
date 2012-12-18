@@ -85,10 +85,10 @@ void ConnectionManager::handle_received_datagrams()
   }
 }
 
-void ConnectionManager::tick()
+void ConnectionManager::tick(unsigned long tick)
 {
   handle_received_datagrams();
-  ping();
+  ping(tick);
 }
 
 bool is_disconnected(const Connection& c)
@@ -96,7 +96,7 @@ bool is_disconnected(const Connection& c)
   return c.state == ConnectionState::DISCONNECTED;
 }
 
-void ConnectionManager::ping()
+void ConnectionManager::ping(unsigned long tick)
 {
   int fd = m_udp_socket.fd();
   char buf[] = "P";
@@ -118,6 +118,10 @@ void ConnectionManager::ping()
       if (n < 0) perror("sendto");
       c.state = ConnectionState::STALE;
       std::cout << "ping" << std::endl;
+    } else {
+      n = sendto(fd, &tick, sizeof(unsigned long), 0,
+          (const sockaddr*)&c.sa, c.sa_len);
+      if (n < 0) perror("sendto");
     }
   }
   m_connections.erase(remove_if(m_connections.begin(),

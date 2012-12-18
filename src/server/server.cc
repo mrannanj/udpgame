@@ -10,10 +10,10 @@ Server::Server(unsigned ticks_per_sec, int& quit):
 
 void Server::listen()
 {
-  while (!m_quit)
+  for (unsigned long tick = 0; !m_quit; ++tick)
   {
     m_tick_timer.start_tick();
-    m_connection_manager.tick();
+    m_connection_manager.tick(tick);
     m_tick_timer.end_tick();
   }
   std::cout << "quitting" << std::endl;

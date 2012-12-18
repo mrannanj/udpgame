@@ -1,5 +1,4 @@
-#ifndef SERVER_CONNECTION_MANAGER_H
-#define SERVER_CONNECTION_MANAGER_H
+#pragma once
 
 #include <vector>
 
@@ -12,10 +11,10 @@ class ConnectionManager
 {
 public:
   ConnectionManager();
-  void tick();
+  void tick(unsigned long);
 
 private:
-  void ping();
+  void ping(unsigned long);
   void update_timestamp(Connection*, const Datagram&);
   void handle_received_datagrams();
   void handle_datagram(const Datagram&);
@@ -27,6 +26,4 @@ private:
   timespec m_ping_time;
   std::vector<Connection> m_connections;
 };
-
-#endif
 
