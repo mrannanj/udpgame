@@ -44,7 +44,8 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
 
   size_t nchar = s.size();
   size_t arr_size = nchar * vertex_elem_size_ * 4;
-  float letter_size = 1.0f / 16;
+  float char_width = 1.0f / 16;
+  float char_height = 1.0f / 8;
   float* vertices = (float*)alloca(arr_size);
   float* p = vertices;
   float x = top_x;
@@ -58,26 +59,26 @@ void TextRenderer::DrawText(float top_x, float top_y, float size,
     // top left
     p[0] = x;
     p[1] = top_y;
-    p[2] = col * letter_size;
-    p[3] = row * letter_size;
+    p[2] = col * char_width;
+    p[3] = row * char_height;
 
     // bottom left
     p[4] = x;
     p[5] = top_y - size;
-    p[6] = col * letter_size;
-    p[7] = (row+1) * letter_size;
+    p[6] = col * char_width;
+    p[7] = (row+1) * char_height;
 
     // bottom right
     p[8] = x + size;
     p[9] = top_y - size;
-    p[10] = (col+1) * letter_size;
-    p[11] = (row+1) * letter_size;
+    p[10] = (col+1) * char_width;
+    p[11] = (row+1) * char_height;
 
     // top right
     p[12] = x + size;
     p[13] = top_y;
-    p[14] = (col+1) * letter_size;
-    p[15] = row * letter_size;
+    p[14] = (col+1) * char_width;
+    p[15] = row * char_height;
 
     p += 16;
     x += size;
