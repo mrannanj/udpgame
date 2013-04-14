@@ -14,6 +14,9 @@ COMMON_DIR := $(SRC_DIR)/common
 COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cc")
 COMMON_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 
+DEPS := $(COMMON_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d) $(SERVER_OBJS:.o=.d)
+DEPS := $(sort $(DEPS))
+
 TARGETS := server client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
@@ -32,17 +35,19 @@ PKGS := glew SDL_image sdl glu
 LIBS := -lpthread -lm -lrt
 LIBS += $(shell pkg-config --libs $(PKGS))
 
-CFLAGS := -fno-exceptions -fno-rtti
-CFLAGS += $(shell pkg-config --cflags $(PKGS))
-CFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -Werror -std=c++0x -g
+CXXFLAGS := -fno-exceptions -fno-rtti
+CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
+CXXFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -Werror -std=c++0x -g
 
-.PHONY: dirs clean all
+.PHONY: clean all
+.SUFFIXES: .cc .cpp
 
-all: dirs $(TARGETS)
+all: $(TARGETS)
 
 $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	echo CXX $@
-	$(CXX) $(CFLAGS) -MMD -MP -MT "$*.d $*.o" -c $< -o $@
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 server: $(SERVER_OBJS) $(COMMON_OBJS)
 	echo LN $@
@@ -55,6 +60,7 @@ client: $(CLIENT_OBJS) $(COMMON_OBJS)
 clean:
 	$(RM) -r $(OUTPUT)
 
-dirs:
-	mkdir -p $(patsubst %, $(BUILD_DIR)/%, $(shell find $(SRC_DIR) -type d))
+ifneq ($(MAKECMDGOALS), clean)
+-include $(DEPS)
+endif
 
