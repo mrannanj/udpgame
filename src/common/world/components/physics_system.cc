@@ -4,8 +4,7 @@
 
 PhysicsC* PhysicsSystem::get(EntityId id)
 {
-  for (PhysicsC& p : m_physics_components)
-  {
+  for (PhysicsC& p : m_physics_components) {
     if (p.id == id)
       return &p;
   }
@@ -16,8 +15,7 @@ EntityId PhysicsSystem::next_id(EntityId id)
 {
   size_t n = m_physics_components.size();
   unsigned i = 0;
-  for (; i < n; ++i)
-  {
+  for (; i < n; ++i) {
     if (m_physics_components[i].id == id)
       break;
   }

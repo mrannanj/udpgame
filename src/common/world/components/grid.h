@@ -1,13 +1,12 @@
-#ifndef COMMON_WORLD_COMPONENTS_GRID_H
-#define COMMON_WORLD_COMPONENTS_GRID_H
+#pragma once
 
 #include <glm/glm.hpp>
 
 #include "common/world/components/physics.h"
 
-constexpr unsigned GRID_SIZE_X = 25;
-constexpr unsigned GRID_SIZE_Y = 25;
-constexpr unsigned GRID_SIZE_Z = 25;
+constexpr unsigned GRID_SIZE_X = 10;
+constexpr unsigned GRID_SIZE_Y = 10;
+constexpr unsigned GRID_SIZE_Z = 10;
 
 constexpr float MAX_X = (float)(GRID_SIZE_X - 1);
 constexpr float MAX_Y = (float)(GRID_SIZE_Y - 1);
@@ -40,4 +39,3 @@ public:
 
 extern Grid g_grid;
 
-#endif

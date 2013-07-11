@@ -30,6 +30,6 @@ void EntityManager::spawn_entity()
 
 void EntityManager::tick(float dt)
 {
-  g_physics_system.tick(dt);
   g_input_system.tick(dt);
+  g_physics_system.tick(dt);
 }

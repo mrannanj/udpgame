@@ -11,13 +11,12 @@
 
 Client::Client(unsigned ticks_per_sec, int& quit):
   m_tick_timer(ns_per_tick(ticks_per_sec)),
-  m_quit(quit)
+  m_quit(quit),
+  m_client_connection()
 {
 }
 
-void Client::keepalive()
-{
-  m_client_connection.initiate_connection();
+void Client::run() {
   open_window();
 
   InputManager input_manager;
@@ -25,10 +24,8 @@ void Client::keepalive()
 
   g_screen_stack.push(&g_main_menu);
 
-  while(!g_screen_stack.empty())
-  {
+  while (!g_screen_stack.empty()) {
     m_tick_timer.start_tick();
-    m_client_connection.tick();
     Screen* screen = g_screen_stack.back();
     if (g_screen_stack.check_dirty())
       screen->Activate();

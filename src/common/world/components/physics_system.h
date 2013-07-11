@@ -1,5 +1,4 @@
-#ifndef COMMON_WORLD_COMPONENTS_PHYSICS_SYSTEM_H
-#define COMMON_WORLD_COMPONENTS_PHYSICS_SYSTEM_H
+#pragma once
 
 #include <vector>
 #include <glm/glm.hpp>
@@ -23,4 +22,3 @@ private:
 
 extern PhysicsSystem g_physics_system;
 
-#endif

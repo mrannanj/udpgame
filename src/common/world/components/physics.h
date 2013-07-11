@@ -1,8 +1,9 @@
-#ifndef COMMON_WORLD_COMPONENTS_PHYSICS_H
-#define COMMON_WORLD_COMPONENTS_PHYSICS_H
+#pragma once
 
 #include <glm/glm.hpp>
 #include "common/world/entity_id.h"
+
+#define MASS 10.0f
 
 struct PhysicsC
 {
@@ -26,4 +27,3 @@ struct PhysicsC
   void update_next_bbs();
 };
 
-#endif
