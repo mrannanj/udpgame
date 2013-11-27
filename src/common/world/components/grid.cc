@@ -2,6 +2,8 @@
 #include "common/world/components/grid.h"
 #include <iostream>
 
+using namespace std;
+
 Grid::Grid()
 {
   memset(m_grid, 0, GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z);
@@ -42,25 +44,33 @@ void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const
   }
 }
 
+bool Grid::correct_one_hit(PhysicsC& p) const {
+  unsigned ind[3][2];
+  overlapping_indices(p, ind);
+  for (unsigned x = ind[0][0]; x <= ind[0][1]; ++x) {
+    for (unsigned y = ind[1][0]; y <= ind[1][1]; ++y) {
+      for (unsigned z = ind[2][0]; z <= ind[2][1]; ++z) {
+        if (m_grid[x][y][z]) {
+          correct_position(p,x,y,z);
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 void Grid::handle_grid_collisions(PhysicsC& p, float dt) const
 {
   p.next_position = p.position + p.velocity * dt;
   p.update_bbs();
   p.update_next_bbs();
   mind_world_limits(p);
-  p.update_next_bbs();
 
-  unsigned ind[3][2];
-  overlapping_indices(p, ind);
-
-  for (unsigned x = ind[0][0]; x <= ind[0][1]; ++x) {
-    for (unsigned y = ind[1][0]; y <= ind[1][1]; ++y) {
-      for (unsigned z = ind[2][0]; z <= ind[2][1]; ++z) {
-        if (m_grid[x][y][z])
-        {
-          correct_position(p,x,y,z);
-        }
-      }
+  for (int i = 0; correct_one_hit(p); ++i) {
+    if (i > 8) {
+      cout << "OBJECT STUCK" << endl;
+      break;
     }
   }
 }
@@ -95,9 +105,13 @@ void Grid::correct_position(PhysicsC& p, unsigned x, unsigned y, unsigned z) con
   }
   assert(axis != 4);
 
-  p.next_position[axis] += smallest_overlap * 1.001f;
+  p.next_position[axis] += smallest_overlap * 1.1f;
   p.velocity[axis] = 0.0f;
   if (axis == 1) p.on_ground = true;
+
+  p.position = p.next_position;
+  p.update_bbs();
+  p.update_next_bbs();
 }
 
 void Grid::bb_min(unsigned x, unsigned y, unsigned z, glm::vec3& bb) const
@@ -120,6 +134,8 @@ void Grid::mind_world_limits(PhysicsC& p) const
     else if (p.next_bb_max[a] > grid_top[a])
       p.next_position[a] = grid_top[a] - p.dimensions[a];
   }
+  p.update_bbs();
+  p.update_next_bbs();
 }
 
 void Grid::check_collision(PhysicsC& p, float dt) const

@@ -33,6 +33,7 @@ public:
   char block(unsigned, unsigned, unsigned) const;
   void mind_world_limits(PhysicsC&) const;
   void overlapping_indices(const PhysicsC&, unsigned[3][2]) const;
+  bool correct_one_hit(PhysicsC& p) const;
 
   char m_grid[GRID_SIZE_X][GRID_SIZE_Y][GRID_SIZE_Z];
 };
