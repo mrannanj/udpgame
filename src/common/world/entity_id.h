@@ -1,6 +1,3 @@
-#ifndef COMMON_WORLD_ENTITY_ID_H
-#define COMMON_WORLD_ENTITY_ID_H
+#pragma once
 
 typedef unsigned EntityId;
-
-#endif

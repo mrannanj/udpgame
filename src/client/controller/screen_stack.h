@@ -1,12 +1,10 @@
-#ifndef CLIENT_CONTROLLER_SCREEN_STACK_H
-#define CLIENT_CONTROLLER_SCREEN_STACK_H
+#pragma once
 
 #include "client/controller/screen.h"
 
 #include <vector>
 
-class ScreenStack
-{
+class ScreenStack {
 public:
   ScreenStack();
 
@@ -24,5 +22,3 @@ private:
 };
 
 extern ScreenStack g_screen_stack;
-
-#endif

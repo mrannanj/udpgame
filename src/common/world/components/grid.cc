@@ -4,8 +4,7 @@
 
 using namespace std;
 
-Grid::Grid()
-{
+Grid::Grid() {
   memset(m_grid, 0, GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z);
   for (unsigned x = 0; x < GRID_SIZE_X; ++x)
     for (unsigned z = 0; z < GRID_SIZE_Z; ++z)
@@ -22,7 +21,7 @@ Grid::Grid()
   for (unsigned x = 0; x < GRID_SIZE_X; ++x)
     for (unsigned y = 0; y < 2 && x+y < GRID_SIZE_Y; ++y)
        m_grid[x][x+y][9] = 1;
- }
+}
 
 char Grid::block(unsigned x, unsigned y, unsigned z) const
 {
@@ -32,8 +31,7 @@ char Grid::block(unsigned x, unsigned y, unsigned z) const
 
 void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const
 {
-  for (unsigned a = 0; a < 3; ++a)
-  {
+  for (unsigned a = 0; a < 3; ++a) {
     if (p.velocity[a] < 0.0f) {
       ind[a][0] = (unsigned)(p.next_bb_min[a]);
       ind[a][1] = (unsigned)(p.bb_max[a]);
@@ -60,19 +58,15 @@ bool Grid::correct_one_hit(PhysicsC& p) const {
   return false;
 }
 
-void Grid::handle_grid_collisions(PhysicsC& p, float dt) const
-{
+bool Grid::handle_grid_collisions(PhysicsC& p, float dt) const {
   p.next_position = p.position + p.velocity * dt;
   p.update_bbs();
   p.update_next_bbs();
   mind_world_limits(p);
 
-  for (int i = 0; correct_one_hit(p); ++i) {
-    if (i > 8) {
-      cout << "OBJECT STUCK" << endl;
-      break;
-    }
-  }
+  for (int i = 0; correct_one_hit(p); ++i)
+    if (i > 8) return false;
+  return true;
 }
 
 void Grid::correct_position(PhysicsC& p, unsigned x, unsigned y, unsigned z) const
@@ -138,12 +132,12 @@ void Grid::mind_world_limits(PhysicsC& p) const
   p.update_next_bbs();
 }
 
-void Grid::check_collision(PhysicsC& p, float dt) const
-{
-  handle_grid_collisions(p, dt);
+bool Grid::check_collision(PhysicsC& p, float dt) const {
+  bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
   p.update_bbs();
   p.update_next_bbs();
+  return ret;
 }
 
 Grid g_grid;

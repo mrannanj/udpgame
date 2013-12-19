@@ -1,5 +1,4 @@
-#ifndef COMMON_UTIL_TIMESPEC_H
-#define COMMON_UTIL_TIMESPEC_H
+#pragma once
 
 #include <ostream>
 #include <ctime>
@@ -10,6 +9,3 @@ timespec& operator+=(timespec&, timespec&);
 timespec operator-(timespec&, timespec&);
 timespec operator+(timespec&, timespec&);
 bool operator<(timespec&, timespec&);
-
-#endif
-

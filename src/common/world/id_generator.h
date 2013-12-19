@@ -1,7 +1,5 @@
-#ifndef COMMON_WORLD_ID_GENERATOR_H
-#define COMMON_WORLD_ID_GENERATOR_H
+#pragma once
 
-#include "common/google.h"
 #include "common/world/entity_id.h"
 
 class IdGenerator {
@@ -10,9 +8,6 @@ public:
   EntityId NextId();
 
 private:
-  DISALLOW_COPY_AND_ASSIGN(IdGenerator);
   EntityId next_id_;
 };
-
-#endif
 

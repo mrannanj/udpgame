@@ -1,19 +1,15 @@
-#ifndef CLIENT_CONTROLLER_PERSPECTIVE_H
-#define CLIENT_CONTROLLER_PERSPECTIVE_H
+#pragma once
 
 #include <string>
 #include <glm/glm.hpp>
 
 #include "common/world/entity_id.h"
-#include "common/google.h"
 
 struct Input;
 
-class Perspective
-{
+class Perspective {
 public:
   Perspective();
-  DISALLOW_COPY_AND_ASSIGN(Perspective);
 
   void handle_input(Input&);
   void tick();
@@ -37,5 +33,3 @@ private:
   glm::mat4 m_projection;
   glm::mat4 m_view_projection;
 };
-
-#endif

@@ -17,13 +17,12 @@ constexpr float BLOCK_SIZE = 1.0f;
 const glm::vec3 grid_top(MAX_X, MAX_Y, MAX_Z);
 const glm::vec3 grid_bot(0.0f, 0.0f, 0.0f);
 
-class Grid
-{
+class Grid {
 public:
   Grid();
 
-  void handle_grid_collisions(PhysicsC&, float) const;
-  void check_collision(PhysicsC&, float) const;
+  bool handle_grid_collisions(PhysicsC&, float) const;
+  bool check_collision(PhysicsC&, float) const;
   void correct_position(PhysicsC&, unsigned, unsigned, unsigned) const;
   void obey_lower_limits(PhysicsC&, const glm::vec3&) const;
   void obey_upper_limits(PhysicsC&, const glm::vec3&) const;

@@ -1,16 +1,18 @@
-#ifndef CLIENT_CONTROLLER_GAME_SESSION_H
-#define CLIENT_CONTROLLER_GAME_SESSION_H
+#pragma once
+
+#include "common/net/connection.h"
+#include "common/world/world.h"
+#include "client/controller/perspective.h"
 
 #include <string>
 
-#include "common/google.h"
+struct GameSession {
+  GameSession(const std::string&);
+  void tick(Input&);
 
-class GameSession
-{
-public:
-  GameSession();
-  void connect();
-  std::string m_server_addr;
+  Connection mConnection;
+  Perspective mPerspective;
+  World mWorld;
 };
 
-#endif
+extern GameSession* g_game_session;

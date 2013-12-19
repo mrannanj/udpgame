@@ -1,21 +1,26 @@
-#include <signal.h>
-
-#include "common/config.h"
 #include "server/server.h"
+#include "common/util/die.h"
 
-static int quit = 0;
+#include <signal.h>
+#include <unistd.h>
+#include <iostream>
+#include <fcntl.h>
 
-void handle_sigint(int)
-{
-  quit = 1;
+int quitPipe[2];
+
+void handle_sigint(int) {
+  char c = 'q';
+  write(quitPipe[1], &c, 1);
 }
 
-int main(void)
-{
-  signal(SIGINT, handle_sigint);
+int main(void) {
+  if (-1 == pipe2(quitPipe, O_NONBLOCK)) die("pipe");
+  if (SIG_ERR == signal(SIGINT, handle_sigint)) die("signal");
 
-  Server server(TICKS_PER_SEC, quit);
-  server.listen();
+  Server server(quitPipe[0]);
+  server.init();
+  server.serve();
+
   return 0;
 }
 

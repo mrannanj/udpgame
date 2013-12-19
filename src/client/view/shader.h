@@ -1,14 +1,11 @@
-#ifndef CLIENT_VIEW_SHADER_H
-#define CLIENT_VIEW_SHADER_H
+#pragma once
 
 #include <GL/glew.h>
-#include "common/google.h"
 
 class Shader {
 public:
   Shader(const char*, const char*);
   ~Shader();
-  DISALLOW_COPY_AND_ASSIGN(Shader);
 
   void On() const;
 
@@ -25,5 +22,3 @@ private:
   size_t MmapFile(const char*, int*, void**);
   void UnmmapFile(size_t, int, void*);
 };
-
-#endif

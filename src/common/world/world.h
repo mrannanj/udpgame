@@ -1,0 +1,22 @@
+#pragma once
+
+#include <map>
+#include <set>
+#include "common/world/components/physics_system.h"
+#include "common/world/id_generator.h"
+#include "common/proto/udpgame.pb.h"
+
+class World {
+public:
+  World();
+
+  void tick(float);
+  void spawn_entity();
+  WorldState getState();
+  void setState(const WorldState&);
+  void removeDead();
+
+private:
+  IdGenerator m_idgen;
+  std::set<EntityId> mDeleteList;
+};

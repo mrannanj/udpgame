@@ -3,7 +3,7 @@
 #include "common/config.h"
 #include "client/client.h"
 
-static int quit = 0;
+static volatile int quit = 0;
 
 void handle_sigint(int) {
   quit = 1;
@@ -14,6 +14,4 @@ int main(void) {
 
   Client client(TICKS_PER_SEC, quit);
   client.run();
-  return 0;
 }
-

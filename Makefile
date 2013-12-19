@@ -21,25 +21,20 @@ TARGETS := server client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-ifeq ($(CXX), g++)
-	WARN := -Wall -Wextra
-else ifeq ($(CXX), clang++)
-	WARN := -Weverything -Wno-padded -Wno-missing-noreturn
-	WARN := -Wno-global-constructors -Wno-exit-time-destructors
-endif
+CXX := clang++
 
-WARN += -pedantic -Wno-unused-parameter
+WARN := -pedantic -Wall -Wextra -Wno-unused-parameter
 
-PKGS := glew SDL_image sdl glu
+PKGS := glew SDL_image sdl glu protobuf
 
 LIBS := -lpthread -lm -lrt
 LIBS += $(shell pkg-config --libs $(PKGS))
 
-CXXFLAGS := -fno-exceptions -fno-rtti
+CXXFLAGS := -fno-exceptions
 CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
-CXXFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -Werror -std=c++0x -g
+CXXFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -std=c++11 -g
 
-.PHONY: clean all
+.PHONY: clean all proto
 .SUFFIXES: .cc .cpp
 
 all: $(TARGETS)
@@ -48,6 +43,10 @@ $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	echo CXX $@
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+proto:
+	cd src; \
+	protoc --cpp_out=./ common/proto/udpgame.proto
 
 server: $(SERVER_OBJS) $(COMMON_OBJS)
 	echo LN $@

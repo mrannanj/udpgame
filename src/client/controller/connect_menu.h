@@ -1,12 +1,10 @@
-#ifndef CLIENT_CONTROLLER_CONNECT_MENU_H
-#define CLIENT_CONTROLLER_CONNECT_MENU_H
+#pragma once
 
 #include "client/controller/screen.h"
 #include "client/view/button.h"
 #include "client/view/text_field.h"
 
-class ConnectMenu : public Screen
-{
+class ConnectMenu : public Screen {
 public:
   ConnectMenu();
   void Update(InputManager&, float);
@@ -20,5 +18,3 @@ private:
 };
 
 extern ConnectMenu g_connect_menu;
-
-#endif

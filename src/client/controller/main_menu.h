@@ -1,11 +1,9 @@
-#ifndef CLIENT_CONTROLLER_MAIN_MENU_H
-#define CLIENT_CONTROLLER_MAIN_MENU_H
+#pragma once
 
 #include "client/controller/screen.h"
 #include "client/view/button.h"
 
-class MainMenu: public Screen
-{
+class MainMenu: public Screen {
 public:
   MainMenu();
   void Update(InputManager&, float);
@@ -18,5 +16,3 @@ private:
 };
 
 extern MainMenu g_main_menu;
-
-#endif

@@ -5,8 +5,7 @@
 
 #define MASS 10.0f
 
-struct PhysicsC
-{
+struct PhysicsC {
   EntityId id;
 
   glm::vec3 position;
@@ -26,4 +25,3 @@ struct PhysicsC
   void update_bbs();
   void update_next_bbs();
 };
-

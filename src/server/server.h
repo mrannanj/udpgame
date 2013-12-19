@@ -1,22 +1,25 @@
-#ifndef SERVER_SERVER_H
-#define SERVER_SERVER_H
+#pragma once
 
-#include <arpa/inet.h>
+#include <set>
+#include <netinet/in.h>
 
-#include "common/util/tick_timer.h"
-#include "server/connection_manager.h"
+#include "common/world/world.h"
 
-class Server
-{
-public:
-  Server(unsigned, int&);
-  void listen();
+#define SERVER_BUFSIZE 1024
 
-private:
-  TickTimer m_tick_timer;
-  ConnectionManager m_connection_manager;
-  int& m_quit;
+struct Server {
+  Server(int);
+
+  void init();
+  void serve();
+
+  private:
+  int mkFDSet(fd_set*);
+  void sendWorldState();
+
+  int mQuit;
+  sockaddr_in mListenSA;
+  int mListenFD;
+  std::set<int> mClients;
+  World mWorld;
 };
-
-#endif
-

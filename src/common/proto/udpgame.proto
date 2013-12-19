@@ -1,0 +1,18 @@
+enum Type {
+  WORLD_STATE = 1;
+}
+
+message AMessage {
+  required Type type = 1;
+  optional WorldState world_state = 2;
+}
+
+message Object {
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
+message WorldState {
+  repeated Object object = 1;
+}
