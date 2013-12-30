@@ -15,6 +15,7 @@ public:
   WorldState getState();
   void setState(const WorldState&);
   void removeDead();
+  void defaultWorld();
 
 private:
   IdGenerator m_idgen;

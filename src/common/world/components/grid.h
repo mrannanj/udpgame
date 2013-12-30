@@ -17,9 +17,9 @@ constexpr float BLOCK_SIZE = 1.0f;
 const glm::vec3 grid_top(MAX_X, MAX_Y, MAX_Z);
 const glm::vec3 grid_bot(0.0f, 0.0f, 0.0f);
 
-class Grid {
-public:
+struct Grid {
   Grid();
+  void defaultGrid();
 
   bool handle_grid_collisions(PhysicsC&, float) const;
   bool check_collision(PhysicsC&, float) const;

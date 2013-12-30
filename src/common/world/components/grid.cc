@@ -6,6 +6,9 @@ using namespace std;
 
 Grid::Grid() {
   memset(m_grid, 0, GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z);
+}
+
+void Grid::defaultGrid() {
   for (unsigned x = 0; x < GRID_SIZE_X; ++x)
     for (unsigned z = 0; z < GRID_SIZE_Z; ++z)
       m_grid[x][0][z] = 1;
@@ -23,14 +26,12 @@ Grid::Grid() {
        m_grid[x][x+y][9] = 1;
 }
 
-char Grid::block(unsigned x, unsigned y, unsigned z) const
-{
+char Grid::block(unsigned x, unsigned y, unsigned z) const {
   assert(x < GRID_SIZE_X && y < GRID_SIZE_Y && z < GRID_SIZE_Z);
   return m_grid[x][y][z];
 }
 
-void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const
-{
+void Grid::overlapping_indices(const PhysicsC& p, unsigned ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
     if (p.velocity[a] < 0.0f) {
       ind[a][0] = (unsigned)(p.next_bb_min[a]);

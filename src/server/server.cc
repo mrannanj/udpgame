@@ -22,6 +22,7 @@ Server::Server(int quit):
   mClients(),
   mWorld()
 {
+  mWorld.defaultWorld();
 }
 
 void Server::init() {
@@ -49,11 +50,12 @@ void Server::sendWorldState() {
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
   (a.mutable_world_state())->CopyFrom(w);
-  //cout << a.DebugString() << endl;
   short size = a.ByteSize();
   uint16_t netSize = htons(size);
   memcpy(buf, &netSize, sizeof(netSize));
   a.SerializeToArray(&buf[sizeof(netSize)], size);
+  cout << a.DebugString() << endl;
+  cout << "size: " << size << endl;
   for (int fd : mClients) {
     write(fd, buf, size + sizeof(netSize));
   }

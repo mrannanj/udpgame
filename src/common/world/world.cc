@@ -2,6 +2,7 @@
 #include "common/world/components/input_system.h"
 #include "common/world/components/physics_system.h"
 #include "common/world/components/physics.h"
+#include "common/world/components/grid.h"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -17,6 +18,10 @@ using namespace std;
 
 World::World()
 {
+}
+
+void World::defaultWorld() {
+  g_grid.defaultGrid();
 }
 
 void World::spawn_entity() {
@@ -57,6 +62,7 @@ void World::setState(const WorldState& w) {
     p.update_bbs();
     g_physics_system.add(p);
   }
+  memcpy(g_grid.m_grid, w.grid().c_str(), 1000);
 }
 
 WorldState World::getState() {
@@ -67,5 +73,6 @@ WorldState World::getState() {
     o->set_y(p.position.y);
     o->set_z(p.position.z);
   }
+  w.set_grid(g_grid.m_grid, 1000);
   return w;
 }

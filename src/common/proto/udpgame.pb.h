@@ -315,15 +315,29 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Object >*
       mutable_object();
   
+  // optional bytes grid = 2;
+  inline bool has_grid() const;
+  inline void clear_grid();
+  static const int kGridFieldNumber = 2;
+  inline const ::std::string& grid() const;
+  inline void set_grid(const ::std::string& value);
+  inline void set_grid(const char* value);
+  inline void set_grid(const void* value, size_t size);
+  inline ::std::string* mutable_grid();
+  inline ::std::string* release_grid();
+  
   // @@protoc_insertion_point(class_scope:WorldState)
  private:
+  inline void set_has_grid();
+  inline void clear_has_grid();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::google::protobuf::RepeatedPtrField< ::Object > object_;
+  ::std::string* grid_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -488,6 +502,64 @@ WorldState::object() const {
 inline ::google::protobuf::RepeatedPtrField< ::Object >*
 WorldState::mutable_object() {
   return &object_;
+}
+
+// optional bytes grid = 2;
+inline bool WorldState::has_grid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void WorldState::set_has_grid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void WorldState::clear_has_grid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void WorldState::clear_grid() {
+  if (grid_ != &::google::protobuf::internal::kEmptyString) {
+    grid_->clear();
+  }
+  clear_has_grid();
+}
+inline const ::std::string& WorldState::grid() const {
+  return *grid_;
+}
+inline void WorldState::set_grid(const ::std::string& value) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(value);
+}
+inline void WorldState::set_grid(const char* value) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(value);
+}
+inline void WorldState::set_grid(const void* value, size_t size) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* WorldState::mutable_grid() {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  return grid_;
+}
+inline ::std::string* WorldState::release_grid() {
+  clear_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = grid_;
+    grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
 }
 
 

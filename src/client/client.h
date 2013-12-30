@@ -4,10 +4,9 @@
 
 class Client {
 public:
-  Client(unsigned, volatile int&);
+  Client(unsigned);
   void run();
 
 private:
   TickTimer m_tick_timer;
-  volatile int& m_quit;
 };

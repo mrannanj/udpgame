@@ -69,8 +69,9 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Object));
   WorldState_descriptor_ = file->message_type(2);
-  static const int WorldState_offsets_[1] = {
+  static const int WorldState_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, object_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, grid_),
   };
   WorldState_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -125,9 +126,9 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\n\032common/proto/udpgame.proto\"A\n\010AMessage"
     "\022\023\n\004type\030\001 \002(\0162\005.Type\022 \n\013world_state\030\002 \001"
     "(\0132\013.WorldState\")\n\006Object\022\t\n\001x\030\001 \002(\002\022\t\n\001"
-    "y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"%\n\nWorldState\022\027\n\006obje"
-    "ct\030\001 \003(\0132\007.Object*\027\n\004Type\022\017\n\013WORLD_STATE"
-    "\020\001", 202);
+    "y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"3\n\nWorldState\022\027\n\006obje"
+    "ct\030\001 \003(\0132\007.Object\022\014\n\004grid\030\002 \001(\014*\027\n\004Type\022"
+    "\017\n\013WORLD_STATE\020\001", 216);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -708,6 +709,7 @@ void Object::Swap(Object* other) {
 
 #ifndef _MSC_VER
 const int WorldState::kObjectFieldNumber;
+const int WorldState::kGridFieldNumber;
 #endif  // !_MSC_VER
 
 WorldState::WorldState()
@@ -726,6 +728,7 @@ WorldState::WorldState(const WorldState& from)
 
 void WorldState::SharedCtor() {
   _cached_size_ = 0;
+  grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -734,6 +737,9 @@ WorldState::~WorldState() {
 }
 
 void WorldState::SharedDtor() {
+  if (grid_ != &::google::protobuf::internal::kEmptyString) {
+    delete grid_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -759,6 +765,13 @@ WorldState* WorldState::New() const {
 }
 
 void WorldState::Clear() {
+  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    if (has_grid()) {
+      if (grid_ != &::google::protobuf::internal::kEmptyString) {
+        grid_->clear();
+      }
+    }
+  }
   object_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -781,6 +794,20 @@ bool WorldState::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(10)) goto parse_object;
+        if (input->ExpectTag(18)) goto parse_grid;
+        break;
+      }
+      
+      // optional bytes grid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_grid:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_grid()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -809,6 +836,12 @@ void WorldState::SerializeWithCachedSizes(
       1, this->object(i), output);
   }
   
+  // optional bytes grid = 2;
+  if (has_grid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      2, this->grid(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -824,6 +857,13 @@ void WorldState::SerializeWithCachedSizes(
         1, this->object(i), target);
   }
   
+  // optional bytes grid = 2;
+  if (has_grid()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        2, this->grid(), target);
+  }
+  
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -834,6 +874,15 @@ void WorldState::SerializeWithCachedSizes(
 int WorldState::ByteSize() const {
   int total_size = 0;
   
+  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    // optional bytes grid = 2;
+    if (has_grid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->grid());
+    }
+    
+  }
   // repeated .Object object = 1;
   total_size += 1 * this->object_size();
   for (int i = 0; i < this->object_size(); i++) {
@@ -868,6 +917,11 @@ void WorldState::MergeFrom(const ::google::protobuf::Message& from) {
 void WorldState::MergeFrom(const WorldState& from) {
   GOOGLE_CHECK_NE(&from, this);
   object_.MergeFrom(from.object_);
+  if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    if (from.has_grid()) {
+      set_grid(from.grid());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -894,6 +948,7 @@ bool WorldState::IsInitialized() const {
 void WorldState::Swap(WorldState* other) {
   if (other != this) {
     object_.Swap(&other->object_);
+    std::swap(grid_, other->grid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

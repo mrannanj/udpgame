@@ -15,4 +15,5 @@ message Object {
 
 message WorldState {
   repeated Object object = 1;
+  optional bytes grid = 2;
 }

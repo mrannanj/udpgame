@@ -7,7 +7,7 @@
 #include <iostream>
 #include <unistd.h>
 
-#define MAXMSG 1024
+#define MAXMSG 2048
 
 struct Connection {
   Connection(const std::string&);
@@ -36,7 +36,7 @@ void Connection::checkMessages(T& handler) {
       if (a.ParseFromArray(&mBuf[sizeof(uint16_t)], size)) {
         const WorldState& w = a.world_state();
         handler.setState(w);
-        mPos = 0;
+        mPos -= size+2;
       }
     }
   }
