@@ -1,5 +1,4 @@
-#ifndef CLIENT_CONTROLLER_INPUT_INPUT_H
-#define CLIENT_CONTROLLER_INPUT_INPUT_H
+#pragma once
 
 namespace ContinousAction {
   enum Enum : unsigned {
@@ -45,5 +44,3 @@ struct Input {
   bool consume_mouse_click(Mouse::Enum);
   bool consume_discrete_action(DiscreteAction::Enum);
 };
-
-#endif

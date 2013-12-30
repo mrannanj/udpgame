@@ -1,10 +1,17 @@
 enum Type {
   WORLD_STATE = 1;
+  CLIENT_INPUT = 2;
 }
 
 message AMessage {
   required Type type = 1;
   optional WorldState world_state = 2;
+  optional ClientInput input = 3;
+}
+
+message WorldState {
+  repeated Object object = 1;
+  optional bytes grid = 2;
 }
 
 message Object {
@@ -13,7 +20,8 @@ message Object {
   required float z = 3;
 }
 
-message WorldState {
-  repeated Object object = 1;
-  optional bytes grid = 2;
+message ClientInput {
+  required fixed32 actions = 1;
+  required float horizontal_delta = 2;
+  required float verical_delta = 3;
 }

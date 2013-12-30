@@ -3,8 +3,7 @@
 constexpr float HALF_PI = (float)M_PI/2.0f;
 constexpr float PI = (float)M_PI;
 
-void InputSystem::add_input(EntityId id, const Input& input)
-{
+void InputSystem::add_input(EntityId id, const Input& input) {
   InputC input_comp;
   input_comp.id = id;
   input_comp.actions = input.continous_actions;

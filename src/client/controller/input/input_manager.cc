@@ -5,26 +5,22 @@
 #include "client/view/window.h"
 #include "client/controller/screen_stack.h"
 
-SDLKey binded_keys[] =
-{
+SDLKey binded_keys[] = {
   SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE
 };
 
-InputManager::InputManager()
-{
+InputManager::InputManager() {
   m_key_state = SDL_GetKeyState(&m_num_keys);
   SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL*6);
   SDL_EnableUNICODE(1);
   init_key_to_action();
 }
 
-InputManager::~InputManager()
-{
+InputManager::~InputManager() {
   delete[] m_key_to_action;
 }
 
-void InputManager::init_key_to_action()
-{
+void InputManager::init_key_to_action() {
   m_key_to_action = new unsigned[m_num_keys];
   memset(m_key_to_action, 0, sizeof(*m_key_to_action) * (unsigned)m_num_keys);
   m_key_to_action[SDLK_w] = ContinousAction::MOVE_FORWARD;
@@ -34,8 +30,7 @@ void InputManager::init_key_to_action()
   m_key_to_action[SDLK_SPACE] = ContinousAction::JUMP;
 }
 
-void InputManager::check_mouse(Input& i) const
-{
+void InputManager::check_mouse(Input& i) const {
   Uint8 buttons = SDL_GetMouseState(&i.mouse_x, &i.mouse_y);
   if (buttons & SDL_BUTTON_LEFT)
     i.mouse_buttons |= Mouse::LEFT;
@@ -47,8 +42,7 @@ void InputManager::check_mouse(Input& i) const
   i.gl_mouse_y = gl_pos_y(i.mouse_y);
 }
 
-void InputManager::read_input(Input& i) const
-{
+void InputManager::read_input(Input& i) const {
   i.clear_consumables();
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
@@ -74,10 +68,8 @@ void InputManager::read_input(Input& i) const
   check_mouse(i);
 }
 
-void InputManager::mouse_button_up(const SDL_Event& e, Input& i) const
-{
-  switch (e.button.button)
-  {
+void InputManager::mouse_button_up(const SDL_Event& e, Input& i) const {
+  switch (e.button.button) {
     case SDL_BUTTON_LEFT:
       i.mouse_buttons &= ~(Mouse::LEFT);
       i.mouse_click |= Mouse::LEFT;
@@ -93,10 +85,8 @@ void InputManager::mouse_button_up(const SDL_Event& e, Input& i) const
   }
 }
 
-void InputManager::keyup(const SDL_Event& e, Input& i) const
-{
-  switch (e.key.keysym.sym)
-  {
+void InputManager::keyup(const SDL_Event& e, Input& i) const {
+  switch (e.key.keysym.sym) {
     case SDLK_ESCAPE:
       i.keypress |= DiscreteAction::ESCAPE;
       break;
@@ -114,17 +104,14 @@ void InputManager::keyup(const SDL_Event& e, Input& i) const
   }
 }
 
-void InputManager::mouse_motion(const SDL_Event& e, Input &i) const
-{
+void InputManager::mouse_motion(const SDL_Event& e, Input &i) const {
   i.mouse_delta_x += e.motion.xrel;
   i.mouse_delta_y += e.motion.yrel;
 }
 
-void InputManager::check_keyboard(Input& i) const
-{
+void InputManager::check_keyboard(Input& i) const {
   constexpr size_t n = sizeof(binded_keys)/sizeof(SDLKey);
-  for (unsigned k = 0; k < n; ++k)
-  {
+  for (unsigned k = 0; k < n; ++k) {
     SDLKey key = binded_keys[k];
     if (m_key_state[key])
       i.continous_actions |= m_key_to_action[key];

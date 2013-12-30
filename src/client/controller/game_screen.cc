@@ -17,8 +17,7 @@
 
 using namespace std;
 
-GameScreen::GameScreen()
-{
+GameScreen::GameScreen() {
 }
 
 void GameScreen::Activate() {

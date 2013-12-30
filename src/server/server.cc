@@ -54,8 +54,6 @@ void Server::sendWorldState() {
   uint16_t netSize = htons(size);
   memcpy(buf, &netSize, sizeof(netSize));
   a.SerializeToArray(&buf[sizeof(netSize)], size);
-  cout << a.DebugString() << endl;
-  cout << "size: " << size << endl;
   for (int fd : mClients) {
     write(fd, buf, size + sizeof(netSize));
   }
