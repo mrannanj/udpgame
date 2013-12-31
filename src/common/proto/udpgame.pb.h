@@ -31,15 +31,17 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
 void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
 
 class AMessage;
-class Object;
 class WorldState;
+class Object;
+class ClientInput;
 
 enum Type {
-  WORLD_STATE = 1
+  WORLD_STATE = 1,
+  CLIENT_INPUT = 2
 };
 bool Type_IsValid(int value);
 const Type Type_MIN = WORLD_STATE;
-const Type Type_MAX = WORLD_STATE;
+const Type Type_MAX = CLIENT_INPUT;
 const int Type_ARRAYSIZE = Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Type_descriptor();
@@ -123,17 +125,127 @@ class AMessage : public ::google::protobuf::Message {
   inline ::WorldState* mutable_world_state();
   inline ::WorldState* release_world_state();
   
+  // optional .ClientInput input = 3;
+  inline bool has_input() const;
+  inline void clear_input();
+  static const int kInputFieldNumber = 3;
+  inline const ::ClientInput& input() const;
+  inline ::ClientInput* mutable_input();
+  inline ::ClientInput* release_input();
+  
   // @@protoc_insertion_point(class_scope:AMessage)
  private:
   inline void set_has_type();
   inline void clear_has_type();
   inline void set_has_world_state();
   inline void clear_has_world_state();
+  inline void set_has_input();
+  inline void clear_has_input();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::WorldState* world_state_;
+  ::ClientInput* input_;
   int type_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static AMessage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class WorldState : public ::google::protobuf::Message {
+ public:
+  WorldState();
+  virtual ~WorldState();
+  
+  WorldState(const WorldState& from);
+  
+  inline WorldState& operator=(const WorldState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const WorldState& default_instance();
+  
+  void Swap(WorldState* other);
+  
+  // implements Message ----------------------------------------------
+  
+  WorldState* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const WorldState& from);
+  void MergeFrom(const WorldState& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Object object = 1;
+  inline int object_size() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Object& object(int index) const;
+  inline ::Object* mutable_object(int index);
+  inline ::Object* add_object();
+  inline const ::google::protobuf::RepeatedPtrField< ::Object >&
+      object() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Object >*
+      mutable_object();
+  
+  // optional bytes grid = 2;
+  inline bool has_grid() const;
+  inline void clear_grid();
+  static const int kGridFieldNumber = 2;
+  inline const ::std::string& grid() const;
+  inline void set_grid(const ::std::string& value);
+  inline void set_grid(const char* value);
+  inline void set_grid(const void* value, size_t size);
+  inline ::std::string* mutable_grid();
+  inline ::std::string* release_grid();
+  
+  // @@protoc_insertion_point(class_scope:WorldState)
+ private:
+  inline void set_has_grid();
+  inline void clear_has_grid();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Object > object_;
+  ::std::string* grid_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -143,7 +255,7 @@ class AMessage : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
   
   void InitAsDefaultInstance();
-  static AMessage* default_instance_;
+  static WorldState* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -249,14 +361,14 @@ class Object : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class WorldState : public ::google::protobuf::Message {
+class ClientInput : public ::google::protobuf::Message {
  public:
-  WorldState();
-  virtual ~WorldState();
+  ClientInput();
+  virtual ~ClientInput();
   
-  WorldState(const WorldState& from);
+  ClientInput(const ClientInput& from);
   
-  inline WorldState& operator=(const WorldState& from) {
+  inline ClientInput& operator=(const ClientInput& from) {
     CopyFrom(from);
     return *this;
   }
@@ -270,17 +382,17 @@ class WorldState : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const WorldState& default_instance();
+  static const ClientInput& default_instance();
   
-  void Swap(WorldState* other);
+  void Swap(ClientInput* other);
   
   // implements Message ----------------------------------------------
   
-  WorldState* New() const;
+  ClientInput* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const WorldState& from);
-  void MergeFrom(const WorldState& from);
+  void CopyFrom(const ClientInput& from);
+  void MergeFrom(const ClientInput& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -303,48 +415,51 @@ class WorldState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .Object object = 1;
-  inline int object_size() const;
-  inline void clear_object();
-  static const int kObjectFieldNumber = 1;
-  inline const ::Object& object(int index) const;
-  inline ::Object* mutable_object(int index);
-  inline ::Object* add_object();
-  inline const ::google::protobuf::RepeatedPtrField< ::Object >&
-      object() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Object >*
-      mutable_object();
+  // required fixed32 actions = 1;
+  inline bool has_actions() const;
+  inline void clear_actions();
+  static const int kActionsFieldNumber = 1;
+  inline ::google::protobuf::uint32 actions() const;
+  inline void set_actions(::google::protobuf::uint32 value);
   
-  // optional bytes grid = 2;
-  inline bool has_grid() const;
-  inline void clear_grid();
-  static const int kGridFieldNumber = 2;
-  inline const ::std::string& grid() const;
-  inline void set_grid(const ::std::string& value);
-  inline void set_grid(const char* value);
-  inline void set_grid(const void* value, size_t size);
-  inline ::std::string* mutable_grid();
-  inline ::std::string* release_grid();
+  // required float horizontal_delta = 2;
+  inline bool has_horizontal_delta() const;
+  inline void clear_horizontal_delta();
+  static const int kHorizontalDeltaFieldNumber = 2;
+  inline float horizontal_delta() const;
+  inline void set_horizontal_delta(float value);
   
-  // @@protoc_insertion_point(class_scope:WorldState)
+  // required float verical_delta = 3;
+  inline bool has_verical_delta() const;
+  inline void clear_verical_delta();
+  static const int kVericalDeltaFieldNumber = 3;
+  inline float verical_delta() const;
+  inline void set_verical_delta(float value);
+  
+  // @@protoc_insertion_point(class_scope:ClientInput)
  private:
-  inline void set_has_grid();
-  inline void clear_has_grid();
+  inline void set_has_actions();
+  inline void clear_has_actions();
+  inline void set_has_horizontal_delta();
+  inline void clear_has_horizontal_delta();
+  inline void set_has_verical_delta();
+  inline void clear_has_verical_delta();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
-  ::google::protobuf::RepeatedPtrField< ::Object > object_;
-  ::std::string* grid_;
+  ::google::protobuf::uint32 actions_;
+  float horizontal_delta_;
+  float verical_delta_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
   
   void InitAsDefaultInstance();
-  static WorldState* default_instance_;
+  static ClientInput* default_instance_;
 };
 // ===================================================================
 
@@ -405,74 +520,33 @@ inline ::WorldState* AMessage::release_world_state() {
   return temp;
 }
 
-// -------------------------------------------------------------------
-
-// Object
-
-// required float x = 1;
-inline bool Object::has_x() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void Object::set_has_x() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void Object::clear_has_x() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void Object::clear_x() {
-  x_ = 0;
-  clear_has_x();
-}
-inline float Object::x() const {
-  return x_;
-}
-inline void Object::set_x(float value) {
-  set_has_x();
-  x_ = value;
-}
-
-// required float y = 2;
-inline bool Object::has_y() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Object::set_has_y() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Object::clear_has_y() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Object::clear_y() {
-  y_ = 0;
-  clear_has_y();
-}
-inline float Object::y() const {
-  return y_;
-}
-inline void Object::set_y(float value) {
-  set_has_y();
-  y_ = value;
-}
-
-// required float z = 3;
-inline bool Object::has_z() const {
+// optional .ClientInput input = 3;
+inline bool AMessage::has_input() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Object::set_has_z() {
+inline void AMessage::set_has_input() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Object::clear_has_z() {
+inline void AMessage::clear_has_input() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Object::clear_z() {
-  z_ = 0;
-  clear_has_z();
+inline void AMessage::clear_input() {
+  if (input_ != NULL) input_->::ClientInput::Clear();
+  clear_has_input();
 }
-inline float Object::z() const {
-  return z_;
+inline const ::ClientInput& AMessage::input() const {
+  return input_ != NULL ? *input_ : *default_instance_->input_;
 }
-inline void Object::set_z(float value) {
-  set_has_z();
-  z_ = value;
+inline ::ClientInput* AMessage::mutable_input() {
+  set_has_input();
+  if (input_ == NULL) input_ = new ::ClientInput;
+  return input_;
+}
+inline ::ClientInput* AMessage::release_input() {
+  clear_has_input();
+  ::ClientInput* temp = input_;
+  input_ = NULL;
+  return temp;
 }
 
 // -------------------------------------------------------------------
@@ -560,6 +634,146 @@ inline ::std::string* WorldState::release_grid() {
     grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
+}
+
+// -------------------------------------------------------------------
+
+// Object
+
+// required float x = 1;
+inline bool Object::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Object::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Object::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Object::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline float Object::x() const {
+  return x_;
+}
+inline void Object::set_x(float value) {
+  set_has_x();
+  x_ = value;
+}
+
+// required float y = 2;
+inline bool Object::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Object::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Object::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Object::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline float Object::y() const {
+  return y_;
+}
+inline void Object::set_y(float value) {
+  set_has_y();
+  y_ = value;
+}
+
+// required float z = 3;
+inline bool Object::has_z() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Object::set_has_z() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Object::clear_has_z() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Object::clear_z() {
+  z_ = 0;
+  clear_has_z();
+}
+inline float Object::z() const {
+  return z_;
+}
+inline void Object::set_z(float value) {
+  set_has_z();
+  z_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ClientInput
+
+// required fixed32 actions = 1;
+inline bool ClientInput::has_actions() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ClientInput::set_has_actions() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ClientInput::clear_has_actions() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ClientInput::clear_actions() {
+  actions_ = 0u;
+  clear_has_actions();
+}
+inline ::google::protobuf::uint32 ClientInput::actions() const {
+  return actions_;
+}
+inline void ClientInput::set_actions(::google::protobuf::uint32 value) {
+  set_has_actions();
+  actions_ = value;
+}
+
+// required float horizontal_delta = 2;
+inline bool ClientInput::has_horizontal_delta() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ClientInput::set_has_horizontal_delta() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ClientInput::clear_has_horizontal_delta() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ClientInput::clear_horizontal_delta() {
+  horizontal_delta_ = 0;
+  clear_has_horizontal_delta();
+}
+inline float ClientInput::horizontal_delta() const {
+  return horizontal_delta_;
+}
+inline void ClientInput::set_horizontal_delta(float value) {
+  set_has_horizontal_delta();
+  horizontal_delta_ = value;
+}
+
+// required float verical_delta = 3;
+inline bool ClientInput::has_verical_delta() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ClientInput::set_has_verical_delta() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ClientInput::clear_has_verical_delta() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ClientInput::clear_verical_delta() {
+  verical_delta_ = 0;
+  clear_has_verical_delta();
+}
+inline float ClientInput::verical_delta() const {
+  return verical_delta_;
+}
+inline void ClientInput::set_verical_delta(float value) {
+  set_has_verical_delta();
+  verical_delta_ = value;
 }
 
 

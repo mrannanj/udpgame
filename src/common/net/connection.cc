@@ -25,6 +25,23 @@ Connection::Connection(const std::string& addr):
     die("fcntl");
 }
 
+Connection::Connection(int socket, const sockaddr_in& sa):
+  mPos(0),
+  mSocket(socket),
+  mAddress(),
+  mSockaddr(sa)
+{
+}
+
 Connection::~Connection() {
   close(mSocket);
+}
+
+void Connection::sendMessage(const AMessage& a) {
+  char buf[MAXMSG];
+  short size = a.ByteSize();
+  uint16_t netSize = htons(size);
+  memcpy(buf, &netSize, sizeof(netSize));
+  a.SerializeToArray(&buf[sizeof(netSize)], size);
+  write(mSocket, buf, size + sizeof(netSize));
 }

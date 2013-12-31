@@ -49,49 +49,56 @@ void Server::sendWorldState() {
   AMessage a;
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
-  (a.mutable_world_state())->CopyFrom(w);
+  a.mutable_world_state()->CopyFrom(w);
   short size = a.ByteSize();
   uint16_t netSize = htons(size);
   memcpy(buf, &netSize, sizeof(netSize));
   a.SerializeToArray(&buf[sizeof(netSize)], size);
-  for (int fd : mClients) {
-    write(fd, buf, size + sizeof(netSize));
+  for (const Connection& c : mClients) {
+    write(c.mSocket, buf, size + sizeof(netSize));
   }
 }
 
 void Server::serve() {
-  char buf[1024];
-
-  fd_set set;
+  char buf[SERVER_BUFSIZE];
+  fd_set fds;
   for (int i = 0;; ++i) {
     sendWorldState();
     if (i % 5 == 0) mWorld.spawn_entity();
     mWorld.tick(sec_per_ticks);
-    int nfds = mkFDSet(&set);
+    int nfds = mkFDSet(&fds);
     timeval tv = {0, 1000000/TICKS_PER_SEC};
-    select(nfds, &set, nullptr, nullptr, &tv);
-    if (FD_ISSET(mListenFD, &set)) {
+    if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
+      perror("read");
+
+    for (auto it = mClients.begin(); it != mClients.end();) {
+      Connection& c = *it;
+      if (!FD_ISSET(c.mSocket, &fds)) {
+        ++it;
+        continue;
+      }
+      cout << "message from client" << endl;
+      ssize_t n = read(c.mSocket, buf, SERVER_BUFSIZE);
+      if (n == 0) {
+        cout << "client disconnect" << endl;
+        it = mClients.erase(it);
+      } else if (n == -1) {
+        perror("read");
+        it = mClients.erase(it);
+      } else {
+        ++it;
+      }
+    }
+    if (FD_ISSET(mListenFD, &fds)) {
       sockaddr_in sa;
       socklen_t sa_len;
       int client = accept(mListenFD, (sockaddr*)&sa, &sa_len);
       if (client != -1) {
         cout << "client connected" << endl;
-        mClients.insert(client);
+        mClients.emplace_back(client, sa);
       }
     }
-    for (int fd : mClients) {
-      if (!FD_ISSET(fd, &set)) continue;
-      cout << "message from client" << endl;
-      ssize_t n = read(fd, buf, 1024);
-      if (n == 0) {
-        cout << "client disconnect" << endl;
-        mClients.erase(fd);
-      } else if (n == -1) {
-        perror("read");
-        mClients.erase(fd);
-      }
-    }
-    if (FD_ISSET(mQuit, &set)) break;
+    if (FD_ISSET(mQuit, &fds)) break;
   }
 }
 
@@ -100,9 +107,9 @@ int Server::mkFDSet(fd_set* set) {
   FD_SET(mQuit, set);
   FD_SET(mListenFD, set);
   int m = max(mListenFD, mQuit);
-  for (int fd : mClients) {
-    m = max(m, fd);
-    FD_SET(fd, set);
+  for (const Connection& c : mClients) {
+    m = max(m, c.mSocket);
+    FD_SET(c.mSocket, set);
   }
   return m + 1;
 }

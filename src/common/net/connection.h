@@ -10,9 +10,15 @@
 #define MAXMSG 2048
 
 struct Connection {
+  Connection(int, const sockaddr_in&);
   Connection(const std::string&);
+  Connection(Connection&&) = default;
+  Connection& operator=(Connection&&) = default;
+  Connection& operator=(const Connection&) = delete;
+  Connection(const Connection&) = delete;
   ~Connection();
 
+  void sendMessage(const AMessage&);
   template <class T> void checkMessages(T&);
 
   ssize_t mPos;

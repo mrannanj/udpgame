@@ -9,6 +9,7 @@
 struct GameSession {
   GameSession(const std::string&);
   void tick(Input&);
+  void sendFrameInput(Input&);
 
   Connection mConnection;
   Perspective mPerspective;
