@@ -47,7 +47,6 @@ void World::tick(float dt) {
 
 void World::removeDead() {
   for (EntityId id : g_physics_system.mRemoveList) {
-    cout << "removing " << id << endl;
     g_physics_system.remove(id);
   }
 }

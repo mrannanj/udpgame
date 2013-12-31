@@ -21,7 +21,7 @@ GameScreen::GameScreen() {
 }
 
 void GameScreen::Activate() {
-  grab_mouse();
+  //grab_mouse();
   glEnable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);

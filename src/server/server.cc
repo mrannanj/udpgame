@@ -60,7 +60,7 @@ void Server::serve() {
     int nfds = mkFDSet(&fds);
     timeval tv = {1, 0};
     if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
-      perror("read");
+      perror("select");
 
     for (auto it = mClients.begin(); it != mClients.end();) {
       Connection& c = *it;
@@ -70,6 +70,7 @@ void Server::serve() {
       }
       ssize_t nread = c.checkMessages(mWorld);
       if (nread <= 0) {
+        cout << "client disconnected" << endl;
         it = mClients.erase(it);
       } else {
         ++it;

@@ -12,8 +12,10 @@
 struct Connection {
   Connection(int, const sockaddr_in&);
   Connection(const std::string&);
-  Connection(Connection&&) = default;
-  Connection& operator=(Connection&&) = default;
+
+  Connection(Connection&&);
+  Connection& operator=(Connection&&);
+
   Connection& operator=(const Connection&) = delete;
   Connection(const Connection&) = delete;
   ~Connection();

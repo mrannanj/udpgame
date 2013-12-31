@@ -9,6 +9,7 @@
 
 Connection::Connection(const std::string& addr):
   mPos(0),
+  mSocket(-1),
   mAddress(addr)
 {
   memset(&mSockaddr, 0, sizeof(mSockaddr));
@@ -35,8 +36,31 @@ Connection::Connection(int socket, const sockaddr_in& sa):
     die("fcntl");
 }
 
+Connection::Connection(Connection&& c):
+  mPos(c.mPos),
+  mSocket(c.mSocket),
+  mAddress(c.mAddress),
+  mSockaddr(c.mSockaddr),
+  mBuf()
+{
+  c.mSocket = -1;
+  memcpy(mBuf, c.mBuf, MAXMSG);
+}
+
+Connection& Connection::operator=(Connection&& c) {
+  mPos = c.mPos;
+  mSocket = c.mSocket;
+  mAddress = std::move(c.mAddress);
+  mSockaddr = c.mSockaddr;
+  memcpy(mBuf, c.mBuf, MAXMSG);
+  c.mSocket = -1;
+  return *this;
+}
+
 Connection::~Connection() {
-  close(mSocket);
+  if (mSocket != -1)
+    close(mSocket);
+  mSocket = -1;
 }
 
 void Connection::sendMessage(const AMessage& a) {

@@ -45,22 +45,18 @@ void InputSystem::tick(float)
     if (i.actions & ContinousAction::MOVE_FORWARD)
     {
       p->velocity += forward * move_speed;
-      std::cout << "moving forward " << p->id << std::endl;
     }
     else if (i.actions & ContinousAction::MOVE_BACK)
     {
       p->velocity -= forward * move_speed;
-      std::cout << "moving back " << p->id << std::endl;
     }
     if (i.actions & ContinousAction::MOVE_RIGHT)
     {
       p->velocity += right * move_speed;
-      std::cout << "moving right " << p->id << std::endl;
     }
     else if (i.actions & ContinousAction::MOVE_LEFT)
     {
       p->velocity -= right * move_speed;
-      std::cout << "moving left " << p->id << std::endl;
     }
     if (i.actions & ContinousAction::JUMP && p->on_ground)
     {
