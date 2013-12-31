@@ -55,7 +55,7 @@ void Server::sendWorldState() {
 
 void Server::serve() {
   fd_set fds;
-  for (int i = 0;; ++i) {
+  while (true) {
     int nfds = mkFDSet(&fds);
     timeval tv = {1, 0};
     if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
@@ -86,7 +86,7 @@ void Server::serve() {
     }
     if (FD_ISSET(mQuit, &fds)) break;
     if (mWorldTicker.canTick()) {
-      mWorld.tick(sec_per_ticks, mWorldTicker.mCi);
+      mWorld.tick(sec_per_ticks, mWorldTicker.mCi, mWorldTicker.mFd);
       sendWorldState();
     }
   }

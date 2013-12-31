@@ -48,7 +48,7 @@ ssize_t Connection::checkMessages(T& handler) {
     if (mPos >= size+2) {
       AMessage a;
       if (a.ParseFromArray(&mBuf[sizeof(uint16_t)], size)) {
-        handler.handleAMessage(a);
+        handler.handleAMessage(a, mSocket);
         mPos -= size+2;
       }
     }

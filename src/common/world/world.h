@@ -10,15 +10,16 @@ class World {
 public:
   World();
 
-  void tick(float, const ClientInput&);
-  void spawn_entity();
+  void tick(float, const ClientInput&, int);
+  EntityId spawn_entity(int);
   WorldState getState();
-  void setInput(const ClientInput&);
+  void setInput(const ClientInput&, int);
   void setState(const WorldState&);
-  void handleAMessage(const AMessage&);
+  void handleAMessage(const AMessage&, int);
   void removeDead();
   void defaultWorld();
 
+  std::map<int, EntityId> mClient2Entity;
 private:
   IdGenerator m_idgen;
   std::set<EntityId> mDeleteList;

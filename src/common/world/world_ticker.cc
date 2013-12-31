@@ -1,8 +1,9 @@
 #include "common/world/world_ticker.h"
 
-void WorldTicker::handleAMessage(const AMessage& a) {
+void WorldTicker::handleAMessage(const AMessage& a, int fd) {
   if (a.type() == Type::CLIENT_INPUT) {
     mCi = a.input();
+    mFd = fd;
     mInputSet = true;
   }
 }

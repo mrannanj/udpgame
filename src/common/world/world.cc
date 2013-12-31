@@ -24,7 +24,7 @@ void World::defaultWorld() {
   g_grid.defaultGrid();
 }
 
-void World::spawn_entity() {
+EntityId World::spawn_entity(int fd) {
   cout << "spawning unit" << endl;
   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
   default_random_engine g(seed);
@@ -37,10 +37,12 @@ void World::spawn_entity() {
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   g_physics_system.add(p);
+  mClient2Entity[fd] = p.id;
+  return p.id;
 }
 
-void World::tick(float dt, const ClientInput& ci) {
-  setInput(ci);
+void World::tick(float dt, const ClientInput& ci, int fd) {
+  setInput(ci, fd);
   g_input_system.tick(dt, *this);
   g_physics_system.tick(dt);
   removeDead();
@@ -52,7 +54,7 @@ void World::removeDead() {
   }
 }
 
-void World::handleAMessage(const AMessage& a) {
+void World::handleAMessage(const AMessage& a, int) {
   switch (a.type()) {
     case Type::WORLD_STATE:
       setState(a.world_state());
@@ -63,9 +65,9 @@ void World::handleAMessage(const AMessage& a) {
   }
 }
 
-void World::setInput(const ClientInput& ci) {
+void World::setInput(const ClientInput& ci, int fd) {
   InputC ic(ci);
-  ic.id = 0;
+  ic.id = fd;
   g_input_system.add_inputc(ic);
 }
 

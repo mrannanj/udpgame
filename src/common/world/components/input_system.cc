@@ -24,9 +24,14 @@ void InputSystem::tick(float, World& w) {
   for (InputC& i : m_inputs)
   {
     if (i.actions & ContinousAction::SPAWN_UNIT) {
-      w.spawn_entity();
+      w.spawn_entity(i.id);
     }
-    PhysicsC* p = g_physics_system.get(i.id);
+    auto it = w.mClient2Entity.find(i.id);
+    if (it == w.mClient2Entity.end())
+      continue;
+    EntityId id = it->second;
+
+    PhysicsC* p = g_physics_system.get(id);
     if (p == nullptr) continue;
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;
