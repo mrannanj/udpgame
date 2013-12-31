@@ -85,9 +85,10 @@ void Server::serve() {
       }
     }
     if (FD_ISSET(mQuit, &fds)) break;
-    if (mWorldTicker.canTick()) {
-      mWorld.tick(sec_per_ticks, mWorldTicker.mCi, mWorldTicker.mFd);
+    if (mWorldTicker.ok()) {
+      mWorld.tick(sec_per_ticks, mWorldTicker.mInputs);
       sendWorldState();
+      mWorldTicker.nextWait(mClients.size());
     }
   }
 }

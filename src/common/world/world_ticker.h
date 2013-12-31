@@ -1,12 +1,15 @@
 #pragma once
 
 #include "common/proto/udpgame.pb.h"
+#include "common/world/components/inputc.h"
+#include <vector>
 
 struct WorldTicker {
+  WorldTicker();
   void handleAMessage(const AMessage& a, int fd);
-  bool canTick();
+  bool ok();
+  void nextWait(size_t);
 
-  ClientInput mCi;
-  int mFd;
-  bool mInputSet;
+  size_t mNumClients;
+  std::vector<InputC> mInputs;
 };

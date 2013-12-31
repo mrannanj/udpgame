@@ -16,7 +16,8 @@
 
 using namespace std;
 
-World::World()
+World::World():
+  mTickNumber(0)
 {
 }
 
@@ -41,11 +42,12 @@ EntityId World::spawn_entity(int fd) {
   return p.id;
 }
 
-void World::tick(float dt, const ClientInput& ci, int fd) {
-  setInput(ci, fd);
+int World::tick(float dt, const std::vector<InputC>& inputs) {
+  setInputs(inputs);
   g_input_system.tick(dt, *this);
   g_physics_system.tick(dt);
   removeDead();
+  return ++mTickNumber;
 }
 
 void World::removeDead() {
@@ -65,10 +67,9 @@ void World::handleAMessage(const AMessage& a, int) {
   }
 }
 
-void World::setInput(const ClientInput& ci, int fd) {
-  InputC ic(ci);
-  ic.id = fd;
-  g_input_system.add_inputc(ic);
+void World::setInputs(const std::vector<InputC>& inputs) {
+  for (const InputC& ic : inputs)
+    g_input_system.add_inputc(ic);
 }
 
 void World::setState(const WorldState& w) {
@@ -83,6 +84,7 @@ void World::setState(const WorldState& w) {
     p.update_bbs();
     g_physics_system.add(p);
   }
+  mTickNumber = w.tick_number();
   memcpy(g_grid.m_grid, w.grid().c_str(), 1000);
 }
 
@@ -95,5 +97,6 @@ WorldState World::getState() {
     o->set_z(p.position.z);
   }
   w.set_grid(g_grid.m_grid, 1000);
+  w.set_tick_number(mTickNumber);
   return w;
 }

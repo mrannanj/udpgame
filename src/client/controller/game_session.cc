@@ -22,6 +22,7 @@ void GameSession::tick(Input& input) {
 void GameSession::sendFrameInput(Input& i) {
   InputC ic(i);
   ClientInput ci;
+  ci.set_tick_number(mWorld.mTickNumber + 1);
   ci.set_actions(ic.actions);
   ci.set_verical_delta(ic.vertical_angle_delta);
   ci.set_horizontal_delta(ic.horizontal_angle_delta);

@@ -214,10 +214,17 @@ class WorldState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .Object object = 1;
+  // required fixed32 tick_number = 1;
+  inline bool has_tick_number() const;
+  inline void clear_tick_number();
+  static const int kTickNumberFieldNumber = 1;
+  inline ::google::protobuf::uint32 tick_number() const;
+  inline void set_tick_number(::google::protobuf::uint32 value);
+  
+  // repeated .Object object = 2;
   inline int object_size() const;
   inline void clear_object();
-  static const int kObjectFieldNumber = 1;
+  static const int kObjectFieldNumber = 2;
   inline const ::Object& object(int index) const;
   inline ::Object* mutable_object(int index);
   inline ::Object* add_object();
@@ -226,10 +233,10 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Object >*
       mutable_object();
   
-  // optional bytes grid = 2;
+  // optional bytes grid = 3;
   inline bool has_grid() const;
   inline void clear_grid();
-  static const int kGridFieldNumber = 2;
+  static const int kGridFieldNumber = 3;
   inline const ::std::string& grid() const;
   inline void set_grid(const ::std::string& value);
   inline void set_grid(const char* value);
@@ -239,6 +246,8 @@ class WorldState : public ::google::protobuf::Message {
   
   // @@protoc_insertion_point(class_scope:WorldState)
  private:
+  inline void set_has_tick_number();
+  inline void clear_has_tick_number();
   inline void set_has_grid();
   inline void clear_has_grid();
   
@@ -246,9 +255,10 @@ class WorldState : public ::google::protobuf::Message {
   
   ::google::protobuf::RepeatedPtrField< ::Object > object_;
   ::std::string* grid_;
+  ::google::protobuf::uint32 tick_number_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -415,29 +425,38 @@ class ClientInput : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required fixed32 actions = 1;
+  // required fixed32 tick_number = 1;
+  inline bool has_tick_number() const;
+  inline void clear_tick_number();
+  static const int kTickNumberFieldNumber = 1;
+  inline ::google::protobuf::uint32 tick_number() const;
+  inline void set_tick_number(::google::protobuf::uint32 value);
+  
+  // required fixed32 actions = 2;
   inline bool has_actions() const;
   inline void clear_actions();
-  static const int kActionsFieldNumber = 1;
+  static const int kActionsFieldNumber = 2;
   inline ::google::protobuf::uint32 actions() const;
   inline void set_actions(::google::protobuf::uint32 value);
   
-  // required float horizontal_delta = 2;
+  // required float horizontal_delta = 3;
   inline bool has_horizontal_delta() const;
   inline void clear_horizontal_delta();
-  static const int kHorizontalDeltaFieldNumber = 2;
+  static const int kHorizontalDeltaFieldNumber = 3;
   inline float horizontal_delta() const;
   inline void set_horizontal_delta(float value);
   
-  // required float verical_delta = 3;
+  // required float verical_delta = 4;
   inline bool has_verical_delta() const;
   inline void clear_verical_delta();
-  static const int kVericalDeltaFieldNumber = 3;
+  static const int kVericalDeltaFieldNumber = 4;
   inline float verical_delta() const;
   inline void set_verical_delta(float value);
   
   // @@protoc_insertion_point(class_scope:ClientInput)
  private:
+  inline void set_has_tick_number();
+  inline void clear_has_tick_number();
   inline void set_has_actions();
   inline void clear_has_actions();
   inline void set_has_horizontal_delta();
@@ -447,12 +466,13 @@ class ClientInput : public ::google::protobuf::Message {
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
+  ::google::protobuf::uint32 tick_number_;
   ::google::protobuf::uint32 actions_;
   float horizontal_delta_;
   float verical_delta_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -553,7 +573,29 @@ inline ::ClientInput* AMessage::release_input() {
 
 // WorldState
 
-// repeated .Object object = 1;
+// required fixed32 tick_number = 1;
+inline bool WorldState::has_tick_number() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void WorldState::set_has_tick_number() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void WorldState::clear_has_tick_number() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void WorldState::clear_tick_number() {
+  tick_number_ = 0u;
+  clear_has_tick_number();
+}
+inline ::google::protobuf::uint32 WorldState::tick_number() const {
+  return tick_number_;
+}
+inline void WorldState::set_tick_number(::google::protobuf::uint32 value) {
+  set_has_tick_number();
+  tick_number_ = value;
+}
+
+// repeated .Object object = 2;
 inline int WorldState::object_size() const {
   return object_.size();
 }
@@ -578,15 +620,15 @@ WorldState::mutable_object() {
   return &object_;
 }
 
-// optional bytes grid = 2;
+// optional bytes grid = 3;
 inline bool WorldState::has_grid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void WorldState::set_has_grid() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void WorldState::clear_has_grid() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void WorldState::clear_grid() {
   if (grid_ != &::google::protobuf::internal::kEmptyString) {
@@ -710,15 +752,37 @@ inline void Object::set_z(float value) {
 
 // ClientInput
 
-// required fixed32 actions = 1;
-inline bool ClientInput::has_actions() const {
+// required fixed32 tick_number = 1;
+inline bool ClientInput::has_tick_number() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ClientInput::set_has_actions() {
+inline void ClientInput::set_has_tick_number() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ClientInput::clear_has_actions() {
+inline void ClientInput::clear_has_tick_number() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void ClientInput::clear_tick_number() {
+  tick_number_ = 0u;
+  clear_has_tick_number();
+}
+inline ::google::protobuf::uint32 ClientInput::tick_number() const {
+  return tick_number_;
+}
+inline void ClientInput::set_tick_number(::google::protobuf::uint32 value) {
+  set_has_tick_number();
+  tick_number_ = value;
+}
+
+// required fixed32 actions = 2;
+inline bool ClientInput::has_actions() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ClientInput::set_has_actions() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ClientInput::clear_has_actions() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void ClientInput::clear_actions() {
   actions_ = 0u;
@@ -732,15 +796,15 @@ inline void ClientInput::set_actions(::google::protobuf::uint32 value) {
   actions_ = value;
 }
 
-// required float horizontal_delta = 2;
+// required float horizontal_delta = 3;
 inline bool ClientInput::has_horizontal_delta() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void ClientInput::set_has_horizontal_delta() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void ClientInput::clear_has_horizontal_delta() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void ClientInput::clear_horizontal_delta() {
   horizontal_delta_ = 0;
@@ -754,15 +818,15 @@ inline void ClientInput::set_horizontal_delta(float value) {
   horizontal_delta_ = value;
 }
 
-// required float verical_delta = 3;
+// required float verical_delta = 4;
 inline bool ClientInput::has_verical_delta() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void ClientInput::set_has_verical_delta() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void ClientInput::clear_has_verical_delta() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ClientInput::clear_verical_delta() {
   verical_delta_ = 0;

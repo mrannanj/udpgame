@@ -24,9 +24,9 @@ void InputSystem::tick(float, World& w) {
   for (InputC& i : m_inputs)
   {
     if (i.actions & ContinousAction::SPAWN_UNIT) {
-      w.spawn_entity(i.id);
+      w.spawn_entity(i.mClient);
     }
-    auto it = w.mClient2Entity.find(i.id);
+    auto it = w.mClient2Entity.find(i.mClient);
     if (it == w.mClient2Entity.end())
       continue;
     EntityId id = it->second;

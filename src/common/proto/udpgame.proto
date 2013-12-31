@@ -10,8 +10,9 @@ message AMessage {
 }
 
 message WorldState {
-  repeated Object object = 1;
-  optional bytes grid = 2;
+  required fixed32 tick_number = 1;
+  repeated Object object = 2;
+  optional bytes grid = 3;
 }
 
 message Object {
@@ -21,7 +22,8 @@ message Object {
 }
 
 message ClientInput {
-  required fixed32 actions = 1;
-  required float horizontal_delta = 2;
-  required float verical_delta = 3;
+  required fixed32 tick_number = 1;
+  required fixed32 actions = 2;
+  required float horizontal_delta = 3;
+  required float verical_delta = 4;
 }

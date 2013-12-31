@@ -11,6 +11,7 @@ struct InputC {
   InputC(const Input&);
   InputC(const ClientInput&);
 
+  int mClient;
   EntityId id;
   unsigned actions;
   float horizontal_angle_delta;

@@ -56,7 +56,8 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AMessage));
   WorldState_descriptor_ = file->message_type(1);
-  static const int WorldState_offsets_[2] = {
+  static const int WorldState_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, grid_),
   };
@@ -89,7 +90,8 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Object));
   ClientInput_descriptor_ = file->message_type(3);
-  static const int ClientInput_offsets_[3] = {
+  static const int ClientInput_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, actions_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, horizontal_delta_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, verical_delta_),
@@ -151,12 +153,13 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\n\032common/proto/udpgame.proto\"^\n\010AMessage"
     "\022\023\n\004type\030\001 \002(\0162\005.Type\022 \n\013world_state\030\002 \001"
     "(\0132\013.WorldState\022\033\n\005input\030\003 \001(\0132\014.ClientI"
-    "nput\"3\n\nWorldState\022\027\n\006object\030\001 \003(\0132\007.Obj"
-    "ect\022\014\n\004grid\030\002 \001(\014\")\n\006Object\022\t\n\001x\030\001 \002(\002\022\t"
-    "\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"O\n\013ClientInput\022\017\n\007a"
-    "ctions\030\001 \002(\007\022\030\n\020horizontal_delta\030\002 \002(\002\022\025"
-    "\n\rverical_delta\030\003 \002(\002*)\n\004Type\022\017\n\013WORLD_S"
-    "TATE\020\001\022\020\n\014CLIENT_INPUT\020\002", 344);
+    "nput\"H\n\nWorldState\022\023\n\013tick_number\030\001 \002(\007\022"
+    "\027\n\006object\030\002 \003(\0132\007.Object\022\014\n\004grid\030\003 \001(\014\")"
+    "\n\006Object\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002("
+    "\002\"d\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022\017\n"
+    "\007actions\030\002 \002(\007\022\030\n\020horizontal_delta\030\003 \002(\002"
+    "\022\025\n\rverical_delta\030\004 \002(\002*)\n\004Type\022\017\n\013WORLD"
+    "_STATE\020\001\022\020\n\014CLIENT_INPUT\020\002", 386);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -505,6 +508,7 @@ void AMessage::Swap(AMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int WorldState::kTickNumberFieldNumber;
 const int WorldState::kObjectFieldNumber;
 const int WorldState::kGridFieldNumber;
 #endif  // !_MSC_VER
@@ -525,6 +529,7 @@ WorldState::WorldState(const WorldState& from)
 
 void WorldState::SharedCtor() {
   _cached_size_ = 0;
+  tick_number_ = 0u;
   grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -562,7 +567,8 @@ WorldState* WorldState::New() const {
 }
 
 void WorldState::Clear() {
-  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    tick_number_ = 0u;
     if (has_grid()) {
       if (grid_ != &::google::protobuf::internal::kEmptyString) {
         grid_->clear();
@@ -580,8 +586,23 @@ bool WorldState::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Object object = 1;
+      // required fixed32 tick_number = 1;
       case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &tick_number_)));
+          set_has_tick_number();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_object;
+        break;
+      }
+      
+      // repeated .Object object = 2;
+      case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_object:
@@ -590,13 +611,13 @@ bool WorldState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(10)) goto parse_object;
-        if (input->ExpectTag(18)) goto parse_grid;
+        if (input->ExpectTag(18)) goto parse_object;
+        if (input->ExpectTag(26)) goto parse_grid;
         break;
       }
       
-      // optional bytes grid = 2;
-      case 2: {
+      // optional bytes grid = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_grid:
@@ -627,16 +648,21 @@ bool WorldState::MergePartialFromCodedStream(
 
 void WorldState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated .Object object = 1;
-  for (int i = 0; i < this->object_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->object(i), output);
+  // required fixed32 tick_number = 1;
+  if (has_tick_number()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->tick_number(), output);
   }
   
-  // optional bytes grid = 2;
+  // repeated .Object object = 2;
+  for (int i = 0; i < this->object_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->object(i), output);
+  }
+  
+  // optional bytes grid = 3;
   if (has_grid()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytes(
-      2, this->grid(), output);
+      3, this->grid(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -647,18 +673,23 @@ void WorldState::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* WorldState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated .Object object = 1;
+  // required fixed32 tick_number = 1;
+  if (has_tick_number()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->tick_number(), target);
+  }
+  
+  // repeated .Object object = 2;
   for (int i = 0; i < this->object_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->object(i), target);
+        2, this->object(i), target);
   }
   
-  // optional bytes grid = 2;
+  // optional bytes grid = 3;
   if (has_grid()) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        2, this->grid(), target);
+        3, this->grid(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -671,8 +702,13 @@ void WorldState::SerializeWithCachedSizes(
 int WorldState::ByteSize() const {
   int total_size = 0;
   
-  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // optional bytes grid = 2;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required fixed32 tick_number = 1;
+    if (has_tick_number()) {
+      total_size += 1 + 4;
+    }
+    
+    // optional bytes grid = 3;
     if (has_grid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
@@ -680,7 +716,7 @@ int WorldState::ByteSize() const {
     }
     
   }
-  // repeated .Object object = 1;
+  // repeated .Object object = 2;
   total_size += 1 * this->object_size();
   for (int i = 0; i < this->object_size(); i++) {
     total_size +=
@@ -714,7 +750,10 @@ void WorldState::MergeFrom(const ::google::protobuf::Message& from) {
 void WorldState::MergeFrom(const WorldState& from) {
   GOOGLE_CHECK_NE(&from, this);
   object_.MergeFrom(from.object_);
-  if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_tick_number()) {
+      set_tick_number(from.tick_number());
+    }
     if (from.has_grid()) {
       set_grid(from.grid());
     }
@@ -735,6 +774,7 @@ void WorldState::CopyFrom(const WorldState& from) {
 }
 
 bool WorldState::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
   for (int i = 0; i < object_size(); i++) {
     if (!this->object(i).IsInitialized()) return false;
@@ -744,6 +784,7 @@ bool WorldState::IsInitialized() const {
 
 void WorldState::Swap(WorldState* other) {
   if (other != this) {
+    std::swap(tick_number_, other->tick_number_);
     object_.Swap(&other->object_);
     std::swap(grid_, other->grid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1046,6 +1087,7 @@ void Object::Swap(Object* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int ClientInput::kTickNumberFieldNumber;
 const int ClientInput::kActionsFieldNumber;
 const int ClientInput::kHorizontalDeltaFieldNumber;
 const int ClientInput::kVericalDeltaFieldNumber;
@@ -1067,6 +1109,7 @@ ClientInput::ClientInput(const ClientInput& from)
 
 void ClientInput::SharedCtor() {
   _cached_size_ = 0;
+  tick_number_ = 0u;
   actions_ = 0u;
   horizontal_delta_ = 0;
   verical_delta_ = 0;
@@ -1104,6 +1147,7 @@ ClientInput* ClientInput::New() const {
 
 void ClientInput::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    tick_number_ = 0u;
     actions_ = 0u;
     horizontal_delta_ = 0;
     verical_delta_ = 0;
@@ -1118,10 +1162,26 @@ bool ClientInput::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required fixed32 actions = 1;
+      // required fixed32 tick_number = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &tick_number_)));
+          set_has_tick_number();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(21)) goto parse_actions;
+        break;
+      }
+      
+      // required fixed32 actions = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_actions:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
                  input, &actions_)));
@@ -1129,12 +1189,12 @@ bool ClientInput::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(21)) goto parse_horizontal_delta;
+        if (input->ExpectTag(29)) goto parse_horizontal_delta;
         break;
       }
       
-      // required float horizontal_delta = 2;
-      case 2: {
+      // required float horizontal_delta = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
          parse_horizontal_delta:
@@ -1145,12 +1205,12 @@ bool ClientInput::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(29)) goto parse_verical_delta;
+        if (input->ExpectTag(37)) goto parse_verical_delta;
         break;
       }
       
-      // required float verical_delta = 3;
-      case 3: {
+      // required float verical_delta = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
          parse_verical_delta:
@@ -1183,19 +1243,24 @@ bool ClientInput::MergePartialFromCodedStream(
 
 void ClientInput::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required fixed32 actions = 1;
+  // required fixed32 tick_number = 1;
+  if (has_tick_number()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->tick_number(), output);
+  }
+  
+  // required fixed32 actions = 2;
   if (has_actions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->actions(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->actions(), output);
   }
   
-  // required float horizontal_delta = 2;
+  // required float horizontal_delta = 3;
   if (has_horizontal_delta()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->horizontal_delta(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->horizontal_delta(), output);
   }
   
-  // required float verical_delta = 3;
+  // required float verical_delta = 4;
   if (has_verical_delta()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->verical_delta(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->verical_delta(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1206,19 +1271,24 @@ void ClientInput::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* ClientInput::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required fixed32 actions = 1;
+  // required fixed32 tick_number = 1;
+  if (has_tick_number()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->tick_number(), target);
+  }
+  
+  // required fixed32 actions = 2;
   if (has_actions()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->actions(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->actions(), target);
   }
   
-  // required float horizontal_delta = 2;
+  // required float horizontal_delta = 3;
   if (has_horizontal_delta()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->horizontal_delta(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->horizontal_delta(), target);
   }
   
-  // required float verical_delta = 3;
+  // required float verical_delta = 4;
   if (has_verical_delta()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->verical_delta(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->verical_delta(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1232,17 +1302,22 @@ int ClientInput::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required fixed32 actions = 1;
+    // required fixed32 tick_number = 1;
+    if (has_tick_number()) {
+      total_size += 1 + 4;
+    }
+    
+    // required fixed32 actions = 2;
     if (has_actions()) {
       total_size += 1 + 4;
     }
     
-    // required float horizontal_delta = 2;
+    // required float horizontal_delta = 3;
     if (has_horizontal_delta()) {
       total_size += 1 + 4;
     }
     
-    // required float verical_delta = 3;
+    // required float verical_delta = 4;
     if (has_verical_delta()) {
       total_size += 1 + 4;
     }
@@ -1274,6 +1349,9 @@ void ClientInput::MergeFrom(const ::google::protobuf::Message& from) {
 void ClientInput::MergeFrom(const ClientInput& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_tick_number()) {
+      set_tick_number(from.tick_number());
+    }
     if (from.has_actions()) {
       set_actions(from.actions());
     }
@@ -1300,13 +1378,14 @@ void ClientInput::CopyFrom(const ClientInput& from) {
 }
 
 bool ClientInput::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
   
   return true;
 }
 
 void ClientInput::Swap(ClientInput* other) {
   if (other != this) {
+    std::swap(tick_number_, other->tick_number_);
     std::swap(actions_, other->actions_);
     std::swap(horizontal_delta_, other->horizontal_delta_);
     std::swap(verical_delta_, other->verical_delta_);
