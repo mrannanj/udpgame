@@ -13,6 +13,7 @@ public:
   void tick(float);
   void spawn_entity();
   WorldState getState();
+  void setInput(const ClientInput&);
   void setState(const WorldState&);
   void handleAMessage(const AMessage&);
   void removeDead();

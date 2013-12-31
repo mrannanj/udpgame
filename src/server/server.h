@@ -7,8 +7,6 @@
 #include "common/net/connection.h"
 #include "common/world/world.h"
 
-#define SERVER_BUFSIZE 2048
-
 struct Server {
   Server(int);
 

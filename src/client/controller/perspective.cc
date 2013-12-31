@@ -22,8 +22,10 @@ Perspective::Perspective():
 
 void Perspective::jump_to_next_unit()
 {
+#if 0
   m_follow_id = g_physics_system.next_id(m_follow_id);
   std::cout << "Jumped to unit " << m_follow_id << std::endl;
+#endif
 }
 
 void Perspective::switch_camera_mode()

@@ -1,4 +1,5 @@
 #include "common/world/components/input_system.h"
+#include <iostream>
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
 constexpr float PI = (float)M_PI;
@@ -12,6 +13,10 @@ void InputSystem::add_input(EntityId id, const Input& input) {
   m_inputs.push_back(input_comp);
 }
 
+void InputSystem::add_inputc(const InputC& ic) {
+  m_inputs.push_back(ic);
+}
+
 void InputSystem::tick(float)
 {
   float move_speed = 1.5f;
@@ -20,6 +25,7 @@ void InputSystem::tick(float)
   for (InputC& i : m_inputs)
   {
     PhysicsC* p = g_physics_system.get(i.id);
+    if (p == nullptr) continue;
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;
     if (p->vertical_angle < -HALF_PI)
@@ -39,18 +45,22 @@ void InputSystem::tick(float)
     if (i.actions & ContinousAction::MOVE_FORWARD)
     {
       p->velocity += forward * move_speed;
+      std::cout << "moving forward " << p->id << std::endl;
     }
     else if (i.actions & ContinousAction::MOVE_BACK)
     {
       p->velocity -= forward * move_speed;
+      std::cout << "moving back " << p->id << std::endl;
     }
     if (i.actions & ContinousAction::MOVE_RIGHT)
     {
       p->velocity += right * move_speed;
+      std::cout << "moving right " << p->id << std::endl;
     }
     else if (i.actions & ContinousAction::MOVE_LEFT)
     {
       p->velocity -= right * move_speed;
+      std::cout << "moving left " << p->id << std::endl;
     }
     if (i.actions & ContinousAction::JUMP && p->on_ground)
     {

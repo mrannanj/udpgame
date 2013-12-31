@@ -45,28 +45,20 @@ void Server::init() {
 }
 
 void Server::sendWorldState() {
-  char buf[SERVER_BUFSIZE];
   AMessage a;
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
   a.mutable_world_state()->CopyFrom(w);
-  short size = a.ByteSize();
-  uint16_t netSize = htons(size);
-  memcpy(buf, &netSize, sizeof(netSize));
-  a.SerializeToArray(&buf[sizeof(netSize)], size);
-  for (const Connection& c : mClients) {
-    write(c.mSocket, buf, size + sizeof(netSize));
-  }
+  for (Connection& c : mClients)
+    c.sendMessage(a);
 }
 
 void Server::serve() {
   fd_set fds;
   for (int i = 0;; ++i) {
-    sendWorldState();
     if (i % 5 == 0) mWorld.spawn_entity();
-    mWorld.tick(sec_per_ticks);
     int nfds = mkFDSet(&fds);
-    timeval tv = {0, 1000000/TICKS_PER_SEC};
+    timeval tv = {1, 0};
     if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
       perror("read");
 
@@ -76,7 +68,7 @@ void Server::serve() {
         ++it;
         continue;
       }
-      ssize_t nread = c.checkMessages(mPrinter);
+      ssize_t nread = c.checkMessages(mWorld);
       if (nread <= 0) {
         it = mClients.erase(it);
       } else {
@@ -92,6 +84,8 @@ void Server::serve() {
         mClients.emplace_back(client, sa);
       }
     }
+    mWorld.tick(sec_per_ticks);
+    sendWorldState();
     if (FD_ISSET(mQuit, &fds)) break;
   }
 }

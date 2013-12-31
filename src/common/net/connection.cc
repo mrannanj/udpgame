@@ -31,6 +31,8 @@ Connection::Connection(int socket, const sockaddr_in& sa):
   mAddress(),
   mSockaddr(sa)
 {
+  if (-1 == fcntl(mSocket, F_SETFL, O_NONBLOCK))
+    die("fcntl");
 }
 
 Connection::~Connection() {

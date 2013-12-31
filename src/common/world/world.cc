@@ -46,12 +46,29 @@ void World::tick(float dt) {
 }
 
 void World::removeDead() {
-  for (EntityId id : g_physics_system.mRemoveList)
+  for (EntityId id : g_physics_system.mRemoveList) {
+    cout << "removing " << id << endl;
     g_physics_system.remove(id);
+  }
 }
 
 void World::handleAMessage(const AMessage& a) {
-  setState(a.world_state());
+  switch (a.type()) {
+    case Type::WORLD_STATE:
+      setState(a.world_state());
+      break;
+    case Type::CLIENT_INPUT:
+      setInput(a.input());
+      break;
+  }
+}
+
+void World::setInput(const ClientInput& ci) {
+  InputC ic(ci);
+  for (const PhysicsC& p : g_physics_system.physics_components()) {
+    ic.id = p.id;
+    g_input_system.add_inputc(ic);
+  }
 }
 
 void World::setState(const WorldState& w) {

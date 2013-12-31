@@ -10,6 +10,7 @@
 class InputSystem {
 public:
   void add_input(EntityId, const Input&);
+  void add_inputc(const InputC& ic);
   void tick(float);
 
 private:
