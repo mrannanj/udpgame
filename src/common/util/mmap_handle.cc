@@ -20,23 +20,19 @@ MmapHandle::MmapHandle(const char* filename):
   m_ptr = mmap(nullptr, m_size, PROT_READ, MAP_PRIVATE, m_fd, 0);
 }
 
-MmapHandle::~MmapHandle()
-{
-  assert(0 == munmap(m_ptr, m_size));
-  assert(0 == close(m_fd));
+MmapHandle::~MmapHandle() {
+  munmap(m_ptr, m_size);
+  close(m_fd);
 }
 
-int MmapHandle::fd() const
-{
+int MmapHandle::fd() const {
   return m_fd;
 }
 
-size_t MmapHandle::size() const
-{
+size_t MmapHandle::size() const {
   return m_size;
 }
 
-void* MmapHandle::ptr() const
-{
+void* MmapHandle::ptr() const {
   return m_ptr;
 }

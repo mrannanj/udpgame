@@ -1,10 +1,8 @@
-#ifndef COMMON_UTIL_MMAP_HANDLE_H
-#define COMMON_UTIL_MMAP_HANDLE_H
+#pragma once
 
 #include <stddef.h>
 
-class MmapHandle
-{
+class MmapHandle {
 public:
   MmapHandle(const char*);
   ~MmapHandle();
@@ -18,5 +16,3 @@ private:
   size_t m_size;
   void* m_ptr;
 };
-
-#endif
