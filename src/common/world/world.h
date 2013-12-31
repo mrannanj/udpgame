@@ -14,6 +14,7 @@ public:
   void spawn_entity();
   WorldState getState();
   void setState(const WorldState&);
+  void handleAMessage(const AMessage&);
   void removeDead();
   void defaultWorld();
 

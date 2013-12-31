@@ -16,7 +16,7 @@ void GameSession::tick(Input& input) {
   mConnection.checkMessages(mWorld);
   mPerspective.handle_input(input);
   mPerspective.tick();
-  //sendFrameInput(input);
+  sendFrameInput(input);
 }
 
 void GameSession::sendFrameInput(Input& i) {

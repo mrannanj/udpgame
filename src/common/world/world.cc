@@ -50,6 +50,10 @@ void World::removeDead() {
     g_physics_system.remove(id);
 }
 
+void World::handleAMessage(const AMessage& a) {
+  setState(a.world_state());
+}
+
 void World::setState(const WorldState& w) {
   g_physics_system.clear();
   for (int i = 0; i < w.object_size(); ++i) {

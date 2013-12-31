@@ -23,4 +23,5 @@ struct Server {
   int mListenFD;
   std::vector<Connection> mClients;
   World mWorld;
+  AMessagePrinter mPrinter;
 };

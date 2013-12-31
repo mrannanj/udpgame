@@ -19,7 +19,7 @@ struct Connection {
   ~Connection();
 
   void sendMessage(const AMessage&);
-  template <class T> void checkMessages(T&);
+  template <class T> ssize_t checkMessages(T&);
 
   ssize_t mPos;
   int mSocket;
@@ -28,10 +28,16 @@ struct Connection {
   char mBuf[MAXMSG];
 };
 
+struct AMessagePrinter {
+  void handleAMessage(const AMessage& a) {
+    a.PrintDebugString();
+  }
+};
+
 template <class T>
-void Connection::checkMessages(T& handler) {
+ssize_t Connection::checkMessages(T& handler) {
   ssize_t nread = read(mSocket, &mBuf[mPos], MAXMSG-mPos);
-  if (nread < 0) return;
+  if (nread <= 0) return nread;
   mPos += nread;
   if (mPos >= 2) {
     uint16_t size;
@@ -40,11 +46,11 @@ void Connection::checkMessages(T& handler) {
     if (mPos >= size+2) {
       AMessage a;
       if (a.ParseFromArray(&mBuf[sizeof(uint16_t)], size)) {
-        const WorldState& w = a.world_state();
-        handler.setState(w);
+        handler.handleAMessage(a);
         mPos -= size+2;
       }
     }
   }
+  return nread;
 }
 

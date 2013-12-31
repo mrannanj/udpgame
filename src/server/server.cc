@@ -60,7 +60,6 @@ void Server::sendWorldState() {
 }
 
 void Server::serve() {
-  char buf[SERVER_BUFSIZE];
   fd_set fds;
   for (int i = 0;; ++i) {
     sendWorldState();
@@ -77,13 +76,8 @@ void Server::serve() {
         ++it;
         continue;
       }
-      cout << "message from client" << endl;
-      ssize_t n = read(c.mSocket, buf, SERVER_BUFSIZE);
-      if (n == 0) {
-        cout << "client disconnect" << endl;
-        it = mClients.erase(it);
-      } else if (n == -1) {
-        perror("read");
+      ssize_t nread = c.checkMessages(mPrinter);
+      if (nread <= 0) {
         it = mClients.erase(it);
       } else {
         ++it;
