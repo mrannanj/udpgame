@@ -17,13 +17,15 @@ void InputSystem::add_inputc(const InputC& ic) {
   m_inputs.push_back(ic);
 }
 
-void InputSystem::tick(float)
-{
+void InputSystem::tick(float, World& w) {
   float move_speed = 1.5f;
   float jump_velocity = 5.0f;
 
   for (InputC& i : m_inputs)
   {
+    if (i.actions & ContinousAction::SPAWN_UNIT) {
+      w.spawn_entity();
+    }
     PhysicsC* p = g_physics_system.get(i.id);
     if (p == nullptr) continue;
     p->horizontal_angle -= i.horizontal_angle_delta;

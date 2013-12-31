@@ -56,7 +56,6 @@ void Server::sendWorldState() {
 void Server::serve() {
   fd_set fds;
   for (int i = 0;; ++i) {
-    if (i % 5 == 0) mWorld.spawn_entity();
     int nfds = mkFDSet(&fds);
     timeval tv = {1, 0};
     if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
@@ -68,7 +67,7 @@ void Server::serve() {
         ++it;
         continue;
       }
-      ssize_t nread = c.checkMessages(mWorld);
+      ssize_t nread = c.checkMessages(mWorldTicker);
       if (nread <= 0) {
         cout << "client disconnected" << endl;
         it = mClients.erase(it);
@@ -85,9 +84,11 @@ void Server::serve() {
         mClients.emplace_back(client, sa);
       }
     }
-    mWorld.tick(sec_per_ticks);
-    sendWorldState();
     if (FD_ISSET(mQuit, &fds)) break;
+    if (mWorldTicker.canTick()) {
+      mWorld.tick(sec_per_ticks, mWorldTicker.mCi);
+      sendWorldState();
+    }
   }
 }
 

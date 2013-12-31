@@ -25,7 +25,7 @@ void World::defaultWorld() {
 }
 
 void World::spawn_entity() {
-  if (g_physics_system.physics_components().size() >= 10) return;
+  cout << "spawning unit" << endl;
   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
   default_random_engine g(seed);
   uniform_real_distribution<double> d(1.0f, 10.0f);
@@ -39,8 +39,9 @@ void World::spawn_entity() {
   g_physics_system.add(p);
 }
 
-void World::tick(float dt) {
-  g_input_system.tick(dt);
+void World::tick(float dt, const ClientInput& ci) {
+  setInput(ci);
+  g_input_system.tick(dt, *this);
   g_physics_system.tick(dt);
   removeDead();
 }
@@ -57,17 +58,15 @@ void World::handleAMessage(const AMessage& a) {
       setState(a.world_state());
       break;
     case Type::CLIENT_INPUT:
-      setInput(a.input());
+      cout << "deprecated handlemessage" << endl;
       break;
   }
 }
 
 void World::setInput(const ClientInput& ci) {
   InputC ic(ci);
-  for (const PhysicsC& p : g_physics_system.physics_components()) {
-    ic.id = p.id;
-    g_input_system.add_inputc(ic);
-  }
+  ic.id = 0;
+  g_input_system.add_inputc(ic);
 }
 
 void World::setState(const WorldState& w) {

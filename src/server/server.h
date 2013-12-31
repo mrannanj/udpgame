@@ -6,6 +6,7 @@
 
 #include "common/net/connection.h"
 #include "common/world/world.h"
+#include "common/world/world_ticker.h"
 
 struct Server {
   Server(int);
@@ -21,5 +22,6 @@ struct Server {
   int mListenFD;
   std::vector<Connection> mClients;
   World mWorld;
+  WorldTicker mWorldTicker;
   AMessagePrinter mPrinter;
 };

@@ -91,7 +91,8 @@ void InputManager::keyup(const SDL_Event& e, Input& i) const {
       i.keypress |= DiscreteAction::ESCAPE;
       break;
     case SDLK_F8:
-      i.keypress |= DiscreteAction::SPAWN_UNIT;
+      i.continous_actions |= ContinousAction::SPAWN_UNIT;
+      std::cout << "spawn unit pressed" << std::endl;
       break;
     case SDLK_F7:
       i.keypress |= DiscreteAction::SWITCH_CAMERA_MODE;

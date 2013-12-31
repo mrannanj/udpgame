@@ -10,7 +10,7 @@ class World {
 public:
   World();
 
-  void tick(float);
+  void tick(float, const ClientInput&);
   void spawn_entity();
   WorldState getState();
   void setInput(const ClientInput&);
