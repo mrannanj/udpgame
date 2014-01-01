@@ -17,7 +17,8 @@
 using namespace std;
 
 World::World():
-  mTickNumber(0)
+  mTickNumber(0),
+  mInit(false)
 {
 }
 
@@ -56,14 +57,13 @@ void World::removeDead() {
   }
 }
 
-void World::handleAMessage(const AMessage& a, int) {
+bool World::handleAMessage(const AMessage& a, int) {
   switch (a.type()) {
     case Type::WORLD_STATE:
       setState(a.world_state());
-      break;
-    case Type::CLIENT_INPUT:
-      cout << "deprecated handlemessage" << endl;
-      break;
+      return true;
+    default:
+      return false;
   }
 }
 
@@ -86,6 +86,7 @@ void World::setState(const WorldState& w) {
   }
   mTickNumber = w.tick_number();
   memcpy(g_grid.m_grid, w.grid().c_str(), 1000);
+  mInit = true;
 }
 
 WorldState World::getState() {

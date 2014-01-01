@@ -5,11 +5,12 @@
 #include <vector>
 
 struct WorldTicker {
-  WorldTicker();
-  void handleAMessage(const AMessage& a, int fd);
+  WorldTicker(size_t, unsigned);
+  bool handleAMessage(const AMessage&, int);
   bool ok();
-  void nextWait(size_t);
+  void nextWait(size_t, unsigned);
 
   size_t mNumClients;
+  unsigned mFrameNum;
   std::vector<InputC> mInputs;
 };

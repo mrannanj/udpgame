@@ -10,6 +10,9 @@ GameSession::GameSession(const std::string& addr):
   mPerspective(),
   mWorld()
 {
+  while (!mWorld.mInit) {
+    mConnection.checkMessages(mWorld);
+  }
 }
 
 void GameSession::tick(Input& input) {

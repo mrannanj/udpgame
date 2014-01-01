@@ -20,7 +20,8 @@ Server::Server(int quit):
   mListenSA(),
   mListenFD(-1),
   mClients(),
-  mWorld()
+  mWorld(),
+  mWorldTicker(mClients.size(), mWorld.mTickNumber)
 {
   mWorld.defaultWorld();
 }
@@ -63,7 +64,7 @@ void Server::serve() {
 
     if (mWorldTicker.ok()) {
       mWorld.tick(sec_per_ticks, mWorldTicker.mInputs);
-      mWorldTicker.nextWait(mClients.size());
+      mWorldTicker.nextWait(mClients.size(), mWorld.mTickNumber + 1);
       sendWorldState();
     }
   } while(!FD_ISSET(mQuit, &fds));

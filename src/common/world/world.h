@@ -17,11 +17,12 @@ public:
   WorldState getState();
   void setInputs(const std::vector<InputC>&);
   void setState(const WorldState&);
-  void handleAMessage(const AMessage&, int);
+  bool handleAMessage(const AMessage&, int);
   void removeDead();
   void defaultWorld();
 
-  int mTickNumber;
+  bool mInit;
+  unsigned mTickNumber;
   std::map<int, EntityId> mClient2Entity;
 private:
   IdGenerator m_idgen;
