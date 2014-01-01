@@ -55,40 +55,45 @@ void Server::sendWorldState() {
 
 void Server::serve() {
   fd_set fds;
-  while (true) {
+  do {
     int nfds = mkFDSet(&fds);
-    timeval tv = {1, 0};
-    if (-1 == select(nfds, &fds, nullptr, nullptr, &tv))
-      perror("select");
+    if (-1 == select(nfds, &fds, nullptr, nullptr, nullptr)) die("select");
+    acceptNewClient(fds);
+    checkClientInput(fds);
 
-    for (auto it = mClients.begin(); it != mClients.end();) {
-      Connection& c = *it;
-      if (!FD_ISSET(c.mSocket, &fds)) {
-        ++it;
-        continue;
-      }
-      ssize_t nread = c.checkMessages(mWorldTicker);
-      if (nread <= 0) {
-        cout << "client disconnected" << endl;
-        it = mClients.erase(it);
-      } else {
-        ++it;
-      }
-    }
-    if (FD_ISSET(mListenFD, &fds)) {
-      sockaddr_in sa;
-      socklen_t sa_len;
-      int client = accept(mListenFD, (sockaddr*)&sa, &sa_len);
-      if (client != -1) {
-        cout << "client connected" << endl;
-        mClients.emplace_back(client, sa);
-      }
-    }
-    if (FD_ISSET(mQuit, &fds)) break;
     if (mWorldTicker.ok()) {
       mWorld.tick(sec_per_ticks, mWorldTicker.mInputs);
-      sendWorldState();
       mWorldTicker.nextWait(mClients.size());
+      sendWorldState();
+    }
+  } while(!FD_ISSET(mQuit, &fds));
+}
+
+void Server::acceptNewClient(const fd_set& fds) {
+  if (FD_ISSET(mListenFD, &fds)) {
+    sockaddr_in sa;
+    socklen_t sa_len;
+    int client = accept(mListenFD, (sockaddr*)&sa, &sa_len);
+    if (client != -1) {
+      cout << "client connected" << endl;
+      mClients.emplace_back(client, sa);
+    }
+  }
+}
+
+void Server::checkClientInput(const fd_set& fds) {
+  for (auto it = mClients.begin(); it != mClients.end();) {
+    Connection& c = *it;
+    if (!FD_ISSET(c.mSocket, &fds)) {
+      ++it;
+      continue;
+    }
+    ssize_t nread = c.checkMessages(mWorldTicker);
+    if (nread <= 0) {
+      cout << "client disconnected" << endl;
+      it = mClients.erase(it);
+    } else {
+      ++it;
     }
   }
 }

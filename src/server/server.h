@@ -15,6 +15,8 @@ struct Server {
   void serve();
 
   int mkFDSet(fd_set*);
+  void checkClientInput(const fd_set& fds);
+  void acceptNewClient(const fd_set& fds);
   void sendWorldState();
 
   int mQuit;
