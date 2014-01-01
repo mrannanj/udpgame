@@ -21,7 +21,6 @@ GameScreen::GameScreen() {
 }
 
 void GameScreen::Activate() {
-  //grab_mouse();
   glEnable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
@@ -30,6 +29,9 @@ void GameScreen::Activate() {
 void GameScreen::Update(InputManager& input_reader, float dt) {
   Input input;
   input_reader.read_input(input);
+  if (input.consume_discrete_action(DiscreteAction::TOGGLE_MOUSEGRAB)) {
+    toggle_mousegrab();
+  }
   if (input.consume_discrete_action(DiscreteAction::ESCAPE)) {
     g_screen_stack.switch_state(&g_main_menu);
     return;

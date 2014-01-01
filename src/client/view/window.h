@@ -1,5 +1,4 @@
-#ifndef CLIENT_VIEW_WINDOW_H
-#define CLIENT_VIEW_WINDOW_H
+#pragma once
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -9,5 +8,4 @@ float gl_pos_y(int);
 void open_window();
 void grab_mouse();
 void release_mouse();
-
-#endif
+void toggle_mousegrab();
