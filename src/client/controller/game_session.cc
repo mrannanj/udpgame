@@ -1,17 +1,27 @@
 #include <iostream>
+#include <chrono>
+
 #include "common/proto/udpgame.pb.h"
 #include "client/controller/game_session.h"
 #include "common/world/components/inputc.h"
 
 using namespace std;
+using namespace std::chrono;
 
 GameSession::GameSession(const std::string& addr):
   mConnection(addr),
   mPerspective(),
   mWorld()
 {
+  system_clock::time_point t1 = system_clock::now();
   while (!mWorld.mInit) {
     mConnection.checkMessages(*this);
+    system_clock::time_point t2 = system_clock::now();
+
+    if (t2-t1 >= chrono::seconds(1)) {
+      cout << "Failed to get initial state from server, exiting" << endl;
+      exit(EXIT_FAILURE);
+    }
   }
 }
 
