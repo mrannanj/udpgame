@@ -20,35 +20,17 @@ Perspective::Perspective():
 {
 }
 
-void Perspective::jump_to_next_unit()
-{
-#if 0
-  m_follow_id = g_physics_system.next_id(m_follow_id);
-  std::cout << "Jumped to unit " << m_follow_id << std::endl;
-#endif
-}
-
-void Perspective::switch_camera_mode()
-{
+void Perspective::switch_camera_mode() {
   m_freelook = !m_freelook;
   std::cout << "Freelook: " << m_freelook << std::endl;
 }
 
-void Perspective::handle_input(Input& i)
-{
+void Perspective::handle_input(Input& i) {
   if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
-  {
     switch_camera_mode();
-  }
-  if (i.consume_discrete_action(DiscreteAction::SWITCH_UNIT))
-  {
-    jump_to_next_unit();
-  }
 
-  if (!m_freelook)
-  {
-    if (g_physics_system.get(m_follow_id))
-    {
+  if (!m_freelook) {
+    if (g_physics_system.get(m_follow_id)) {
       g_input_system.add_input(m_follow_id, i);
     }
     return;

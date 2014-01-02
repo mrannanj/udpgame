@@ -22,6 +22,18 @@ void GameSession::tick(Input& input) {
   sendFrameInput(input);
 }
 
+bool GameSession::handleAMessage(const AMessage& a, int) {
+  switch (a.type()) {
+    case Type::WORLD_STATE:
+      mWorld.setState(a.world_state());
+      mOwnedId = a.world_state().owned_id();
+      mPerspective.m_follow_id = mOwnedId;
+      return true;
+    default:
+      return false;
+  }
+}
+
 void GameSession::sendFrameInput(Input& i) {
   InputC ic(i);
   ClientInput ci;

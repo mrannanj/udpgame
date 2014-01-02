@@ -77,6 +77,7 @@ void World::setState(const WorldState& w) {
   for (int i = 0; i < w.object_size(); ++i) {
     const Object& o = w.object(i);
     PhysicsC p;
+    p.id = o.id();
     p.position.x = o.x();
     p.position.y = o.y();
     p.position.z = o.z();
@@ -93,6 +94,7 @@ WorldState World::getState() {
   WorldState w;
   for (const PhysicsC& p : g_physics_system.physics_components()) {
     Object* o = w.add_object();
+    o->set_id(p.id);
     o->set_x(p.position.x);
     o->set_y(p.position.y);
     o->set_z(p.position.z);

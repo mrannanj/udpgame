@@ -221,10 +221,17 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 tick_number() const;
   inline void set_tick_number(::google::protobuf::uint32 value);
   
-  // repeated .Object object = 2;
+  // required fixed32 owned_id = 2;
+  inline bool has_owned_id() const;
+  inline void clear_owned_id();
+  static const int kOwnedIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 owned_id() const;
+  inline void set_owned_id(::google::protobuf::uint32 value);
+  
+  // repeated .Object object = 3;
   inline int object_size() const;
   inline void clear_object();
-  static const int kObjectFieldNumber = 2;
+  static const int kObjectFieldNumber = 3;
   inline const ::Object& object(int index) const;
   inline ::Object* mutable_object(int index);
   inline ::Object* add_object();
@@ -233,10 +240,10 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Object >*
       mutable_object();
   
-  // optional bytes grid = 3;
+  // required bytes grid = 4;
   inline bool has_grid() const;
   inline void clear_grid();
-  static const int kGridFieldNumber = 3;
+  static const int kGridFieldNumber = 4;
   inline const ::std::string& grid() const;
   inline void set_grid(const ::std::string& value);
   inline void set_grid(const char* value);
@@ -248,17 +255,20 @@ class WorldState : public ::google::protobuf::Message {
  private:
   inline void set_has_tick_number();
   inline void clear_has_tick_number();
+  inline void set_has_owned_id();
+  inline void clear_has_owned_id();
   inline void set_has_grid();
   inline void clear_has_grid();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
+  ::google::protobuf::uint32 tick_number_;
+  ::google::protobuf::uint32 owned_id_;
   ::google::protobuf::RepeatedPtrField< ::Object > object_;
   ::std::string* grid_;
-  ::google::protobuf::uint32 tick_number_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -323,29 +333,38 @@ class Object : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required float x = 1;
+  // required fixed32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+  // required float x = 2;
   inline bool has_x() const;
   inline void clear_x();
-  static const int kXFieldNumber = 1;
+  static const int kXFieldNumber = 2;
   inline float x() const;
   inline void set_x(float value);
   
-  // required float y = 2;
+  // required float y = 3;
   inline bool has_y() const;
   inline void clear_y();
-  static const int kYFieldNumber = 2;
+  static const int kYFieldNumber = 3;
   inline float y() const;
   inline void set_y(float value);
   
-  // required float z = 3;
+  // required float z = 4;
   inline bool has_z() const;
   inline void clear_z();
-  static const int kZFieldNumber = 3;
+  static const int kZFieldNumber = 4;
   inline float z() const;
   inline void set_z(float value);
   
   // @@protoc_insertion_point(class_scope:Object)
  private:
+  inline void set_has_id();
+  inline void clear_has_id();
   inline void set_has_x();
   inline void clear_has_x();
   inline void set_has_y();
@@ -355,12 +374,13 @@ class Object : public ::google::protobuf::Message {
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
+  ::google::protobuf::uint32 id_;
   float x_;
   float y_;
   float z_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -595,7 +615,29 @@ inline void WorldState::set_tick_number(::google::protobuf::uint32 value) {
   tick_number_ = value;
 }
 
-// repeated .Object object = 2;
+// required fixed32 owned_id = 2;
+inline bool WorldState::has_owned_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void WorldState::set_has_owned_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void WorldState::clear_has_owned_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void WorldState::clear_owned_id() {
+  owned_id_ = 0u;
+  clear_has_owned_id();
+}
+inline ::google::protobuf::uint32 WorldState::owned_id() const {
+  return owned_id_;
+}
+inline void WorldState::set_owned_id(::google::protobuf::uint32 value) {
+  set_has_owned_id();
+  owned_id_ = value;
+}
+
+// repeated .Object object = 3;
 inline int WorldState::object_size() const {
   return object_.size();
 }
@@ -620,15 +662,15 @@ WorldState::mutable_object() {
   return &object_;
 }
 
-// optional bytes grid = 3;
+// required bytes grid = 4;
 inline bool WorldState::has_grid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void WorldState::set_has_grid() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void WorldState::clear_has_grid() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void WorldState::clear_grid() {
   if (grid_ != &::google::protobuf::internal::kEmptyString) {
@@ -682,15 +724,37 @@ inline ::std::string* WorldState::release_grid() {
 
 // Object
 
-// required float x = 1;
-inline bool Object::has_x() const {
+// required fixed32 id = 1;
+inline bool Object::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Object::set_has_x() {
+inline void Object::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Object::clear_has_x() {
+inline void Object::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void Object::clear_id() {
+  id_ = 0u;
+  clear_has_id();
+}
+inline ::google::protobuf::uint32 Object::id() const {
+  return id_;
+}
+inline void Object::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required float x = 2;
+inline bool Object::has_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Object::set_has_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Object::clear_has_x() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void Object::clear_x() {
   x_ = 0;
@@ -704,15 +768,15 @@ inline void Object::set_x(float value) {
   x_ = value;
 }
 
-// required float y = 2;
+// required float y = 3;
 inline bool Object::has_y() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void Object::set_has_y() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void Object::clear_has_y() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void Object::clear_y() {
   y_ = 0;
@@ -726,15 +790,15 @@ inline void Object::set_y(float value) {
   y_ = value;
 }
 
-// required float z = 3;
+// required float z = 4;
 inline bool Object::has_z() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void Object::set_has_z() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void Object::clear_has_z() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void Object::clear_z() {
   z_ = 0;

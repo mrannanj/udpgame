@@ -50,8 +50,10 @@ void Server::sendWorldState() {
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
   a.mutable_world_state()->CopyFrom(w);
-  for (Connection& c : mClients)
+  for (Connection& c : mClients) {
+    a.mutable_world_state()->set_owned_id(mWorld.mClient2Entity[c.mSocket]);
     c.sendMessage(a);
+  }
 }
 
 void Server::serve() {

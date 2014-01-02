@@ -15,7 +15,6 @@ public:
   void tick();
   const glm::mat4& get_view_projection_matrix() const;
   std::string pos_string() const;
-  void jump_to_next_unit();
   void handle_freelook_input(const Input&);
   void switch_camera_mode();
 
