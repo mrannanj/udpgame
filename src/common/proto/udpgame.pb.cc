@@ -74,11 +74,13 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(WorldState));
   Object_descriptor_ = file->message_type(2);
-  static const int Object_offsets_[4] = {
+  static const int Object_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, z_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, horizontal_angle_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, vertical_angle_),
   };
   Object_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -157,12 +159,13 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "(\0132\013.WorldState\022\033\n\005input\030\003 \001(\0132\014.ClientI"
     "nput\"Z\n\nWorldState\022\023\n\013tick_number\030\001 \002(\007\022"
     "\020\n\010owned_id\030\002 \002(\007\022\027\n\006object\030\003 \003(\0132\007.Obje"
-    "ct\022\014\n\004grid\030\004 \002(\014\"5\n\006Object\022\n\n\002id\030\001 \002(\007\022\t"
-    "\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\"d\n\013Clien"
-    "tInput\022\023\n\013tick_number\030\001 \002(\007\022\017\n\007actions\030\002"
-    " \002(\007\022\030\n\020horizontal_delta\030\003 \002(\002\022\025\n\rverica"
-    "l_delta\030\004 \002(\002*)\n\004Type\022\017\n\013WORLD_STATE\020\001\022\020"
-    "\n\014CLIENT_INPUT\020\002", 416);
+    "ct\022\014\n\004grid\030\004 \002(\014\"g\n\006Object\022\n\n\002id\030\001 \002(\007\022\t"
+    "\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horiz"
+    "ontal_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002("
+    "\002\"d\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022\017\n"
+    "\007actions\030\002 \002(\007\022\030\n\020horizontal_delta\030\003 \002(\002"
+    "\022\025\n\rverical_delta\030\004 \002(\002*)\n\004Type\022\017\n\013WORLD"
+    "_STATE\020\001\022\020\n\014CLIENT_INPUT\020\002", 466);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -850,6 +853,8 @@ const int Object::kIdFieldNumber;
 const int Object::kXFieldNumber;
 const int Object::kYFieldNumber;
 const int Object::kZFieldNumber;
+const int Object::kHorizontalAngleFieldNumber;
+const int Object::kVerticalAngleFieldNumber;
 #endif  // !_MSC_VER
 
 Object::Object()
@@ -872,6 +877,8 @@ void Object::SharedCtor() {
   x_ = 0;
   y_ = 0;
   z_ = 0;
+  horizontal_angle_ = 0;
+  vertical_angle_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -910,6 +917,8 @@ void Object::Clear() {
     x_ = 0;
     y_ = 0;
     z_ = 0;
+    horizontal_angle_ = 0;
+    vertical_angle_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -980,6 +989,38 @@ bool Object::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(45)) goto parse_horizontal_angle;
+        break;
+      }
+      
+      // required float horizontal_angle = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_horizontal_angle:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &horizontal_angle_)));
+          set_has_horizontal_angle();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(53)) goto parse_vertical_angle;
+        break;
+      }
+      
+      // required float vertical_angle = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_vertical_angle:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &vertical_angle_)));
+          set_has_vertical_angle();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1022,6 +1063,16 @@ void Object::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->z(), output);
   }
   
+  // required float horizontal_angle = 5;
+  if (has_horizontal_angle()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->horizontal_angle(), output);
+  }
+  
+  // required float vertical_angle = 6;
+  if (has_vertical_angle()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->vertical_angle(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1048,6 +1099,16 @@ void Object::SerializeWithCachedSizes(
   // required float z = 4;
   if (has_z()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->z(), target);
+  }
+  
+  // required float horizontal_angle = 5;
+  if (has_horizontal_angle()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->horizontal_angle(), target);
+  }
+  
+  // required float vertical_angle = 6;
+  if (has_vertical_angle()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->vertical_angle(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1078,6 +1139,16 @@ int Object::ByteSize() const {
     
     // required float z = 4;
     if (has_z()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float horizontal_angle = 5;
+    if (has_horizontal_angle()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float vertical_angle = 6;
+    if (has_vertical_angle()) {
       total_size += 1 + 4;
     }
     
@@ -1120,6 +1191,12 @@ void Object::MergeFrom(const Object& from) {
     if (from.has_z()) {
       set_z(from.z());
     }
+    if (from.has_horizontal_angle()) {
+      set_horizontal_angle(from.horizontal_angle());
+    }
+    if (from.has_vertical_angle()) {
+      set_vertical_angle(from.vertical_angle());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1137,7 +1214,7 @@ void Object::CopyFrom(const Object& from) {
 }
 
 bool Object::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
   
   return true;
 }
@@ -1148,6 +1225,8 @@ void Object::Swap(Object* other) {
     std::swap(x_, other->x_);
     std::swap(y_, other->y_);
     std::swap(z_, other->z_);
+    std::swap(horizontal_angle_, other->horizontal_angle_);
+    std::swap(vertical_angle_, other->vertical_angle_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

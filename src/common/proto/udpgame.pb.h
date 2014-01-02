@@ -361,6 +361,20 @@ class Object : public ::google::protobuf::Message {
   inline float z() const;
   inline void set_z(float value);
   
+  // required float horizontal_angle = 5;
+  inline bool has_horizontal_angle() const;
+  inline void clear_horizontal_angle();
+  static const int kHorizontalAngleFieldNumber = 5;
+  inline float horizontal_angle() const;
+  inline void set_horizontal_angle(float value);
+  
+  // required float vertical_angle = 6;
+  inline bool has_vertical_angle() const;
+  inline void clear_vertical_angle();
+  static const int kVerticalAngleFieldNumber = 6;
+  inline float vertical_angle() const;
+  inline void set_vertical_angle(float value);
+  
   // @@protoc_insertion_point(class_scope:Object)
  private:
   inline void set_has_id();
@@ -371,6 +385,10 @@ class Object : public ::google::protobuf::Message {
   inline void clear_has_y();
   inline void set_has_z();
   inline void clear_has_z();
+  inline void set_has_horizontal_angle();
+  inline void clear_has_horizontal_angle();
+  inline void set_has_vertical_angle();
+  inline void clear_has_vertical_angle();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -378,9 +396,11 @@ class Object : public ::google::protobuf::Message {
   float x_;
   float y_;
   float z_;
+  float horizontal_angle_;
+  float vertical_angle_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -810,6 +830,50 @@ inline float Object::z() const {
 inline void Object::set_z(float value) {
   set_has_z();
   z_ = value;
+}
+
+// required float horizontal_angle = 5;
+inline bool Object::has_horizontal_angle() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void Object::set_has_horizontal_angle() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void Object::clear_has_horizontal_angle() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void Object::clear_horizontal_angle() {
+  horizontal_angle_ = 0;
+  clear_has_horizontal_angle();
+}
+inline float Object::horizontal_angle() const {
+  return horizontal_angle_;
+}
+inline void Object::set_horizontal_angle(float value) {
+  set_has_horizontal_angle();
+  horizontal_angle_ = value;
+}
+
+// required float vertical_angle = 6;
+inline bool Object::has_vertical_angle() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void Object::set_has_vertical_angle() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void Object::clear_has_vertical_angle() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void Object::clear_vertical_angle() {
+  vertical_angle_ = 0;
+  clear_has_vertical_angle();
+}
+inline float Object::vertical_angle() const {
+  return vertical_angle_;
+}
+inline void Object::set_vertical_angle(float value) {
+  set_has_vertical_angle();
+  vertical_angle_ = value;
 }
 
 // -------------------------------------------------------------------

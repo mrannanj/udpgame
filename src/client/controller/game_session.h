@@ -15,7 +15,6 @@ struct GameSession {
   Connection mConnection;
   Perspective mPerspective;
   World mWorld;
-  EntityId mOwnedId;
 };
 
 extern GameSession* g_game_session;

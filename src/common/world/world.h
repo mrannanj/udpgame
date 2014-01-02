@@ -17,7 +17,6 @@ public:
   WorldState getState();
   void setInputs(const std::vector<InputC>&);
   void setState(const WorldState&);
-  bool handleAMessage(const AMessage&, int);
   void removeDead();
   void defaultWorld();
 

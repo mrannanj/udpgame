@@ -11,12 +11,12 @@ GameSession::GameSession(const std::string& addr):
   mWorld()
 {
   while (!mWorld.mInit) {
-    mConnection.checkMessages(mWorld);
+    mConnection.checkMessages(*this);
   }
 }
 
 void GameSession::tick(Input& input) {
-  mConnection.checkMessages(mWorld);
+  mConnection.checkMessages(*this);
   mPerspective.handle_input(input);
   mPerspective.tick();
   sendFrameInput(input);
@@ -26,8 +26,7 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
   switch (a.type()) {
     case Type::WORLD_STATE:
       mWorld.setState(a.world_state());
-      mOwnedId = a.world_state().owned_id();
-      mPerspective.m_follow_id = mOwnedId;
+      mPerspective.m_follow_id = a.world_state().owned_id();
       return true;
     default:
       return false;

@@ -57,16 +57,6 @@ void World::removeDead() {
   }
 }
 
-bool World::handleAMessage(const AMessage& a, int) {
-  switch (a.type()) {
-    case Type::WORLD_STATE:
-      setState(a.world_state());
-      return true;
-    default:
-      return false;
-  }
-}
-
 void World::setInputs(const std::vector<InputC>& inputs) {
   for (const InputC& ic : inputs)
     g_input_system.add_inputc(ic);
@@ -81,6 +71,8 @@ void World::setState(const WorldState& w) {
     p.position.x = o.x();
     p.position.y = o.y();
     p.position.z = o.z();
+    p.vertical_angle = o.vertical_angle();
+    p.horizontal_angle = o.horizontal_angle();
     p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
     p.update_bbs();
     g_physics_system.add(p);
@@ -98,6 +90,8 @@ WorldState World::getState() {
     o->set_x(p.position.x);
     o->set_y(p.position.y);
     o->set_z(p.position.z);
+    o->set_vertical_angle(p.vertical_angle);
+    o->set_horizontal_angle(p.horizontal_angle);
   }
   w.set_grid(g_grid.m_grid, 1000);
   w.set_tick_number(mTickNumber);

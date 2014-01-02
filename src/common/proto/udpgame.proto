@@ -21,6 +21,8 @@ message Object {
   required float x = 2;
   required float y = 3;
   required float z = 4;
+  required float horizontal_angle = 5;
+  required float vertical_angle = 6;
 }
 
 message ClientInput {
