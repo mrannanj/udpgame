@@ -1,7 +1,16 @@
 udpgame
 =======
 
-Deps for Ubuntu:
+Such game. Much block. Very multiplayer.
 
-    sudo apt-get install libglew-dev libsdl-image1.2-dev libglm-dev
+![Screenshot](https://raw.github.com/mrannanj/udpgame/master/doc/udpgame.png
+"Screenshot")
+
+How Ubuntu
+
+```
+sudo add-apt-repository ppa:mrannanj/udpgame
+sudo apt-get update
+sudo apt-get install udpgame
+```
 
