@@ -1,5 +1,5 @@
 /build
-/server
-/client
+/udpgame_server
+/udpgame_client
 /.ycm_extra_conf.pyc
 

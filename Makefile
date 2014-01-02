@@ -2,6 +2,8 @@ MAKEFLAGS := -j4 -s
 BUILD_DIR := build
 SRC_DIR := src
 
+PREFIX := $(DESTDIR)/usr
+
 SERVER_DIR := $(SRC_DIR)/server
 SERVER_SRCS := $(shell find $(SERVER_DIR) -name "*.cc")
 SERVER_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(SERVER_SRCS))
@@ -17,11 +19,9 @@ COMMON_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 DEPS := $(COMMON_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d) $(SERVER_OBJS:.o=.d)
 DEPS := $(sort $(DEPS))
 
-TARGETS := server client
+TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
-
-CXX := clang++
 
 WARN := -pedantic -Wall -Wextra -Wno-unused-parameter
 
@@ -34,7 +34,7 @@ CXXFLAGS := -fno-exceptions
 CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
 CXXFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -std=c++11 -g
 
-.PHONY: clean all proto
+.PHONY: clean all proto install
 .SUFFIXES: .cc .cpp
 
 all: $(TARGETS)
@@ -48,16 +48,23 @@ proto:
 	cd src; \
 	protoc --cpp_out=./ common/proto/udpgame.proto
 
-server: $(SERVER_OBJS) $(COMMON_OBJS)
+udpgame_server: $(SERVER_OBJS) $(COMMON_OBJS)
 	echo LN $@
 	$(CXX) $^ -o $@ $(LIBS)
 
-client: $(CLIENT_OBJS) $(COMMON_OBJS)
+udpgame_client: $(CLIENT_OBJS) $(COMMON_OBJS)
 	echo LN $@
 	$(CXX) $^ -o $@ $(LIBS)
 
 clean:
 	$(RM) -r $(OUTPUT)
+
+install: udpgame_client udpgame_server
+	mkdir -p $(PREFIX)/bin
+	install -m 0755 udpgame_client $(PREFIX)/bin
+	install -m 0755 udpgame_server $(PREFIX)/bin
+	mkdir -p $(PREFIX)/share/udpgame
+	cp -r resources $(PREFIX)/share/udpgame
 
 ifneq ($(MAKECMDGOALS), clean)
 -include $(DEPS)

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <string>
 
 class Shader {
 public:
-  Shader(const char*, const char*);
+  Shader(const std::string&, const std::string&);
   ~Shader();
 
   void On() const;

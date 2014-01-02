@@ -17,8 +17,8 @@
 using namespace std;
 
 World::World():
-  mTickNumber(0),
-  mInit(false)
+  mInit(false),
+  mTickNumber(0)
 {
 }
 

@@ -7,7 +7,9 @@
 #include "client/view/shader.h"
 #include "common/util/mmap_handle.h"
 
-Shader::Shader(const char* vertex_file, const char* fragment_file)
+using namespace std;
+
+Shader::Shader(const string& vertex_file, const string& fragment_file)
 {
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);
@@ -15,7 +17,7 @@ Shader::Shader(const char* vertex_file, const char* fragment_file)
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
-  LoadShader(vertex_file, fragment_file);
+  LoadShader(vertex_file.c_str(), fragment_file.c_str());
 }
 
 Shader::~Shader() {
@@ -31,7 +33,6 @@ void Shader::On() const {
   glBindVertexArray(vertex_array);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 }
-
 
 GLuint Shader::AddShaderSource(const char* filename, int type) {
   assert(type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER);
