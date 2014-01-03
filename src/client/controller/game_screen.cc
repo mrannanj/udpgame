@@ -50,6 +50,13 @@ void GameScreen::Draw(const Renderer& r) {
     draw_grid(r, g_grid, vp);
     draw_units(r, g_physics_system, vp);
   }
+
+  float q[] = {
+    -0.005f, -0.005f, 0.005f, 0.005f,
+    -0.005f, 0.005f, 0.005f, -0.005f
+  };
+  r.quad_renderer.On();
+  r.quad_renderer.draw_quad(q);
 }
 
 GameScreen g_game_screen;
