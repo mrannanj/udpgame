@@ -11,7 +11,7 @@ void draw_grid(const Renderer& r, const Grid& g, const glm::mat4& vp)
   for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
     for (unsigned y = 0; y < GRID_SIZE_Y; ++y) {
       for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
-        char block = g.m_grid[x][y][z];
+        char block = g.mGrid.get(x,y,z);
         if (block)
         {
           glm::mat4 model = glm::translate(glm::mat4(1.0f),

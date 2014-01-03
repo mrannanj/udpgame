@@ -3,10 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "common/world/components/physics.h"
-
-constexpr unsigned GRID_SIZE_X = 10;
-constexpr unsigned GRID_SIZE_Y = 10;
-constexpr unsigned GRID_SIZE_Z = 10;
+#include "common/world/components/grid_array.h"
 
 constexpr float MAX_X = (float)(GRID_SIZE_X - 1);
 constexpr float MAX_Y = (float)(GRID_SIZE_Y - 1);
@@ -23,18 +20,18 @@ struct Grid {
 
   bool handle_grid_collisions(PhysicsC&, float) const;
   bool check_collision(PhysicsC&, float) const;
-  void correct_position(PhysicsC&, unsigned, unsigned, unsigned) const;
+  void correct_position(PhysicsC&, int, int, int) const;
   void obey_lower_limits(PhysicsC&, const glm::vec3&) const;
   void obey_upper_limits(PhysicsC&, const glm::vec3&) const;
-  void bb_min(unsigned, unsigned, unsigned, glm::vec3&) const;
-  void bb_max(unsigned, unsigned, unsigned, glm::vec3&) const;
+  void bb_min(int, int, int, glm::vec3&) const;
+  void bb_max(int, int, int, glm::vec3&) const;
   void block_center(int, int, int, glm::vec3&) const;
-  char block(unsigned, unsigned, unsigned) const;
+  char block(int, int, int) const;
   void mind_world_limits(PhysicsC&) const;
-  void overlapping_indices(const PhysicsC&, unsigned[3][2]) const;
+  void overlapping_indices(const PhysicsC&, int[3][2]) const;
   bool correct_one_hit(PhysicsC& p) const;
 
-  char m_grid[GRID_SIZE_X][GRID_SIZE_Y][GRID_SIZE_Z];
+  GridArray mGrid;
 };
 
 extern Grid g_grid;
