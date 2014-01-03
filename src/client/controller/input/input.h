@@ -7,14 +7,15 @@ namespace ContinousAction {
     MOVE_FORWARD = 4,
     MOVE_BACK = 8,
     JUMP = 16,
-    SPAWN_UNIT = 32
+    SPAWN_UNIT = 32,
+    FIRST = 64,
+    SECOND = 128
   };
 }
 
 namespace DiscreteAction {
   enum Enum : unsigned {
     ESCAPE = 1,
-    //SPAWN_UNIT = 2,
     SWITCH_UNIT = 4,
     SWITCH_CAMERA_MODE = 8,
     TOGGLE_MOUSEGRAB = 16

@@ -1,8 +1,11 @@
 #include "common/world/components/input_system.h"
+#include "common/world/components/grid.h"
 #include <iostream>
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
 constexpr float PI = (float)M_PI;
+
+using namespace std;
 
 void InputSystem::add_input(EntityId id, const Input& input) {
   InputC input_comp;
@@ -21,8 +24,7 @@ void InputSystem::tick(float, World& w) {
   float move_speed = 1.5f;
   float jump_velocity = 5.0f;
 
-  for (InputC& i : m_inputs)
-  {
+  for (InputC& i : m_inputs) {
     if (i.actions & ContinousAction::SPAWN_UNIT) {
       w.spawn_entity(i.mClient);
     }
@@ -50,25 +52,38 @@ void InputSystem::tick(float, World& w) {
     );
 
     if (i.actions & ContinousAction::MOVE_FORWARD)
-    {
       p->velocity += forward * move_speed;
-    }
     else if (i.actions & ContinousAction::MOVE_BACK)
-    {
       p->velocity -= forward * move_speed;
-    }
+
     if (i.actions & ContinousAction::MOVE_RIGHT)
-    {
       p->velocity += right * move_speed;
-    }
     else if (i.actions & ContinousAction::MOVE_LEFT)
-    {
       p->velocity -= right * move_speed;
-    }
-    if (i.actions & ContinousAction::JUMP && p->on_ground)
-    {
+
+    if (i.actions & ContinousAction::JUMP && p->on_ground) {
       p->velocity.y += jump_velocity;
       p->on_ground = false;
+    }
+    if (i.actions & ContinousAction::FIRST) {
+      glm::vec3 pos = p->position;
+      pos.y += 0.7f;
+      glm::vec3 dir = glm::vec3(
+          cos(p->vertical_angle) * sin(p->horizontal_angle),
+          sin(p->vertical_angle),
+          cos(p->vertical_angle) * cos(p->horizontal_angle)
+        );
+      g_grid.raycast(pos, dir, true);
+    }
+    if (i.actions & ContinousAction::SECOND) {
+      glm::vec3 pos = p->position;
+      pos.y += 0.7f;
+      glm::vec3 dir = glm::vec3(
+          cos(p->vertical_angle) * sin(p->horizontal_angle),
+          sin(p->vertical_angle),
+          cos(p->vertical_angle) * cos(p->horizontal_angle)
+        );
+      g_grid.raycast(pos, dir, false);
     }
   }
   m_inputs.clear();

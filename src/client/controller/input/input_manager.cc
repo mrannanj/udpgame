@@ -5,6 +5,8 @@
 #include "client/view/window.h"
 #include "client/controller/screen_stack.h"
 
+using namespace std;
+
 SDLKey binded_keys[] = {
   SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE
 };
@@ -32,12 +34,17 @@ void InputManager::init_key_to_action() {
 
 void InputManager::check_mouse(Input& i) const {
   Uint8 buttons = SDL_GetMouseState(&i.mouse_x, &i.mouse_y);
-  if (buttons & SDL_BUTTON_LEFT)
+  if (buttons & SDL_BUTTON(1)) {
     i.mouse_buttons |= Mouse::LEFT;
-  if (buttons & SDL_BUTTON_RIGHT)
+    i.continous_actions |= ContinousAction::FIRST;
+  }
+  if (buttons & SDL_BUTTON(3)) {
     i.mouse_buttons |= Mouse::RIGHT;
-  if (buttons & SDL_BUTTON_MIDDLE)
+    i.continous_actions |= ContinousAction::SECOND;
+  }
+  if (buttons & SDL_BUTTON(2))
     i.mouse_buttons |= Mouse::MIDDLE;
+
   i.gl_mouse_x = gl_pos_x(i.mouse_x);
   i.gl_mouse_y = gl_pos_y(i.mouse_y);
 }

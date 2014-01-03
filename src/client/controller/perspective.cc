@@ -6,6 +6,7 @@
 #include "client/controller/input/input.h"
 #include "client/controller/perspective.h"
 
+#include "common/world/components/grid.h"
 #include "common/world/components/input_system.h"
 #include "common/world/components/physics_system.h"
 
@@ -31,10 +32,12 @@ void Perspective::handle_input(Input& i) {
 
   if (!m_freelook) {
     if (g_physics_system.get(m_follow_id)) {
+      // XXX: deprecated?
       g_input_system.add_input(m_follow_id, i);
     }
     return;
   }
+
   handle_freelook_input(i);
 }
 
