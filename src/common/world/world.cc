@@ -62,20 +62,7 @@ GridHandler& World::grid() {
 }
 
 void World::setState(const WorldState& w) {
-  mPhysicsHandler.clear();
-  for (int i = 0; i < w.object_size(); ++i) {
-    const Object& o = w.object(i);
-    PhysicsC p;
-    p.id = o.id();
-    p.position.x = o.x();
-    p.position.y = o.y();
-    p.position.z = o.z();
-    p.vertical_angle = o.vertical_angle();
-    p.horizontal_angle = o.horizontal_angle();
-    p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
-    p.update_bbs();
-    mPhysicsHandler.add(p);
-  }
+  mPhysicsHandler.setObjects(w);
   mTickNumber = w.tick_number();
   memcpy(mGrid.mArr.mData, w.grid().c_str(), 1000);
   mInit = true;
@@ -83,15 +70,7 @@ void World::setState(const WorldState& w) {
 
 WorldState World::getState() {
   WorldState w;
-  for (const PhysicsC& p : mPhysicsHandler.physics_components()) {
-    Object* o = w.add_object();
-    o->set_id(p.id);
-    o->set_x(p.position.x);
-    o->set_y(p.position.y);
-    o->set_z(p.position.z);
-    o->set_vertical_angle(p.vertical_angle);
-    o->set_horizontal_angle(p.horizontal_angle);
-  }
+  mPhysicsHandler.getObjects(w);
   w.set_grid(mGrid.mArr.mData, 1000);
   w.set_tick_number(mTickNumber);
   return w;

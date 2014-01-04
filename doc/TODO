@@ -1,7 +1,6 @@
 REFACTOR:
 - inherit base for world handlers
-- gamesession
-- remove world globals
+- remove gamesession global
 - AABB class
 - protobuf integration
   - 3 input classes
