@@ -1,6 +1,8 @@
-CLEAN:
+REFACTOR:
+- inherit base for world handlers
 - gamesession
 - remove world globals
+- AABB class
 
 BUGS:
 - raycast hits wrong

@@ -1,4 +1,4 @@
-#include "common/world/components/input_system.h"
+#include "common/world/components/input_handler.h"
 #include "common/world/components/grid.h"
 #include <iostream>
 
@@ -7,7 +7,7 @@ constexpr float PI = (float)M_PI;
 
 using namespace std;
 
-void InputSystem::add_input(EntityId id, const Input& input) {
+void InputHandler::add_input(EntityId id, const Input& input) {
   InputC input_comp;
   input_comp.id = id;
   input_comp.actions = input.continous_actions;
@@ -16,11 +16,11 @@ void InputSystem::add_input(EntityId id, const Input& input) {
   m_inputs.push_back(input_comp);
 }
 
-void InputSystem::add_inputc(const InputC& ic) {
+void InputHandler::add_inputc(const InputC& ic) {
   m_inputs.push_back(ic);
 }
 
-void InputSystem::tick(float, World& w) {
+void InputHandler::tick(float, World& w) {
   float move_speed = 1.5f;
   float jump_velocity = 5.0f;
 
@@ -89,5 +89,5 @@ void InputSystem::tick(float, World& w) {
   m_inputs.clear();
 }
 
-InputSystem g_input_system;
+InputHandler g_input_system;
 

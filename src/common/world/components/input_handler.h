@@ -8,7 +8,7 @@
 #include "common/world/components/physics_system.h"
 #include "common/world/world.h"
 
-class InputSystem {
+class InputHandler {
 public:
   void add_input(EntityId, const Input&);
   void add_inputc(const InputC& ic);
@@ -18,4 +18,4 @@ private:
   std::vector<InputC> m_inputs;
 };
 
-extern InputSystem g_input_system;
+extern InputHandler g_input_system;

@@ -1,5 +1,5 @@
 #include "common/world/world.h"
-#include "common/world/components/input_system.h"
+#include "common/world/components/input_handler.h"
 #include "common/world/components/physics_system.h"
 #include "common/world/components/physics.h"
 #include "common/world/components/grid.h"
