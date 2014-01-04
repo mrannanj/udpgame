@@ -61,7 +61,7 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
           sin(p->vertical_angle),
           cos(p->vertical_angle) * cos(p->horizontal_angle)
         );
-      g_grid.raycast(pos, dir, true);
+      w.grid().raycast(pos, dir, true);
     }
     if (i.actions & ContinousAction::SECOND) {
       glm::vec3 pos = p->position;
@@ -71,7 +71,7 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
           sin(p->vertical_angle),
           cos(p->vertical_angle) * cos(p->horizontal_angle)
         );
-      g_grid.raycast(pos, dir, false);
+      w.grid().raycast(pos, dir, false);
     }
   }
 }

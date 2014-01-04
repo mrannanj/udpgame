@@ -21,7 +21,7 @@ World::World():
 }
 
 void World::defaultWorld() {
-  g_grid.defaultGrid();
+  mGrid.defaultGrid();
 }
 
 EntityId World::spawn_entity(int fd) {
@@ -42,7 +42,7 @@ EntityId World::spawn_entity(int fd) {
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
   mInputHandler.tick(inputs, *this);
-  mPhysicsHandler.tick(dt);
+  mPhysicsHandler.tick(dt, *this);
   removeDead();
   return ++mTickNumber;
 }
@@ -55,6 +55,10 @@ void World::removeDead() {
 
 PhysicsHandler& World::physics() {
   return mPhysicsHandler;
+}
+
+GridHandler& World::grid() {
+  return mGrid;
 }
 
 void World::setState(const WorldState& w) {
@@ -73,7 +77,7 @@ void World::setState(const WorldState& w) {
     mPhysicsHandler.add(p);
   }
   mTickNumber = w.tick_number();
-  memcpy(g_grid.mGrid.mData, w.grid().c_str(), 1000);
+  memcpy(mGrid.mGrid.mData, w.grid().c_str(), 1000);
   mInit = true;
 }
 
@@ -88,7 +92,7 @@ WorldState World::getState() {
     o->set_vertical_angle(p.vertical_angle);
     o->set_horizontal_angle(p.horizontal_angle);
   }
-  w.set_grid(g_grid.mGrid.mData, 1000);
+  w.set_grid(mGrid.mGrid.mData, 1000);
   w.set_tick_number(mTickNumber);
   return w;
 }

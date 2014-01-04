@@ -7,6 +7,7 @@
 #include "common/world/components/inputc.h"
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/input_handler.h"
+#include "common/world/components/grid_handler.h"
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -26,10 +27,12 @@ public:
   std::map<int, EntityId> mClient2Entity;
 
   PhysicsHandler& physics();
+  GridHandler& grid();
 
 private:
   IdGenerator m_idgen;
   std::set<EntityId> mDeleteList;
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;
+  GridHandler mGrid;
 };

@@ -38,6 +38,3 @@ struct GridHandler {
 
   GridArray mGrid;
 };
-
-extern GridHandler g_grid;
-

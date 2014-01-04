@@ -1,17 +1,17 @@
 # udpgame
 
-## Such looks
+### Such looks
 
 ![Screenshot](https://raw.github.com/mrannanj/udpgame/master/doc/udpgame.png
 "Screenshot")
 
-## Much chat
+### Much chat
 
 ```
-#udpgame @ IRCnet
+#udpgame@IRCnet
 ```
 
-## How Ubuntu
+### How Ubuntu
 
 ```
 sudo add-apt-repository ppa:mrannanj/udpgame

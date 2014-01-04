@@ -1,5 +1,6 @@
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/grid_handler.h"
+#include "common/world/world.h"
 
 #include <cassert>
 #include <algorithm>
@@ -39,13 +40,13 @@ void PhysicsHandler::remove(EntityId eid) {
       std::end(m_physics_components));
 }
 
-void PhysicsHandler::tick(float dt) {
+void PhysicsHandler::tick(float dt, World& w) {
   mRemoveList.clear();
   for (PhysicsC& p : m_physics_components) {
     p.velocity.y -= GRAVITY * dt;
     p.velocity.x *= FRICTION;
     p.velocity.z *= FRICTION;
-    if (!g_grid.check_collision(p, dt))
+    if (!w.grid().check_collision(p, dt))
       mRemoveList.insert(p.id);
   }
 }

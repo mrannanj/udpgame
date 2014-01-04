@@ -47,7 +47,7 @@ void GameScreen::Draw(const Renderer& r) {
     r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f,
       g_game_session->mPerspective.pos_string(), Green);
     glm::mat4 vp = g_game_session->mPerspective.get_view_projection_matrix();
-    draw_grid(r, g_grid, vp);
+    draw_grid(r, g_game_session->mWorld.grid(), vp);
     draw_units(r, g_game_session->mWorld.physics(), vp);
   }
 

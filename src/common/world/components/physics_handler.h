@@ -9,11 +9,13 @@
 #define FRICTION 0.8f
 #define GRAVITY 10.0f
 
+class World;
+
 class PhysicsHandler {
 public:
   PhysicsC* get(EntityId);
   void add(PhysicsC&);
-  void tick(float);
+  void tick(float, World&);
   void clear();
   void remove(EntityId);
   EntityId next_id(EntityId);

@@ -200,6 +200,3 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
     }
   }
 }
-
-GridHandler g_grid;
-
