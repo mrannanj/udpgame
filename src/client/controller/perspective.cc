@@ -7,7 +7,6 @@
 #include "client/controller/perspective.h"
 
 #include "common/world/components/grid.h"
-#include "common/world/components/input_handler.h"
 #include "common/world/components/physics_system.h"
 
 Perspective::Perspective():
@@ -23,7 +22,6 @@ Perspective::Perspective():
 
 void Perspective::switch_camera_mode() {
   m_freelook = !m_freelook;
-  std::cout << "Freelook: " << m_freelook << std::endl;
 }
 
 void Perspective::handle_input(Input& i) {
@@ -111,8 +109,7 @@ const glm::mat4& Perspective::get_view_projection_matrix() const {
   return m_view_projection;
 }
 
-std::string Perspective::pos_string() const
-{
+std::string Perspective::pos_string() const {
   std::stringstream ss;
   ss << "(" << (int)m_position.x << ","
     << (int)m_position.y << "," << (int)m_position.z << ")";
