@@ -63,15 +63,15 @@ GridHandler& World::grid() {
 
 void World::setState(const WorldState& w) {
   mPhysicsHandler.setObjects(w);
+  mGrid.setGrid(w);
   mTickNumber = w.tick_number();
-  memcpy(mGrid.mArr.mData, w.grid().c_str(), 1000);
   mInit = true;
 }
 
 WorldState World::getState() {
   WorldState w;
   mPhysicsHandler.getObjects(w);
-  w.set_grid(mGrid.mArr.mData, 1000);
+  mGrid.getGrid(w);
   w.set_tick_number(mTickNumber);
   return w;
 }
