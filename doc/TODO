@@ -9,6 +9,7 @@ BUGS:
 - connect/disconnect hang
 
 FEATURES:
+- outside grid killer
 - server timed
 - named players
 - full screen
