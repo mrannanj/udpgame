@@ -1,20 +1,21 @@
-#include <assert.h>
-#include <algorithm>
-#include "common/world/components/physics_system.h"
+#include "common/world/components/physics_handler.h"
 #include "common/world/components/grid.h"
 
-PhysicsC* PhysicsSystem::get(EntityId id) {
+#include <cassert>
+#include <algorithm>
+
+PhysicsC* PhysicsHandler::get(EntityId id) {
   for (PhysicsC& p : m_physics_components)
     if (p.id == id)
       return &p;
   return NULL;
 }
 
-void PhysicsSystem::clear() {
+void PhysicsHandler::clear() {
   m_physics_components.clear();
 }
 
-EntityId PhysicsSystem::next_id(EntityId id) {
+EntityId PhysicsHandler::next_id(EntityId id) {
   size_t n = m_physics_components.size();
   unsigned i = 0;
   for (; i < n; ++i) {
@@ -27,18 +28,18 @@ EntityId PhysicsSystem::next_id(EntityId id) {
     return m_physics_components[0].id;
 }
 
-void PhysicsSystem::add(PhysicsC& p) {
+void PhysicsHandler::add(PhysicsC& p) {
   m_physics_components.push_back(p);
 }
 
-void PhysicsSystem::remove(EntityId eid) {
+void PhysicsHandler::remove(EntityId eid) {
   m_physics_components.erase(std::remove_if(std::begin(m_physics_components),
         std::end(m_physics_components),
         [&](PhysicsC& p) { return p.id == eid; }),
       std::end(m_physics_components));
 }
 
-void PhysicsSystem::tick(float dt) {
+void PhysicsHandler::tick(float dt) {
   mRemoveList.clear();
   for (PhysicsC& p : m_physics_components) {
     p.velocity.y -= GRAVITY * dt;
@@ -49,8 +50,8 @@ void PhysicsSystem::tick(float dt) {
   }
 }
 
-const std::vector<PhysicsC>& PhysicsSystem::physics_components() const {
+const std::vector<PhysicsC>& PhysicsHandler::physics_components() const {
   return m_physics_components;
 }
 
-PhysicsSystem g_physics_system;
+PhysicsHandler g_physics_system;

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "common/world/components/inputc.h"
-#include "common/world/components/physics_system.h"
+#include "common/world/components/physics_handler.h"
 #include "common/world/components/input_handler.h"
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
@@ -28,4 +28,5 @@ private:
   IdGenerator m_idgen;
   std::set<EntityId> mDeleteList;
   InputHandler mInputHandler;
+  //PhysicsHandler mPhysicsHandler;
 };

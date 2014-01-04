@@ -7,7 +7,7 @@
 #include "client/controller/perspective.h"
 
 #include "common/world/components/grid.h"
-#include "common/world/components/physics_system.h"
+#include "common/world/components/physics_handler.h"
 
 Perspective::Perspective():
   m_freelook(true),
@@ -31,8 +31,7 @@ void Perspective::handle_input(Input& i) {
     handle_freelook_input(i);
 }
 
-void Perspective::handle_freelook_input(const Input& input)
-{
+void Perspective::handle_freelook_input(const Input& input) {
   float move_speed = 0.1f;
   m_vertical_angle -= (float)input.mouse_delta_y * 0.01f;
   m_horizontal_angle -= (float)input.mouse_delta_x * 0.01f;
@@ -74,12 +73,11 @@ void Perspective::handle_freelook_input(const Input& input)
 
 void Perspective::tick()
 {
-  m_projection = glm::perspective(45.0f, (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
-  if (!m_freelook)
-  {
+  m_projection = glm::perspective(45.0f,
+      (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
+  if (!m_freelook) {
     PhysicsC* p = g_physics_system.get(m_follow_id);
-    if (p)
-    {
+    if (p) {
       m_position = p->position;
       m_position.y += 0.7f;
       m_vertical_angle = p->vertical_angle;
@@ -95,9 +93,7 @@ void Perspective::tick()
         cos(m_horizontal_angle - 3.14f/2.0f)
       );
       m_up = glm::cross(right, m_direction);
-    }
-    else
-    {
+    } else {
       switch_camera_mode();
     }
   }

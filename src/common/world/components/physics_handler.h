@@ -9,7 +9,7 @@
 #define FRICTION 0.8f
 #define GRAVITY 10.0f
 
-class PhysicsSystem {
+class PhysicsHandler {
 public:
   PhysicsC* get(EntityId);
   void add(PhysicsC&);
@@ -23,4 +23,4 @@ private:
   std::vector<PhysicsC> m_physics_components;
 };
 
-extern PhysicsSystem g_physics_system;
+extern PhysicsHandler g_physics_system;
