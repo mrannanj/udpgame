@@ -1,5 +1,6 @@
 #include "common/world/components/input_handler.h"
 #include "common/world/components/grid.h"
+#include "common/world/world.h"
 #include <iostream>
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
@@ -7,24 +8,11 @@ constexpr float PI = (float)M_PI;
 
 using namespace std;
 
-void InputHandler::add_input(EntityId id, const Input& input) {
-  InputC input_comp;
-  input_comp.id = id;
-  input_comp.actions = input.continous_actions;
-  input_comp.vertical_angle_delta = (float)input.mouse_delta_y * 0.01f;
-  input_comp.horizontal_angle_delta = (float)input.mouse_delta_x * 0.01f;
-  m_inputs.push_back(input_comp);
-}
-
-void InputHandler::add_inputc(const InputC& ic) {
-  m_inputs.push_back(ic);
-}
-
-void InputHandler::tick(float, World& w) {
+void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
   float move_speed = 1.5f;
   float jump_velocity = 5.0f;
 
-  for (InputC& i : m_inputs) {
+  for (const InputC& i : inputs) {
     if (i.actions & ContinousAction::SPAWN_UNIT) {
       w.spawn_entity(i.mClient);
     }
@@ -86,8 +74,4 @@ void InputHandler::tick(float, World& w) {
       g_grid.raycast(pos, dir, false);
     }
   }
-  m_inputs.clear();
 }
-
-InputHandler g_input_system;
-

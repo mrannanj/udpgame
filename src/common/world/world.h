@@ -6,6 +6,7 @@
 
 #include "common/world/components/inputc.h"
 #include "common/world/components/physics_system.h"
+#include "common/world/components/input_handler.h"
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -16,7 +17,6 @@ public:
   int tick(float, const std::vector<InputC>&);
   EntityId spawn_entity(int);
   WorldState getState();
-  void setInputs(const std::vector<InputC>&);
   void setState(const WorldState&);
   void removeDead();
   void defaultWorld();
@@ -27,4 +27,5 @@ public:
 private:
   IdGenerator m_idgen;
   std::set<EntityId> mDeleteList;
+  InputHandler mInputHandler;
 };

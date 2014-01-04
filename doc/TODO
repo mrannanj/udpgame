@@ -9,6 +9,7 @@ BUGS:
 - connect/disconnect hang
 
 FEATURES:
+- show in gui if client is in observer or player mode
 - outside grid killer
 - server timed
 - named players

@@ -44,8 +44,7 @@ EntityId World::spawn_entity(int fd) {
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
-  setInputs(inputs);
-  g_input_system.tick(dt, *this);
+  mInputHandler.tick(inputs, *this);
   g_physics_system.tick(dt);
   removeDead();
   return ++mTickNumber;
@@ -55,11 +54,6 @@ void World::removeDead() {
   for (EntityId id : g_physics_system.mRemoveList) {
     g_physics_system.remove(id);
   }
-}
-
-void World::setInputs(const std::vector<InputC>& inputs) {
-  for (const InputC& ic : inputs)
-    g_input_system.add_inputc(ic);
 }
 
 void World::setState(const WorldState& w) {
