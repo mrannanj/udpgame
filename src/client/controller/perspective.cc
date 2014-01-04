@@ -29,16 +29,8 @@ void Perspective::switch_camera_mode() {
 void Perspective::handle_input(Input& i) {
   if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
     switch_camera_mode();
-
-  if (!m_freelook) {
-    if (g_physics_system.get(m_follow_id)) {
-      // XXX: deprecated?
-      g_input_system.add_input(m_follow_id, i);
-    }
-    return;
-  }
-
-  handle_freelook_input(i);
+  if (m_freelook)
+    handle_freelook_input(i);
 }
 
 void Perspective::handle_freelook_input(const Input& input)
