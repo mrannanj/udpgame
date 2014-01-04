@@ -7,7 +7,7 @@
 #include "client/controller/perspective.h"
 
 #include "common/world/world.h"
-#include "common/world/components/grid.h"
+#include "common/world/components/grid_handler.h"
 #include "common/world/components/physics_handler.h"
 
 Perspective::Perspective():

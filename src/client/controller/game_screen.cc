@@ -2,9 +2,9 @@
 #include "client/controller/game_screen.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/input/input.h"
-#include "client/view/world_renderer.h"
 #include "client/controller/main_menu.h"
-#include "common/world/components/grid.h"
+#include "client/view/world_renderer.h"
+#include "common/world/components/grid_handler.h"
 #include "common/util/die.h"
 #include "common/proto/udpgame.pb.h"
 

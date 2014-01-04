@@ -1,5 +1,5 @@
 #include "common/world/components/physics_handler.h"
-#include "common/world/components/grid.h"
+#include "common/world/components/grid_handler.h"
 
 #include <cassert>
 #include <algorithm>

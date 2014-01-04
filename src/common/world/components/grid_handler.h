@@ -15,8 +15,8 @@ constexpr float EPSILON = 0.001f;
 const glm::vec3 grid_top(MAX_X, MAX_Y, MAX_Z);
 const glm::vec3 grid_bot(0.0f, 0.0f, 0.0f);
 
-struct Grid {
-  Grid();
+struct GridHandler {
+  GridHandler();
   void defaultGrid();
 
   bool handle_grid_collisions(PhysicsC&, float) const;
@@ -39,5 +39,5 @@ struct Grid {
   GridArray mGrid;
 };
 
-extern Grid g_grid;
+extern GridHandler g_grid;
 

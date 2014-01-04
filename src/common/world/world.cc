@@ -1,6 +1,6 @@
 #include "common/world/world.h"
 #include "common/world/components/physics.h"
-#include "common/world/components/grid.h"
+#include "common/world/components/grid_handler.h"
 
 #include <SDL.h>
 #include <GL/glew.h>

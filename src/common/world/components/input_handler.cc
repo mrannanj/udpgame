@@ -1,5 +1,5 @@
 #include "common/world/components/input_handler.h"
-#include "common/world/components/grid.h"
+#include "common/world/components/grid_handler.h"
 #include "common/world/world.h"
 #include <iostream>
 

@@ -3,8 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-void draw_grid(const Renderer& r, const Grid& g, const glm::mat4& vp)
-{
+void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp) {
   r.cube_renderer.On();
   r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
 
@@ -25,8 +24,7 @@ void draw_grid(const Renderer& r, const Grid& g, const glm::mat4& vp)
   }
 }
 
-float rad_to_degree(float r)
-{
+float rad_to_degree(float r) {
   constexpr float rad_in_degrees = (180.0f/(float)M_PI);
   return rad_in_degrees * r;
 }
@@ -45,4 +43,3 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
     r.cube_renderer.DrawCube(vp * model);
   }
 }
-

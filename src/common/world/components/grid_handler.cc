@@ -1,18 +1,18 @@
-#include "common/world/components/grid.h"
+#include "common/world/components/grid_handler.h"
 #include <iostream>
 
 using namespace std;
 using namespace glm;
 
-Grid::Grid()
+GridHandler::GridHandler()
 {
 }
 
-void Grid::defaultGrid() {
+void GridHandler::defaultGrid() {
   mGrid.makeFloor();
 }
 
-void Grid::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
+void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
     if (p.velocity[a] < 0.0f) {
       ind[a][0] = (int)(p.next_bb_min[a]);
@@ -24,7 +24,7 @@ void Grid::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
   }
 }
 
-bool Grid::correct_one_hit(PhysicsC& p) const {
+bool GridHandler::correct_one_hit(PhysicsC& p) const {
   int ind[3][2];
   overlapping_indices(p, ind);
   for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
@@ -40,7 +40,7 @@ bool Grid::correct_one_hit(PhysicsC& p) const {
   return false;
 }
 
-bool Grid::handle_grid_collisions(PhysicsC& p, float dt) const {
+bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   p.next_position = p.position + p.velocity * dt;
   p.update_bbs();
   p.update_next_bbs();
@@ -50,7 +50,7 @@ bool Grid::handle_grid_collisions(PhysicsC& p, float dt) const {
   return true;
 }
 
-void Grid::correct_position(PhysicsC& p, int x, int y, int z) const {
+void GridHandler::correct_position(PhysicsC& p, int x, int y, int z) const {
   glm::vec3 block_min;
   glm::vec3 block_max;
   bb_min(x, y, z, block_min);
@@ -87,16 +87,16 @@ void Grid::correct_position(PhysicsC& p, int x, int y, int z) const {
   p.update_next_bbs();
 }
 
-void Grid::bb_min(int x, int y, int z, glm::vec3& bb) const {
+void GridHandler::bb_min(int x, int y, int z, glm::vec3& bb) const {
   bb = glm::vec3((float)x, (float)y, (float)z);
 }
 
-void Grid::bb_max(int x, int y, int z, glm::vec3& bb) const {
+void GridHandler::bb_max(int x, int y, int z, glm::vec3& bb) const {
   bb = glm::vec3((float)x + BLOCK_SIZE, (float)y + BLOCK_SIZE,
     (float)z + BLOCK_SIZE);
 }
 
-void Grid::mind_world_limits(PhysicsC& p) const {
+void GridHandler::mind_world_limits(PhysicsC& p) const {
   for (unsigned a = 0; a < 3; ++a) {
     if (p.next_bb_min[a] < grid_bot[a])
       p.next_position[a] = grid_bot[a] + p.dimensions[a];
@@ -107,7 +107,7 @@ void Grid::mind_world_limits(PhysicsC& p) const {
   p.update_next_bbs();
 }
 
-bool Grid::check_collision(PhysicsC& p, float dt) const {
+bool GridHandler::check_collision(PhysicsC& p, float dt) const {
   bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
   p.update_bbs();
@@ -115,7 +115,7 @@ bool Grid::check_collision(PhysicsC& p, float dt) const {
   return ret;
 }
 
-bool Grid::ray_block_collision(
+bool GridHandler::ray_block_collision(
     int x, int y, int z,
     const vec3& p, const vec3& d, float& t, int& axis, int& dir) const
 {
@@ -163,7 +163,7 @@ bool Grid::ray_block_collision(
   return true;
 }
 
-void Grid::raycast(const vec3& s, const vec3& d, bool take) {
+void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
   glm::vec3 dn = normalize(d);
   int b[3];
   float tmin = FLT_MAX;
@@ -201,5 +201,5 @@ void Grid::raycast(const vec3& s, const vec3& d, bool take) {
   }
 }
 
-Grid g_grid;
+GridHandler g_grid;
 
