@@ -77,7 +77,7 @@ void World::setState(const WorldState& w) {
     mPhysicsHandler.add(p);
   }
   mTickNumber = w.tick_number();
-  memcpy(mGrid.mGrid.mData, w.grid().c_str(), 1000);
+  memcpy(mGrid.mArr.mData, w.grid().c_str(), 1000);
   mInit = true;
 }
 
@@ -92,7 +92,7 @@ WorldState World::getState() {
     o->set_vertical_angle(p.vertical_angle);
     o->set_horizontal_angle(p.horizontal_angle);
   }
-  w.set_grid(mGrid.mGrid.mData, 1000);
+  w.set_grid(mGrid.mArr.mData, 1000);
   w.set_tick_number(mTickNumber);
   return w;
 }

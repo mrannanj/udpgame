@@ -9,7 +9,7 @@ GridHandler::GridHandler()
 }
 
 void GridHandler::defaultGrid() {
-  mGrid.makeFloor();
+  mArr.makeFloor();
 }
 
 void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
@@ -30,7 +30,7 @@ bool GridHandler::correct_one_hit(PhysicsC& p) const {
   for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
     for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
       for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
-        if (mGrid.get(x,y,z)) {
+        if (mArr.get(x,y,z)) {
           correct_position(p, x, y, z);
           return true;
         }
@@ -176,7 +176,7 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
         float t;
         int a;
         int d;
-        if (mGrid.get(x,y,z) and
+        if (mArr.get(x,y,z) and
             ray_block_collision(x, y, z, s, dn, t, a, d)) {
           if (tmin > t) {
             b[0] = x;
@@ -193,10 +193,10 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
   }
   if (hit) {
     if (take) {
-      mGrid.set(b[0], b[1], b[2], 0);
+      mArr.set(b[0], b[1], b[2], 0);
     } else {
       b[baxis] += dir;
-      mGrid.set(b[0], b[1], b[2], 1);
+      mArr.set(b[0], b[1], b[2], 1);
     }
   }
 }

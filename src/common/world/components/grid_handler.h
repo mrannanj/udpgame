@@ -36,5 +36,5 @@ struct GridHandler {
   bool ray_block_collision(int, int, int,
       const glm::vec3&, const glm::vec3&, float&, int&, int&) const;
 
-  GridArray mGrid;
+  GridArray mArr;
 };
