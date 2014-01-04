@@ -5,7 +5,6 @@ REFACTOR:
 - protobuf integration
   - 3 input classes
   - 2 world classes
-- delegate world setState and getState
 - object removal is NASTY
 
 BUGS:
