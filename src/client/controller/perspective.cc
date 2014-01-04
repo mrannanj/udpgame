@@ -6,6 +6,7 @@
 #include "client/controller/input/input.h"
 #include "client/controller/perspective.h"
 
+#include "common/world/world.h"
 #include "common/world/components/grid.h"
 #include "common/world/components/physics_handler.h"
 
@@ -71,12 +72,12 @@ void Perspective::handle_freelook_input(const Input& input) {
   }
 }
 
-void Perspective::tick()
+void Perspective::tick(World& w)
 {
   m_projection = glm::perspective(45.0f,
       (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
   if (!m_freelook) {
-    PhysicsC* p = g_physics_system.get(m_follow_id);
+    PhysicsC* p = w.physics().get(m_follow_id);
     if (p) {
       m_position = p->position;
       m_position.y += 0.7f;

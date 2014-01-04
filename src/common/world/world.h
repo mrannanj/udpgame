@@ -24,9 +24,12 @@ public:
   bool mInit;
   unsigned mTickNumber;
   std::map<int, EntityId> mClient2Entity;
+
+  PhysicsHandler& physics();
+
 private:
   IdGenerator m_idgen;
   std::set<EntityId> mDeleteList;
   InputHandler mInputHandler;
-  //PhysicsHandler mPhysicsHandler;
+  PhysicsHandler mPhysicsHandler;
 };

@@ -48,7 +48,7 @@ void GameScreen::Draw(const Renderer& r) {
       g_game_session->mPerspective.pos_string(), Green);
     glm::mat4 vp = g_game_session->mPerspective.get_view_projection_matrix();
     draw_grid(r, g_grid, vp);
-    draw_units(r, g_physics_system, vp);
+    draw_units(r, g_game_session->mWorld.physics(), vp);
   }
 
   float q[] = {

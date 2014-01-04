@@ -6,6 +6,7 @@ REFACTOR:
 - protobuf integration
   - 3 input classes
   - 2 world classes
+- delegate world setState and getState
 
 BUGS:
 - raycast hits wrong
@@ -20,6 +21,7 @@ FEATURES:
 - full screen
 - bigger world
   - fixed point math
+  - transfer inputs only
 - meta server
 - monsters
 

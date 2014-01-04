@@ -28,7 +28,7 @@ GameSession::GameSession(const std::string& addr):
 void GameSession::tick(Input& input) {
   mConnection.checkMessages(*this);
   mPerspective.handle_input(input);
-  mPerspective.tick();
+  mPerspective.tick(mWorld);
   sendFrameInput(input);
 }
 

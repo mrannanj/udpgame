@@ -22,5 +22,3 @@ public:
 private:
   std::vector<PhysicsC> m_physics_components;
 };
-
-extern PhysicsHandler g_physics_system;

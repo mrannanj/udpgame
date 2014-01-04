@@ -25,7 +25,6 @@ void World::defaultWorld() {
 }
 
 EntityId World::spawn_entity(int fd) {
-  cout << "spawning unit" << endl;
   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
   default_random_engine g(seed);
   uniform_real_distribution<double> d(1.0f, 10.0f);
@@ -36,26 +35,30 @@ EntityId World::spawn_entity(int fd) {
   p.position = glm::vec3(d(g), d(g), d(g));
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-  g_physics_system.add(p);
+  mPhysicsHandler.add(p);
   mClient2Entity[fd] = p.id;
   return p.id;
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
   mInputHandler.tick(inputs, *this);
-  g_physics_system.tick(dt);
+  mPhysicsHandler.tick(dt);
   removeDead();
   return ++mTickNumber;
 }
 
 void World::removeDead() {
-  for (EntityId id : g_physics_system.mRemoveList) {
-    g_physics_system.remove(id);
+  for (EntityId id : mPhysicsHandler.mRemoveList) {
+    mPhysicsHandler.remove(id);
   }
 }
 
+PhysicsHandler& World::physics() {
+  return mPhysicsHandler;
+}
+
 void World::setState(const WorldState& w) {
-  g_physics_system.clear();
+  mPhysicsHandler.clear();
   for (int i = 0; i < w.object_size(); ++i) {
     const Object& o = w.object(i);
     PhysicsC p;
@@ -67,7 +70,7 @@ void World::setState(const WorldState& w) {
     p.horizontal_angle = o.horizontal_angle();
     p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
     p.update_bbs();
-    g_physics_system.add(p);
+    mPhysicsHandler.add(p);
   }
   mTickNumber = w.tick_number();
   memcpy(g_grid.mGrid.mData, w.grid().c_str(), 1000);
@@ -76,7 +79,7 @@ void World::setState(const WorldState& w) {
 
 WorldState World::getState() {
   WorldState w;
-  for (const PhysicsC& p : g_physics_system.physics_components()) {
+  for (const PhysicsC& p : mPhysicsHandler.physics_components()) {
     Object* o = w.add_object();
     o->set_id(p.id);
     o->set_x(p.position.x);
