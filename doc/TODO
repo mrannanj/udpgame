@@ -1,0 +1,17 @@
+CLEAN:
+- gamesession
+- remove world globals
+
+BUGS:
+- raycast hits wrong
+- connect/disconnect hang
+
+FEATURES:
+- server timed
+- named players
+- full screen
+- bigger world
+  - fixed point math
+- meta server
+- monsters
+
