@@ -2,8 +2,11 @@
 
 #include <cstring>
 
-GridArray::GridArray() {
-  memset(mData, 0, GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z);
+GridArray::GridArray():
+  mData(),
+  mSize(GRID_SIZE_X * GRID_SIZE_Y * GRID_SIZE_Z)
+{
+  memset(mData, 0, mSize);
 }
 
 void GridArray::makeFloor() {
@@ -27,3 +30,6 @@ void GridArray::set(int x, int y, int z, char value) {
   mData[x][y][z] = value;
 }
 
+size_t GridArray::size() const {
+  return mSize;
+}
