@@ -29,9 +29,10 @@ public:
   PhysicsHandler& physics();
   GridHandler& grid();
 
+  std::set<EntityId> mDeleteList;
+
 private:
   IdGenerator m_idgen;
-  std::set<EntityId> mDeleteList;
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;
   GridHandler mGrid;

@@ -35,12 +35,13 @@ EntityId World::spawn_entity(int fd) {
   p.position = glm::vec3(d(g), d(g), d(g));
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-  mPhysicsHandler.add(&p);
+  mPhysicsHandler.add(p);
   mClient2Entity[fd] = p.id;
   return p.id;
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
+  mDeleteList.clear();
   mInputHandler.tick(inputs, *this);
   mPhysicsHandler.tick(dt, *this);
   removeDead();
@@ -48,9 +49,7 @@ int World::tick(float dt, const std::vector<InputC>& inputs) {
 }
 
 void World::removeDead() {
-  for (EntityId id : mPhysicsHandler.mRemoveList) {
-    mPhysicsHandler.remove(id);
-  }
+  mPhysicsHandler.removeComponents(mDeleteList);
 }
 
 PhysicsHandler& World::physics() {

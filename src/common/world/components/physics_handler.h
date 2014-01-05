@@ -14,18 +14,10 @@
 
 class World;
 
-class PhysicsHandler : public WorldHandler {
+class PhysicsHandler : public WorldHandler<PhysicsC> {
 public:
-  void* get(EntityId);
-  void add(void*);
   void tick(float, World&);
-
-  void remove(EntityId);
-  const std::vector<PhysicsC>& physics_components() const;
-  std::set<EntityId> mRemoveList;
 
   void getObjects(WorldState&) const;
   void setObjects(const WorldState&);
-private:
-  std::vector<PhysicsC> m_physics_components;
 };
