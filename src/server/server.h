@@ -17,7 +17,8 @@ struct Server {
   int mkFDSet(fd_set*);
   void checkClientInput(const fd_set& fds);
   void acceptNewClient(const fd_set& fds);
-  void sendWorldState();
+  void sendWorldState(Connection& c);
+  void broadcastWorldState();
 
   int mQuit;
   sockaddr_in mListenSA;

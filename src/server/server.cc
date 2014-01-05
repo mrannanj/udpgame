@@ -45,7 +45,7 @@ void Server::init() {
     die("fcntl");
 }
 
-void Server::sendWorldState() {
+void Server::broadcastWorldState() {
   AMessage a;
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
@@ -54,6 +54,15 @@ void Server::sendWorldState() {
     a.mutable_world_state()->set_owned_id(mWorld.mClient2Entity[c.mSocket]);
     c.sendMessage(a);
   }
+}
+
+void Server::sendWorldState(Connection& c) {
+  AMessage a;
+  a.set_type(Type::WORLD_STATE);
+  WorldState w = mWorld.getState();
+  a.mutable_world_state()->CopyFrom(w);
+  a.mutable_world_state()->set_owned_id(mWorld.mClient2Entity[c.mSocket]);
+  c.sendMessage(a);
 }
 
 void Server::serve() {
@@ -67,7 +76,7 @@ void Server::serve() {
     if (mWorldTicker.ok()) {
       mWorld.tick(sec_per_ticks, mWorldTicker.mInputs);
       mWorldTicker.nextWait(mClients.size(), mWorld.mTickNumber + 1);
-      sendWorldState();
+      broadcastWorldState();
     }
   } while(!FD_ISSET(mQuit, &fds));
 }
@@ -80,6 +89,7 @@ void Server::acceptNewClient(const fd_set& fds) {
     if (client != -1) {
       cout << "client connected" << endl;
       mClients.emplace_back(client, sa);
+      sendWorldState(mClients.back());
     }
   }
 }

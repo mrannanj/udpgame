@@ -11,7 +11,6 @@ REFACTOR:
 BUGS:
 - invisible walls
 - wall climb
-- connect/disconnect hang
 
 FEATURES:
 - make possible to set one block per click
