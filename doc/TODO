@@ -1,17 +1,20 @@
 REFACTOR:
-- copy & paste code in camera and raycasting
 - add Weffc++ warning
 - deglobalize menus and screens
 - AABB class
 - protobuf integration
-  - 3 input classes
+  - 3 UGLY input classes
   - 2 world classes
 - object removal is NASTY
+- raycast code is ugly
 
 BUGS:
+- invisible walls
+- wall climb
 - connect/disconnect hang
 
 FEATURES:
+- make possible to set one block per click
 - implement handle system for faster component lookups
 - kill disconnected players
 - show wielded item in gui
@@ -19,9 +22,9 @@ FEATURES:
 - outside grid killer
 - server timed
 - named players
-- full screen
+- fullscreen
 - bigger world
   - fixed point math
   - transfer inputs only
-- meta server
+- metaserver
 - monsters

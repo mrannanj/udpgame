@@ -60,17 +60,12 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
     if ((i.actions & ContinousAction::FIRST) or
         i.actions & ContinousAction::SECOND)
     {
-      glm::vec3 eye_pos = p->position;
-      eye_pos.y += 0.7f;
-      glm::vec3 dir = glm::vec3(
-        cos(p->vertical_angle) * sin(p->horizontal_angle),
-        sin(p->vertical_angle),
-        cos(p->vertical_angle) * cos(p->horizontal_angle)
-      );
+      glm::vec3 pos = p->eye_position();
+      glm::vec3 dir = p->look_direction();
       float distance;
       char* hitBlock;
       char* faceBlock;
-      if (w.grid().raycast(eye_pos, dir, distance, &hitBlock, &faceBlock)) {
+      if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock)) {
         if (i.actions & ContinousAction::FIRST) {
           *hitBlock = 0;
         }

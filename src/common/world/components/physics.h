@@ -24,4 +24,7 @@ struct PhysicsC {
 
   void update_bbs();
   void update_next_bbs();
+
+  glm::vec3 eye_position() const;
+  glm::vec3 look_direction() const;
 };

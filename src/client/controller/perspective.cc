@@ -31,6 +31,7 @@ void Perspective::handle_input(Input& i) {
     handle_freelook_input(i);
 }
 
+// FIXME: how to avoid duplicate code here and in input manager
 void Perspective::handle_freelook_input(const Input& input) {
   float move_speed = 0.1f;
   m_vertical_angle -= (float)input.mouse_delta_y * 0.01f;
@@ -78,33 +79,16 @@ void Perspective::tick(World& w)
   if (!m_freelook) {
     PhysicsC* p = (PhysicsC*)w.physics().get(m_follow_id);
     if (p) {
-      m_position = p->position;
-      m_position.y += 0.7f;
-      m_vertical_angle = p->vertical_angle;
       m_horizontal_angle = p->horizontal_angle;
-      m_direction = glm::vec3(
-        cos(m_vertical_angle) * sin(m_horizontal_angle),
-        sin(m_vertical_angle),
-        cos(m_vertical_angle) * cos(m_horizontal_angle)
-      );
+      m_vertical_angle = p->vertical_angle;
+      m_position = p->eye_position();
+      m_direction = p->look_direction();
       glm::vec3 right = glm::vec3(
         sin(m_horizontal_angle - 3.14f/2.0f),
         0,
         cos(m_horizontal_angle - 3.14f/2.0f)
       );
       m_up = glm::cross(right, m_direction);
-
-#if 0
-      float distance;
-      char* hitBlock = nullptr;
-      char* faceBlock = nullptr;
-      if (w.grid().raycast(m_position, m_direction,
-            distance, &hitBlock, &faceBlock))
-      {
-        *hitBlock = 2;
-        if (faceBlock) *faceBlock = 3;
-      }
-#endif
     } else {
       switch_camera_mode();
     }
