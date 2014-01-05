@@ -9,7 +9,6 @@ REFACTOR:
 - object removal is NASTY
 
 BUGS:
-- raycast hits wrong
 - connect/disconnect hang
 
 FEATURES:

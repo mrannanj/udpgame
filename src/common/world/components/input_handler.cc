@@ -53,25 +53,11 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
       p->velocity.y += jump_velocity;
       p->on_ground = false;
     }
+
     if (i.actions & ContinousAction::FIRST) {
-      glm::vec3 pos = p->position;
-      pos.y += 0.7f;
-      glm::vec3 dir = glm::vec3(
-          cos(p->vertical_angle) * sin(p->horizontal_angle),
-          sin(p->vertical_angle),
-          cos(p->vertical_angle) * cos(p->horizontal_angle)
-        );
-      w.grid().raycast(pos, dir, true);
     }
+
     if (i.actions & ContinousAction::SECOND) {
-      glm::vec3 pos = p->position;
-      pos.y += 0.7f;
-      glm::vec3 dir = glm::vec3(
-          cos(p->vertical_angle) * sin(p->horizontal_angle),
-          sin(p->vertical_angle),
-          cos(p->vertical_angle) * cos(p->horizontal_angle)
-        );
-      w.grid().raycast(pos, dir, false);
     }
   }
 }

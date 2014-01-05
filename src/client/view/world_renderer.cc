@@ -5,20 +5,25 @@
 
 void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp) {
   r.cube_renderer.On();
-  r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
 
   for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
     for (unsigned y = 0; y < GRID_SIZE_Y; ++y) {
       for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
         char block = g.mArr.get(x,y,z);
-        if (block)
-        {
-          glm::mat4 model = glm::translate(glm::mat4(1.0f),
-            glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)
-          );
-          model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-          r.cube_renderer.DrawCube(vp * model);
-        }
+        if (block == 0) continue;
+
+        if (block == 1)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
+        if (block == 2)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::FACE]);
+        if (block == 3)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::FONT]);
+
+        glm::mat4 model = glm::translate(glm::mat4(1.0f),
+          glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)
+        );
+        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+        r.cube_renderer.DrawCube(vp * model);
       }
     }
   }

@@ -124,23 +124,21 @@ bool GridHandler::ray_block_collision(
   bb_min(x, y, z, block_min);
   bb_max(x, y, z, block_max);
   float tmin = 0.0f;
-  float tmax = 5.0f;
+  float tmax = FLT_MAX;
   axis = 4;
   for (int i = 0; i < 3; i++) {
     int swapped = 1;
-    if (fabs(d[i]) < EPSILON) {
+    if (fabs(d[i]) < FLT_MIN) {
       if (p[i] < block_min[i] || p[i] > block_max[i]) {
         return false;
       }
     } else {
+      float div = 1.0f/d[i];
       float d1 = (block_min[i] - p[i]);
       float d2 = (block_max[i] - p[i]);
-      float t1 = d1/d[i];
-      float t2 = d2/d[i];
+      float t1 = d1 * div;
+      float t2 = d2 * div;
 
-      if (t1 < 0.0f or t2 < 0.0f) {
-        return false;
-      }
       if (t1 > t2) {
         swapped = -1;
         swap(t1, t2);
@@ -150,7 +148,7 @@ bool GridHandler::ray_block_collision(
         axis = i;
         dir = -1 * swapped;
       }
-      if (t2 > tmax) {
+      if (tmax > t2) {
         tmax = t2;
       }
       if (tmin > tmax) {
@@ -158,12 +156,13 @@ bool GridHandler::ray_block_collision(
       }
     }
   }
-  if (tmin > 5.0f) return false;
+  if (axis == 4) // inside box
+    return false;
   t = tmin;
   return true;
 }
 
-void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
+void GridHandler::raycast(const vec3& s, const vec3& d, bool) {
   glm::vec3 dn = normalize(d);
   int b[3];
   float tmin = FLT_MAX;
@@ -176,7 +175,8 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
         float t;
         int a;
         int d;
-        if (mArr.get(x,y,z) and
+        char block = mArr.get(x,y,z);
+        if ((block == 1 or block == 2) and
             ray_block_collision(x, y, z, s, dn, t, a, d)) {
           if (tmin > t) {
             b[0] = x;
@@ -192,12 +192,9 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool take) {
     }
   }
   if (hit) {
-    if (take) {
-      mArr.set(b[0], b[1], b[2], 0);
-    } else {
-      b[baxis] += dir;
-      mArr.set(b[0], b[1], b[2], 1);
-    }
+    mArr.set(b[0], b[1], b[2], 2);
+    b[baxis] += dir;
+    mArr.set(b[0], b[1], b[2], 3);
   }
 }
 
