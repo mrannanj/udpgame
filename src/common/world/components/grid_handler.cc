@@ -120,7 +120,7 @@ bool GridHandler::ray_block_collision(
   axis = 4;
   for (int i = 0; i < 3; i++) {
     int swapped = 1;
-    if (fabs(d[i]) < FLT_MIN) {
+    if (fabsf(d[i]) < FLT_MIN) {
       if (p[i] < block_min[i] || p[i] > block_max[i]) {
         return false;
       }
@@ -199,7 +199,7 @@ void GridHandler::getGrid(WorldState& w) const {
 }
 
 bool GridHandler::inKillRange(const glm::vec3& p) const {
-  return (fabs(p.x) >= KILLRANGE
-      or fabs(p.y) >= KILLRANGE
-      or fabs(p.z) >= KILLRANGE);
+  return (fabsf(p.x) >= KILLRANGE
+      or fabsf(p.y) >= KILLRANGE
+      or fabsf(p.z) >= KILLRANGE);
 }
