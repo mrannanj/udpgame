@@ -12,8 +12,7 @@ MainMenu::MainMenu():
 {
 }
 
-void MainMenu::Update(InputManager& input_manager, float)
-{
+void MainMenu::Update(GameSession&, InputManager& input_manager, float) {
   Input input;
   input_manager.read_input(input);
 
@@ -30,16 +29,14 @@ void MainMenu::Update(InputManager& input_manager, float)
   }
 }
 
-void MainMenu::Draw(const Renderer& r)
-{
+void MainMenu::Draw(GameSession&, const Renderer& r) {
   m_quit.Draw(r);
   m_connect.Draw(r);
   r.text_renderer.On();
-  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game!", Blue);
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "udpgame", Blue);
 }
 
-void MainMenu::Activate()
-{
+void MainMenu::Activate() {
   release_mouse();
 }
 

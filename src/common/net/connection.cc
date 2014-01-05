@@ -7,6 +7,13 @@
 #include <unistd.h>
 #include <cstring>
 
+Connection::Connection():
+  mPos(0),
+  mSocket(-1),
+  mAddress()
+{
+}
+
 Connection::Connection(const std::string& addr):
   mPos(0),
   mSocket(-1),

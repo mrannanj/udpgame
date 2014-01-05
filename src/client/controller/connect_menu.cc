@@ -13,7 +13,7 @@ ConnectMenu::ConnectMenu():
 {
 }
 
-void ConnectMenu::Update(InputManager& input_manager, float) {
+void ConnectMenu::Update(GameSession& gs, InputManager& input_manager, float) {
   Input input;
   input_manager.read_input(input);
 
@@ -26,17 +26,17 @@ void ConnectMenu::Update(InputManager& input_manager, float) {
   }
 
   if (m_go.Update(input)) {
-    if (g_game_session) {
-      delete g_game_session;
+    if (gs.mInit) {
+      gs.~GameSession();
     }
-    g_game_session = new GameSession(m_address.text());
+    new (&gs) GameSession(m_address.text());
     g_screen_stack.push(&g_game_screen);
   }
 
   m_address.Update(input);
 }
 
-void ConnectMenu::Draw(const Renderer& r) {
+void ConnectMenu::Draw(GameSession&, const Renderer& r) {
   m_go.Draw(r);
   m_cancel.Draw(r);
   m_address.Draw(r);

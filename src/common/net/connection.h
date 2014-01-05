@@ -10,6 +10,7 @@
 #define MAXMSG 2048
 
 struct Connection {
+  Connection();
   Connection(int, const sockaddr_in&);
   Connection(const std::string&);
 

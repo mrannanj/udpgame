@@ -1,11 +1,10 @@
 #include "client/view/window.h"
+#include "client/view/world_renderer.h"
 #include "client/controller/game_screen.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/input/input.h"
 #include "client/controller/main_menu.h"
-#include "client/view/world_renderer.h"
 #include "common/world/components/grid_handler.h"
-#include "common/util/die.h"
 #include "common/proto/udpgame.pb.h"
 
 #include <glm/glm.hpp>
@@ -26,7 +25,7 @@ void GameScreen::Activate() {
   glEnable(GL_CULL_FACE);
 }
 
-void GameScreen::Update(InputManager& input_reader, float dt) {
+void GameScreen::Update(GameSession& gs, InputManager& input_reader, float dt) {
   Input input;
   input_reader.read_input(input);
   if (input.consume_discrete_action(DiscreteAction::TOGGLE_MOUSEGRAB)) {
@@ -36,19 +35,19 @@ void GameScreen::Update(InputManager& input_reader, float dt) {
     g_screen_stack.switch_state(&g_main_menu);
     return;
   }
-  if (g_game_session) {
-    g_game_session->tick(input);
+  if (gs.mInit) {
+    gs.tick(input);
   }
 }
 
-void GameScreen::Draw(const Renderer& r) {
+void GameScreen::Draw(GameSession& gs, const Renderer& r) {
   r.text_renderer.On();
-  if (g_game_session) {
+  if (gs.mInit) {
     r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f,
-      g_game_session->mPerspective.pos_string(), Green);
-    glm::mat4 vp = g_game_session->mPerspective.get_view_projection_matrix();
-    draw_grid(r, g_game_session->mWorld.grid(), vp);
-    draw_units(r, g_game_session->mWorld.physics(), vp);
+      gs.mPerspective.pos_string(), Green);
+    glm::mat4 vp = gs.mPerspective.get_view_projection_matrix();
+    draw_grid(r, gs.mWorld.grid(), vp);
+    draw_units(r, gs.mWorld.physics(), vp);
   }
 
   float q[] = {

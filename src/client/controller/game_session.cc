@@ -8,7 +8,13 @@
 using namespace std;
 using namespace std::chrono;
 
+GameSession::GameSession():
+  mInit(false)
+{
+}
+
 GameSession::GameSession(const std::string& addr):
+  mInit(true),
   mConnection(addr),
   mPerspective(),
   mWorld()
@@ -55,5 +61,3 @@ void GameSession::sendFrameInput(Input& i) {
   a.mutable_input()->CopyFrom(ci);
   mConnection.sendMessage(a);
 }
-
-GameSession* g_game_session = nullptr;

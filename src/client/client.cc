@@ -6,7 +6,7 @@
 #include "client/controller/input/input_manager.h"
 #include "client/controller/screen_stack.h"
 #include "client/controller/main_menu.h"
-
+#include "client/controller/game_session.h"
 #include "client/client.h"
 
 Client::Client(unsigned ticks_per_sec):
@@ -17,6 +17,7 @@ Client::Client(unsigned ticks_per_sec):
 void Client::run() {
   open_window();
 
+  GameSession gameSession;
   InputManager input_manager;
   Renderer renderer;
 
@@ -28,10 +29,10 @@ void Client::run() {
     if (g_screen_stack.check_dirty())
       screen->Activate();
 
-    screen->Update(input_manager, 0.05f);
+    screen->Update(gameSession, input_manager, 0.05f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    screen->Draw(renderer);
+    screen->Draw(gameSession, renderer);
     SDL_GL_SwapBuffers();
     m_tick_timer.end_tick();
   }

@@ -11,8 +11,8 @@
 
 struct GameScreen : public Screen {
   GameScreen();
-  void Update(InputManager&, float);
-  void Draw(const Renderer&);
+  void Update(GameSession&, InputManager&, float);
+  void Draw(GameSession&, const Renderer&);
   void Activate();
 };
 

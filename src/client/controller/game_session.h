@@ -7,14 +7,16 @@
 #include <string>
 
 struct GameSession {
+  GameSession();
   GameSession(const std::string&);
+
   void tick(Input&);
   void sendFrameInput(Input&);
   bool handleAMessage(const AMessage&, int);
 
+  bool mInit;
   Connection mConnection;
   Perspective mPerspective;
   World mWorld;
 };
 
-extern GameSession* g_game_session;
