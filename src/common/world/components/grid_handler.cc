@@ -189,8 +189,11 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
             b[1] = y;
             b[2] = z;
             b[baxis] += dir;
-            if (!mArr.outsideGrid(b[0], b[1], b[2]))
+            if (!mArr.outsideGrid(b[0], b[1], b[2])) {
               *faceBlock = &mArr.getUnsafe(b[0], b[1], b[2]);
+            } else {
+              *faceBlock = nullptr;
+            }
           }
         }
       }

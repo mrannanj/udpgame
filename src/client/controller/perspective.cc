@@ -16,7 +16,6 @@ Perspective::Perspective():
   m_vertical_angle(0.0f),
   m_horizontal_angle(0.0f),
   m_position(10.0f, 2.0f, 10.0f),
-  m_center(0.0f, 0.0f, 0.0f),
   m_up(0.0f, 1.0f, 0.0f)
 {
 }
@@ -96,8 +95,8 @@ void Perspective::tick(World& w)
       m_up = glm::cross(right, m_direction);
 
       float distance;
-      char* hitBlock;
-      char* faceBlock;
+      char* hitBlock = nullptr;
+      char* faceBlock = nullptr;
       if (w.grid().raycast(m_position, m_direction,
             distance, &hitBlock, &faceBlock))
       {
