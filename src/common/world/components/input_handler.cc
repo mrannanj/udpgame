@@ -21,7 +21,7 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
       continue;
     EntityId id = it->second;
 
-    PhysicsC* p = (PhysicsC*)w.physics().get(id);
+    PhysicsC* p = w.physics().get(id);
     if (p == nullptr) continue;
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;
@@ -54,6 +54,9 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
       p->on_ground = false;
     }
 
+    Inventory* inv = w.inventory().get(id);
+    if (inv == nullptr) continue;
+
     if ((i.actions & ContinousAction::FIRST) or
         i.actions & ContinousAction::SECOND)
     {
@@ -72,9 +75,15 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
           *hitBlock = 0;
         }
         if (i.actions & ContinousAction::SECOND and faceBlock != nullptr) {
-          *faceBlock = 1;
+          *faceBlock = inv->mWielding;
         }
       }
     }
+    if (i.actions & ContinousAction::ITEM_1)
+      inv->mWielding = 1;
+    if (i.actions & ContinousAction::ITEM_2)
+      inv->mWielding = 2;
+    if (i.actions & ContinousAction::ITEM_3)
+      inv->mWielding = 3;
   }
 }

@@ -8,7 +8,7 @@
 using namespace std;
 
 SDLKey binded_keys[] = {
-  SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE
+  SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_1, SDLK_2, SDLK_3
 };
 
 InputManager::InputManager() {

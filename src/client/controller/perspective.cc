@@ -94,6 +94,7 @@ void Perspective::tick(World& w)
       );
       m_up = glm::cross(right, m_direction);
 
+#if 0
       float distance;
       char* hitBlock = nullptr;
       char* faceBlock = nullptr;
@@ -103,6 +104,7 @@ void Perspective::tick(World& w)
         *hitBlock = 2;
         if (faceBlock) *faceBlock = 3;
       }
+#endif
     } else {
       switch_camera_mode();
     }

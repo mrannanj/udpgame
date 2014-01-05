@@ -36,6 +36,12 @@ EntityId World::spawn_entity(int fd) {
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
+
+  Inventory i;
+  i.id = p.id;
+  i.mWielding = 1;
+  mInventory.add(i);
+
   mClient2Entity[fd] = p.id;
   return p.id;
 }
@@ -50,6 +56,10 @@ int World::tick(float dt, const std::vector<InputC>& inputs) {
 
 void World::removeDead() {
   mPhysicsHandler.removeComponents(mDeleteList);
+}
+
+InventoryHandler& World::inventory() {
+  return mInventory;
 }
 
 PhysicsHandler& World::physics() {

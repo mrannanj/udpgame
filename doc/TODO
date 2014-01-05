@@ -1,8 +1,7 @@
 REFACTOR:
 - copy & paste code in camera and raycasting
 - add Weffc++ warning
-- remove game screen globals
-- inherit base for world handlers
+- deglobalize menus and screens
 - AABB class
 - protobuf integration
   - 3 input classes
@@ -13,9 +12,9 @@ BUGS:
 - connect/disconnect hang
 
 FEATURES:
-- make placement hints less obtrusive
-o allow placing different blocks
+- implement handle system for faster component lookups
 - kill disconnected players
+- show wielded item in gui
 - show in gui if client is in observer or player mode
 - outside grid killer
 - server timed

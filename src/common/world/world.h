@@ -8,6 +8,7 @@
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/input_handler.h"
 #include "common/world/components/grid_handler.h"
+#include "common/world/components/inventory_handler.h"
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -28,6 +29,7 @@ public:
 
   PhysicsHandler& physics();
   GridHandler& grid();
+  InventoryHandler& inventory();
 
   std::set<EntityId> mDeleteList;
 
@@ -35,5 +37,6 @@ private:
   IdGenerator m_idgen;
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;
+  InventoryHandler mInventory;
   GridHandler mGrid;
 };
