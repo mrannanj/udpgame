@@ -5,14 +5,16 @@ REFACTOR:
 - protobuf integration
   - 3 UGLY input classes
   - 2 world classes
-- object removal is NASTY
-- raycast code is ugly
+- refactor object deletion for speed
+- grid position class
+- refactor connection class, add ostream operator
 
 BUGS:
 - invisible walls
 - wall climb
 
 FEATURES:
+- maybe add team?
 - make possible to set one block per click
 - implement handle system for faster component lookups
 - kill disconnected players
@@ -27,3 +29,4 @@ FEATURES:
   - transfer inputs only
 - metaserver
 - monsters
+- lol chat
