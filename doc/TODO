@@ -20,7 +20,6 @@ FEATURES:
 - kill disconnected players
 - show wielded item in gui
 - show in gui if client is in observer or player mode
-- outside grid killer
 - server timed
 - named players
 - fullscreen

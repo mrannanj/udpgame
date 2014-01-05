@@ -101,6 +101,7 @@ void GridHandler::bb_max(int x, int y, int z, glm::vec3& bb) const {
 bool GridHandler::check_collision(PhysicsC& p, float dt) const {
   bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
+  if (inKillRange(p.position)) return false;
   p.update_bbs();
   p.update_next_bbs();
   return ret;
@@ -195,4 +196,10 @@ void GridHandler::setGrid(const WorldState& w) {
 
 void GridHandler::getGrid(WorldState& w) const {
   w.set_grid(mArr.mData, mArr.size());
+}
+
+bool GridHandler::inKillRange(const glm::vec3& p) const {
+  return (fabs(p.x) >= KILLRANGE
+      or fabs(p.y) >= KILLRANGE
+      or fabs(p.z) >= KILLRANGE);
 }

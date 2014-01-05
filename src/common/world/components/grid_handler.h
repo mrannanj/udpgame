@@ -11,6 +11,7 @@ constexpr float MAX_Y = (float)(GRID_SIZE_Y - 1);
 constexpr float MAX_Z = (float)(GRID_SIZE_Z - 1);
 
 constexpr float BLOCK_SIZE = 1.0f;
+constexpr float KILLRANGE = 50.0f;
 
 const glm::vec3 grid_top(MAX_X, MAX_Y, MAX_Z);
 const glm::vec3 grid_bot(0.0f, 0.0f, 0.0f);
@@ -34,6 +35,8 @@ struct GridHandler {
   bool raycast(const glm::vec3&, const glm::vec3&, float&, char**, char**);
   bool ray_block_collision(int, int, int,
       const glm::vec3&, const glm::vec3&, float&, int&, int&) const;
+
+  bool inKillRange(const glm::vec3&) const;
 
   void setGrid(const WorldState&);
   void getGrid(WorldState&) const;
