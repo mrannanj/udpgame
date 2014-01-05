@@ -12,6 +12,7 @@ BUGS:
 - connect/disconnect hang
 
 FEATURES:
+- make placement hints less obtrusive
 - allow placing different blocks
 - kill disconnected players
 - show in gui if client is in observer or player mode
