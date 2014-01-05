@@ -12,7 +12,6 @@ BUGS:
 - connect/disconnect hang
 
 FEATURES:
-- color cubes where ray would hit
 - kill disconnected players
 - show in gui if client is in observer or player mode
 - outside grid killer
@@ -24,4 +23,3 @@ FEATURES:
   - transfer inputs only
 - meta server
 - monsters
-
