@@ -1,7 +1,8 @@
 #pragma once
 
-#include "common/world/entity_id.h"
+#include "common/world/components/world_handler.h"
 #include "common/world/components/physics.h"
+#include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
 
 #include <vector>
@@ -13,13 +14,13 @@
 
 class World;
 
-class PhysicsHandler {
+class PhysicsHandler : public WorldHandler {
 public:
-  PhysicsC* get(EntityId);
-  void add(PhysicsC&);
+  void* get(EntityId);
+  void add(void*);
   void tick(float, World&);
+
   void remove(EntityId);
-  EntityId next_id(EntityId);
   const std::vector<PhysicsC>& physics_components() const;
   std::set<EntityId> mRemoveList;
 

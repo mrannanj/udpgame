@@ -5,28 +5,15 @@
 #include <cassert>
 #include <algorithm>
 
-PhysicsC* PhysicsHandler::get(EntityId id) {
+void* PhysicsHandler::get(EntityId id) {
   for (PhysicsC& p : m_physics_components)
     if (p.id == id)
       return &p;
   return NULL;
 }
 
-EntityId PhysicsHandler::next_id(EntityId id) {
-  size_t n = m_physics_components.size();
-  unsigned i = 0;
-  for (; i < n; ++i) {
-    if (m_physics_components[i].id == id)
-      break;
-  }
-  if (i+1 < n)
-    return m_physics_components[i+1].id;
-  else
-    return m_physics_components[0].id;
-}
-
-void PhysicsHandler::add(PhysicsC& p) {
-  m_physics_components.push_back(p);
+void PhysicsHandler::add(void* p) {
+  m_physics_components.push_back(*(PhysicsC*)p);
 }
 
 void PhysicsHandler::remove(EntityId eid) {

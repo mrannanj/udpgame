@@ -21,7 +21,7 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
       continue;
     EntityId id = it->second;
 
-    PhysicsC* p = w.physics().get(id);
+    PhysicsC* p = (PhysicsC*)w.physics().get(id);
     if (p == nullptr) continue;
     p->horizontal_angle -= i.horizontal_angle_delta;
     p->vertical_angle -= i.vertical_angle_delta;

@@ -76,7 +76,7 @@ void Perspective::tick(World& w)
   m_projection = glm::perspective(45.0f,
       (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
   if (!m_freelook) {
-    PhysicsC* p = w.physics().get(m_follow_id);
+    PhysicsC* p = (PhysicsC*)w.physics().get(m_follow_id);
     if (p) {
       m_position = p->position;
       m_position.y += 0.7f;
@@ -121,4 +121,3 @@ std::string Perspective::pos_string() const {
     << (int)m_position.y << "," << (int)m_position.z << ")";
   return ss.str();
 }
-

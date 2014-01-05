@@ -35,7 +35,7 @@ EntityId World::spawn_entity(int fd) {
   p.position = glm::vec3(d(g), d(g), d(g));
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-  mPhysicsHandler.add(p);
+  mPhysicsHandler.add(&p);
   mClient2Entity[fd] = p.id;
   return p.id;
 }

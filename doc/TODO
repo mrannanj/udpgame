@@ -1,4 +1,5 @@
 REFACTOR:
+- copy & paste code in camera and raycasting
 - add Weffc++ warning
 - remove game screen globals
 - inherit base for world handlers
@@ -13,7 +14,7 @@ BUGS:
 
 FEATURES:
 - make placement hints less obtrusive
-- allow placing different blocks
+o allow placing different blocks
 - kill disconnected players
 - show in gui if client is in observer or player mode
 - outside grid killer

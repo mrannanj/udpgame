@@ -30,6 +30,9 @@ void InputManager::init_key_to_action() {
   m_key_to_action[SDLK_d] = ContinousAction::MOVE_RIGHT;
   m_key_to_action[SDLK_a] = ContinousAction::MOVE_LEFT;
   m_key_to_action[SDLK_SPACE] = ContinousAction::JUMP;
+  m_key_to_action[SDLK_1] = ContinousAction::ITEM_1;
+  m_key_to_action[SDLK_2] = ContinousAction::ITEM_2;
+  m_key_to_action[SDLK_3] = ContinousAction::ITEM_3;
 }
 
 void InputManager::check_mouse(Input& i) const {

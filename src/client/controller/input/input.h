@@ -9,7 +9,10 @@ namespace ContinousAction {
     JUMP = 16,
     SPAWN_UNIT = 32,
     FIRST = 64,
-    SECOND = 128
+    SECOND = 128,
+    ITEM_1 = 256,
+    ITEM_2 = 512,
+    ITEM_3 = 1024
   };
 }
 
