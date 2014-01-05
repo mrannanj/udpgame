@@ -1,5 +1,7 @@
 #include "common/world/components/grid_handler.h"
+
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 using namespace glm;
@@ -96,17 +98,6 @@ void GridHandler::bb_max(int x, int y, int z, glm::vec3& bb) const {
     (float)z + BLOCK_SIZE);
 }
 
-void GridHandler::mind_world_limits(PhysicsC& p) const {
-  for (unsigned a = 0; a < 3; ++a) {
-    if (p.next_bb_min[a] < grid_bot[a])
-      p.next_position[a] = grid_bot[a] + p.dimensions[a];
-    else if (p.next_bb_max[a] > grid_top[a])
-      p.next_position[a] = grid_top[a] - p.dimensions[a];
-  }
-  p.update_bbs();
-  p.update_next_bbs();
-}
-
 bool GridHandler::check_collision(PhysicsC& p, float dt) const {
   bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
@@ -117,13 +108,13 @@ bool GridHandler::check_collision(PhysicsC& p, float dt) const {
 
 bool GridHandler::ray_block_collision(
     int x, int y, int z,
-    const vec3& p, const vec3& d, float& t, int& axis, int& dir) const
+    const vec3& p, const vec3& d, float& tmin, int& axis, int& dir) const
 {
   glm::vec3 block_min;
   glm::vec3 block_max;
   bb_min(x, y, z, block_min);
   bb_max(x, y, z, block_max);
-  float tmin = 0.0f;
+  tmin = 0.0f;
   float tmax = FLT_MAX;
   axis = 4;
   for (int i = 0; i < 3; i++) {
@@ -134,10 +125,8 @@ bool GridHandler::ray_block_collision(
       }
     } else {
       float div = 1.0f/d[i];
-      float d1 = (block_min[i] - p[i]);
-      float d2 = (block_max[i] - p[i]);
-      float t1 = d1 * div;
-      float t2 = d2 * div;
+      float t1 = (block_min[i] - p[i]) * div;
+      float t2 = (block_max[i] - p[i]) * div;
 
       if (t1 > t2) {
         swapped = -1;
@@ -156,9 +145,7 @@ bool GridHandler::ray_block_collision(
       }
     }
   }
-  if (axis == 4) // inside box
-    return false;
-  t = tmin;
+  assert(axis != 4);
   return true;
 }
 

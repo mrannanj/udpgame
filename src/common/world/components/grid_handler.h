@@ -28,7 +28,6 @@ struct GridHandler {
   void bb_max(int, int, int, glm::vec3&) const;
   void block_center(int, int, int, glm::vec3&) const;
   char block(int, int, int) const;
-  void mind_world_limits(PhysicsC&) const;
   void overlapping_indices(const PhysicsC&, int[3][2]) const;
   bool correct_one_hit(PhysicsC& p) const;
 
