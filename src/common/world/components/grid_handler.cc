@@ -162,10 +162,12 @@ bool GridHandler::ray_block_collision(
   return true;
 }
 
-void GridHandler::raycast(const vec3& s, const vec3& d, bool) {
+bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
+    char** hitBlock, char** faceBlock)
+{
   glm::vec3 dn = normalize(d);
   int b[3];
-  float tmin = FLT_MAX;
+  distance = FLT_MAX;
   int baxis = 4;
   int dir = 0;
   bool hit = false;
@@ -175,27 +177,26 @@ void GridHandler::raycast(const vec3& s, const vec3& d, bool) {
         float t;
         int a;
         int d;
-        char block = mArr.get(x,y,z);
-        if ((block == 1 or block == 2) and
-            ray_block_collision(x, y, z, s, dn, t, a, d)) {
-          if (tmin > t) {
-            b[0] = x;
-            b[1] = y;
-            b[2] = z;
-            tmin = t;
+        char& block = mArr.getUnsafe(x,y,z);
+        if (block and ray_block_collision(x, y, z, s, dn, t, a, d)) {
+          if (distance > t) {
+            distance = t;
             hit = true;
             baxis = a;
             dir = d;
+            *hitBlock = &block;
+            b[0] = x;
+            b[1] = y;
+            b[2] = z;
+            b[baxis] += dir;
+            if (!mArr.outsideGrid(b[0], b[1], b[2]))
+              *faceBlock = &mArr.getUnsafe(b[0], b[1], b[2]);
           }
         }
       }
     }
   }
-  if (hit) {
-    mArr.set(b[0], b[1], b[2], 2);
-    b[baxis] += dir;
-    mArr.set(b[0], b[1], b[2], 3);
-  }
+  return hit;
 }
 
 void GridHandler::setGrid(const WorldState& w) {

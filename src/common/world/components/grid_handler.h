@@ -32,7 +32,7 @@ struct GridHandler {
   void overlapping_indices(const PhysicsC&, int[3][2]) const;
   bool correct_one_hit(PhysicsC& p) const;
 
-  void raycast(const glm::vec3&, const glm::vec3&, bool);
+  bool raycast(const glm::vec3&, const glm::vec3&, float&, char**, char**);
   bool ray_block_collision(int, int, int,
       const glm::vec3&, const glm::vec3&, float&, int&, int&) const;
 

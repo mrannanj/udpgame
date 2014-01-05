@@ -94,7 +94,16 @@ void Perspective::tick(World& w)
         cos(m_horizontal_angle - 3.14f/2.0f)
       );
       m_up = glm::cross(right, m_direction);
-      w.grid().raycast(m_position, m_direction, true);
+
+      float distance;
+      char* hitBlock;
+      char* faceBlock;
+      if (w.grid().raycast(m_position, m_direction,
+            distance, &hitBlock, &faceBlock))
+      {
+        *hitBlock = 2;
+        if (faceBlock) *faceBlock = 3;
+      }
     } else {
       switch_camera_mode();
     }

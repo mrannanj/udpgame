@@ -20,6 +20,10 @@ bool GridArray::outsideGrid(int x, int y, int z) const {
       x >= GRID_SIZE_X or y >= GRID_SIZE_Y or z >= GRID_SIZE_Z;
 }
 
+char& GridArray::getUnsafe(int x, int y, int z) {
+  return mData[x][y][z];
+}
+
 char GridArray::get(int x, int y, int z) const {
   if (outsideGrid(x,y,z)) return 0;
   return mData[x][y][z];
