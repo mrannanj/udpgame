@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/proto/udpgame.pb.h"
+
 #include <arpa/inet.h>
 #include <string>
 #include <cstring>
@@ -49,4 +50,6 @@ ssize_t Connection::checkMessages(T& handler) {
   }
   return nread;
 }
+
+std::ostream& operator<<(std::ostream& os, const Connection&);
 

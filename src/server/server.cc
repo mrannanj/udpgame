@@ -87,9 +87,10 @@ void Server::acceptNewClient(const fd_set& fds) {
     socklen_t sa_len;
     int client = accept(mListenFD, (sockaddr*)&sa, &sa_len);
     if (client != -1) {
-      cout << "client connected" << endl;
       mClients.emplace_back(client, sa);
-      sendWorldState(mClients.back());
+      Connection& c = mClients.back();
+      sendWorldState(c);
+      cout << c << " connected" << endl;
     }
   }
 }
@@ -103,7 +104,7 @@ void Server::checkClientInput(const fd_set& fds) {
     }
     ssize_t nread = c.checkMessages(mWorldTicker);
     if (nread <= 0) {
-      cout << "client disconnected" << endl;
+      cout << c << " disconnected" << endl;
       it = mClients.erase(it);
     } else {
       ++it;

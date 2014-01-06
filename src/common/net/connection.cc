@@ -73,3 +73,9 @@ void Connection::sendMessage(const AMessage& a) {
   a.SerializeToArray(&buf[sizeof(netSize)], size);
   write(mSocket, buf, size + sizeof(netSize));
 }
+
+std::ostream& operator<<(std::ostream& os, const Connection& c) {
+  char* addr = inet_ntoa(c.mSockaddr.sin_addr);
+  uint16_t port = ntohs(c.mSockaddr.sin_port);
+  return os << "fd: " << c.mSocket << ", addr: " << addr << ":" << port;
+}

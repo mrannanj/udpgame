@@ -7,7 +7,6 @@ REFACTOR:
   - 2 world classes
 - refactor object deletion for speed
 - grid position class
-- refactor connection class, add ostream operator
 - refactor to kill input component?
 
 BUGS:

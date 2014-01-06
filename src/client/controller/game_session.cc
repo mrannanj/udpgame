@@ -29,6 +29,7 @@ GameSession::GameSession(const std::string& addr):
       exit(EXIT_FAILURE);
     }
   }
+  cout << "connected to " << mConnection << endl;
 }
 
 void GameSession::tick(Input& input) {
