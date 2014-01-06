@@ -12,16 +12,8 @@ WorldTicker::WorldTicker(size_t numClients, unsigned frameNum):
 }
 
 bool WorldTicker::handleAMessage(const AMessage& a, int fd) {
-  if (a.type() != Type::CLIENT_INPUT) {
-    cout << "wrong message type" << endl;
-    return false;
-  }
-  if (a.input().tick_number() != mFrameNum) {
-    cout << "wrong tick number" << endl;
-    cout << "expected: " << mFrameNum << endl;
-    cout << "was: " << a.input().tick_number() << endl;
-    return false;
-  }
+  assert(a.type() == Type::CLIENT_INPUT);
+  assert(a.input().tick_number() == mFrameNum);
   InputC ic(a.input());
   ic.mClient = fd;
   mInputs.push_back(ic);

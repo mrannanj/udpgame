@@ -17,13 +17,19 @@ void InputHandler::tick(float, World& w) {
   float jump_velocity = 5.0f;
 
   for (const InputC& i : mComponents) {
-    if (i.actions & ContinousAction::SPAWN_UNIT)
-      w.spawn_player(i.mClient);
+    ClientData* c = w.client().getByClient(i.mClient);
+    assert(c != nullptr);
+
     if (i.actions & ContinousAction::SPAWN_MONSTER)
       w.spawn_monster();
 
-    ClientData* c = w.client().getByClient(i.mClient);
-    assert(c != nullptr);
+    if (i.actions & ContinousAction::PLAYER_MODE) {
+      if (c->mode == OBSERVER_MODE)
+        c->mode = PLAYER_MODE;
+      else
+        c->mode = OBSERVER_MODE;
+    }
+
     if (c->mode == OBSERVER_MODE) continue;
     EntityId id = c->id;
 

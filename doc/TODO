@@ -8,14 +8,16 @@ REFACTOR:
   - investigate if possible to use only protobuf classes for components
 - refactor object deletion for speed
 - grid position class
-- refactor to kill input handler
+- refactor so that input handler ticks nothing
+- refactor input continous actions
 
 BUGS:
 - invisible walls
 - wall climb
 
 FEATURES:
-o implement handle system for faster component lookups
+- monsters that follow player
+- implement handle system for faster component lookups
 - maybe add team?
 - make possible to set one block per click
 - show wielded item in gui

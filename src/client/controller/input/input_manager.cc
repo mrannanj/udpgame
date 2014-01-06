@@ -100,17 +100,11 @@ void InputManager::keyup(const SDL_Event& e, Input& i) const {
     case SDLK_ESCAPE:
       i.keypress |= DiscreteAction::ESCAPE;
       break;
-    case SDLK_F8:
-      i.continous_actions |= ContinousAction::SPAWN_UNIT;
-      break;
-    case SDLK_F7:
-      i.keypress |= DiscreteAction::SWITCH_CAMERA_MODE;
-      break;
-    case SDLK_F6:
-      i.continous_actions |= ContinousAction::SPAWN_MONSTER;
-      break;
     case SDLK_TAB:
-      i.keypress |= DiscreteAction::SWITCH_UNIT;
+      i.continous_actions |= ContinousAction::PLAYER_MODE;
+      break;
+    case SDLK_F8:
+      i.continous_actions |= ContinousAction::SPAWN_MONSTER;
       break;
     case SDLK_g:
       i.keypress |= DiscreteAction::TOGGLE_MOUSEGRAB;
