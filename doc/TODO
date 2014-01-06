@@ -14,6 +14,7 @@ BUGS:
 - wall climb
 
 FEATURES:
+o automatically spawn new player controlled unit if player is in play mode
 - maybe add team?
 - make possible to set one block per click
 - implement handle system for faster component lookups
@@ -30,4 +31,3 @@ FEATURES:
 - metaserver
 - lol chat
 - screenshot taking
-- automatically spawn new player controlled unit if player is in play mode

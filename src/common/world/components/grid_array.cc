@@ -11,8 +11,11 @@ GridArray::GridArray():
 
 void GridArray::makeFloor() {
   for (unsigned x = 0; x < GRID_SIZE_X; ++x)
-    for (unsigned z = 0; z < GRID_SIZE_Z; ++z)
-      mData[x][0][z] = 1;
+    for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
+      mData[x][0][z] = 3;
+      mData[x][1][z] = 1;
+      mData[x][2][z] = 1;
+    }
 }
 
 bool GridArray::outsideGrid(int x, int y, int z) const {

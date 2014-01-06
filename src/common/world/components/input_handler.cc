@@ -68,7 +68,7 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
       char* hitBlock;
       char* faceBlock;
       if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock)) {
-        if (i.actions & ContinousAction::FIRST) {
+        if (i.actions & ContinousAction::FIRST and *hitBlock != 3) {
           *hitBlock = 0;
         }
         if (i.actions & ContinousAction::SECOND and faceBlock != nullptr) {
