@@ -5,8 +5,47 @@
 #include <cassert>
 #include <algorithm>
 
+constexpr float HALF_PI = (float)M_PI/2.0f;
+constexpr float PI = (float)M_PI;
+constexpr float move_speed = 1.5f;
+constexpr float jump_velocity = 5.0f;
+
 void PhysicsHandler::tick(float dt, World& w) {
   for (PhysicsC& p : mComponents) {
+    InputC* i = w.input().get(p.id);
+    if (i != nullptr) {
+      p.horizontal_angle -= i->horizontal_angle_delta;
+      p.vertical_angle -= i->vertical_angle_delta;
+      if (p.vertical_angle < -HALF_PI)
+        p.vertical_angle = -HALF_PI;
+      else if (p.vertical_angle > HALF_PI)
+        p.vertical_angle = HALF_PI;
+
+      glm::vec3 forward = glm::vec3(
+        sin(p.horizontal_angle), 0.0f, cos(p.horizontal_angle));
+
+      glm::vec3 right = glm::vec3(
+        sin(p.horizontal_angle - HALF_PI),
+        0.0f,
+        cos(p.horizontal_angle - HALF_PI)
+      );
+
+      if (i->actions & ContinousAction::MOVE_FORWARD)
+        p.velocity += forward * move_speed;
+      else if (i->actions & ContinousAction::MOVE_BACK)
+        p.velocity -= forward * move_speed;
+
+      if (i->actions & ContinousAction::MOVE_RIGHT)
+        p.velocity += right * move_speed;
+      else if (i->actions & ContinousAction::MOVE_LEFT)
+        p.velocity -= right * move_speed;
+
+      if (i->actions & ContinousAction::JUMP && p.on_ground) {
+        p.velocity.y += jump_velocity;
+        p.on_ground = false;
+      }
+    }
+
     p.velocity.y -= GRAVITY * dt;
     p.velocity.x *= FRICTION;
     p.velocity.z *= FRICTION;

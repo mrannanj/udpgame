@@ -10,5 +10,6 @@ public:
   void markDead(EntityId);
   void remove(EntityId);
   ClientData* getByClient(int);
+  void removeByClient(int);
 };
 

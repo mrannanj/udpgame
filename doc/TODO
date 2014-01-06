@@ -8,7 +8,6 @@ REFACTOR:
   - investigate if possible to use only protobuf classes for components
 - refactor object deletion for speed
 - grid position class
-- refactor so that input handler ticks nothing
 - refactor input continous actions
 
 BUGS:

@@ -26,7 +26,7 @@ void Perspective::switch_camera_mode() {
 
 void Perspective::handle_input(Input& i) {
   //if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
-   // switch_camera_mode();
+    //switch_camera_mode();
   if (m_freelook)
     handle_freelook_input(i);
 }

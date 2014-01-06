@@ -3,4 +3,6 @@
 #include "common/world/components/world_handler.h"
 #include "common/world/components/inventory.h"
 
-class InventoryHandler : public WorldHandler<Inventory> {};
+struct InventoryHandler : public WorldHandler<Inventory> {
+  void tick(float, World&);
+};

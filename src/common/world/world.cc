@@ -24,9 +24,12 @@ void World::defaultWorld() {
 }
 
 void World::spawn_monster() {
+  EntityId eid = m_idgen.NextId();
+
   PhysicsC p;
   memset(&p, 0, sizeof(p));
-  p.id = m_idgen.NextId();
+
+  p.id = eid;
   p.position = spawn_position;
   p.dimensions = glm::vec3(0.4f, 0.2f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -34,25 +37,27 @@ void World::spawn_monster() {
 }
 
 void World::spawn_player(int fd) {
+  EntityId eid = m_idgen.NextId();
+
   PhysicsC p;
   memset(&p, 0, sizeof(p));
-  p.id = m_idgen.NextId();
+
+  p.id = eid;
   p.position = spawn_position;
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
 
   Inventory i;
-  i.id = p.id;
+  i.id = eid;
   i.mWielding = 1;
   mInventory.add(i);
 
   ClientData* cd = mClient.getByClient(fd);
   assert(cd != nullptr);
   cd->dead = false;
-  cd->id = p.id;
+  cd->id = eid;
   cd->mode = PLAYER_MODE;
-  cd->connected = true;
   cd->client = fd;
 }
 
@@ -60,29 +65,32 @@ void World::connected(int fd) {
   ClientData cd;
   cd.dead = true;
   cd.mode = PLAYER_MODE;
-  cd.connected = true;
   cd.client = fd;
+  cd.connected = true;
   mClient.add(cd);
 }
 
 void World::disconnected(int fd) {
   ClientData* cd = mClient.getByClient(fd);
-  if (cd != nullptr) cd->connected = false;
+  cd->connected = false;
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
   mDeleteList.clear();
   mInputHandler.setInputs(inputs);
+
   mClient.tick(dt, *this);
-  mInputHandler.tick(dt, *this);
   mPhysicsHandler.tick(dt, *this);
+  mInventory.tick(dt, *this);
+
   removeDead();
   return ++mTickNumber;
 }
 
 void World::removeDead() {
-  mPhysicsHandler.handleDead(mDeleteList);
   mClient.handleDead(mDeleteList);
+  mPhysicsHandler.handleDead(mDeleteList);
+  mInventory.handleDead(mDeleteList);
 }
 
 InventoryHandler& World::inventory() {

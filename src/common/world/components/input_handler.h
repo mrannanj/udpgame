@@ -6,10 +6,7 @@
 
 #include <vector>
 
-class World;
-
-class InputHandler : public WorldHandler<InputC> {
-public:
+struct InputHandler : public WorldHandler<InputC> {
   void setInputs(const std::vector<InputC>&);
-  void tick(float, World&);
+  InputC* getByClient(int);
 };
