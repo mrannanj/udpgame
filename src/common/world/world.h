@@ -12,12 +12,16 @@
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
+const glm::vec3 spawn_position(5.0f, 8.0f, 5.0f);
+
 class World {
 public:
   World();
 
   int tick(float, const std::vector<InputC>&);
-  EntityId spawn_entity(int);
+  void spawn_player(int);
+  void spawn_monster();
+
   WorldState getState();
   void setState(const WorldState&);
   void removeDead();

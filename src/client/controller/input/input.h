@@ -12,7 +12,8 @@ namespace ContinousAction {
     SECOND = 128,
     ITEM_1 = 256,
     ITEM_2 = 512,
-    ITEM_3 = 1024
+    ITEM_3 = 1024,
+    SPAWN_MONSTER = 2048
   };
 }
 

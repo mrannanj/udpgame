@@ -74,13 +74,16 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(WorldState));
   Object_descriptor_ = file->message_type(2);
-  static const int Object_offsets_[6] = {
+  static const int Object_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, z_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, horizontal_angle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, vertical_angle_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, dim_x_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, dim_y_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, dim_z_),
   };
   Object_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -159,13 +162,14 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "(\0132\013.WorldState\022\033\n\005input\030\003 \001(\0132\014.ClientI"
     "nput\"Z\n\nWorldState\022\023\n\013tick_number\030\001 \002(\007\022"
     "\020\n\010owned_id\030\002 \002(\007\022\027\n\006object\030\003 \003(\0132\007.Obje"
-    "ct\022\014\n\004grid\030\004 \002(\014\"g\n\006Object\022\n\n\002id\030\001 \002(\007\022\t"
-    "\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horiz"
-    "ontal_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002("
-    "\002\"d\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022\017\n"
-    "\007actions\030\002 \002(\007\022\030\n\020horizontal_delta\030\003 \002(\002"
-    "\022\025\n\rverical_delta\030\004 \002(\002*)\n\004Type\022\017\n\013WORLD"
-    "_STATE\020\001\022\020\n\014CLIENT_INPUT\020\002", 466);
+    "ct\022\014\n\004grid\030\004 \002(\014\"\224\001\n\006Object\022\n\n\002id\030\001 \002(\007\022"
+    "\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020hori"
+    "zontal_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002"
+    "(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r\n\005dim_"
+    "z\030\t \002(\002\"d\n\013ClientInput\022\023\n\013tick_number\030\001 "
+    "\002(\007\022\017\n\007actions\030\002 \002(\007\022\030\n\020horizontal_delta"
+    "\030\003 \002(\002\022\025\n\rverical_delta\030\004 \002(\002*)\n\004Type\022\017\n"
+    "\013WORLD_STATE\020\001\022\020\n\014CLIENT_INPUT\020\002", 512);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -855,6 +859,9 @@ const int Object::kYFieldNumber;
 const int Object::kZFieldNumber;
 const int Object::kHorizontalAngleFieldNumber;
 const int Object::kVerticalAngleFieldNumber;
+const int Object::kDimXFieldNumber;
+const int Object::kDimYFieldNumber;
+const int Object::kDimZFieldNumber;
 #endif  // !_MSC_VER
 
 Object::Object()
@@ -879,6 +886,9 @@ void Object::SharedCtor() {
   z_ = 0;
   horizontal_angle_ = 0;
   vertical_angle_ = 0;
+  dim_x_ = 0;
+  dim_y_ = 0;
+  dim_z_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -919,6 +929,11 @@ void Object::Clear() {
     z_ = 0;
     horizontal_angle_ = 0;
     vertical_angle_ = 0;
+    dim_x_ = 0;
+    dim_y_ = 0;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    dim_z_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1021,6 +1036,54 @@ bool Object::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(61)) goto parse_dim_x;
+        break;
+      }
+      
+      // required float dim_x = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_dim_x:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &dim_x_)));
+          set_has_dim_x();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(69)) goto parse_dim_y;
+        break;
+      }
+      
+      // required float dim_y = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_dim_y:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &dim_y_)));
+          set_has_dim_y();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(77)) goto parse_dim_z;
+        break;
+      }
+      
+      // required float dim_z = 9;
+      case 9: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_dim_z:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &dim_z_)));
+          set_has_dim_z();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1073,6 +1136,21 @@ void Object::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->vertical_angle(), output);
   }
   
+  // required float dim_x = 7;
+  if (has_dim_x()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(7, this->dim_x(), output);
+  }
+  
+  // required float dim_y = 8;
+  if (has_dim_y()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->dim_y(), output);
+  }
+  
+  // required float dim_z = 9;
+  if (has_dim_z()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->dim_z(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1109,6 +1187,21 @@ void Object::SerializeWithCachedSizes(
   // required float vertical_angle = 6;
   if (has_vertical_angle()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->vertical_angle(), target);
+  }
+  
+  // required float dim_x = 7;
+  if (has_dim_x()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->dim_x(), target);
+  }
+  
+  // required float dim_y = 8;
+  if (has_dim_y()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->dim_y(), target);
+  }
+  
+  // required float dim_z = 9;
+  if (has_dim_z()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->dim_z(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1149,6 +1242,23 @@ int Object::ByteSize() const {
     
     // required float vertical_angle = 6;
     if (has_vertical_angle()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float dim_x = 7;
+    if (has_dim_x()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float dim_y = 8;
+    if (has_dim_y()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // required float dim_z = 9;
+    if (has_dim_z()) {
       total_size += 1 + 4;
     }
     
@@ -1197,6 +1307,17 @@ void Object::MergeFrom(const Object& from) {
     if (from.has_vertical_angle()) {
       set_vertical_angle(from.vertical_angle());
     }
+    if (from.has_dim_x()) {
+      set_dim_x(from.dim_x());
+    }
+    if (from.has_dim_y()) {
+      set_dim_y(from.dim_y());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_dim_z()) {
+      set_dim_z(from.dim_z());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1214,7 +1335,7 @@ void Object::CopyFrom(const Object& from) {
 }
 
 bool Object::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
+  if ((_has_bits_[0] & 0x000001ff) != 0x000001ff) return false;
   
   return true;
 }
@@ -1227,6 +1348,9 @@ void Object::Swap(Object* other) {
     std::swap(z_, other->z_);
     std::swap(horizontal_angle_, other->horizontal_angle_);
     std::swap(vertical_angle_, other->vertical_angle_);
+    std::swap(dim_x_, other->dim_x_);
+    std::swap(dim_y_, other->dim_y_);
+    std::swap(dim_z_, other->dim_z_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

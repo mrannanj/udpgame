@@ -24,6 +24,9 @@ void PhysicsHandler::getObjects(WorldState& w) const {
     o->set_z(p.position.z);
     o->set_vertical_angle(p.vertical_angle);
     o->set_horizontal_angle(p.horizontal_angle);
+    o->set_dim_x(p.dimensions.x);
+    o->set_dim_y(p.dimensions.y);
+    o->set_dim_z(p.dimensions.z);
   }
 }
 
@@ -38,7 +41,9 @@ void PhysicsHandler::setObjects(const WorldState& w) {
     p.position.z = o.z();
     p.vertical_angle = o.vertical_angle();
     p.horizontal_angle = o.horizontal_angle();
-    p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
+    p.dimensions.x = o.dim_x();
+    p.dimensions.y = o.dim_y();
+    p.dimensions.z = o.dim_z();
     p.update_bbs();
     add(p);
   }

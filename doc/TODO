@@ -7,7 +7,7 @@ REFACTOR:
   - 2 world classes
 - refactor object deletion for speed
 - grid position class
-- refactor to kill input component?
+- refactor to kill input handler
 
 BUGS:
 - invisible walls
@@ -28,5 +28,6 @@ FEATURES:
   - fixed point math
   - transfer inputs only
 - metaserver
-- monsters
 - lol chat
+- screenshot taking
+- automatically spawn new player controlled unit if player is in play mode

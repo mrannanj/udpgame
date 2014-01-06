@@ -13,9 +13,11 @@ void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
   float jump_velocity = 5.0f;
 
   for (const InputC& i : inputs) {
-    if (i.actions & ContinousAction::SPAWN_UNIT) {
-      w.spawn_entity(i.mClient);
-    }
+    if (i.actions & ContinousAction::SPAWN_UNIT)
+      w.spawn_player(i.mClient);
+    if (i.actions & ContinousAction::SPAWN_MONSTER)
+      w.spawn_monster();
+
     auto it = w.mClient2Entity.find(i.mClient);
     if (it == w.mClient2Entity.end())
       continue;

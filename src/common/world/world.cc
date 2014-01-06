@@ -4,11 +4,10 @@
 
 #include <SDL.h>
 #include <GL/glew.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 #include <iostream>
-#include <random>
 #include <chrono>
 #include <set>
 
@@ -24,15 +23,21 @@ void World::defaultWorld() {
   mGrid.defaultGrid();
 }
 
-EntityId World::spawn_entity(int fd) {
-  unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-  default_random_engine g(seed);
-  uniform_real_distribution<double> d(1.0f, 10.0f);
-
+void World::spawn_monster() {
   PhysicsC p;
   memset(&p, 0, sizeof(p));
   p.id = m_idgen.NextId();
-  p.position = glm::vec3(d(g), d(g), d(g));
+  p.position = spawn_position;
+  p.dimensions = glm::vec3(0.4f, 0.2f, 0.4f);
+  p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+  mPhysicsHandler.add(p);
+}
+
+void World::spawn_player(int fd) {
+  PhysicsC p;
+  memset(&p, 0, sizeof(p));
+  p.id = m_idgen.NextId();
+  p.position = spawn_position;
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
@@ -43,7 +48,6 @@ EntityId World::spawn_entity(int fd) {
   mInventory.add(i);
 
   mClient2Entity[fd] = p.id;
-  return p.id;
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {

@@ -106,6 +106,9 @@ void InputManager::keyup(const SDL_Event& e, Input& i) const {
     case SDLK_F7:
       i.keypress |= DiscreteAction::SWITCH_CAMERA_MODE;
       break;
+    case SDLK_F6:
+      i.continous_actions |= ContinousAction::SPAWN_MONSTER;
+      break;
     case SDLK_TAB:
       i.keypress |= DiscreteAction::SWITCH_UNIT;
       break;

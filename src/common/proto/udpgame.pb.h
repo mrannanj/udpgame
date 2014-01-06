@@ -375,6 +375,27 @@ class Object : public ::google::protobuf::Message {
   inline float vertical_angle() const;
   inline void set_vertical_angle(float value);
   
+  // required float dim_x = 7;
+  inline bool has_dim_x() const;
+  inline void clear_dim_x();
+  static const int kDimXFieldNumber = 7;
+  inline float dim_x() const;
+  inline void set_dim_x(float value);
+  
+  // required float dim_y = 8;
+  inline bool has_dim_y() const;
+  inline void clear_dim_y();
+  static const int kDimYFieldNumber = 8;
+  inline float dim_y() const;
+  inline void set_dim_y(float value);
+  
+  // required float dim_z = 9;
+  inline bool has_dim_z() const;
+  inline void clear_dim_z();
+  static const int kDimZFieldNumber = 9;
+  inline float dim_z() const;
+  inline void set_dim_z(float value);
+  
   // @@protoc_insertion_point(class_scope:Object)
  private:
   inline void set_has_id();
@@ -389,6 +410,12 @@ class Object : public ::google::protobuf::Message {
   inline void clear_has_horizontal_angle();
   inline void set_has_vertical_angle();
   inline void clear_has_vertical_angle();
+  inline void set_has_dim_x();
+  inline void clear_has_dim_x();
+  inline void set_has_dim_y();
+  inline void clear_has_dim_y();
+  inline void set_has_dim_z();
+  inline void clear_has_dim_z();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -398,9 +425,12 @@ class Object : public ::google::protobuf::Message {
   float z_;
   float horizontal_angle_;
   float vertical_angle_;
+  float dim_x_;
+  float dim_y_;
+  float dim_z_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -874,6 +904,72 @@ inline float Object::vertical_angle() const {
 inline void Object::set_vertical_angle(float value) {
   set_has_vertical_angle();
   vertical_angle_ = value;
+}
+
+// required float dim_x = 7;
+inline bool Object::has_dim_x() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void Object::set_has_dim_x() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void Object::clear_has_dim_x() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void Object::clear_dim_x() {
+  dim_x_ = 0;
+  clear_has_dim_x();
+}
+inline float Object::dim_x() const {
+  return dim_x_;
+}
+inline void Object::set_dim_x(float value) {
+  set_has_dim_x();
+  dim_x_ = value;
+}
+
+// required float dim_y = 8;
+inline bool Object::has_dim_y() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void Object::set_has_dim_y() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void Object::clear_has_dim_y() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void Object::clear_dim_y() {
+  dim_y_ = 0;
+  clear_has_dim_y();
+}
+inline float Object::dim_y() const {
+  return dim_y_;
+}
+inline void Object::set_dim_y(float value) {
+  set_has_dim_y();
+  dim_y_ = value;
+}
+
+// required float dim_z = 9;
+inline bool Object::has_dim_z() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void Object::set_has_dim_z() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void Object::clear_has_dim_z() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void Object::clear_dim_z() {
+  dim_z_ = 0;
+  clear_has_dim_z();
+}
+inline float Object::dim_z() const {
+  return dim_z_;
+}
+inline void Object::set_dim_z(float value) {
+  set_has_dim_z();
+  dim_z_ = value;
 }
 
 // -------------------------------------------------------------------
