@@ -9,15 +9,13 @@
 
 Connection::Connection():
   mPos(0),
-  mSocket(-1),
-  mAddress()
+  mSocket(-1)
 {
 }
 
 Connection::Connection(const std::string& addr):
   mPos(0),
-  mSocket(-1),
-  mAddress(addr)
+  mSocket(-1)
 {
   memset(&mSockaddr, 0, sizeof(mSockaddr));
   mSockaddr.sin_family = AF_INET;
@@ -36,7 +34,6 @@ Connection::Connection(const std::string& addr):
 Connection::Connection(int socket, const sockaddr_in& sa):
   mPos(0),
   mSocket(socket),
-  mAddress(),
   mSockaddr(sa)
 {
   if (-1 == fcntl(mSocket, F_SETFL, O_NONBLOCK))
@@ -46,7 +43,6 @@ Connection::Connection(int socket, const sockaddr_in& sa):
 Connection::Connection(Connection&& c):
   mPos(c.mPos),
   mSocket(c.mSocket),
-  mAddress(c.mAddress),
   mSockaddr(c.mSockaddr),
   mBuf()
 {
@@ -57,7 +53,6 @@ Connection::Connection(Connection&& c):
 Connection& Connection::operator=(Connection&& c) {
   mPos = c.mPos;
   mSocket = c.mSocket;
-  mAddress = std::move(c.mAddress);
   mSockaddr = c.mSockaddr;
   memcpy(mBuf, c.mBuf, MAXMSG);
   c.mSocket = -1;

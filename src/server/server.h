@@ -26,5 +26,4 @@ struct Server {
   std::vector<Connection> mClients;
   World mWorld;
   WorldTicker mWorldTicker;
-  AMessagePrinter mPrinter;
 };

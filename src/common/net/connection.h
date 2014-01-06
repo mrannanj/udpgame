@@ -26,15 +26,8 @@ struct Connection {
 
   ssize_t mPos;
   int mSocket;
-  std::string mAddress;
   sockaddr_in mSockaddr;
   char mBuf[MAXMSG];
-};
-
-struct AMessagePrinter {
-  void handleAMessage(const AMessage& a) {
-    a.PrintDebugString();
-  }
 };
 
 template <class T>

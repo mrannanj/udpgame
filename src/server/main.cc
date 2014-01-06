@@ -3,7 +3,6 @@
 
 #include <signal.h>
 #include <unistd.h>
-#include <iostream>
 #include <fcntl.h>
 
 int quitPipe[2];
@@ -23,4 +22,3 @@ int main(void) {
 
   return 0;
 }
-

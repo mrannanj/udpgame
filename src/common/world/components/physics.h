@@ -3,8 +3,6 @@
 #include <glm/glm.hpp>
 #include "common/world/entity_id.h"
 
-#define MASS 10.0f
-
 struct PhysicsC {
   EntityId id;
 

@@ -48,7 +48,7 @@ bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   p.update_next_bbs();
 
   for (int i = 0; correct_one_hit(p); ++i)
-    if (i > 8) return false;
+    if (i >= 8) return false;
   return true;
 }
 

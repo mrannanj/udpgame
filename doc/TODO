@@ -8,6 +8,7 @@ REFACTOR:
 - refactor object deletion for speed
 - grid position class
 - refactor connection class, add ostream operator
+- refactor to kill input component?
 
 BUGS:
 - invisible walls
@@ -20,6 +21,7 @@ FEATURES:
 - kill disconnected players
 - show wielded item in gui
 - show in gui if client is in observer or player mode
+- add screen that shows key bindings
 - server timed
 - named players
 - fullscreen
