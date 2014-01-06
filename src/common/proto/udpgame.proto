@@ -12,8 +12,9 @@ message AMessage {
 message WorldState {
   required fixed32 tick_number = 1;
   required fixed32 owned_id = 2;
-  repeated Object object = 3;
-  required bytes grid = 4;
+  required fixed32 client_mode = 3;
+  repeated Object object = 4;
+  required bytes grid = 5;
 }
 
 message Object {

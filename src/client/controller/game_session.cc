@@ -44,6 +44,7 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
     case Type::WORLD_STATE:
       mWorld.setState(a.world_state());
       mPerspective.m_follow_id = a.world_state().owned_id();
+      mPerspective.m_freelook = a.world_state().client_mode();
       return true;
     default:
       return false;

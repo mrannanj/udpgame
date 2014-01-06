@@ -5,6 +5,7 @@ REFACTOR:
 - protobuf integration
   - 3 UGLY input classes
   - 2 world classes
+  - investigate if possible to use only protobuf classes for components
 - refactor object deletion for speed
 - grid position class
 - refactor to kill input handler
@@ -14,11 +15,9 @@ BUGS:
 - wall climb
 
 FEATURES:
-o automatically spawn new player controlled unit if player is in play mode
+o implement handle system for faster component lookups
 - maybe add team?
 - make possible to set one block per click
-- implement handle system for faster component lookups
-- kill disconnected players
 - show wielded item in gui
 - show in gui if client is in observer or player mode
 - add screen that shows key bindings

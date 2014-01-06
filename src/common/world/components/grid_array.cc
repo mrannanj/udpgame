@@ -15,6 +15,7 @@ void GridArray::makeFloor() {
       mData[x][0][z] = 3;
       mData[x][1][z] = 1;
       mData[x][2][z] = 1;
+      mData[x][3][z] = 1;
     }
 }
 

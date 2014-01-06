@@ -8,20 +8,24 @@ constexpr float PI = (float)M_PI;
 
 using namespace std;
 
-void InputHandler::tick(const std::vector<InputC>& inputs, World& w) {
+void InputHandler::setInputs(const std::vector<InputC>& inputs) {
+  mComponents = inputs;
+}
+
+void InputHandler::tick(float, World& w) {
   float move_speed = 1.5f;
   float jump_velocity = 5.0f;
 
-  for (const InputC& i : inputs) {
+  for (const InputC& i : mComponents) {
     if (i.actions & ContinousAction::SPAWN_UNIT)
       w.spawn_player(i.mClient);
     if (i.actions & ContinousAction::SPAWN_MONSTER)
       w.spawn_monster();
 
-    auto it = w.mClient2Entity.find(i.mClient);
-    if (it == w.mClient2Entity.end())
-      continue;
-    EntityId id = it->second;
+    ClientData* c = w.client().getByClient(i.mClient);
+    assert(c != nullptr);
+    if (c->mode == OBSERVER_MODE) continue;
+    EntityId id = c->id;
 
     PhysicsC* p = w.physics().get(id);
     if (p == nullptr) continue;

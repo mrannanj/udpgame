@@ -12,8 +12,8 @@ template<typename T> class WorldHandler {
 public:
   T* get(EntityId);
   void add(const T&);
-  void remove(EntityId);
-  void removeComponents(const std::set<EntityId>&);
+  virtual void remove(EntityId);
+  virtual void handleDead(const std::set<EntityId>&);
 
   virtual void tick(float, World&);
   virtual ~WorldHandler();
@@ -25,7 +25,7 @@ protected:
 };
 
 template<typename T>
-void WorldHandler<T>::removeComponents(const std::set<EntityId>& r) {
+void WorldHandler<T>::handleDead(const std::set<EntityId>& r) {
   for (EntityId id : r) remove(id);
 }
 

@@ -11,22 +11,22 @@
 #include "common/world/components/physics_handler.h"
 
 Perspective::Perspective():
-  m_freelook(true),
+  m_freelook(OBSERVER_MODE),
   m_follow_id(0),
   m_vertical_angle(0.0f),
   m_horizontal_angle(0.0f),
-  m_position(10.0f, 2.0f, 10.0f),
+  m_position(2.0f, 5.0f, 2.0f),
   m_up(0.0f, 1.0f, 0.0f)
 {
 }
 
 void Perspective::switch_camera_mode() {
-  m_freelook = !m_freelook;
+  //m_freelook = !m_freelook;
 }
 
 void Perspective::handle_input(Input& i) {
-  if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
-    switch_camera_mode();
+  //if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
+   // switch_camera_mode();
   if (m_freelook)
     handle_freelook_input(i);
 }

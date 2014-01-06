@@ -51,7 +51,10 @@ void Server::broadcastWorldState() {
   WorldState w = mWorld.getState();
   a.mutable_world_state()->CopyFrom(w);
   for (Connection& c : mClients) {
-    a.mutable_world_state()->set_owned_id(mWorld.mClient2Entity[c.mSocket]);
+    ClientData* cd = mWorld.client().getByClient(c.mSocket);
+    assert(cd != nullptr);
+    a.mutable_world_state()->set_owned_id(cd->id);
+    a.mutable_world_state()->set_client_mode(cd->mode);
     c.sendMessage(a);
   }
 }
@@ -61,7 +64,10 @@ void Server::sendWorldState(Connection& c) {
   a.set_type(Type::WORLD_STATE);
   WorldState w = mWorld.getState();
   a.mutable_world_state()->CopyFrom(w);
-  a.mutable_world_state()->set_owned_id(mWorld.mClient2Entity[c.mSocket]);
+  ClientData* cd = mWorld.client().getByClient(c.mSocket);
+  assert(cd != nullptr);
+  a.mutable_world_state()->set_owned_id(cd->id);
+  a.mutable_world_state()->set_client_mode(cd->mode);
   c.sendMessage(a);
 }
 
@@ -89,6 +95,7 @@ void Server::acceptNewClient(const fd_set& fds) {
     if (client != -1) {
       mClients.emplace_back(client, sa);
       Connection& c = mClients.back();
+      mWorld.connected(c.mSocket);
       sendWorldState(c);
       cout << c << " connected" << endl;
     }
@@ -105,6 +112,7 @@ void Server::checkClientInput(const fd_set& fds) {
     ssize_t nread = c.checkMessages(mWorldTicker);
     if (nread <= 0) {
       cout << c << " disconnected" << endl;
+      mWorld.disconnected(c.mSocket);
       it = mClients.erase(it);
     } else {
       ++it;

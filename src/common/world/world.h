@@ -9,6 +9,7 @@
 #include "common/world/components/input_handler.h"
 #include "common/world/components/grid_handler.h"
 #include "common/world/components/inventory_handler.h"
+#include "common/world/components/client_handler.h"
 #include "common/world/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -26,14 +27,17 @@ public:
   void setState(const WorldState&);
   void removeDead();
   void defaultWorld();
+  void connected(int);
+  void disconnected(int);
 
   bool mInit;
   unsigned mTickNumber;
-  std::map<int, EntityId> mClient2Entity;
 
+  InputHandler& input();
   PhysicsHandler& physics();
   GridHandler& grid();
   InventoryHandler& inventory();
+  ClientHandler& client();
 
   std::set<EntityId> mDeleteList;
 
@@ -42,5 +46,6 @@ private:
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;
   InventoryHandler mInventory;
+  ClientHandler mClient;
   GridHandler mGrid;
 };

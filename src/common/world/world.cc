@@ -47,19 +47,42 @@ void World::spawn_player(int fd) {
   i.mWielding = 1;
   mInventory.add(i);
 
-  mClient2Entity[fd] = p.id;
+  ClientData* cd = mClient.getByClient(fd);
+  assert(cd != nullptr);
+  cd->dead = false;
+  cd->id = p.id;
+  cd->mode = PLAYER_MODE;
+  cd->connected = true;
+  cd->client = fd;
+}
+
+void World::connected(int fd) {
+  ClientData cd;
+  cd.dead = true;
+  cd.mode = PLAYER_MODE;
+  cd.connected = true;
+  cd.client = fd;
+  mClient.add(cd);
+}
+
+void World::disconnected(int fd) {
+  ClientData* cd = mClient.getByClient(fd);
+  if (cd != nullptr) cd->connected = false;
 }
 
 int World::tick(float dt, const std::vector<InputC>& inputs) {
   mDeleteList.clear();
-  mInputHandler.tick(inputs, *this);
+  mInputHandler.setInputs(inputs);
+  mClient.tick(dt, *this);
+  mInputHandler.tick(dt, *this);
   mPhysicsHandler.tick(dt, *this);
   removeDead();
   return ++mTickNumber;
 }
 
 void World::removeDead() {
-  mPhysicsHandler.removeComponents(mDeleteList);
+  mPhysicsHandler.handleDead(mDeleteList);
+  mClient.handleDead(mDeleteList);
 }
 
 InventoryHandler& World::inventory() {
@@ -72,6 +95,14 @@ PhysicsHandler& World::physics() {
 
 GridHandler& World::grid() {
   return mGrid;
+}
+
+ClientHandler& World::client() {
+  return mClient;
+}
+
+InputHandler& World::input() {
+  return mInputHandler;
 }
 
 void World::setState(const WorldState& w) {

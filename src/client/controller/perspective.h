@@ -19,7 +19,7 @@ public:
   void handle_freelook_input(const Input&);
   void switch_camera_mode();
 
-  bool m_freelook;
+  int m_freelook;
   EntityId m_follow_id;
 
 private:

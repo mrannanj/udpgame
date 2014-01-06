@@ -228,10 +228,17 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 owned_id() const;
   inline void set_owned_id(::google::protobuf::uint32 value);
   
-  // repeated .Object object = 3;
+  // required fixed32 client_mode = 3;
+  inline bool has_client_mode() const;
+  inline void clear_client_mode();
+  static const int kClientModeFieldNumber = 3;
+  inline ::google::protobuf::uint32 client_mode() const;
+  inline void set_client_mode(::google::protobuf::uint32 value);
+  
+  // repeated .Object object = 4;
   inline int object_size() const;
   inline void clear_object();
-  static const int kObjectFieldNumber = 3;
+  static const int kObjectFieldNumber = 4;
   inline const ::Object& object(int index) const;
   inline ::Object* mutable_object(int index);
   inline ::Object* add_object();
@@ -240,10 +247,10 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Object >*
       mutable_object();
   
-  // required bytes grid = 4;
+  // required bytes grid = 5;
   inline bool has_grid() const;
   inline void clear_grid();
-  static const int kGridFieldNumber = 4;
+  static const int kGridFieldNumber = 5;
   inline const ::std::string& grid() const;
   inline void set_grid(const ::std::string& value);
   inline void set_grid(const char* value);
@@ -257,6 +264,8 @@ class WorldState : public ::google::protobuf::Message {
   inline void clear_has_tick_number();
   inline void set_has_owned_id();
   inline void clear_has_owned_id();
+  inline void set_has_client_mode();
+  inline void clear_has_client_mode();
   inline void set_has_grid();
   inline void clear_has_grid();
   
@@ -266,9 +275,10 @@ class WorldState : public ::google::protobuf::Message {
   ::google::protobuf::uint32 owned_id_;
   ::google::protobuf::RepeatedPtrField< ::Object > object_;
   ::std::string* grid_;
+  ::google::protobuf::uint32 client_mode_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -687,7 +697,29 @@ inline void WorldState::set_owned_id(::google::protobuf::uint32 value) {
   owned_id_ = value;
 }
 
-// repeated .Object object = 3;
+// required fixed32 client_mode = 3;
+inline bool WorldState::has_client_mode() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void WorldState::set_has_client_mode() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void WorldState::clear_has_client_mode() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void WorldState::clear_client_mode() {
+  client_mode_ = 0u;
+  clear_has_client_mode();
+}
+inline ::google::protobuf::uint32 WorldState::client_mode() const {
+  return client_mode_;
+}
+inline void WorldState::set_client_mode(::google::protobuf::uint32 value) {
+  set_has_client_mode();
+  client_mode_ = value;
+}
+
+// repeated .Object object = 4;
 inline int WorldState::object_size() const {
   return object_.size();
 }
@@ -712,15 +744,15 @@ WorldState::mutable_object() {
   return &object_;
 }
 
-// required bytes grid = 4;
+// required bytes grid = 5;
 inline bool WorldState::has_grid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void WorldState::set_has_grid() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void WorldState::clear_has_grid() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void WorldState::clear_grid() {
   if (grid_ != &::google::protobuf::internal::kEmptyString) {
