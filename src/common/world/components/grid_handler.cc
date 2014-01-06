@@ -146,8 +146,7 @@ bool GridHandler::ray_block_collision(
       }
     }
   }
-  assert(axis != 4);
-  return true;
+  return axis != 4; // axis 4 up to no good
 }
 
 bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
