@@ -2,15 +2,14 @@ REFACTOR:
 - add Weffc++ warning
 - deglobalize menus and screens
 - AABB class
-- protobuf integration
-  - 3 UGLY input classes
-  - 2 world classes
-  - investigate if possible to use only protobuf classes for components
+- perspective is super ugly
+- cleanup gamesession
 - refactor object deletion for speed
 - grid position class
 - refactor input continous actions
 
 BUGS:
+- world ticker only works by accident
 - invisible walls
 - wall climb
 

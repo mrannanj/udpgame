@@ -32,8 +32,8 @@ struct GridHandler {
 
   bool belowBottom(const glm::vec3&) const;
 
-  void setGrid(const InitialState&);
-  void getGrid(InitialState&) const;
+  void serialize(InitialState&) const;
+  void deserialize(const InitialState&);
 
   GridArray mArr;
 };

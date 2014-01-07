@@ -45,18 +45,12 @@ void Server::init() {
     die("fcntl");
 }
 
-void Server::broadcastWorldState() {
+void Server::distributeInputs() {
   AMessage a;
-  a.set_type(Type::WORLD_STATE);
-  WorldState w = mWorld.getState();
-  a.mutable_world_state()->CopyFrom(w);
-  for (Connection& c : mClients) {
-    ClientData* cd = mWorld.client().getByClient(c.mSocket);
-    assert(cd != nullptr);
-    a.mutable_world_state()->set_owned_id(cd->id);
-    a.mutable_world_state()->set_client_mode(cd->mode);
+  a.set_type(Type::FRAME_INPUTS);
+  a.mutable_frame_inputs()->CopyFrom(mWorldTicker.frameInputs());
+  for (Connection& c : mClients)
     c.sendMessage(a);
-  }
 }
 
 void Server::sendInitialState(Connection& c) {
@@ -64,18 +58,8 @@ void Server::sendInitialState(Connection& c) {
   a.set_type(Type::INITIAL_STATE);
   InitialState i = mWorld.getInitialState();
   a.mutable_initial_state()->CopyFrom(i);
-  c.sendMessage(a);
-}
-
-void Server::sendWorldState(Connection& c) {
-  AMessage a;
-  a.set_type(Type::WORLD_STATE);
-  WorldState w = mWorld.getState();
-  a.mutable_world_state()->CopyFrom(w);
-  ClientData* cd = mWorld.client().getByClient(c.mSocket);
-  assert(cd != nullptr);
-  a.mutable_world_state()->set_owned_id(cd->id);
-  a.mutable_world_state()->set_client_mode(cd->mode);
+  a.mutable_initial_state()->set_tick_number(mWorld.mTickNumber);
+  a.mutable_initial_state()->set_client_id(c.mSocket);
   c.sendMessage(a);
 }
 
@@ -88,9 +72,9 @@ void Server::serve() {
     checkClientInput(fds);
 
     if (mWorldTicker.ok()) {
-      mWorld.tick(sec_per_ticks, mWorldTicker.mInputs);
+      mWorld.tick(sec_per_ticks, mWorldTicker.frameInputs());
+      distributeInputs();
       mWorldTicker.nextWait(mClients.size(), mWorld.mTickNumber + 1);
-      broadcastWorldState();
     }
   } while(!FD_ISSET(mQuit, &fds));
 }
@@ -104,8 +88,6 @@ void Server::acceptNewClient(const fd_set& fds) {
       mClients.emplace_back(client, sa);
       Connection& c = mClients.back();
       cout << c << " connected" << endl;
-      mWorld.connected(c.mSocket);
-      sendWorldState(c);
       sendInitialState(c);
     }
   }
@@ -121,7 +103,7 @@ void Server::checkClientInput(const fd_set& fds) {
     ssize_t nread = c.checkMessages(mWorldTicker);
     if (nread <= 0) {
       cout << c << " disconnected" << endl;
-      mWorld.disconnected(c.mSocket);
+      //mWorld.disconnected(c.mSocket);
       it = mClients.erase(it);
     } else {
       ++it;

@@ -1,29 +1,62 @@
 enum Type {
-  WORLD_STATE = 1;
-  CLIENT_INPUT = 2;
-  INITIAL_STATE = 3;
+  CLIENT_INPUT = 1;
+  INITIAL_STATE = 2;
+  FRAME_INPUTS = 3;
 }
 
 message AMessage {
   required Type type = 1;
-  optional WorldState world_state = 2;
-  optional ClientInput input = 3;
-  optional InitialState initial_state = 4;
+  optional ClientInput client_input = 2;
+  optional InitialState initial_state = 3;
+  optional FrameInputs frame_inputs = 4;
+}
+
+enum ClientMode {
+  PLAYER = 0;
+  OBSERVER = 1;
+}
+
+message ClientData {
+  required sfixed32 client = 1;
+  required ClientMode mode = 2;
+  required fixed32 eid = 3;
+  required fixed32 dead = 4;
+}
+
+message Inventory {
+  required fixed32 eid = 1;
+  required fixed32 wielding = 2;
+}
+
+message FrameInputs {
+  required fixed32 tick_number = 1;
+  repeated FrameInput frame_inputs = 2;
+}
+
+message FrameInput {
+  optional sfixed32 client = 1;
+  optional fixed32 eid = 2;
+  required fixed32 actions = 3;
+  required float horizontal_delta = 4;
+  required float vertical_delta = 5;
+}
+
+message ClientInput {
+  required fixed32 tick_number = 1;
+  required FrameInput frame_input = 2;
 }
 
 message InitialState {
-  required bytes grid = 1;
-}
-
-message WorldState {
   required fixed32 tick_number = 1;
-  required fixed32 owned_id = 2;
-  required fixed32 client_mode = 3;
-  repeated Object object = 4;
+  required fixed32 client_id = 2;
+  required bytes grid = 3;
+  repeated Inventory inventories = 4;
+  repeated ClientData client_data = 5;
+  repeated PhysicsData physics_data = 6;
 }
 
-message Object {
-  required fixed32 id = 1;
+message PhysicsData {
+  required fixed32 eid = 1;
   required float x = 2;
   required float y = 3;
   required float z = 4;
@@ -32,11 +65,4 @@ message Object {
   required float dim_x = 7;
   required float dim_y = 8;
   required float dim_z = 9;
-}
-
-message ClientInput {
-  required fixed32 tick_number = 1;
-  required fixed32 actions = 2;
-  required float horizontal_delta = 3;
-  required float verical_delta = 4;
 }

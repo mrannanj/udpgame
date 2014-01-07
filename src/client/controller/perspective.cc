@@ -11,7 +11,7 @@
 #include "common/world/components/physics_handler.h"
 
 Perspective::Perspective():
-  m_freelook(OBSERVER_MODE),
+  mClientMode(ClientMode::OBSERVER),
   m_follow_id(0),
   m_vertical_angle(0.0f),
   m_horizontal_angle(0.0f),
@@ -27,7 +27,7 @@ void Perspective::switch_camera_mode() {
 void Perspective::handle_input(Input& i) {
   //if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
     //switch_camera_mode();
-  if (m_freelook)
+  if (mClientMode == ClientMode::OBSERVER)
     handle_freelook_input(i);
 }
 
@@ -76,7 +76,7 @@ void Perspective::tick(World& w)
 {
   m_projection = glm::perspective(45.0f,
       (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
-  if (!m_freelook) {
+  if (mClientMode == ClientMode::PLAYER) {
     PhysicsC* p = (PhysicsC*)w.physics().get(m_follow_id);
     if (p) {
       m_horizontal_angle = p->horizontal_angle;

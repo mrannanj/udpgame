@@ -10,11 +10,13 @@ struct GameSession {
   GameSession();
   GameSession(const std::string&);
 
-  void tick(Input&);
+  void tick(float, Input&);
   void sendFrameInput(Input&);
   bool handleAMessage(const AMessage&, int);
 
+  int mClientId;
   bool mInit;
+  float mDt;
   Connection mConnection;
   Perspective mPerspective;
   World mWorld;

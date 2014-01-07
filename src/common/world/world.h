@@ -4,7 +4,6 @@
 #include <set>
 #include <vector>
 
-#include "common/world/components/inputc.h"
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/input_handler.h"
 #include "common/world/components/grid_handler.h"
@@ -19,17 +18,13 @@ class World {
 public:
   World();
 
-  int tick(float, const std::vector<InputC>&);
+  int tick(float, const FrameInputs&);
   void spawn_player(int);
   void spawn_monster();
 
   void removeDead();
   void defaultWorld();
-  void connected(int);
-  void disconnected(int);
 
-  WorldState getState();
-  void setState(const WorldState&);
   InitialState getInitialState();
   void setInitialState(const InitialState&);
 

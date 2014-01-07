@@ -36,7 +36,7 @@ void WorldHandler<T>::tick(float, World&) {
 template<typename T>
 T* WorldHandler<T>::get(EntityId eid) {
   for (T& c : mComponents)
-    if (c.id == eid)
+    if (c.eid() == eid)
       return &c;
   return nullptr;
 }
@@ -58,6 +58,6 @@ const std::vector<T>& WorldHandler<T>::components() const {
 template<typename T>
 void WorldHandler<T>::remove(EntityId eid) {
   mComponents.erase(std::remove_if(std::begin(mComponents),
-    std::end(mComponents), [&](T& c) { return c.id == eid; }),
+    std::end(mComponents), [&](T& c) { return c.eid() == eid; }),
     std::end(mComponents));
 }

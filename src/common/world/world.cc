@@ -29,56 +29,42 @@ void World::spawn_monster() {
   PhysicsC p;
   memset(&p, 0, sizeof(p));
 
-  p.id = eid;
+  p.entityid = eid;
   p.position = spawn_position;
   p.dimensions = glm::vec3(0.4f, 0.2f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
 }
 
-void World::spawn_player(int fd) {
+void World::spawn_player(int clientid) {
   EntityId eid = m_idgen.NextId();
 
   PhysicsC p;
   memset(&p, 0, sizeof(p));
 
-  p.id = eid;
+  p.entityid = eid;
   p.position = spawn_position;
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
 
   Inventory i;
-  i.id = eid;
-  i.mWielding = 1;
+  i.set_eid(eid);
+  i.set_wielding(1);
   mInventory.add(i);
 
-  ClientData* cd = mClient.getByClient(fd);
+  ClientData* cd = mClient.getByClient(clientid);
   assert(cd != nullptr);
-  cd->dead = false;
-  cd->id = eid;
-  cd->mode = PLAYER_MODE;
-  cd->client = fd;
+  cd->set_dead(0);
+  cd->set_eid(eid);
+  cd->set_mode(ClientMode::PLAYER);
 }
 
-void World::connected(int fd) {
-  ClientData cd;
-  cd.dead = true;
-  cd.mode = PLAYER_MODE;
-  cd.client = fd;
-  cd.connected = true;
-  mClient.add(cd);
-}
-
-void World::disconnected(int fd) {
-  ClientData* cd = mClient.getByClient(fd);
-  cd->connected = false;
-}
-
-int World::tick(float dt, const std::vector<InputC>& inputs) {
+int World::tick(float dt, const FrameInputs& fis) {
   mDeleteList.clear();
-  mInputHandler.setInputs(inputs);
+  mInputHandler.deserialize(fis.frame_inputs());
 
+  mInputHandler.tick(dt, *this);
   mClient.tick(dt, *this);
   mPhysicsHandler.tick(dt, *this);
   mInventory.tick(dt, *this);
@@ -115,23 +101,17 @@ InputHandler& World::input() {
 
 InitialState World::getInitialState() {
   InitialState i;
-  mGrid.getGrid(i);
+  mGrid.serialize(i);
+  mClient.serialize(i.mutable_client_data());
+  mInventory.serialize(i.mutable_inventories());
+  mPhysicsHandler.serialize(i.mutable_physics_data());
   return i;
 }
 
 void World::setInitialState(const InitialState& i) {
-  mGrid.setGrid(i);
-}
-
-void World::setState(const WorldState& w) {
-  mPhysicsHandler.setObjects(w);
-  mTickNumber = w.tick_number();
+  mGrid.deserialize(i);
+  mClient.deserialize(i.client_data());
+  mInventory.deserialize(i.inventories());
+  mPhysicsHandler.deserialize(i.physics_data());
   mInit = true;
-}
-
-WorldState World::getState() {
-  WorldState w;
-  mPhysicsHandler.getObjects(w);
-  w.set_tick_number(mTickNumber);
-  return w;
 }

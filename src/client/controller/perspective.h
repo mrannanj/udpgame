@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "common/world/entity_id.h"
+#include "common/proto/udpgame.pb.h"
 
 struct Input;
 struct World;
@@ -19,7 +20,7 @@ public:
   void handle_freelook_input(const Input&);
   void switch_camera_mode();
 
-  int m_freelook;
+  ClientMode mClientMode;
   EntityId m_follow_id;
 
   float m_vertical_angle;

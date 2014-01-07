@@ -1,7 +1,7 @@
 #include "common/world/id_generator.h"
 
 IdGenerator::IdGenerator():
-  next_id_(0)
+  next_id_(1)
 {
 }
 

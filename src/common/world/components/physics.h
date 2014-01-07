@@ -4,7 +4,7 @@
 #include "common/world/entity_id.h"
 
 struct PhysicsC {
-  EntityId id;
+  EntityId entityid;
 
   glm::vec3 position;
   glm::vec3 velocity;
@@ -25,4 +25,6 @@ struct PhysicsC {
 
   glm::vec3 eye_position() const;
   glm::vec3 look_direction() const;
+
+  EntityId eid() { return entityid; }
 };

@@ -3,7 +3,7 @@
 
 #include "common/proto/udpgame.pb.h"
 #include "client/controller/game_session.h"
-#include "common/world/components/inputc.h"
+#include "client/controller/input/input.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -32,7 +32,8 @@ GameSession::GameSession(const std::string& addr):
   }
 }
 
-void GameSession::tick(Input& input) {
+void GameSession::tick(float dt, Input& input) {
+  mDt = dt;
   mConnection.checkMessages(*this);
   mPerspective.handle_input(input);
   mPerspective.tick(mWorld);
@@ -40,14 +41,19 @@ void GameSession::tick(Input& input) {
 }
 
 bool GameSession::handleAMessage(const AMessage& a, int) {
+  ClientData* cd;
   switch (a.type()) {
-    case Type::WORLD_STATE:
-      mWorld.setState(a.world_state());
-      mPerspective.m_follow_id = a.world_state().owned_id();
-      mPerspective.m_freelook = a.world_state().client_mode();
-      return true;
     case Type::INITIAL_STATE:
       mWorld.setInitialState(a.initial_state());
+      mClientId = a.initial_state().client_id();
+      return true;
+    case Type::FRAME_INPUTS:
+      mWorld.tick(mDt, a.frame_inputs());
+      cd = mWorld.client().getByClient(mClientId);
+      if (cd) {
+        mPerspective.m_follow_id = cd->eid();
+        mPerspective.mClientMode = cd->mode();
+      }
       return true;
     default:
       return false;
@@ -55,14 +61,17 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
 }
 
 void GameSession::sendFrameInput(Input& i) {
-  InputC ic(i);
+  FrameInput fi;
+  fi.set_actions(i.continous_actions);
+  fi.set_vertical_delta((float)i.mouse_delta_y * 0.01f);
+  fi.set_horizontal_delta((float)i.mouse_delta_x * 0.01f);
+
   ClientInput ci;
   ci.set_tick_number(mWorld.mTickNumber + 1);
-  ci.set_actions(ic.actions);
-  ci.set_verical_delta(ic.vertical_angle_delta);
-  ci.set_horizontal_delta(ic.horizontal_angle_delta);
+  ci.mutable_frame_input()->CopyFrom(fi);
+
   AMessage a;
   a.set_type(Type::CLIENT_INPUT);
-  a.mutable_input()->CopyFrom(ci);
+  a.mutable_client_input()->CopyFrom(ci);
   mConnection.sendMessage(a);
 }

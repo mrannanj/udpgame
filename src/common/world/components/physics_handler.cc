@@ -1,6 +1,7 @@
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/grid_handler.h"
 #include "common/world/world.h"
+#include "client/controller/input/input.h"
 
 #include <cassert>
 #include <algorithm>
@@ -12,10 +13,10 @@ constexpr float jump_velocity = 5.0f;
 
 void PhysicsHandler::tick(float dt, World& w) {
   for (PhysicsC& p : mComponents) {
-    InputC* i = w.input().get(p.id);
+    FrameInput* i = w.input().get(p.eid());
     if (i != nullptr) {
-      p.horizontal_angle -= i->horizontal_angle_delta;
-      p.vertical_angle -= i->vertical_angle_delta;
+      p.horizontal_angle -= i->horizontal_delta();
+      p.vertical_angle -= i->vertical_delta();
       if (p.vertical_angle < -HALF_PI)
         p.vertical_angle = -HALF_PI;
       else if (p.vertical_angle > HALF_PI)
@@ -30,17 +31,17 @@ void PhysicsHandler::tick(float dt, World& w) {
         cos(p.horizontal_angle - HALF_PI)
       );
 
-      if (i->actions & ContinousAction::MOVE_FORWARD)
+      if (i->actions() & ContinousAction::MOVE_FORWARD)
         p.velocity += forward * move_speed;
-      else if (i->actions & ContinousAction::MOVE_BACK)
+      else if (i->actions() & ContinousAction::MOVE_BACK)
         p.velocity -= forward * move_speed;
 
-      if (i->actions & ContinousAction::MOVE_RIGHT)
+      if (i->actions() & ContinousAction::MOVE_RIGHT)
         p.velocity += right * move_speed;
-      else if (i->actions & ContinousAction::MOVE_LEFT)
+      else if (i->actions() & ContinousAction::MOVE_LEFT)
         p.velocity -= right * move_speed;
 
-      if (i->actions & ContinousAction::JUMP && p.on_ground) {
+      if (i->actions() & ContinousAction::JUMP && p.on_ground) {
         p.velocity.y += jump_velocity;
         p.on_ground = false;
       }
@@ -50,14 +51,16 @@ void PhysicsHandler::tick(float dt, World& w) {
     p.velocity.x *= FRICTION;
     p.velocity.z *= FRICTION;
     if (!w.grid().check_collision(p, dt))
-      w.mDeleteList.insert(p.id);
+      w.mDeleteList.insert(p.eid());
   }
 }
 
-void PhysicsHandler::getObjects(WorldState& w) const {
+void PhysicsHandler::serialize(
+    google::protobuf::RepeatedPtrField<PhysicsData>* pd)
+{
   for (const PhysicsC& p : mComponents) {
-    Object* o = w.add_object();
-    o->set_id(p.id);
+    PhysicsData* o = pd->Add();
+    o->set_eid(p.entityid);
     o->set_x(p.position.x);
     o->set_y(p.position.y);
     o->set_z(p.position.z);
@@ -69,20 +72,22 @@ void PhysicsHandler::getObjects(WorldState& w) const {
   }
 }
 
-void PhysicsHandler::setObjects(const WorldState& w) {
+void PhysicsHandler::deserialize(
+    const google::protobuf::RepeatedPtrField<PhysicsData>& ps)
+{
   mComponents.clear();
-  for (int i = 0; i < w.object_size(); ++i) {
-    const Object& o = w.object(i);
+  for (int i = 0; i < ps.size(); ++i) {
+    const PhysicsData& pd = ps.Get(i);
     PhysicsC p;
-    p.id = o.id();
-    p.position.x = o.x();
-    p.position.y = o.y();
-    p.position.z = o.z();
-    p.vertical_angle = o.vertical_angle();
-    p.horizontal_angle = o.horizontal_angle();
-    p.dimensions.x = o.dim_x();
-    p.dimensions.y = o.dim_y();
-    p.dimensions.z = o.dim_z();
+    p.entityid = pd.eid();
+    p.position.x = pd.x();
+    p.position.y = pd.y();
+    p.position.z = pd.z();
+    p.vertical_angle = pd.vertical_angle();
+    p.horizontal_angle = pd.horizontal_angle();
+    p.dimensions.x = pd.dim_x();
+    p.dimensions.y = pd.dim_y();
+    p.dimensions.z = pd.dim_z();
     p.update_bbs();
     add(p);
   }

@@ -76,10 +76,12 @@ void Connection::sendMessage(const AMessage& a) {
   char buf[MAXMSG];
   int byteSize = a.ByteSize();
   assert(MAXMSG >= byteSize);
+  ssize_t count = byteSize + sizeof(int);
   int netSize = htonl(byteSize);
   memcpy(buf, &netSize, sizeof(int));
   a.SerializeToArray(&buf[sizeof(int)], byteSize);
-  write(mSocket, buf, byteSize + sizeof(int));
+  ssize_t nwrote = write(mSocket, buf, count);
+  assert(nwrote == count);
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {

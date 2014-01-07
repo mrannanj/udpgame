@@ -37,7 +37,7 @@ void GameScreen::Update(GameSession& gs, InputManager& input_reader, float dt) {
     return;
   }
   if (gs.mInit) {
-    gs.tick(input);
+    gs.tick(dt, input);
   }
 }
 

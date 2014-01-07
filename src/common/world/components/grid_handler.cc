@@ -196,11 +196,11 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
   return hit;
 }
 
-void GridHandler::setGrid(const InitialState& i) {
+void GridHandler::deserialize(const InitialState& i) {
   memcpy(mArr.mData, i.grid().c_str(), mArr.size());
 }
 
-void GridHandler::getGrid(InitialState& i) const {
+void GridHandler::serialize(InitialState& i) const {
   i.set_grid(mArr.mData, mArr.size());
 }
 
