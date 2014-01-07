@@ -18,6 +18,7 @@ struct Server {
   void checkClientInput(const fd_set& fds);
   void acceptNewClient(const fd_set& fds);
   void sendWorldState(Connection& c);
+  void sendInitialState(Connection& c);
   void broadcastWorldState();
 
   int mQuit;

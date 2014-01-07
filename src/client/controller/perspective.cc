@@ -93,6 +93,12 @@ void Perspective::tick(World& w)
       switch_camera_mode();
     }
   }
+  if (fabsf(m_direction.x) <= FLT_MIN or fabsf(m_direction.y) <= FLT_MIN
+      or fabsf(m_direction.z) <= FLT_MIN)
+  {
+    m_direction = glm::vec3(1.0, 1.0, 1.0);
+  }
+
   m_view = glm::lookAt(m_position, m_position+m_direction, m_up);
   m_view_projection = m_projection * m_view;
 }

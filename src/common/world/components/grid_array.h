@@ -2,13 +2,17 @@
 
 #include <cstddef>
 
-constexpr int GRID_SIZE_X = 10;
-constexpr int GRID_SIZE_Y = 10;
-constexpr int GRID_SIZE_Z = 10;
+constexpr int GRID_SIZE_X = 50;
+constexpr int GRID_SIZE_Y = 50;
+constexpr int GRID_SIZE_Z = 50;
 constexpr int GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
 
 struct GridArray {
   GridArray();
+  ~GridArray();
+
+  GridArray(const GridArray&) = delete;
+  GridArray& operator=(const GridArray&) = delete;
 
   void makeFloor();
   char get(int, int, int) const;
@@ -17,7 +21,9 @@ struct GridArray {
   void set(int, int, int, char);
   size_t size() const;
 
-  char mData[GRID_SIZE_X][GRID_SIZE_Y][GRID_SIZE_Z];
+  size_t i(int x, int y, int z) const;
+
+  char* mData;
 
 private:
   size_t mSize;

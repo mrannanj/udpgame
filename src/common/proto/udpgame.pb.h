@@ -31,17 +31,19 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
 void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
 
 class AMessage;
+class InitialState;
 class WorldState;
 class Object;
 class ClientInput;
 
 enum Type {
   WORLD_STATE = 1,
-  CLIENT_INPUT = 2
+  CLIENT_INPUT = 2,
+  INITIAL_STATE = 3
 };
 bool Type_IsValid(int value);
 const Type Type_MIN = WORLD_STATE;
-const Type Type_MAX = CLIENT_INPUT;
+const Type Type_MAX = INITIAL_STATE;
 const int Type_ARRAYSIZE = Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Type_descriptor();
@@ -133,6 +135,14 @@ class AMessage : public ::google::protobuf::Message {
   inline ::ClientInput* mutable_input();
   inline ::ClientInput* release_input();
   
+  // optional .InitialState initial_state = 4;
+  inline bool has_initial_state() const;
+  inline void clear_initial_state();
+  static const int kInitialStateFieldNumber = 4;
+  inline const ::InitialState& initial_state() const;
+  inline ::InitialState* mutable_initial_state();
+  inline ::InitialState* release_initial_state();
+  
   // @@protoc_insertion_point(class_scope:AMessage)
  private:
   inline void set_has_type();
@@ -141,15 +151,18 @@ class AMessage : public ::google::protobuf::Message {
   inline void clear_has_world_state();
   inline void set_has_input();
   inline void clear_has_input();
+  inline void set_has_initial_state();
+  inline void clear_has_initial_state();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::WorldState* world_state_;
   ::ClientInput* input_;
+  ::InitialState* initial_state_;
   int type_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -157,6 +170,92 @@ class AMessage : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static AMessage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class InitialState : public ::google::protobuf::Message {
+ public:
+  InitialState();
+  virtual ~InitialState();
+  
+  InitialState(const InitialState& from);
+  
+  inline InitialState& operator=(const InitialState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const InitialState& default_instance();
+  
+  void Swap(InitialState* other);
+  
+  // implements Message ----------------------------------------------
+  
+  InitialState* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const InitialState& from);
+  void MergeFrom(const InitialState& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required bytes grid = 1;
+  inline bool has_grid() const;
+  inline void clear_grid();
+  static const int kGridFieldNumber = 1;
+  inline const ::std::string& grid() const;
+  inline void set_grid(const ::std::string& value);
+  inline void set_grid(const char* value);
+  inline void set_grid(const void* value, size_t size);
+  inline ::std::string* mutable_grid();
+  inline ::std::string* release_grid();
+  
+  // @@protoc_insertion_point(class_scope:InitialState)
+ private:
+  inline void set_has_grid();
+  inline void clear_has_grid();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::std::string* grid_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static InitialState* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -247,17 +346,6 @@ class WorldState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Object >*
       mutable_object();
   
-  // required bytes grid = 5;
-  inline bool has_grid() const;
-  inline void clear_grid();
-  static const int kGridFieldNumber = 5;
-  inline const ::std::string& grid() const;
-  inline void set_grid(const ::std::string& value);
-  inline void set_grid(const char* value);
-  inline void set_grid(const void* value, size_t size);
-  inline ::std::string* mutable_grid();
-  inline ::std::string* release_grid();
-  
   // @@protoc_insertion_point(class_scope:WorldState)
  private:
   inline void set_has_tick_number();
@@ -266,19 +354,16 @@ class WorldState : public ::google::protobuf::Message {
   inline void clear_has_owned_id();
   inline void set_has_client_mode();
   inline void clear_has_client_mode();
-  inline void set_has_grid();
-  inline void clear_has_grid();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::google::protobuf::uint32 tick_number_;
   ::google::protobuf::uint32 owned_id_;
   ::google::protobuf::RepeatedPtrField< ::Object > object_;
-  ::std::string* grid_;
   ::google::protobuf::uint32 client_mode_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -649,6 +734,97 @@ inline ::ClientInput* AMessage::release_input() {
   return temp;
 }
 
+// optional .InitialState initial_state = 4;
+inline bool AMessage::has_initial_state() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void AMessage::set_has_initial_state() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void AMessage::clear_has_initial_state() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void AMessage::clear_initial_state() {
+  if (initial_state_ != NULL) initial_state_->::InitialState::Clear();
+  clear_has_initial_state();
+}
+inline const ::InitialState& AMessage::initial_state() const {
+  return initial_state_ != NULL ? *initial_state_ : *default_instance_->initial_state_;
+}
+inline ::InitialState* AMessage::mutable_initial_state() {
+  set_has_initial_state();
+  if (initial_state_ == NULL) initial_state_ = new ::InitialState;
+  return initial_state_;
+}
+inline ::InitialState* AMessage::release_initial_state() {
+  clear_has_initial_state();
+  ::InitialState* temp = initial_state_;
+  initial_state_ = NULL;
+  return temp;
+}
+
+// -------------------------------------------------------------------
+
+// InitialState
+
+// required bytes grid = 1;
+inline bool InitialState::has_grid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void InitialState::set_has_grid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void InitialState::clear_has_grid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void InitialState::clear_grid() {
+  if (grid_ != &::google::protobuf::internal::kEmptyString) {
+    grid_->clear();
+  }
+  clear_has_grid();
+}
+inline const ::std::string& InitialState::grid() const {
+  return *grid_;
+}
+inline void InitialState::set_grid(const ::std::string& value) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(value);
+}
+inline void InitialState::set_grid(const char* value) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(value);
+}
+inline void InitialState::set_grid(const void* value, size_t size) {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  grid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* InitialState::mutable_grid() {
+  set_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    grid_ = new ::std::string;
+  }
+  return grid_;
+}
+inline ::std::string* InitialState::release_grid() {
+  clear_has_grid();
+  if (grid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = grid_;
+    grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
 // -------------------------------------------------------------------
 
 // WorldState
@@ -742,64 +918,6 @@ WorldState::object() const {
 inline ::google::protobuf::RepeatedPtrField< ::Object >*
 WorldState::mutable_object() {
   return &object_;
-}
-
-// required bytes grid = 5;
-inline bool WorldState::has_grid() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void WorldState::set_has_grid() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void WorldState::clear_has_grid() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void WorldState::clear_grid() {
-  if (grid_ != &::google::protobuf::internal::kEmptyString) {
-    grid_->clear();
-  }
-  clear_has_grid();
-}
-inline const ::std::string& WorldState::grid() const {
-  return *grid_;
-}
-inline void WorldState::set_grid(const ::std::string& value) {
-  set_has_grid();
-  if (grid_ == &::google::protobuf::internal::kEmptyString) {
-    grid_ = new ::std::string;
-  }
-  grid_->assign(value);
-}
-inline void WorldState::set_grid(const char* value) {
-  set_has_grid();
-  if (grid_ == &::google::protobuf::internal::kEmptyString) {
-    grid_ = new ::std::string;
-  }
-  grid_->assign(value);
-}
-inline void WorldState::set_grid(const void* value, size_t size) {
-  set_has_grid();
-  if (grid_ == &::google::protobuf::internal::kEmptyString) {
-    grid_ = new ::std::string;
-  }
-  grid_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* WorldState::mutable_grid() {
-  set_has_grid();
-  if (grid_ == &::google::protobuf::internal::kEmptyString) {
-    grid_ = new ::std::string;
-  }
-  return grid_;
-}
-inline ::std::string* WorldState::release_grid() {
-  clear_has_grid();
-  if (grid_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = grid_;
-    grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
 }
 
 // -------------------------------------------------------------------

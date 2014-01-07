@@ -1,12 +1,18 @@
 enum Type {
   WORLD_STATE = 1;
   CLIENT_INPUT = 2;
+  INITIAL_STATE = 3;
 }
 
 message AMessage {
   required Type type = 1;
   optional WorldState world_state = 2;
   optional ClientInput input = 3;
+  optional InitialState initial_state = 4;
+}
+
+message InitialState {
+  required bytes grid = 1;
 }
 
 message WorldState {
@@ -14,7 +20,6 @@ message WorldState {
   required fixed32 owned_id = 2;
   required fixed32 client_mode = 3;
   repeated Object object = 4;
-  required bytes grid = 5;
 }
 
 message Object {

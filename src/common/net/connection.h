@@ -8,7 +8,10 @@
 #include <iostream>
 #include <unistd.h>
 
-#define MAXMSG 2048
+constexpr ssize_t MAXMSG = 1000000;
+
+using std::cout;
+using std::endl;
 
 struct Connection {
   Connection();
@@ -28,23 +31,32 @@ struct Connection {
   ssize_t mPos;
   int mSocket;
   sockaddr_in mSockaddr;
-  char mBuf[MAXMSG];
+  char* mBuf;
 };
 
 template <class T>
 ssize_t Connection::checkMessages(T& handler) {
-  ssize_t nread = read(mSocket, &mBuf[mPos], MAXMSG-mPos);
-  if (nread <= 0) return nread;
+  assert(MAXMSG > mPos);
+  size_t count = MAXMSG-mPos;
+  ssize_t nread = read(mSocket, &mBuf[mPos], count);
+  if (nread <= 0) return -1;
   mPos += nread;
-  if (mPos >= 2) {
-    uint16_t size;
-    memcpy(&size, mBuf, sizeof(uint16_t));
-    size = ntohs(size);
-    if (mPos >= size+2) {
+  if ((size_t)mPos >= sizeof(int)) {
+    int size;
+    memcpy(&size, mBuf, sizeof(int));
+    size = ntohl(size);
+    int tsize = size + sizeof(int);
+    assert(tsize <= MAXMSG);
+    if ((size_t)mPos >= size + sizeof(int)) {
       AMessage a;
-      if (a.ParseFromArray(&mBuf[sizeof(uint16_t)], size)) {
+      if (a.ParseFromArray(&mBuf[sizeof(int)], size)) {
         if (!handler.handleAMessage(a, mSocket)) return -1;
-        mPos -= size+2;
+        size_t overPos = mPos-tsize;
+        memmove(mBuf, &mBuf[mPos-overPos], overPos);
+        mPos -= tsize;
+      } else {
+        cout << "Invalid message" << endl;
+        return -1;
       }
     }
   }

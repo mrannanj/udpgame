@@ -19,6 +19,7 @@ GameSession::GameSession(const std::string& addr):
   mPerspective(),
   mWorld()
 {
+  cout << "connected to " << mConnection << endl;
   system_clock::time_point t1 = system_clock::now();
   while (!mWorld.mInit) {
     mConnection.checkMessages(*this);
@@ -29,7 +30,6 @@ GameSession::GameSession(const std::string& addr):
       exit(EXIT_FAILURE);
     }
   }
-  cout << "connected to " << mConnection << endl;
 }
 
 void GameSession::tick(Input& input) {
@@ -45,6 +45,9 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
       mWorld.setState(a.world_state());
       mPerspective.m_follow_id = a.world_state().owned_id();
       mPerspective.m_freelook = a.world_state().client_mode();
+      return true;
+    case Type::INITIAL_STATE:
+      mWorld.setInitialState(a.initial_state());
       return true;
     default:
       return false;

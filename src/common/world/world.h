@@ -23,12 +23,15 @@ public:
   void spawn_player(int);
   void spawn_monster();
 
-  WorldState getState();
-  void setState(const WorldState&);
   void removeDead();
   void defaultWorld();
   void connected(int);
   void disconnected(int);
+
+  WorldState getState();
+  void setState(const WorldState&);
+  InitialState getInitialState();
+  void setInitialState(const InitialState&);
 
   bool mInit;
   unsigned mTickNumber;

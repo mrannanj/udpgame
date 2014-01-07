@@ -12,8 +12,8 @@ WorldTicker::WorldTicker(size_t numClients, unsigned frameNum):
 }
 
 bool WorldTicker::handleAMessage(const AMessage& a, int fd) {
-  assert(a.type() == Type::CLIENT_INPUT);
-  assert(a.input().tick_number() == mFrameNum);
+  //assert(a.type() == Type::CLIENT_INPUT);
+  //assert(a.input().tick_number() == mFrameNum);
   InputC ic(a.input());
   ic.mClient = fd;
   mInputs.push_back(ic);

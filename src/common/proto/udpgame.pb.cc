@@ -18,6 +18,9 @@ namespace {
 const ::google::protobuf::Descriptor* AMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AMessage_reflection_ = NULL;
+const ::google::protobuf::Descriptor* InitialState_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  InitialState_reflection_ = NULL;
 const ::google::protobuf::Descriptor* WorldState_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   WorldState_reflection_ = NULL;
@@ -39,10 +42,11 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       "common/proto/udpgame.proto");
   GOOGLE_CHECK(file != NULL);
   AMessage_descriptor_ = file->message_type(0);
-  static const int AMessage_offsets_[3] = {
+  static const int AMessage_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AMessage, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AMessage, world_state_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AMessage, input_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AMessage, initial_state_),
   };
   AMessage_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -55,13 +59,27 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AMessage));
-  WorldState_descriptor_ = file->message_type(1);
-  static const int WorldState_offsets_[5] = {
+  InitialState_descriptor_ = file->message_type(1);
+  static const int InitialState_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, grid_),
+  };
+  InitialState_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      InitialState_descriptor_,
+      InitialState::default_instance_,
+      InitialState_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(InitialState));
+  WorldState_descriptor_ = file->message_type(2);
+  static const int WorldState_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, owned_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, client_mode_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, object_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WorldState, grid_),
   };
   WorldState_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -74,7 +92,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(WorldState));
-  Object_descriptor_ = file->message_type(2);
+  Object_descriptor_ = file->message_type(3);
   static const int Object_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Object, x_),
@@ -97,7 +115,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Object));
-  ClientInput_descriptor_ = file->message_type(3);
+  ClientInput_descriptor_ = file->message_type(4);
   static const int ClientInput_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, actions_),
@@ -131,6 +149,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     AMessage_descriptor_, &AMessage::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    InitialState_descriptor_, &InitialState::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     WorldState_descriptor_, &WorldState::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Object_descriptor_, &Object::default_instance());
@@ -143,6 +163,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete AMessage::default_instance_;
   delete AMessage_reflection_;
+  delete InitialState::default_instance_;
+  delete InitialState_reflection_;
   delete WorldState::default_instance_;
   delete WorldState_reflection_;
   delete Object::default_instance_;
@@ -158,27 +180,31 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\032common/proto/udpgame.proto\"^\n\010AMessage"
-    "\022\023\n\004type\030\001 \002(\0162\005.Type\022 \n\013world_state\030\002 \001"
-    "(\0132\013.WorldState\022\033\n\005input\030\003 \001(\0132\014.ClientI"
-    "nput\"o\n\nWorldState\022\023\n\013tick_number\030\001 \002(\007\022"
-    "\020\n\010owned_id\030\002 \002(\007\022\023\n\013client_mode\030\003 \002(\007\022\027"
-    "\n\006object\030\004 \003(\0132\007.Object\022\014\n\004grid\030\005 \002(\014\"\224\001"
-    "\n\006Object\022\n\n\002id\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002"
-    "(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022"
-    "\026\n\016vertical_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r"
-    "\n\005dim_y\030\010 \002(\002\022\r\n\005dim_z\030\t \002(\002\"d\n\013ClientIn"
-    "put\022\023\n\013tick_number\030\001 \002(\007\022\017\n\007actions\030\002 \002("
-    "\007\022\030\n\020horizontal_delta\030\003 \002(\002\022\025\n\rverical_d"
-    "elta\030\004 \002(\002*)\n\004Type\022\017\n\013WORLD_STATE\020\001\022\020\n\014C"
-    "LIENT_INPUT\020\002", 533);
+    "\n\032common/proto/udpgame.proto\"\204\001\n\010AMessag"
+    "e\022\023\n\004type\030\001 \002(\0162\005.Type\022 \n\013world_state\030\002 "
+    "\001(\0132\013.WorldState\022\033\n\005input\030\003 \001(\0132\014.Client"
+    "Input\022$\n\rinitial_state\030\004 \001(\0132\r.InitialSt"
+    "ate\"\034\n\014InitialState\022\014\n\004grid\030\001 \002(\014\"a\n\nWor"
+    "ldState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010owned_id"
+    "\030\002 \002(\007\022\023\n\013client_mode\030\003 \002(\007\022\027\n\006object\030\004 "
+    "\003(\0132\007.Object\"\224\001\n\006Object\022\n\n\002id\030\001 \002(\007\022\t\n\001x"
+    "\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horizont"
+    "al_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002(\002\022\r"
+    "\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r\n\005dim_z\030\t "
+    "\002(\002\"d\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022"
+    "\017\n\007actions\030\002 \002(\007\022\030\n\020horizontal_delta\030\003 \002"
+    "(\002\022\025\n\rverical_delta\030\004 \002(\002*<\n\004Type\022\017\n\013WOR"
+    "LD_STATE\020\001\022\020\n\014CLIENT_INPUT\020\002\022\021\n\rINITIAL_"
+    "STATE\020\003", 607);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
+  InitialState::default_instance_ = new InitialState();
   WorldState::default_instance_ = new WorldState();
   Object::default_instance_ = new Object();
   ClientInput::default_instance_ = new ClientInput();
   AMessage::default_instance_->InitAsDefaultInstance();
+  InitialState::default_instance_->InitAsDefaultInstance();
   WorldState::default_instance_->InitAsDefaultInstance();
   Object::default_instance_->InitAsDefaultInstance();
   ClientInput::default_instance_->InitAsDefaultInstance();
@@ -200,6 +226,7 @@ bool Type_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -213,6 +240,7 @@ bool Type_IsValid(int value) {
 const int AMessage::kTypeFieldNumber;
 const int AMessage::kWorldStateFieldNumber;
 const int AMessage::kInputFieldNumber;
+const int AMessage::kInitialStateFieldNumber;
 #endif  // !_MSC_VER
 
 AMessage::AMessage()
@@ -223,6 +251,7 @@ AMessage::AMessage()
 void AMessage::InitAsDefaultInstance() {
   world_state_ = const_cast< ::WorldState*>(&::WorldState::default_instance());
   input_ = const_cast< ::ClientInput*>(&::ClientInput::default_instance());
+  initial_state_ = const_cast< ::InitialState*>(&::InitialState::default_instance());
 }
 
 AMessage::AMessage(const AMessage& from)
@@ -236,6 +265,7 @@ void AMessage::SharedCtor() {
   type_ = 1;
   world_state_ = NULL;
   input_ = NULL;
+  initial_state_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -247,6 +277,7 @@ void AMessage::SharedDtor() {
   if (this != default_instance_) {
     delete world_state_;
     delete input_;
+    delete initial_state_;
   }
 }
 
@@ -278,6 +309,9 @@ void AMessage::Clear() {
     }
     if (has_input()) {
       if (input_ != NULL) input_->::ClientInput::Clear();
+    }
+    if (has_initial_state()) {
+      if (initial_state_ != NULL) initial_state_->::InitialState::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -334,6 +368,20 @@ bool AMessage::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(34)) goto parse_initial_state;
+        break;
+      }
+      
+      // optional .InitialState initial_state = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_initial_state:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_initial_state()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -374,6 +422,12 @@ void AMessage::SerializeWithCachedSizes(
       3, this->input(), output);
   }
   
+  // optional .InitialState initial_state = 4;
+  if (has_initial_state()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->initial_state(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -400,6 +454,13 @@ void AMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->input(), target);
+  }
+  
+  // optional .InitialState initial_state = 4;
+  if (has_initial_state()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->initial_state(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -431,6 +492,13 @@ int AMessage::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->input());
+    }
+    
+    // optional .InitialState initial_state = 4;
+    if (has_initial_state()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->initial_state());
     }
     
   }
@@ -469,6 +537,9 @@ void AMessage::MergeFrom(const AMessage& from) {
     if (from.has_input()) {
       mutable_input()->::ClientInput::MergeFrom(from.input());
     }
+    if (from.has_initial_state()) {
+      mutable_initial_state()->::InitialState::MergeFrom(from.initial_state());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -494,6 +565,9 @@ bool AMessage::IsInitialized() const {
   if (has_input()) {
     if (!this->input().IsInitialized()) return false;
   }
+  if (has_initial_state()) {
+    if (!this->initial_state().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -502,6 +576,7 @@ void AMessage::Swap(AMessage* other) {
     std::swap(type_, other->type_);
     std::swap(world_state_, other->world_state_);
     std::swap(input_, other->input_);
+    std::swap(initial_state_, other->initial_state_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -520,11 +595,226 @@ void AMessage::Swap(AMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int InitialState::kGridFieldNumber;
+#endif  // !_MSC_VER
+
+InitialState::InitialState()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void InitialState::InitAsDefaultInstance() {
+}
+
+InitialState::InitialState(const InitialState& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void InitialState::SharedCtor() {
+  _cached_size_ = 0;
+  grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+InitialState::~InitialState() {
+  SharedDtor();
+}
+
+void InitialState::SharedDtor() {
+  if (grid_ != &::google::protobuf::internal::kEmptyString) {
+    delete grid_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void InitialState::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* InitialState::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return InitialState_descriptor_;
+}
+
+const InitialState& InitialState::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
+}
+
+InitialState* InitialState::default_instance_ = NULL;
+
+InitialState* InitialState::New() const {
+  return new InitialState;
+}
+
+void InitialState::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_grid()) {
+      if (grid_ != &::google::protobuf::internal::kEmptyString) {
+        grid_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool InitialState::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required bytes grid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_grid()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void InitialState::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required bytes grid = 1;
+  if (has_grid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      1, this->grid(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* InitialState::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required bytes grid = 1;
+  if (has_grid()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        1, this->grid(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int InitialState::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required bytes grid = 1;
+    if (has_grid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->grid());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void InitialState::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const InitialState* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const InitialState*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void InitialState::MergeFrom(const InitialState& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_grid()) {
+      set_grid(from.grid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void InitialState::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void InitialState::CopyFrom(const InitialState& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool InitialState::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void InitialState::Swap(InitialState* other) {
+  if (other != this) {
+    std::swap(grid_, other->grid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata InitialState::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = InitialState_descriptor_;
+  metadata.reflection = InitialState_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int WorldState::kTickNumberFieldNumber;
 const int WorldState::kOwnedIdFieldNumber;
 const int WorldState::kClientModeFieldNumber;
 const int WorldState::kObjectFieldNumber;
-const int WorldState::kGridFieldNumber;
 #endif  // !_MSC_VER
 
 WorldState::WorldState()
@@ -546,7 +836,6 @@ void WorldState::SharedCtor() {
   tick_number_ = 0u;
   owned_id_ = 0u;
   client_mode_ = 0u;
-  grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -555,9 +844,6 @@ WorldState::~WorldState() {
 }
 
 void WorldState::SharedDtor() {
-  if (grid_ != &::google::protobuf::internal::kEmptyString) {
-    delete grid_;
-  }
   if (this != default_instance_) {
   }
 }
@@ -587,11 +873,6 @@ void WorldState::Clear() {
     tick_number_ = 0u;
     owned_id_ = 0u;
     client_mode_ = 0u;
-    if (has_grid()) {
-      if (grid_ != &::google::protobuf::internal::kEmptyString) {
-        grid_->clear();
-      }
-    }
   }
   object_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -662,20 +943,6 @@ bool WorldState::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(34)) goto parse_object;
-        if (input->ExpectTag(42)) goto parse_grid;
-        break;
-      }
-      
-      // required bytes grid = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_grid:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_grid()));
-        } else {
-          goto handle_uninterpreted;
-        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -719,12 +986,6 @@ void WorldState::SerializeWithCachedSizes(
       4, this->object(i), output);
   }
   
-  // required bytes grid = 5;
-  if (has_grid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytes(
-      5, this->grid(), output);
-  }
-  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -755,13 +1016,6 @@ void WorldState::SerializeWithCachedSizes(
         4, this->object(i), target);
   }
   
-  // required bytes grid = 5;
-  if (has_grid()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        5, this->grid(), target);
-  }
-  
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -786,13 +1040,6 @@ int WorldState::ByteSize() const {
     // required fixed32 client_mode = 3;
     if (has_client_mode()) {
       total_size += 1 + 4;
-    }
-    
-    // required bytes grid = 5;
-    if (has_grid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->grid());
     }
     
   }
@@ -840,9 +1087,6 @@ void WorldState::MergeFrom(const WorldState& from) {
     if (from.has_client_mode()) {
       set_client_mode(from.client_mode());
     }
-    if (from.has_grid()) {
-      set_grid(from.grid());
-    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -860,7 +1104,7 @@ void WorldState::CopyFrom(const WorldState& from) {
 }
 
 bool WorldState::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000017) != 0x00000017) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
   for (int i = 0; i < object_size(); i++) {
     if (!this->object(i).IsInitialized()) return false;
@@ -874,7 +1118,6 @@ void WorldState::Swap(WorldState* other) {
     std::swap(owned_id_, other->owned_id_);
     std::swap(client_mode_, other->client_mode_);
     object_.Swap(&other->object_);
-    std::swap(grid_, other->grid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

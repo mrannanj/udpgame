@@ -9,7 +9,8 @@
 
 Connection::Connection():
   mPos(0),
-  mSocket(-1)
+  mSocket(-1),
+  mBuf(nullptr)
 {
 }
 
@@ -17,6 +18,7 @@ Connection::Connection(const std::string& addr):
   mPos(0),
   mSocket(-1)
 {
+  mBuf = new char[MAXMSG];
   memset(&mSockaddr, 0, sizeof(mSockaddr));
   mSockaddr.sin_family = AF_INET;
   inet_aton(addr.c_str(), &mSockaddr.sin_addr);
@@ -36,6 +38,7 @@ Connection::Connection(int socket, const sockaddr_in& sa):
   mSocket(socket),
   mSockaddr(sa)
 {
+  mBuf = new char[MAXMSG];
   if (-1 == fcntl(mSocket, F_SETFL, O_NONBLOCK))
     die("fcntl");
 }
@@ -44,18 +47,19 @@ Connection::Connection(Connection&& c):
   mPos(c.mPos),
   mSocket(c.mSocket),
   mSockaddr(c.mSockaddr),
-  mBuf()
+  mBuf(c.mBuf)
 {
   c.mSocket = -1;
-  memcpy(mBuf, c.mBuf, MAXMSG);
+  c.mBuf = nullptr;
 }
 
 Connection& Connection::operator=(Connection&& c) {
   mPos = c.mPos;
   mSocket = c.mSocket;
   mSockaddr = c.mSockaddr;
-  memcpy(mBuf, c.mBuf, MAXMSG);
+  mBuf = c.mBuf;
   c.mSocket = -1;
+  c.mBuf = nullptr;
   return *this;
 }
 
@@ -63,15 +67,19 @@ Connection::~Connection() {
   if (mSocket != -1)
     close(mSocket);
   mSocket = -1;
+  if (mBuf != nullptr)
+    delete[] mBuf;
+  mBuf = nullptr;
 }
 
 void Connection::sendMessage(const AMessage& a) {
   char buf[MAXMSG];
-  short size = a.ByteSize();
-  uint16_t netSize = htons(size);
-  memcpy(buf, &netSize, sizeof(netSize));
-  a.SerializeToArray(&buf[sizeof(netSize)], size);
-  write(mSocket, buf, size + sizeof(netSize));
+  int byteSize = a.ByteSize();
+  assert(MAXMSG >= byteSize);
+  int netSize = htonl(byteSize);
+  memcpy(buf, &netSize, sizeof(int));
+  a.SerializeToArray(&buf[sizeof(int)], byteSize);
+  write(mSocket, buf, byteSize + sizeof(int));
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {

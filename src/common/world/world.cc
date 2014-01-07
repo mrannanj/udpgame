@@ -113,9 +113,18 @@ InputHandler& World::input() {
   return mInputHandler;
 }
 
+InitialState World::getInitialState() {
+  InitialState i;
+  mGrid.getGrid(i);
+  return i;
+}
+
+void World::setInitialState(const InitialState& i) {
+  mGrid.setGrid(i);
+}
+
 void World::setState(const WorldState& w) {
   mPhysicsHandler.setObjects(w);
-  mGrid.setGrid(w);
   mTickNumber = w.tick_number();
   mInit = true;
 }
@@ -123,7 +132,6 @@ void World::setState(const WorldState& w) {
 WorldState World::getState() {
   WorldState w;
   mPhysicsHandler.getObjects(w);
-  mGrid.getGrid(w);
   w.set_tick_number(mTickNumber);
   return w;
 }

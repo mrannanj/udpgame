@@ -59,6 +59,14 @@ void Server::broadcastWorldState() {
   }
 }
 
+void Server::sendInitialState(Connection& c) {
+  AMessage a;
+  a.set_type(Type::INITIAL_STATE);
+  InitialState i = mWorld.getInitialState();
+  a.mutable_initial_state()->CopyFrom(i);
+  c.sendMessage(a);
+}
+
 void Server::sendWorldState(Connection& c) {
   AMessage a;
   a.set_type(Type::WORLD_STATE);
@@ -95,9 +103,10 @@ void Server::acceptNewClient(const fd_set& fds) {
     if (client != -1) {
       mClients.emplace_back(client, sa);
       Connection& c = mClients.back();
+      cout << c << " connected" << endl;
       mWorld.connected(c.mSocket);
       sendWorldState(c);
-      cout << c << " connected" << endl;
+      sendInitialState(c);
     }
   }
 }
