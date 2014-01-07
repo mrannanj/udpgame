@@ -22,7 +22,6 @@ public:
   int m_freelook;
   EntityId m_follow_id;
 
-private:
   float m_vertical_angle;
   float m_horizontal_angle;
   glm::vec3 m_position;

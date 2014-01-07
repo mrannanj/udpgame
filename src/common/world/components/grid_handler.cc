@@ -4,7 +4,7 @@
 #include <cassert>
 
 using namespace std;
-using namespace glm;
+using glm::vec3;
 
 GridHandler::GridHandler()
 {
@@ -12,6 +12,13 @@ GridHandler::GridHandler()
 
 void GridHandler::defaultGrid() {
   mArr.makeFloor();
+}
+
+void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
+  for (unsigned a = 0; a < 3; ++a) {
+    ind[a][0] = max(0, (int)(p[a] - 10));
+    ind[a][1] = min(GRID_SIZE[a] - 1, (int)(p[a] + 10));
+  }
 }
 
 void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
@@ -152,7 +159,7 @@ bool GridHandler::ray_block_collision(
 bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
     char** hitBlock, char** faceBlock)
 {
-  glm::vec3 dn = normalize(d);
+  glm::vec3 dn = glm::normalize(d);
   int b[3];
   distance = FLT_MAX;
   int baxis = 4;
@@ -164,7 +171,7 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
         float t;
         int a;
         int d;
-        char& block = mArr.getUnsafe(x,y,z);
+        char& block = mArr.getRef(x,y,z);
         if (block and ray_block_collision(x, y, z, s, dn, t, a, d)) {
           if (distance > t) {
             distance = t;
@@ -177,7 +184,7 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
             b[2] = z;
             b[baxis] += dir;
             if (!mArr.outsideGrid(b[0], b[1], b[2])) {
-              *faceBlock = &mArr.getUnsafe(b[0], b[1], b[2]);
+              *faceBlock = &mArr.getRef(b[0], b[1], b[2]);
             } else {
               *faceBlock = nullptr;
             }

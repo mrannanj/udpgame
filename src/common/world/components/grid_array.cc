@@ -10,13 +10,14 @@ GridArray::GridArray():
 }
 
 void GridArray::makeFloor() {
-  for (unsigned x = 0; x < GRID_SIZE_X; ++x)
+  for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
     for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
       mData[x][0][z] = 3;
       mData[x][1][z] = 1;
       mData[x][2][z] = 1;
       mData[x][3][z] = 1;
     }
+  }
 }
 
 bool GridArray::outsideGrid(int x, int y, int z) const {
@@ -24,7 +25,7 @@ bool GridArray::outsideGrid(int x, int y, int z) const {
       x >= GRID_SIZE_X or y >= GRID_SIZE_Y or z >= GRID_SIZE_Z;
 }
 
-char& GridArray::getUnsafe(int x, int y, int z) {
+char& GridArray::getRef(int x, int y, int z) {
   return mData[x][y][z];
 }
 

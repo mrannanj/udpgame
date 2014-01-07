@@ -3,12 +3,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp) {
+void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
+    const glm::vec3& center) {
   r.cube_renderer.On();
 
-  for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
-    for (unsigned y = 0; y < GRID_SIZE_Y; ++y) {
-      for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
+  int ind[3][2];
+  g.range_indices(center, ind);
+  for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
+    for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
+      for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
         char block = g.mArr.get(x,y,z);
         if (block == 0) continue;
 
