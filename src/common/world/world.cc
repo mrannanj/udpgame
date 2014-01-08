@@ -1,3 +1,4 @@
+#include "common/config.h"
 #include "common/world/world.h"
 #include "common/world/components/physics.h"
 #include "common/world/components/grid_handler.h"
@@ -10,6 +11,7 @@
 #include <iostream>
 #include <chrono>
 #include <set>
+#include <cstdlib>
 
 using namespace std;
 
@@ -60,7 +62,9 @@ void World::spawn_player(int clientid) {
   cd->set_mode(ClientMode::PLAYER);
 }
 
-int World::tick(float dt, const FrameInputs& fis) {
+void World::tick(const FrameInputs& fis) {
+  float dt = secs_per_tick;
+
   mDeleteList.clear();
   mInputHandler.deserialize(fis.frame_inputs());
 
@@ -70,7 +74,7 @@ int World::tick(float dt, const FrameInputs& fis) {
   mInventory.tick(dt, *this);
 
   removeDead();
-  return ++mTickNumber;
+  mTickNumber += 1;
 }
 
 void World::removeDead() {

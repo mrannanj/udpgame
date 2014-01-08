@@ -29,7 +29,7 @@ void Client::run() {
     if (g_screen_stack.check_dirty())
       screen->Activate();
 
-    screen->Update(gameSession, input_manager, 0.05f);
+    screen->Update(gameSession, input_manager, secs_per_tick);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     screen->Draw(gameSession, renderer);

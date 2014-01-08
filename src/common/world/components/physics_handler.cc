@@ -3,8 +3,10 @@
 #include "common/world/world.h"
 #include "client/controller/input/input.h"
 
+#include <iostream>
 #include <cassert>
 #include <algorithm>
+#include <cstdio>
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
 constexpr float PI = (float)M_PI;
@@ -53,6 +55,20 @@ void PhysicsHandler::tick(float dt, World& w) {
     if (!w.grid().check_collision(p, dt))
       w.mDeleteList.insert(p.eid());
   }
+}
+
+unsigned PhysicsHandler::hash() {
+  unsigned long hash = 5381;
+
+  for (const PhysicsC& p : mComponents) {
+    for (int a = 0; a < 3; ++a) {
+      unsigned v;
+      memcpy(&v, &p.position[a], sizeof(v));
+      printf("%x\n", v);
+      hash = ((hash << 5) + hash) + v;
+    }
+  }
+  return hash;
 }
 
 void PhysicsHandler::serialize(

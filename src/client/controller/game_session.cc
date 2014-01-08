@@ -32,8 +32,7 @@ GameSession::GameSession(const std::string& addr):
   }
 }
 
-void GameSession::tick(float dt, Input& input) {
-  mDt = dt;
+void GameSession::tick(float, Input& input) {
   mConnection.checkMessages(*this);
   mPerspective.handle_input(input);
   mPerspective.tick(mWorld);
@@ -48,7 +47,7 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
       mClientId = a.initial_state().client_id();
       return true;
     case Type::FRAME_INPUTS:
-      mWorld.tick(mDt, a.frame_inputs());
+      mWorld.tick(a.frame_inputs());
       cd = mWorld.client().getByClient(mClientId);
       if (cd) {
         mPerspective.m_follow_id = cd->eid();

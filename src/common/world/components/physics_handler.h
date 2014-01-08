@@ -17,6 +17,7 @@ class World;
 class PhysicsHandler : public WorldHandler<PhysicsC> {
 public:
   void tick(float, World&);
+  unsigned hash();
   void serialize(google::protobuf::RepeatedPtrField<PhysicsData>*);
   void deserialize(const google::protobuf::RepeatedPtrField<PhysicsData>&);
 };

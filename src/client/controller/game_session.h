@@ -16,7 +16,6 @@ struct GameSession {
 
   int mClientId;
   bool mInit;
-  float mDt;
   Connection mConnection;
   Perspective mPerspective;
   World mWorld;

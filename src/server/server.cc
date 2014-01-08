@@ -70,7 +70,7 @@ void Server::serve() {
     checkClientInput(fds);
 
     if (mWorldTicker.ok()) {
-      mWorld.tick(sec_per_ticks, mWorldTicker.frameInputs());
+      mWorld.tick(mWorldTicker.frameInputs());
       distributeInputs();
       mWorldTicker.nextWait(mClients.size(), mWorld.mTickNumber + 1);
     }

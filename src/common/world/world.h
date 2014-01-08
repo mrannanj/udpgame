@@ -18,7 +18,7 @@ class World {
 public:
   World();
 
-  int tick(float, const FrameInputs&);
+  void tick(const FrameInputs&);
   void spawn_player(int);
   void spawn_monster();
 
