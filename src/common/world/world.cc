@@ -106,6 +106,7 @@ InitialState World::getInitialState() {
   mInventory.serialize(i.mutable_inventories());
   mPhysicsHandler.serialize(i.mutable_physics_data());
   i.set_next_eid(m_idgen.getNext());
+  i.set_tick_number(mTickNumber);
   return i;
 }
 
@@ -115,5 +116,6 @@ void World::setInitialState(const InitialState& i) {
   mInventory.deserialize(i.inventories());
   mPhysicsHandler.deserialize(i.physics_data());
   m_idgen.setNext(i.next_eid());
+  mTickNumber = i.tick_number();
   mInit = true;
 }

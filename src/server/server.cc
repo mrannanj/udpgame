@@ -56,9 +56,7 @@ void Server::distributeInputs() {
 void Server::sendInitialState(Connection& c) {
   AMessage a;
   a.set_type(Type::INITIAL_STATE);
-  InitialState i = mWorld.getInitialState();
-  a.mutable_initial_state()->CopyFrom(i);
-  a.mutable_initial_state()->set_tick_number(mWorld.mTickNumber);
+  a.mutable_initial_state()->CopyFrom(mWorld.getInitialState());
   a.mutable_initial_state()->set_client_id(c.mSocket);
   c.sendMessage(a);
 }
@@ -103,7 +101,6 @@ void Server::checkClientInput(const fd_set& fds) {
     ssize_t nread = c.checkMessages(mWorldTicker);
     if (nread <= 0) {
       cout << c << " disconnected" << endl;
-      //mWorld.disconnected(c.mSocket);
       it = mClients.erase(it);
     } else {
       ++it;
