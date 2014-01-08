@@ -64,7 +64,6 @@ unsigned PhysicsHandler::hash() {
     for (int a = 0; a < 3; ++a) {
       unsigned v;
       memcpy(&v, &p.position[a], sizeof(v));
-      printf("%x\n", v);
       hash = ((hash << 5) + hash) + v;
     }
   }

@@ -9,7 +9,8 @@ using namespace std;
 using namespace std::chrono;
 
 GameSession::GameSession():
-  mInit(false)
+  mInit(false),
+  mWorld(false)
 {
 }
 
@@ -17,7 +18,7 @@ GameSession::GameSession(const std::string& addr):
   mInit(true),
   mConnection(addr),
   mPerspective(),
-  mWorld()
+  mWorld(false)
 {
   cout << "connected to " << mConnection << endl;
   system_clock::time_point t1 = system_clock::now();
@@ -66,6 +67,7 @@ void GameSession::sendFrameInput(Input& i) {
   fi.set_horizontal_delta((float)i.mouse_delta_x * 0.01f);
 
   ClientInput ci;
+  ci.set_previous_hash(mWorld.hash());
   ci.set_tick_number(mWorld.mTickNumber + 1);
   ci.mutable_frame_input()->CopyFrom(fi);
 

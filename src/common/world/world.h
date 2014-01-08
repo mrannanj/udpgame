@@ -16,17 +16,18 @@ const glm::vec3 spawn_position(5.0f, 8.0f, 5.0f);
 
 class World {
 public:
-  World();
+  World(bool);
 
   void tick(const FrameInputs&);
   void spawn_player(int);
   void spawn_monster();
 
   void removeDead();
-  void defaultWorld();
 
   InitialState getInitialState();
   void setInitialState(const InitialState&);
+
+  unsigned hash() const;
 
   bool mInit;
   unsigned mTickNumber;
@@ -40,6 +41,10 @@ public:
   std::set<EntityId> mDeleteList;
 
 private:
+  void updateHash();
+
+  unsigned mHash;
+
   IdGenerator m_idgen;
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;

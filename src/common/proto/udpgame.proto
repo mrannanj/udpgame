@@ -43,7 +43,8 @@ message FrameInput {
 
 message ClientInput {
   required fixed32 tick_number = 1;
-  required FrameInput frame_input = 2;
+  required fixed32 previous_hash = 2;
+  required FrameInput frame_input = 3;
 }
 
 message InitialState {

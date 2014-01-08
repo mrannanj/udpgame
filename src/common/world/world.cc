@@ -15,14 +15,21 @@
 
 using namespace std;
 
-World::World():
-  mInit(false),
-  mTickNumber(0)
+World::World(bool init):
+  mInit(init),
+  mTickNumber(0),
+  mHash(0)
 {
+  if (mInit) mGrid.defaultGrid();
+  updateHash();
 }
 
-void World::defaultWorld() {
-  mGrid.defaultGrid();
+unsigned World::hash() const {
+  return mHash;
+}
+
+void World::updateHash() {
+  mHash = mPhysicsHandler.hash();
 }
 
 void World::spawn_monster() {
@@ -75,6 +82,7 @@ void World::tick(const FrameInputs& fis) {
 
   removeDead();
   mTickNumber += 1;
+  updateHash();
 }
 
 void World::removeDead() {
@@ -122,4 +130,5 @@ void World::setInitialState(const InitialState& i) {
   m_idgen.setNext(i.next_eid());
   mTickNumber = i.tick_number();
   mInit = true;
+  updateHash();
 }

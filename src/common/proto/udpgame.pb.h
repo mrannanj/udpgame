@@ -677,10 +677,17 @@ class ClientInput : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 tick_number() const;
   inline void set_tick_number(::google::protobuf::uint32 value);
   
-  // required .FrameInput frame_input = 2;
+  // required fixed32 previous_hash = 2;
+  inline bool has_previous_hash() const;
+  inline void clear_previous_hash();
+  static const int kPreviousHashFieldNumber = 2;
+  inline ::google::protobuf::uint32 previous_hash() const;
+  inline void set_previous_hash(::google::protobuf::uint32 value);
+  
+  // required .FrameInput frame_input = 3;
   inline bool has_frame_input() const;
   inline void clear_frame_input();
-  static const int kFrameInputFieldNumber = 2;
+  static const int kFrameInputFieldNumber = 3;
   inline const ::FrameInput& frame_input() const;
   inline ::FrameInput* mutable_frame_input();
   inline ::FrameInput* release_frame_input();
@@ -689,16 +696,19 @@ class ClientInput : public ::google::protobuf::Message {
  private:
   inline void set_has_tick_number();
   inline void clear_has_tick_number();
+  inline void set_has_previous_hash();
+  inline void clear_has_previous_hash();
   inline void set_has_frame_input();
   inline void clear_has_frame_input();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
-  ::FrameInput* frame_input_;
   ::google::protobuf::uint32 tick_number_;
+  ::google::protobuf::uint32 previous_hash_;
+  ::FrameInput* frame_input_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1473,15 +1483,37 @@ inline void ClientInput::set_tick_number(::google::protobuf::uint32 value) {
   tick_number_ = value;
 }
 
-// required .FrameInput frame_input = 2;
-inline bool ClientInput::has_frame_input() const {
+// required fixed32 previous_hash = 2;
+inline bool ClientInput::has_previous_hash() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void ClientInput::set_has_frame_input() {
+inline void ClientInput::set_has_previous_hash() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void ClientInput::clear_has_frame_input() {
+inline void ClientInput::clear_has_previous_hash() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void ClientInput::clear_previous_hash() {
+  previous_hash_ = 0u;
+  clear_has_previous_hash();
+}
+inline ::google::protobuf::uint32 ClientInput::previous_hash() const {
+  return previous_hash_;
+}
+inline void ClientInput::set_previous_hash(::google::protobuf::uint32 value) {
+  set_has_previous_hash();
+  previous_hash_ = value;
+}
+
+// required .FrameInput frame_input = 3;
+inline bool ClientInput::has_frame_input() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ClientInput::set_has_frame_input() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ClientInput::clear_has_frame_input() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void ClientInput::clear_frame_input() {
   if (frame_input_ != NULL) frame_input_->::FrameInput::Clear();

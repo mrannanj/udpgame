@@ -139,8 +139,9 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FrameInput));
   ClientInput_descriptor_ = file->message_type(5);
-  static const int ClientInput_offsets_[2] = {
+  static const int ClientInput_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, tick_number_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, previous_hash_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, frame_input_),
   };
   ClientInput_reflection_ =
@@ -270,20 +271,20 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     ".FrameInput\"l\n\nFrameInput\022\016\n\006client\030\001 \001("
     "\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007actions\030\003 \002(\007\022\030\n\020horiz"
     "ontal_delta\030\004 \002(\002\022\026\n\016vertical_delta\030\005 \002("
-    "\002\"D\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022 \n"
-    "\013frame_input\030\002 \002(\0132\013.FrameInput\"\275\001\n\014Init"
-    "ialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_ei"
-    "d\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014"
-    "\022\037\n\013inventories\030\005 \003(\0132\n.Inventory\022 \n\013cli"
-    "ent_data\030\006 \003(\0132\013.ClientData\022\"\n\014physics_d"
-    "ata\030\007 \003(\0132\014.PhysicsData\"\232\001\n\013PhysicsData\022"
-    "\013\n\003eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030"
-    "\004 \002(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016verti"
-    "cal_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030"
-    "\010 \002(\002\022\r\n\005dim_z\030\t \002(\002*=\n\004Type\022\020\n\014CLIENT_I"
-    "NPUT\020\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INPUT"
-    "S\020\003*&\n\nClientMode\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVE"
-    "R\020\001", 1003);
+    "\002\"[\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022\025\n"
+    "\rprevious_hash\030\002 \002(\007\022 \n\013frame_input\030\003 \002("
+    "\0132\013.FrameInput\"\275\001\n\014InitialState\022\023\n\013tick_"
+    "number\030\001 \002(\007\022\020\n\010next_eid\030\002 \002(\007\022\021\n\tclient"
+    "_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014\022\037\n\013inventories\030\005"
+    " \003(\0132\n.Inventory\022 \n\013client_data\030\006 \003(\0132\013."
+    "ClientData\022\"\n\014physics_data\030\007 \003(\0132\014.Physi"
+    "csData\"\232\001\n\013PhysicsData\022\013\n\003eid\030\001 \002(\007\022\t\n\001x"
+    "\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horizont"
+    "al_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002(\002\022\r"
+    "\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r\n\005dim_z\030\t "
+    "\002(\002*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL"
+    "_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*&\n\nClientMode"
+    "\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVER\020\001", 1026);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -1883,6 +1884,7 @@ void FrameInput::Swap(FrameInput* other) {
 
 #ifndef _MSC_VER
 const int ClientInput::kTickNumberFieldNumber;
+const int ClientInput::kPreviousHashFieldNumber;
 const int ClientInput::kFrameInputFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1904,6 +1906,7 @@ ClientInput::ClientInput(const ClientInput& from)
 void ClientInput::SharedCtor() {
   _cached_size_ = 0;
   tick_number_ = 0u;
+  previous_hash_ = 0u;
   frame_input_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1941,6 +1944,7 @@ ClientInput* ClientInput::New() const {
 void ClientInput::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     tick_number_ = 0u;
+    previous_hash_ = 0u;
     if (has_frame_input()) {
       if (frame_input_ != NULL) frame_input_->::FrameInput::Clear();
     }
@@ -1966,12 +1970,28 @@ bool ClientInput::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_frame_input;
+        if (input->ExpectTag(21)) goto parse_previous_hash;
         break;
       }
       
-      // required .FrameInput frame_input = 2;
+      // required fixed32 previous_hash = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_previous_hash:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &previous_hash_)));
+          set_has_previous_hash();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_frame_input;
+        break;
+      }
+      
+      // required .FrameInput frame_input = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_frame_input:
@@ -2007,10 +2027,15 @@ void ClientInput::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->tick_number(), output);
   }
   
-  // required .FrameInput frame_input = 2;
+  // required fixed32 previous_hash = 2;
+  if (has_previous_hash()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->previous_hash(), output);
+  }
+  
+  // required .FrameInput frame_input = 3;
   if (has_frame_input()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->frame_input(), output);
+      3, this->frame_input(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -2026,11 +2051,16 @@ void ClientInput::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->tick_number(), target);
   }
   
-  // required .FrameInput frame_input = 2;
+  // required fixed32 previous_hash = 2;
+  if (has_previous_hash()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->previous_hash(), target);
+  }
+  
+  // required .FrameInput frame_input = 3;
   if (has_frame_input()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->frame_input(), target);
+        3, this->frame_input(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -2049,7 +2079,12 @@ int ClientInput::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required .FrameInput frame_input = 2;
+    // required fixed32 previous_hash = 2;
+    if (has_previous_hash()) {
+      total_size += 1 + 4;
+    }
+    
+    // required .FrameInput frame_input = 3;
     if (has_frame_input()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -2086,6 +2121,9 @@ void ClientInput::MergeFrom(const ClientInput& from) {
     if (from.has_tick_number()) {
       set_tick_number(from.tick_number());
     }
+    if (from.has_previous_hash()) {
+      set_previous_hash(from.previous_hash());
+    }
     if (from.has_frame_input()) {
       mutable_frame_input()->::FrameInput::MergeFrom(from.frame_input());
     }
@@ -2106,7 +2144,7 @@ void ClientInput::CopyFrom(const ClientInput& from) {
 }
 
 bool ClientInput::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
   if (has_frame_input()) {
     if (!this->frame_input().IsInitialized()) return false;
@@ -2117,6 +2155,7 @@ bool ClientInput::IsInitialized() const {
 void ClientInput::Swap(ClientInput* other) {
   if (other != this) {
     std::swap(tick_number_, other->tick_number_);
+    std::swap(previous_hash_, other->previous_hash_);
     std::swap(frame_input_, other->frame_input_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
