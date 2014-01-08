@@ -14,6 +14,9 @@ struct GameScreen : public Screen {
   void Update(GameSession&, InputManager&, float);
   void Draw(GameSession&, const Renderer&);
   void Activate();
+  bool redraw();
+
+  bool mDraw;
 };
 
 extern GameScreen g_game_screen;

@@ -37,26 +37,17 @@ void GameScreen::Update(GameSession& gs, InputManager& input_reader, float dt) {
     return;
   }
   if (gs.mInit) {
-    gs.tick(dt, input);
+    mDraw = gs.tick(dt, input);
   }
 }
 
 void GameScreen::Draw(GameSession& gs, const Renderer& r) {
-  r.text_renderer.On();
-  if (gs.mInit) {
-    r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f,
-      gs.mPerspective.pos_string(), Green);
-    glm::mat4 vp = gs.mPerspective.get_view_projection_matrix();
-    draw_grid(r, gs.mWorld.grid(), vp, gs.mPerspective.m_position);
-    draw_units(r, gs.mWorld.physics(), vp);
-  }
+  if (gs.mInit)
+    gs.draw(r);
+}
 
-  float q[] = {
-    -0.005f, -0.005f, 0.005f, 0.005f,
-    -0.005f, 0.005f, 0.005f, -0.005f
-  };
-  r.quad_renderer.On();
-  r.quad_renderer.draw_quad(q);
+bool GameScreen::redraw() {
+  return mDraw;
 }
 
 GameScreen g_game_screen;

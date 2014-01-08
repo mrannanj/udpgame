@@ -7,12 +7,8 @@
 #include "client/controller/screen_stack.h"
 #include "client/controller/main_menu.h"
 #include "client/controller/game_session.h"
+#include "client/controller/game_screen.h"
 #include "client/client.h"
-
-Client::Client(unsigned ticks_per_sec):
-  m_tick_timer(ns_per_tick(ticks_per_sec))
-{
-}
 
 void Client::run() {
   open_window();
@@ -24,7 +20,6 @@ void Client::run() {
   g_screen_stack.push(&g_main_menu);
 
   while (!g_screen_stack.empty()) {
-    m_tick_timer.start_tick();
     Screen* screen = g_screen_stack.back();
     if (g_screen_stack.check_dirty())
       screen->Activate();
@@ -34,7 +29,6 @@ void Client::run() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     screen->Draw(gameSession, renderer);
     SDL_GL_SwapBuffers();
-    m_tick_timer.end_tick();
   }
 
   SDL_Quit();

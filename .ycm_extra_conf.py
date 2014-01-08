@@ -11,7 +11,8 @@ flags = [
   '-isystem/usr/include/c++/4.8/backward',
   '-isystem/usr/include/x86_64-linux-gnu/c++/4.8',
   '-isystem/usr/include/c++',
-  '-isystem/usr/include/clang/3.2/include'
+  '-isystem/usr/include/clang/3.2/include',
+  '-isystem/usr/include/SDL'
 ]
 # Set this to the absolute path to the folder (NOT the file!) containing the
 # compile_commands.json file to use that instead of 'flags'. See here for

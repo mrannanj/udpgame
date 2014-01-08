@@ -10,6 +10,7 @@ public:
   void Update(GameSession&, InputManager&, float);
   void Draw(GameSession&, const Renderer&);
   void Activate();
+  bool redraw();
 
 private:
   TextField m_address;

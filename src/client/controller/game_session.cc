@@ -1,9 +1,11 @@
 #include <iostream>
 #include <chrono>
 
+#include "common/config.h"
 #include "common/proto/udpgame.pb.h"
 #include "client/controller/game_session.h"
 #include "client/controller/input/input.h"
+#include "client/view/world_renderer.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -31,13 +33,15 @@ GameSession::GameSession(const std::string& addr):
       exit(EXIT_FAILURE);
     }
   }
+  mDraw = true;
 }
 
-void GameSession::tick(float, Input& input) {
+bool GameSession::tick(float, Input& input) {
+  mInput = input;
   mConnection.checkMessages(*this);
   mPerspective.handle_input(input);
   mPerspective.tick(mWorld);
-  sendFrameInput(input);
+  return mDraw;
 }
 
 bool GameSession::handleAMessage(const AMessage& a, int) {
@@ -46,6 +50,8 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
     case Type::INITIAL_STATE:
       mWorld.setInitialState(a.initial_state());
       mClientId = a.initial_state().client_id();
+      sendFrameInput(mInput);
+      mDraw = true;
       return true;
     case Type::FRAME_INPUTS:
       mWorld.tick(a.frame_inputs());
@@ -54,6 +60,8 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
         mPerspective.m_follow_id = cd->eid();
         mPerspective.mClientMode = cd->mode();
       }
+      sendFrameInput(mInput);
+      mDraw = true;
       return true;
     default:
       return false;
@@ -68,11 +76,28 @@ void GameSession::sendFrameInput(Input& i) {
 
   ClientInput ci;
   ci.set_previous_hash(mWorld.hash());
-  ci.set_tick_number(mWorld.mTickNumber + 1);
+  ci.set_tick_number(mWorld.mTickNumber + STATIC_FRAME_DELTA);
   ci.mutable_frame_input()->CopyFrom(fi);
 
   AMessage a;
   a.set_type(Type::CLIENT_INPUT);
   a.mutable_client_input()->CopyFrom(ci);
   mConnection.sendMessage(a);
+}
+
+void GameSession::draw(const Renderer& r) {
+  r.text_renderer.On();
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f,
+    mPerspective.pos_string(), Green);
+  glm::mat4 vp = mPerspective.get_view_projection_matrix();
+  draw_grid(r, mWorld.grid(), vp, mPerspective.m_position);
+  draw_units(r, mWorld.physics(), vp);
+
+  float q[] = {
+    -0.005f, -0.005f, 0.005f, 0.005f,
+    -0.005f, 0.005f, 0.005f, -0.005f
+  };
+  r.quad_renderer.On();
+  r.quad_renderer.draw_quad(q);
+  mDraw = false;
 }

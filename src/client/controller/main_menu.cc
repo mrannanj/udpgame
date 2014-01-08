@@ -40,4 +40,8 @@ void MainMenu::Activate() {
   release_mouse();
 }
 
+bool MainMenu::redraw() {
+  return true;
+}
+
 MainMenu g_main_menu;

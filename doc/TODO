@@ -9,12 +9,10 @@ REFACTOR:
 - refactor input continous actions
 
 BUGS:
-- world ticker only works by accident
 - invisible walls
 - wall climb
 
 FEATURES:
-- world hash to check oos
 - monsters that follow player
 - implement handle system for faster component lookups
 - maybe add team?
@@ -22,7 +20,6 @@ FEATURES:
 - show wielded item in gui
 - show in gui if client is in observer or player mode
 - add screen that shows key bindings
-- server timed
 - named players
 - fullscreen
 - metaserver

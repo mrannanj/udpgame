@@ -41,7 +41,7 @@ ssize_t Connection::checkMessages(T& handler) {
   ssize_t nread = read(mSocket, &mBuf[mPos], count);
   if (nread <= 0) return -1;
   mPos += nread;
-  if ((size_t)mPos >= sizeof(int)) {
+  while ((size_t)mPos >= sizeof(int)) {
     int size;
     memcpy(&size, mBuf, sizeof(int));
     size = ntohl(size);
@@ -58,6 +58,8 @@ ssize_t Connection::checkMessages(T& handler) {
         cout << "Invalid message" << endl;
         return -1;
       }
+    } else {
+      break;
     }
   }
   return nread;

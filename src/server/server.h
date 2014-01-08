@@ -6,7 +6,7 @@
 
 #include "common/net/connection.h"
 #include "common/world/world.h"
-#include "common/world/world_ticker.h"
+#include "server/world_ticker.h"
 
 struct Server {
   Server(int);
@@ -15,10 +15,11 @@ struct Server {
   void serve();
 
   int mkFDSet(fd_set*);
-  void checkClientInput(const fd_set& fds);
-  void acceptNewClient(const fd_set& fds);
-  void sendInitialState(Connection& c);
-  void distributeInputs();
+  void disconnectSlowClients();
+  void checkClientInput(const fd_set&);
+  void acceptNewClient(const fd_set&);
+  void sendInitialState(Connection&);
+  void distributeInputs(unsigned);
 
   int mQuit;
   sockaddr_in mListenSA;

@@ -50,4 +50,8 @@ void ConnectMenu::Activate() {
   glDisable(GL_DEPTH_TEST);
 }
 
+bool ConnectMenu::redraw() {
+  return true;
+}
+
 ConnectMenu g_connect_menu;

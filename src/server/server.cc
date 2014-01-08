@@ -1,6 +1,8 @@
 #include "server/server.h"
 #include "common/config.h"
 #include "common/util/die.h"
+#include "common/util/timespec.h"
+#include "common/util/tick_timer.h"
 #include "common/proto/udpgame.pb.h"
 
 #include <iostream>
@@ -21,7 +23,7 @@ Server::Server(int quit):
   mListenFD(-1),
   mClients(),
   mWorld(true),
-  mWorldTicker(mClients.size(), mWorld.mTickNumber, mWorld.hash())
+  mWorldTicker()
 {
 }
 
@@ -44,12 +46,15 @@ void Server::init() {
     die("fcntl");
 }
 
-void Server::distributeInputs() {
+void Server::distributeInputs(unsigned tick) {
   AMessage a;
   a.set_type(Type::FRAME_INPUTS);
-  a.mutable_frame_inputs()->CopyFrom(mWorldTicker.frameInputs());
+  a.mutable_frame_inputs()->
+    CopyFrom(mWorldTicker.inputsForFrame(tick));
+  a.mutable_frame_inputs()->set_tick_number(tick);
   for (Connection& c : mClients)
     c.sendMessage(a);
+  mWorldTicker.removeOldFrame(tick);
 }
 
 void Server::sendInitialState(Connection& c) {
@@ -62,17 +67,24 @@ void Server::sendInitialState(Connection& c) {
 
 void Server::serve() {
   fd_set fds;
+  TickTimer timer(ns_per_tick);
+  timespec max_sleep;
+  timer.newTick(max_sleep);
+  mWorldTicker.setHash(mWorld.mTickNumber, mWorld.hash());
   do {
     int nfds = mkFDSet(&fds);
-    if (-1 == select(nfds, &fds, nullptr, nullptr, nullptr)) die("select");
+    if (-1 == pselect(nfds, &fds, nullptr, nullptr, &max_sleep, nullptr))
+      die("select");
     acceptNewClient(fds);
     checkClientInput(fds);
 
-    if (mWorldTicker.ok()) {
-      mWorld.tick(mWorldTicker.frameInputs());
-      distributeInputs();
-      mWorldTicker.nextWait(mClients.size(),
-          mWorld.mTickNumber + 1, mWorld.hash());
+    if (timer.isTickTime(max_sleep)) {
+      unsigned tickNum = mWorld.mTickNumber + 1;
+      mWorld.tick(mWorldTicker.inputsForFrame(tickNum));
+      mWorldTicker.setHash(tickNum, mWorld.hash());
+      distributeInputs(tickNum);
+      mWorldTicker.setCurrentTick(tickNum);
+      timer.newTick(max_sleep);
     }
   } while(!FD_ISSET(mQuit, &fds));
 }
@@ -92,18 +104,17 @@ void Server::acceptNewClient(const fd_set& fds) {
 }
 
 void Server::checkClientInput(const fd_set& fds) {
-  for (auto it = mClients.begin(); it != mClients.end();) {
-    Connection& c = *it;
-    if (!FD_ISSET(c.mSocket, &fds)) {
-      ++it;
+  for (auto c = mClients.begin(); c != mClients.end();) {
+    if (!FD_ISSET(c->mSocket, &fds)) {
+      ++c;
       continue;
     }
-    ssize_t nread = c.checkMessages(mWorldTicker);
+    ssize_t nread = c->checkMessages(mWorldTicker);
     if (nread <= 0) {
-      cout << c << " disconnected" << endl;
-      it = mClients.erase(it);
+      cout << *c << " disconnected" << endl;
+      c = mClients.erase(c);
     } else {
-      ++it;
+      ++c;
     }
   }
 }

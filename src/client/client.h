@@ -4,9 +4,5 @@
 
 class Client {
 public:
-  Client(unsigned);
   void run();
-
-private:
-  TickTimer m_tick_timer;
 };
