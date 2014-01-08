@@ -9,7 +9,7 @@
 #include "common/world/components/grid_handler.h"
 #include "common/world/components/inventory_handler.h"
 #include "common/world/components/client_handler.h"
-#include "common/world/id_generator.h"
+#include "common/world/components/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
 const glm::vec3 spawn_position(5.0f, 8.0f, 5.0f);

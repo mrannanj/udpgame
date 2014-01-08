@@ -770,17 +770,24 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 tick_number() const;
   inline void set_tick_number(::google::protobuf::uint32 value);
   
-  // required fixed32 client_id = 2;
+  // required fixed32 next_eid = 2;
+  inline bool has_next_eid() const;
+  inline void clear_next_eid();
+  static const int kNextEidFieldNumber = 2;
+  inline ::google::protobuf::uint32 next_eid() const;
+  inline void set_next_eid(::google::protobuf::uint32 value);
+  
+  // required fixed32 client_id = 3;
   inline bool has_client_id() const;
   inline void clear_client_id();
-  static const int kClientIdFieldNumber = 2;
+  static const int kClientIdFieldNumber = 3;
   inline ::google::protobuf::uint32 client_id() const;
   inline void set_client_id(::google::protobuf::uint32 value);
   
-  // required bytes grid = 3;
+  // required bytes grid = 4;
   inline bool has_grid() const;
   inline void clear_grid();
-  static const int kGridFieldNumber = 3;
+  static const int kGridFieldNumber = 4;
   inline const ::std::string& grid() const;
   inline void set_grid(const ::std::string& value);
   inline void set_grid(const char* value);
@@ -788,10 +795,10 @@ class InitialState : public ::google::protobuf::Message {
   inline ::std::string* mutable_grid();
   inline ::std::string* release_grid();
   
-  // repeated .Inventory inventories = 4;
+  // repeated .Inventory inventories = 5;
   inline int inventories_size() const;
   inline void clear_inventories();
-  static const int kInventoriesFieldNumber = 4;
+  static const int kInventoriesFieldNumber = 5;
   inline const ::Inventory& inventories(int index) const;
   inline ::Inventory* mutable_inventories(int index);
   inline ::Inventory* add_inventories();
@@ -800,10 +807,10 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Inventory >*
       mutable_inventories();
   
-  // repeated .ClientData client_data = 5;
+  // repeated .ClientData client_data = 6;
   inline int client_data_size() const;
   inline void clear_client_data();
-  static const int kClientDataFieldNumber = 5;
+  static const int kClientDataFieldNumber = 6;
   inline const ::ClientData& client_data(int index) const;
   inline ::ClientData* mutable_client_data(int index);
   inline ::ClientData* add_client_data();
@@ -812,10 +819,10 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::ClientData >*
       mutable_client_data();
   
-  // repeated .PhysicsData physics_data = 6;
+  // repeated .PhysicsData physics_data = 7;
   inline int physics_data_size() const;
   inline void clear_physics_data();
-  static const int kPhysicsDataFieldNumber = 6;
+  static const int kPhysicsDataFieldNumber = 7;
   inline const ::PhysicsData& physics_data(int index) const;
   inline ::PhysicsData* mutable_physics_data(int index);
   inline ::PhysicsData* add_physics_data();
@@ -828,6 +835,8 @@ class InitialState : public ::google::protobuf::Message {
  private:
   inline void set_has_tick_number();
   inline void clear_has_tick_number();
+  inline void set_has_next_eid();
+  inline void clear_has_next_eid();
   inline void set_has_client_id();
   inline void clear_has_client_id();
   inline void set_has_grid();
@@ -836,14 +845,15 @@ class InitialState : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::google::protobuf::uint32 tick_number_;
-  ::google::protobuf::uint32 client_id_;
+  ::google::protobuf::uint32 next_eid_;
   ::std::string* grid_;
   ::google::protobuf::RepeatedPtrField< ::Inventory > inventories_;
   ::google::protobuf::RepeatedPtrField< ::ClientData > client_data_;
   ::google::protobuf::RepeatedPtrField< ::PhysicsData > physics_data_;
+  ::google::protobuf::uint32 client_id_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1518,15 +1528,37 @@ inline void InitialState::set_tick_number(::google::protobuf::uint32 value) {
   tick_number_ = value;
 }
 
-// required fixed32 client_id = 2;
-inline bool InitialState::has_client_id() const {
+// required fixed32 next_eid = 2;
+inline bool InitialState::has_next_eid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void InitialState::set_has_client_id() {
+inline void InitialState::set_has_next_eid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void InitialState::clear_has_client_id() {
+inline void InitialState::clear_has_next_eid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void InitialState::clear_next_eid() {
+  next_eid_ = 0u;
+  clear_has_next_eid();
+}
+inline ::google::protobuf::uint32 InitialState::next_eid() const {
+  return next_eid_;
+}
+inline void InitialState::set_next_eid(::google::protobuf::uint32 value) {
+  set_has_next_eid();
+  next_eid_ = value;
+}
+
+// required fixed32 client_id = 3;
+inline bool InitialState::has_client_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void InitialState::set_has_client_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void InitialState::clear_has_client_id() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void InitialState::clear_client_id() {
   client_id_ = 0u;
@@ -1540,15 +1572,15 @@ inline void InitialState::set_client_id(::google::protobuf::uint32 value) {
   client_id_ = value;
 }
 
-// required bytes grid = 3;
+// required bytes grid = 4;
 inline bool InitialState::has_grid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void InitialState::set_has_grid() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void InitialState::clear_has_grid() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void InitialState::clear_grid() {
   if (grid_ != &::google::protobuf::internal::kEmptyString) {
@@ -1598,7 +1630,7 @@ inline ::std::string* InitialState::release_grid() {
   }
 }
 
-// repeated .Inventory inventories = 4;
+// repeated .Inventory inventories = 5;
 inline int InitialState::inventories_size() const {
   return inventories_.size();
 }
@@ -1623,7 +1655,7 @@ InitialState::mutable_inventories() {
   return &inventories_;
 }
 
-// repeated .ClientData client_data = 5;
+// repeated .ClientData client_data = 6;
 inline int InitialState::client_data_size() const {
   return client_data_.size();
 }
@@ -1648,7 +1680,7 @@ InitialState::mutable_client_data() {
   return &client_data_;
 }
 
-// repeated .PhysicsData physics_data = 6;
+// repeated .PhysicsData physics_data = 7;
 inline int InitialState::physics_data_size() const {
   return physics_data_.size();
 }

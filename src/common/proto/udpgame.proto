@@ -48,11 +48,12 @@ message ClientInput {
 
 message InitialState {
   required fixed32 tick_number = 1;
-  required fixed32 client_id = 2;
-  required bytes grid = 3;
-  repeated Inventory inventories = 4;
-  repeated ClientData client_data = 5;
-  repeated PhysicsData physics_data = 6;
+  required fixed32 next_eid = 2;
+  required fixed32 client_id = 3;
+  required bytes grid = 4;
+  repeated Inventory inventories = 5;
+  repeated ClientData client_data = 6;
+  repeated PhysicsData physics_data = 7;
 }
 
 message PhysicsData {

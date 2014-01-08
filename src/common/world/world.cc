@@ -24,7 +24,7 @@ void World::defaultWorld() {
 }
 
 void World::spawn_monster() {
-  EntityId eid = m_idgen.NextId();
+  EntityId eid = m_idgen.generateId();
 
   PhysicsC p;
   memset(&p, 0, sizeof(p));
@@ -37,7 +37,7 @@ void World::spawn_monster() {
 }
 
 void World::spawn_player(int clientid) {
-  EntityId eid = m_idgen.NextId();
+  EntityId eid = m_idgen.generateId();
 
   PhysicsC p;
   memset(&p, 0, sizeof(p));
@@ -105,6 +105,7 @@ InitialState World::getInitialState() {
   mClient.serialize(i.mutable_client_data());
   mInventory.serialize(i.mutable_inventories());
   mPhysicsHandler.serialize(i.mutable_physics_data());
+  i.set_next_eid(m_idgen.getNext());
   return i;
 }
 
@@ -113,5 +114,6 @@ void World::setInitialState(const InitialState& i) {
   mClient.deserialize(i.client_data());
   mInventory.deserialize(i.inventories());
   mPhysicsHandler.deserialize(i.physics_data());
+  m_idgen.setNext(i.next_eid());
   mInit = true;
 }

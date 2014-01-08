@@ -5,9 +5,12 @@
 class IdGenerator {
 public:
   IdGenerator();
-  EntityId NextId();
+  EntityId generateId();
+
+  void setNext(EntityId);
+  EntityId getNext();
 
 private:
-  EntityId next_id_;
+  EntityId mNext;
 };
 

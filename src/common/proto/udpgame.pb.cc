@@ -155,8 +155,9 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientInput));
   InitialState_descriptor_ = file->message_type(6);
-  static const int InitialState_offsets_[6] = {
+  static const int InitialState_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, tick_number_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, next_eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, client_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, grid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, inventories_),
@@ -270,18 +271,19 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007actions\030\003 \002(\007\022\030\n\020horiz"
     "ontal_delta\030\004 \002(\002\022\026\n\016vertical_delta\030\005 \002("
     "\002\"D\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022 \n"
-    "\013frame_input\030\002 \002(\0132\013.FrameInput\"\253\001\n\014Init"
-    "ialState\022\023\n\013tick_number\030\001 \002(\007\022\021\n\tclient_"
-    "id\030\002 \002(\007\022\014\n\004grid\030\003 \002(\014\022\037\n\013inventories\030\004 "
-    "\003(\0132\n.Inventory\022 \n\013client_data\030\005 \003(\0132\013.C"
-    "lientData\022\"\n\014physics_data\030\006 \003(\0132\014.Physic"
-    "sData\"\232\001\n\013PhysicsData\022\013\n\003eid\030\001 \002(\007\022\t\n\001x\030"
-    "\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horizonta"
-    "l_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002(\002\022\r\n"
-    "\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r\n\005dim_z\030\t \002"
-    "(\002*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL_"
-    "STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*&\n\nClientMode\022"
-    "\n\n\006PLAYER\020\000\022\014\n\010OBSERVER\020\001", 985);
+    "\013frame_input\030\002 \002(\0132\013.FrameInput\"\275\001\n\014Init"
+    "ialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_ei"
+    "d\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014"
+    "\022\037\n\013inventories\030\005 \003(\0132\n.Inventory\022 \n\013cli"
+    "ent_data\030\006 \003(\0132\013.ClientData\022\"\n\014physics_d"
+    "ata\030\007 \003(\0132\014.PhysicsData\"\232\001\n\013PhysicsData\022"
+    "\013\n\003eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030"
+    "\004 \002(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016verti"
+    "cal_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030"
+    "\010 \002(\002\022\r\n\005dim_z\030\t \002(\002*=\n\004Type\022\020\n\014CLIENT_I"
+    "NPUT\020\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INPUT"
+    "S\020\003*&\n\nClientMode\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVE"
+    "R\020\001", 1003);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -2135,6 +2137,7 @@ void ClientInput::Swap(ClientInput* other) {
 
 #ifndef _MSC_VER
 const int InitialState::kTickNumberFieldNumber;
+const int InitialState::kNextEidFieldNumber;
 const int InitialState::kClientIdFieldNumber;
 const int InitialState::kGridFieldNumber;
 const int InitialState::kInventoriesFieldNumber;
@@ -2159,6 +2162,7 @@ InitialState::InitialState(const InitialState& from)
 void InitialState::SharedCtor() {
   _cached_size_ = 0;
   tick_number_ = 0u;
+  next_eid_ = 0u;
   client_id_ = 0u;
   grid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2199,6 +2203,7 @@ InitialState* InitialState::New() const {
 void InitialState::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     tick_number_ = 0u;
+    next_eid_ = 0u;
     client_id_ = 0u;
     if (has_grid()) {
       if (grid_ != &::google::protobuf::internal::kEmptyString) {
@@ -2230,12 +2235,28 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(21)) goto parse_client_id;
+        if (input->ExpectTag(21)) goto parse_next_eid;
         break;
       }
       
-      // required fixed32 client_id = 2;
+      // required fixed32 next_eid = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_next_eid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &next_eid_)));
+          set_has_next_eid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(29)) goto parse_client_id;
+        break;
+      }
+      
+      // required fixed32 client_id = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
          parse_client_id:
@@ -2246,12 +2267,12 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_grid;
+        if (input->ExpectTag(34)) goto parse_grid;
         break;
       }
       
-      // required bytes grid = 3;
-      case 3: {
+      // required bytes grid = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_grid:
@@ -2260,12 +2281,12 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_inventories;
+        if (input->ExpectTag(42)) goto parse_inventories;
         break;
       }
       
-      // repeated .Inventory inventories = 4;
-      case 4: {
+      // repeated .Inventory inventories = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_inventories:
@@ -2274,13 +2295,13 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_inventories;
-        if (input->ExpectTag(42)) goto parse_client_data;
+        if (input->ExpectTag(42)) goto parse_inventories;
+        if (input->ExpectTag(50)) goto parse_client_data;
         break;
       }
       
-      // repeated .ClientData client_data = 5;
-      case 5: {
+      // repeated .ClientData client_data = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_client_data:
@@ -2289,13 +2310,13 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(42)) goto parse_client_data;
-        if (input->ExpectTag(50)) goto parse_physics_data;
+        if (input->ExpectTag(50)) goto parse_client_data;
+        if (input->ExpectTag(58)) goto parse_physics_data;
         break;
       }
       
-      // repeated .PhysicsData physics_data = 6;
-      case 6: {
+      // repeated .PhysicsData physics_data = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_physics_data:
@@ -2304,7 +2325,7 @@ bool InitialState::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(50)) goto parse_physics_data;
+        if (input->ExpectTag(58)) goto parse_physics_data;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2332,33 +2353,38 @@ void InitialState::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->tick_number(), output);
   }
   
-  // required fixed32 client_id = 2;
-  if (has_client_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->client_id(), output);
+  // required fixed32 next_eid = 2;
+  if (has_next_eid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->next_eid(), output);
   }
   
-  // required bytes grid = 3;
+  // required fixed32 client_id = 3;
+  if (has_client_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(3, this->client_id(), output);
+  }
+  
+  // required bytes grid = 4;
   if (has_grid()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytes(
-      3, this->grid(), output);
+      4, this->grid(), output);
   }
   
-  // repeated .Inventory inventories = 4;
+  // repeated .Inventory inventories = 5;
   for (int i = 0; i < this->inventories_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->inventories(i), output);
+      5, this->inventories(i), output);
   }
   
-  // repeated .ClientData client_data = 5;
+  // repeated .ClientData client_data = 6;
   for (int i = 0; i < this->client_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->client_data(i), output);
+      6, this->client_data(i), output);
   }
   
-  // repeated .PhysicsData physics_data = 6;
+  // repeated .PhysicsData physics_data = 7;
   for (int i = 0; i < this->physics_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->physics_data(i), output);
+      7, this->physics_data(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -2374,37 +2400,42 @@ void InitialState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->tick_number(), target);
   }
   
-  // required fixed32 client_id = 2;
-  if (has_client_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->client_id(), target);
+  // required fixed32 next_eid = 2;
+  if (has_next_eid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->next_eid(), target);
   }
   
-  // required bytes grid = 3;
+  // required fixed32 client_id = 3;
+  if (has_client_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(3, this->client_id(), target);
+  }
+  
+  // required bytes grid = 4;
   if (has_grid()) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->grid(), target);
+        4, this->grid(), target);
   }
   
-  // repeated .Inventory inventories = 4;
+  // repeated .Inventory inventories = 5;
   for (int i = 0; i < this->inventories_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->inventories(i), target);
+        5, this->inventories(i), target);
   }
   
-  // repeated .ClientData client_data = 5;
+  // repeated .ClientData client_data = 6;
   for (int i = 0; i < this->client_data_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->client_data(i), target);
+        6, this->client_data(i), target);
   }
   
-  // repeated .PhysicsData physics_data = 6;
+  // repeated .PhysicsData physics_data = 7;
   for (int i = 0; i < this->physics_data_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        6, this->physics_data(i), target);
+        7, this->physics_data(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -2423,12 +2454,17 @@ int InitialState::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required fixed32 client_id = 2;
+    // required fixed32 next_eid = 2;
+    if (has_next_eid()) {
+      total_size += 1 + 4;
+    }
+    
+    // required fixed32 client_id = 3;
     if (has_client_id()) {
       total_size += 1 + 4;
     }
     
-    // required bytes grid = 3;
+    // required bytes grid = 4;
     if (has_grid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
@@ -2436,7 +2472,7 @@ int InitialState::ByteSize() const {
     }
     
   }
-  // repeated .Inventory inventories = 4;
+  // repeated .Inventory inventories = 5;
   total_size += 1 * this->inventories_size();
   for (int i = 0; i < this->inventories_size(); i++) {
     total_size +=
@@ -2444,7 +2480,7 @@ int InitialState::ByteSize() const {
         this->inventories(i));
   }
   
-  // repeated .ClientData client_data = 5;
+  // repeated .ClientData client_data = 6;
   total_size += 1 * this->client_data_size();
   for (int i = 0; i < this->client_data_size(); i++) {
     total_size +=
@@ -2452,7 +2488,7 @@ int InitialState::ByteSize() const {
         this->client_data(i));
   }
   
-  // repeated .PhysicsData physics_data = 6;
+  // repeated .PhysicsData physics_data = 7;
   total_size += 1 * this->physics_data_size();
   for (int i = 0; i < this->physics_data_size(); i++) {
     total_size +=
@@ -2492,6 +2528,9 @@ void InitialState::MergeFrom(const InitialState& from) {
     if (from.has_tick_number()) {
       set_tick_number(from.tick_number());
     }
+    if (from.has_next_eid()) {
+      set_next_eid(from.next_eid());
+    }
     if (from.has_client_id()) {
       set_client_id(from.client_id());
     }
@@ -2515,7 +2554,7 @@ void InitialState::CopyFrom(const InitialState& from) {
 }
 
 bool InitialState::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
   
   for (int i = 0; i < inventories_size(); i++) {
     if (!this->inventories(i).IsInitialized()) return false;
@@ -2532,6 +2571,7 @@ bool InitialState::IsInitialized() const {
 void InitialState::Swap(InitialState* other) {
   if (other != this) {
     std::swap(tick_number_, other->tick_number_);
+    std::swap(next_eid_, other->next_eid_);
     std::swap(client_id_, other->client_id_);
     std::swap(grid_, other->grid_);
     inventories_.Swap(&other->inventories_);

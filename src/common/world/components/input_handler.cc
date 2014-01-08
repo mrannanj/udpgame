@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cstdlib>
 
+using namespace std;
+
 void InputHandler::tick(float, World& w) {
   for (FrameInput& fi : mComponents) {
     if (w.client().getByClient(fi.client())) continue;
@@ -11,6 +13,7 @@ void InputHandler::tick(float, World& w) {
     cd.set_dead(true);
     cd.set_mode(ClientMode::PLAYER);
     cd.set_client(fi.client());
+    fi.set_eid(cd.eid());
     w.client().add(cd);
   }
 }
