@@ -47,11 +47,13 @@ void WorldTicker::removeOldFrame(unsigned tick) {
 
 bool WorldTicker::handleAMessage(const AMessage& a, int clientid) {
   unsigned tick = a.client_input().tick_number();
+#if 0
   if (getHash(tick) != a.client_input().previous_hash()) {
     cout << "hash expected: " << getHash(tick) << endl;
     cout << "hash was: " << a.client_input().previous_hash() << endl;
     return false;
   }
+#endif
   // FIXME: dont add late inputs
   FrameInputs& fis = mInputMap[tick];
   FrameInput* fi = fis.add_frame_inputs();
