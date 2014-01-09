@@ -6,6 +6,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/tcp.h>
+#include <netinet/in.h>
 
 Connection::Connection():
   mPos(0),
@@ -27,9 +31,14 @@ Connection::Connection(const std::string& addr):
   mSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (mSocket == -1) die("socket");
 
+  int on = 1;
+  setsockopt(mSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&on, sizeof(int));
+
   if (-1 == connect(mSocket, (sockaddr*)&mSockaddr, sizeof(mSockaddr)))
     die("connect");
-  if (-1 == fcntl(mSocket, F_SETFL, O_NONBLOCK))
+
+  int flags = fcntl(mSocket, F_GETFL, 0);
+  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
     die("fcntl");
 }
 
@@ -39,8 +48,11 @@ Connection::Connection(int socket, const sockaddr_in& sa):
   mSockaddr(sa)
 {
   mBuf = new char[MAXMSG];
-  if (-1 == fcntl(mSocket, F_SETFL, O_NONBLOCK))
+  int flags = fcntl(mSocket, F_GETFL, 0);
+  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
     die("fcntl");
+  int on = 1;
+  setsockopt(mSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&on, sizeof(int));
 }
 
 Connection::Connection(Connection&& c):

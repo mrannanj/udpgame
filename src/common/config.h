@@ -10,4 +10,4 @@ constexpr size_t GIGA = 1000000000;
 constexpr size_t MEGA = 1000000;
 constexpr float secs_per_tick = 1.0f/TICKS_PER_SEC;
 constexpr long ns_per_tick = GIGA/TICKS_PER_SEC;
-constexpr size_t STATIC_FRAME_DELTA = 3;
+constexpr size_t STATIC_FRAME_DELTA = 2;

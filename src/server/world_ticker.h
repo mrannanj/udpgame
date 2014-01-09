@@ -1,6 +1,8 @@
 #pragma once
 
 #include "common/proto/udpgame.pb.h"
+#include "common/net/connection.h"
+
 #include <vector>
 #include <map>
 
@@ -9,6 +11,7 @@
 struct WorldTicker {
   bool handleAMessage(const AMessage&, int);
   const FrameInputs& inputsForFrame(unsigned);
+  void fillMissingInputs(unsigned, const std::vector<Connection>&);
   void removeOldFrame(unsigned);
   void setHash(unsigned, unsigned);
   void setCurrentTick(unsigned);

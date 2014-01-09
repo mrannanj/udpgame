@@ -5,6 +5,7 @@
 #include "common/util/tick_timer.h"
 #include "common/proto/udpgame.pb.h"
 
+#include <netinet/tcp.h>
 #include <iostream>
 #include <cassert>
 #include <cstring>
@@ -38,6 +39,9 @@ void Server::init() {
   int on = 1;
   if (0 != setsockopt(mListenFD, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)))
     die("setsockopt");
+  if (0 != setsockopt(mListenFD, IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)))
+    die("setsockopt");
+
   if (0 != bind(mListenFD, (const sockaddr*)&mListenSA, sizeof(mListenSA)))
     die("bind");
   if (0 != listen(mListenFD, 10))
@@ -80,6 +84,7 @@ void Server::serve() {
 
     if (timer.isTickTime(max_sleep)) {
       unsigned tickNum = mWorld.mTickNumber + 1;
+      mWorldTicker.fillMissingInputs(tickNum, mClients);
       mWorld.tick(mWorldTicker.inputsForFrame(tickNum));
       mWorldTicker.setHash(tickNum, mWorld.hash());
       distributeInputs(tickNum);
