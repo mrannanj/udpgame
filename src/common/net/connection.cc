@@ -108,7 +108,14 @@ void Connection::sendMessage(const AMessage& a) {
   int netSize = htonl(byteSize);
   memcpy(buf, &netSize, sizeof(int));
   a.SerializeToArray(&buf[sizeof(int)], byteSize);
-  really_write(mSocket, buf, count);
+
+  int flags = fcntl(mSocket, F_GETFL, 0);
+  if (-1 == fcntl(mSocket, F_SETFL, flags & ~O_NONBLOCK))
+    die("fcntl");
+  ssize_t nwrote = write(mSocket, buf, count);
+  assert(nwrote == count);
+  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
+    die("fcntl");
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {
