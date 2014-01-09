@@ -102,6 +102,7 @@ void Server::acceptNewClient(const fd_set& fds) {
     if (client != -1) {
       mClients.emplace_back(client, sa);
       Connection& c = mClients.back();
+      c.mLastFrameOk = mWorld.mTickNumber;
       cout << c << " connected" << endl;
       sendInitialState(c);
     }

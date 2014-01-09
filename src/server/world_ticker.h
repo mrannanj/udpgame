@@ -11,7 +11,7 @@
 struct WorldTicker {
   bool handleAMessage(const AMessage&, int);
   const FrameInputs& inputsForFrame(unsigned);
-  void fillMissingInputs(unsigned, const std::vector<Connection>&);
+  void fillMissingInputs(unsigned, std::vector<Connection>&);
   void removeOldFrame(unsigned);
   void setHash(unsigned, unsigned);
   void setCurrentTick(unsigned);

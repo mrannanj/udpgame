@@ -31,6 +31,7 @@ struct Connection {
   ssize_t mPos;
   int mSocket;
   sockaddr_in mSockaddr;
+  unsigned mLastFrameOk;
   char* mBuf;
 };
 
