@@ -19,12 +19,10 @@ size_t GridArray::i(int x, int y, int z) const {
 }
 
 void GridArray::makeFloor() {
+  memset(mData, 1, mSize);
   for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
     for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
       mData[i(x,0,z)] = 3;
-      mData[i(x,1,z)] = 1;
-      mData[i(x,2,z)] = 1;
-      mData[i(x,3,z)] = 1;
     }
   }
 }

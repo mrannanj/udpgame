@@ -7,7 +7,7 @@
 #include "common/world/components/grid_array.h"
 
 constexpr float BLOCK_SIZE = 1.0f;
-constexpr float BOTTOM = -40.0f;
+constexpr float BOTTOM = -20.0f;
 
 struct GridHandler {
   GridHandler();
