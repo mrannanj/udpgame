@@ -17,11 +17,13 @@ GameSession::GameSession():
 }
 
 GameSession::GameSession(const std::string& addr):
-  mInit(true),
+  mInit(false),
   mConnection(addr),
   mPerspective(),
   mWorld(false)
 {
+  if (addr.size() == 0)
+    return;
   cout << "connected to " << mConnection << endl;
   system_clock::time_point t1 = system_clock::now();
   while (!mWorld.mInit) {
@@ -33,6 +35,7 @@ GameSession::GameSession(const std::string& addr):
       exit(EXIT_FAILURE);
     }
   }
+  mInit = true;
   mDraw = true;
 }
 

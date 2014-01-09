@@ -20,8 +20,11 @@ Connection::Connection():
 
 Connection::Connection(const std::string& addr):
   mPos(0),
-  mSocket(-1)
+  mSocket(-1),
+  mBuf(nullptr)
 {
+  if (addr.size() == 0) return;
+
   mBuf = new char[MAXMSG];
   memset(&mSockaddr, 0, sizeof(mSockaddr));
   mSockaddr.sin_family = AF_INET;
