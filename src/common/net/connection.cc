@@ -87,6 +87,19 @@ Connection::~Connection() {
   mBuf = nullptr;
 }
 
+void really_write(int fd, char* buf, ssize_t count) {
+  ssize_t nw;
+  for (ssize_t tw = 0; tw < count; tw += nw) {
+    nw = write(fd, &buf[tw], count - tw);
+    if (nw < 0) {
+      if (errno == EINTR)
+        continue;
+      else
+        die("write");
+    }
+  }
+}
+
 void Connection::sendMessage(const AMessage& a) {
   char buf[MAXMSG];
   int byteSize = a.ByteSize();
@@ -95,13 +108,7 @@ void Connection::sendMessage(const AMessage& a) {
   int netSize = htonl(byteSize);
   memcpy(buf, &netSize, sizeof(int));
   a.SerializeToArray(&buf[sizeof(int)], byteSize);
-  ssize_t nwrote = write(mSocket, buf, count);
-  if (nwrote < 0) die("write");
-  if (nwrote != count) {
-    cout << "nwrote " << nwrote << endl;
-    cout << "count " << count << endl;
-    exit(EXIT_FAILURE);
-  }
+  really_write(mSocket, buf, count);
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {
