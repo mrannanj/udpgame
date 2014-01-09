@@ -101,6 +101,7 @@ void GameSession::draw(const Renderer& r) {
     -0.005f, 0.005f, 0.005f, -0.005f
   };
   r.quad_renderer.On();
+  set_color(r.quad_renderer.color_uni(), Blue, 1.0f);
   r.quad_renderer.draw_quad(q);
   mDraw = false;
 }
