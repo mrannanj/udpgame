@@ -36,7 +36,7 @@ struct Connection {
 
 template <class T>
 ssize_t Connection::checkMessages(T& handler) {
-  assert(MAXMSG > mPos);
+  if (mPos >= MAXMSG) return -1;
   size_t count = MAXMSG-mPos;
   ssize_t nread = read(mSocket, &mBuf[mPos], count);
   if (nread <= 0) return -1;
@@ -46,7 +46,7 @@ ssize_t Connection::checkMessages(T& handler) {
     memcpy(&size, mBuf, sizeof(int));
     size = ntohl(size);
     int tsize = size + sizeof(int);
-    assert(tsize <= MAXMSG);
+    if (tsize > MAXMSG) return -1;
     if ((size_t)mPos >= size + sizeof(int)) {
       AMessage a;
       if (a.ParseFromArray(&mBuf[sizeof(int)], size)) {
