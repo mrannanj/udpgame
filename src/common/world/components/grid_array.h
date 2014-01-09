@@ -2,9 +2,9 @@
 
 #include <cstddef>
 
-constexpr int GRID_SIZE_X = 10;
-constexpr int GRID_SIZE_Y = 10;
-constexpr int GRID_SIZE_Z = 10;
+constexpr int GRID_SIZE_X = 50;
+constexpr int GRID_SIZE_Y = 50;
+constexpr int GRID_SIZE_Z = 50;
 constexpr int GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
 
 struct GridArray {

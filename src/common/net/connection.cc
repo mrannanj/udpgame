@@ -96,7 +96,12 @@ void Connection::sendMessage(const AMessage& a) {
   memcpy(buf, &netSize, sizeof(int));
   a.SerializeToArray(&buf[sizeof(int)], byteSize);
   ssize_t nwrote = write(mSocket, buf, count);
-  assert(nwrote == count);
+  if (nwrote < 0) die("write");
+  if (nwrote != count) {
+    cout << "nwrote " << nwrote << endl;
+    cout << "count " << count << endl;
+    exit(EXIT_FAILURE);
+  }
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {
