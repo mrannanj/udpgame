@@ -1,8 +1,8 @@
-#include "client/controller/connect_menu.h"
 #include "client/controller/input/input.h"
 #include "client/controller/input/input_manager.h"
-#include "client/controller/screen_stack.h"
-#include "client/controller/game_screen.h"
+#include "client/controller/screen/connect_menu.h"
+#include "client/controller/screen/screen_stack.h"
+#include "client/controller/screen/game_screen.h"
 #include "client/controller/game_session.h"
 #include "client/view/window.h"
 
@@ -13,10 +13,7 @@ ConnectMenu::ConnectMenu():
 {
 }
 
-void ConnectMenu::Update(GameSession& gs, InputManager& input_manager, float) {
-  Input input;
-  input_manager.read_input(input);
-
+void ConnectMenu::Update(GameSession& gs, Input& input) {
   if (input.consume_discrete_action(DiscreteAction::ESCAPE)) {
     g_screen_stack.pop();
   }
@@ -50,7 +47,7 @@ void ConnectMenu::Activate() {
   glDisable(GL_DEPTH_TEST);
 }
 
-bool ConnectMenu::redraw() {
+bool ConnectMenu::redraw(GameSession&) {
   return true;
 }
 

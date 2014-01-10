@@ -20,13 +20,7 @@ Perspective::Perspective():
 {
 }
 
-void Perspective::switch_camera_mode() {
-  //m_freelook = !m_freelook;
-}
-
 void Perspective::handle_input(Input& i) {
-  //if (i.consume_discrete_action(DiscreteAction::SWITCH_CAMERA_MODE))
-    //switch_camera_mode();
   if (mClientMode == ClientMode::OBSERVER)
     handle_freelook_input(i);
 }
@@ -89,11 +83,10 @@ void Perspective::tick(World& w)
         cos(m_horizontal_angle - 3.14f/2.0f)
       );
       m_up = glm::cross(right, m_direction);
-    } else {
-      switch_camera_mode();
     }
   }
-  if (fabsf(m_direction.x) <= FLT_MIN or fabsf(m_direction.y) <= FLT_MIN
+  if (fabsf(m_direction.x) <= FLT_MIN
+      or fabsf(m_direction.y) <= FLT_MIN
       or fabsf(m_direction.z) <= FLT_MIN)
   {
     m_direction = glm::vec3(1.0, 1.0, 1.0);
@@ -109,7 +102,7 @@ const glm::mat4& Perspective::get_view_projection_matrix() const {
 
 std::string Perspective::pos_string() const {
   std::stringstream ss;
-  ss << "(" << (int)m_position.x << ","
-    << (int)m_position.y << "," << (int)m_position.z << ")";
+  ss << "(" << (int)m_position.x << "," << (int)m_position.y
+     << "," << (int)m_position.z << ")";
   return ss.str();
 }

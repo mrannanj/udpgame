@@ -13,6 +13,11 @@ BUGS:
 - wall climb
 
 FEATURES:
+- support tick counter roll over
+- world size 100x100x100
+- skybox
+- server name resolving
+- ability to specify port
 - monsters that follow player
 - implement handle system for faster component lookups
 - maybe add team?
@@ -23,5 +28,5 @@ FEATURES:
 - named players
 - fullscreen
 - metaserver
-- lol chat
+- chat
 - screenshot taking

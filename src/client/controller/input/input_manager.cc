@@ -1,9 +1,10 @@
 #include "client/controller/input/input_manager.h"
 
-#include <iostream>
-#include "client/controller/input/input.h"
 #include "client/view/window.h"
-#include "client/controller/screen_stack.h"
+#include "client/controller/input/input.h"
+#include "client/controller/screen/screen_stack.h"
+
+#include <iostream>
 
 using namespace std;
 

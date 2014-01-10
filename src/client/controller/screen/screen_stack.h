@@ -1,6 +1,6 @@
 #pragma once
 
-#include "client/controller/screen.h"
+#include "client/controller/screen/screen.h"
 
 #include <vector>
 

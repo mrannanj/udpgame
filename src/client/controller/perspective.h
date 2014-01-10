@@ -18,7 +18,6 @@ public:
   const glm::mat4& get_view_projection_matrix() const;
   std::string pos_string() const;
   void handle_freelook_input(const Input&);
-  void switch_camera_mode();
 
   ClientMode mClientMode;
   EntityId m_follow_id;

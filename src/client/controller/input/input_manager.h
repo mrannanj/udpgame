@@ -17,7 +17,6 @@ class InputManager {
     void mouse_button_down(const SDL_Event&, Input&) const;
     void mouse_button_up(const SDL_Event&, Input&) const;
     void mouse_motion(const SDL_Event&, Input&) const;
-    //void keydown(const SDL_Event&, Input&) const;
     void keyup(const SDL_Event&, Input&) const;
     void check_keyboard(Input&) const;
     void check_mouse(Input&) const;

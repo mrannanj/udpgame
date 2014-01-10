@@ -1,15 +1,15 @@
 #pragma once
 
-#include "client/controller/screen.h"
+#include "client/controller/screen/screen.h"
 #include "client/view/button.h"
 
 class MainMenu: public Screen {
 public:
   MainMenu();
-  void Update(GameSession&, InputManager&, float);
+  void Update(GameSession&, Input&);
   void Draw(GameSession&, const Renderer&);
   void Activate();
-  bool redraw();
+  bool redraw(GameSession&);
 
 private:
   Button m_quit;

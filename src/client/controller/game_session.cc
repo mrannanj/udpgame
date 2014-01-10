@@ -22,8 +22,7 @@ GameSession::GameSession(const std::string& addr):
   mPerspective(),
   mWorld(false)
 {
-  if (addr.size() == 0)
-    return;
+  if (addr.size() == 0) return;
   cout << "connected to " << mConnection << endl;
   system_clock::time_point t1 = system_clock::now();
   while (!mWorld.mInit) {
@@ -36,15 +35,15 @@ GameSession::GameSession(const std::string& addr):
     }
   }
   mInit = true;
-  mDraw = true;
+  mRedraw = true;
 }
 
-bool GameSession::tick(float, Input& input) {
-  mInput = input;
+void GameSession::tick(Input& input, bool haveFocus) {
+  if (!mInit) return;
+  mInput = haveFocus ? input : zeroInput();
   mConnection.checkMessages(*this);
-  mPerspective.handle_input(input);
+  mPerspective.handle_input(mInput);
   mPerspective.tick(mWorld);
-  return mDraw;
 }
 
 bool GameSession::handleAMessage(const AMessage& a, int) {
@@ -54,7 +53,7 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
       mWorld.setInitialState(a.initial_state());
       mClientId = a.initial_state().client_id();
       sendFrameInput(mInput);
-      mDraw = true;
+      mRedraw = true;
       return true;
     case Type::FRAME_INPUTS:
       mWorld.tick(a.frame_inputs());
@@ -64,11 +63,17 @@ bool GameSession::handleAMessage(const AMessage& a, int) {
         mPerspective.mClientMode = cd->mode();
       }
       sendFrameInput(mInput);
-      mDraw = true;
+      mRedraw = true;
       return true;
     default:
       return false;
   }
+}
+
+Input GameSession::zeroInput() {
+  Input i;
+  memset(&i, 0, sizeof(i));
+  return i;
 }
 
 void GameSession::sendFrameInput(Input& i) {
@@ -103,5 +108,5 @@ void GameSession::draw(const Renderer& r) {
   r.quad_renderer.On();
   set_color(r.quad_renderer.color_uni(), Blue, 1.0f);
   r.quad_renderer.draw_quad(q);
-  mDraw = false;
+  mRedraw = true;
 }

@@ -12,14 +12,15 @@ struct GameSession {
   GameSession();
   GameSession(const std::string&);
 
-  bool tick(float, Input&);
+  void tick(Input&, bool);
   void sendFrameInput(Input&);
   bool handleAMessage(const AMessage&, int);
   void draw(const Renderer&);
+  Input zeroInput();
 
   int mClientId;
   bool mInit;
-  bool mDraw;
+  bool mRedraw;
   Connection mConnection;
   Perspective mPerspective;
   World mWorld;

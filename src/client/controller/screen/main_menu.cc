@@ -1,10 +1,10 @@
 #include <iostream>
 #include "client/view/window.h"
-#include "client/controller/main_menu.h"
-#include "client/controller/connect_menu.h"
 #include "client/controller/input/input.h"
-#include "client/controller/screen_stack.h"
-#include "client/controller/game_screen.h"
+#include "client/controller/screen/main_menu.h"
+#include "client/controller/screen/connect_menu.h"
+#include "client/controller/screen/screen_stack.h"
+#include "client/controller/screen/game_screen.h"
 
 MainMenu::MainMenu():
   m_quit(-0.2f, 0.3f, 0.1f, "quit"),
@@ -12,10 +12,7 @@ MainMenu::MainMenu():
 {
 }
 
-void MainMenu::Update(GameSession&, InputManager& input_manager, float) {
-  Input input;
-  input_manager.read_input(input);
-
+void MainMenu::Update(GameSession&, Input& input) {
   if (input.consume_discrete_action(DiscreteAction::ESCAPE)) {
     g_screen_stack.pop();
   }
@@ -40,7 +37,7 @@ void MainMenu::Activate() {
   release_mouse();
 }
 
-bool MainMenu::redraw() {
+bool MainMenu::redraw(GameSession&) {
   return true;
 }
 
