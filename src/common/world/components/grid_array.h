@@ -2,9 +2,9 @@
 
 #include <cstddef>
 
-constexpr int GRID_SIZE_X = 50;
-constexpr int GRID_SIZE_Y = 50;
-constexpr int GRID_SIZE_Z = 50;
+constexpr int GRID_SIZE_X = 90;
+constexpr int GRID_SIZE_Y = 90;
+constexpr int GRID_SIZE_Z = 90;
 constexpr int GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
 
 struct GridArray {
@@ -14,6 +14,8 @@ struct GridArray {
   GridArray(const GridArray&) = delete;
   GridArray& operator=(const GridArray&) = delete;
 
+  int heightFunction(int, int);
+  char heightToBlock(int);
   void makeFloor();
   char get(int, int, int) const;
   bool outsideGrid(int, int, int) const;

@@ -6,6 +6,9 @@
 using namespace std;
 using glm::vec3;
 
+static constexpr size_t DRAW_RANGE = 12;
+static constexpr float RAYCAST_RANGE = 6.0f;
+
 GridHandler::GridHandler()
 {
 }
@@ -14,10 +17,14 @@ void GridHandler::defaultGrid() {
   mArr.makeFloor();
 }
 
+vec3 GridHandler::spawn_pos() {
+  return vec3(10.0f, mArr.heightFunction(10,10) + 3.0f, 10.0f);
+}
+
 void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = max(0, (int)(p[a] - 10));
-    ind[a][1] = min(GRID_SIZE[a] - 1, (int)(p[a] + 10));
+    ind[a][0] = max(0, (int)(p[a] - DRAW_RANGE));
+    ind[a][1] = min(GRID_SIZE[a] - 1, (int)(p[a] + DRAW_RANGE));
   }
 }
 
@@ -25,6 +32,17 @@ void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
     ind[a][0] = (int)(p.next_bb_min[a]);
     ind[a][1] = (int)(p.next_bb_max[a]);
+  }
+}
+
+void GridHandler::raycast_range(const vec3& p, const vec3& d, int ind[3][2])
+  const
+{
+  const glm::vec3 k = p + d * RAYCAST_RANGE;
+
+  for (unsigned a = 0; a < 3; ++a) {
+    ind[a][0] = min(p[a], k[a]);
+    ind[a][1] = max(p[a], k[a]);
   }
 }
 
@@ -190,9 +208,13 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
   int baxis = 4;
   int dir = 0;
   bool hit = false;
-  for (int x = 0; x < GRID_SIZE_X; ++x) {
-    for (int y = 0; y < GRID_SIZE_Y; ++y) {
-      for (int z = 0; z < GRID_SIZE_Z; ++z) {
+
+  int ind[3][2];
+  raycast_range(s, d, ind);
+
+  for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
+    for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
+      for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
         float t;
         int a;
         int d;

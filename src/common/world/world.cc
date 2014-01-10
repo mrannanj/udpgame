@@ -39,7 +39,7 @@ void World::spawn_monster() {
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
-  p.position = spawn_position;
+  p.position = mGrid.spawn_pos();
   p.dimensions = glm::vec3(0.4f, 0.2f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);
@@ -52,7 +52,7 @@ void World::spawn_player(int clientid) {
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
-  p.position = spawn_position;
+  p.position = mGrid.spawn_pos();
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   mPhysicsHandler.add(p);

@@ -12,8 +12,6 @@
 #include "common/world/components/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
-const glm::vec3 spawn_position(3.0f, 60.0f, 3.0f);
-
 class World {
 public:
   World(bool);

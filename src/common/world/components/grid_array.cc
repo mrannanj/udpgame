@@ -1,6 +1,9 @@
 #include "common/world/components/grid_array.h"
 
 #include <cstring>
+#include <algorithm>
+
+using namespace std;
 
 GridArray::GridArray():
   mData(),
@@ -18,13 +21,30 @@ size_t GridArray::i(int x, int y, int z) const {
   return x * GRID_SIZE_Y * GRID_SIZE_Z + y * GRID_SIZE_Z + z;
 }
 
+char GridArray::heightToBlock(int z) {
+  if (z < 1) return 3;
+  if (z < 35) return 4;
+  if (z < 45) return 5;
+  if (z < 65) return 6;
+  return 1;
+}
+
 void GridArray::makeFloor() {
-  memset(mData, 1, mSize);
   for (unsigned x = 0; x < GRID_SIZE_X; ++x) {
     for (unsigned z = 0; z < GRID_SIZE_Z; ++z) {
       mData[i(x,0,z)] = 3;
+      unsigned max_y = min(GRID_SIZE_Z-1, heightFunction(x,z));
+      for (unsigned y = 0; y < max_y; ++ y) {
+        mData[i(x,y,z)] = heightToBlock(y);
+      }
     }
   }
+}
+
+int GridArray::heightFunction(int x, int z) {
+  float fx = -1.0f + 2.0f*(x/(float)GRID_SIZE_X);
+  float fz = -1.0f + 2.0f*(z/(float)GRID_SIZE_Z);
+  return 90.0f * (sin(fx) + cos(fz) + 2.0f)/4;
 }
 
 bool GridArray::outsideGrid(int x, int y, int z) const {

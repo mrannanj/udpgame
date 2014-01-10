@@ -32,9 +32,12 @@ struct GridHandler {
 
   bool belowBottom(const glm::vec3&) const;
   int TestAABBAABB(PhysicsC& p, int x, int y, int z) const;
+  void raycast_range(const glm::vec3&, const glm::vec3&, int[3][2]) const;
+  glm::vec3 spawn_pos();
 
   void serialize(InitialState&) const;
   void deserialize(const InitialState&);
 
   GridArray mArr;
+  glm::vec3 mSpawn;
 };
