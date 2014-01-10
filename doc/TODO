@@ -21,7 +21,6 @@ FEATURES:
 - show in gui if client is in observer or player mode
 - add screen that shows key bindings
 - named players
-- fullscreen
 - metaserver
 - chat
 - screenshot taking

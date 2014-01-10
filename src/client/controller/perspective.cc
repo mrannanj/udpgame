@@ -69,7 +69,7 @@ void Perspective::handle_freelook_input(const Input& input) {
 void Perspective::tick(World& w)
 {
   m_projection = glm::perspective(45.0f,
-      (float)WINDOW_WIDTH/WINDOW_HEIGHT, 0.1f, 100.0f);
+      (float)window_width/window_height, 0.1f, 100.0f);
   if (mClientMode == ClientMode::PLAYER) {
     PhysicsC* p = (PhysicsC*)w.physics().get(m_follow_id);
     if (p) {

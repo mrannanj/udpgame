@@ -18,18 +18,31 @@ using namespace std;
 int main(int argc, char** argv) {
   if (strcmp(argv[0], "/usr/bin/udpgame_client"))
     chdir("/usr/share/udpgame");
-  open_window();
 
-  string server_address;
-  if (argc >= 2)
-    server_address = string(argv[1]);
+  bool fullscreen = false;
+  string server_address = "";
+  int opt;
+  while ((opt = getopt(argc, argv, "fs:")) != -1) {
+    switch (opt) {
+      case 'f':
+        fullscreen = true;
+        break;
+      case 's':
+        server_address = optarg;
+        break;
+      default:
+        cerr << "usage: " << argv[0] << " [-fs server_address]" << endl;
+        return EXIT_SUCCESS;
+    }
+  }
+  open_window(fullscreen);
 
   GameSession gameSession(server_address);
   InputManager input_manager;
   Renderer renderer;
 
   g_screen_stack.push(&g_main_menu);
-  if (argc >= 2)
+  if (gameSession.mInit)
     g_screen_stack.push(&g_game_screen);
 
   while (!g_screen_stack.empty()) {
