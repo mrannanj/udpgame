@@ -28,10 +28,10 @@ void WorldTicker::fillMissingInputs(unsigned tick,
       continue;
     }
     if (tick - c->mLastFrameOk >= 10) {
+      cout << *c << " timeouted" << endl;
       c = connections.erase(c);
       continue;
     }
-    cout << "client " << c->mSocket << " was late for frame " << tick << endl;
     FrameInput* fi = fis.add_frame_inputs();
     fi->set_client(c->mSocket);
     fi->set_actions(0);
@@ -52,7 +52,7 @@ bool WorldTicker::handleAMessage(const AMessage& a, int clientid) {
     cout << "hash was: " << a.client_input().previous_hash() << endl;
     return false;
   }
-  // FIXME: dont add late inputs
+  if (tick <= mCurrentTick) return true;
   FrameInputs& fis = mInputMap[tick];
   FrameInput* fi = fis.add_frame_inputs();
   fi->CopyFrom(a.client_input().frame_input());
