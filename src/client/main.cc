@@ -16,7 +16,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  if (strcmp(argv[0], "/usr/bin/udpgame_client"))
+  if (strcmp(argv[0], "/usr/bin/udpgame_client") == 0)
     chdir("/usr/share/udpgame");
 
   bool fullscreen = false;

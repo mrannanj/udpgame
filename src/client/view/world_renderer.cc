@@ -17,10 +17,16 @@ void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
 
         if (block == 1)
           r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
-        if (block == 2)
+        else if (block == 2)
           r.cube_renderer.SetTexture(r.texture_manager[Texture::FACE]);
-        if (block == 3)
+        else if (block == 3)
           r.cube_renderer.SetTexture(r.texture_manager[Texture::FONT]);
+        else if (block == 4)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::BW]);
+        else if (block == 5)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::SAND]);
+        else if (block == 6)
+          r.cube_renderer.SetTexture(r.texture_manager[Texture::ROCK]);
 
         glm::mat4 model = glm::translate(glm::mat4(1.0f),
           glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)

@@ -10,12 +10,14 @@ namespace Texture {
     FONT,
     FACE,
     HEAD,
+    BW,
+    ROCK,
+    SAND,
     SIZE
   };
 }
 
-class TextureManager
-{
+class TextureManager {
 public:
   TextureManager();
   ~TextureManager();

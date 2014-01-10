@@ -9,7 +9,8 @@
 using namespace std;
 
 SDLKey binded_keys[] = {
-  SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_1, SDLK_2, SDLK_3
+  SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_1, SDLK_2, SDLK_3,
+  SDLK_4, SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9
 };
 
 InputManager::InputManager() {
@@ -34,6 +35,12 @@ void InputManager::init_key_to_action() {
   m_key_to_action[SDLK_1] = ContinousAction::ITEM_1;
   m_key_to_action[SDLK_2] = ContinousAction::ITEM_2;
   m_key_to_action[SDLK_3] = ContinousAction::ITEM_3;
+  m_key_to_action[SDLK_4] = ContinousAction::ITEM_4;
+  m_key_to_action[SDLK_5] = ContinousAction::ITEM_5;
+  m_key_to_action[SDLK_6] = ContinousAction::ITEM_6;
+  m_key_to_action[SDLK_7] = ContinousAction::ITEM_7;
+  m_key_to_action[SDLK_8] = ContinousAction::ITEM_8;
+  m_key_to_action[SDLK_9] = ContinousAction::ITEM_9;
 }
 
 void InputManager::check_mouse(Input& i) const {

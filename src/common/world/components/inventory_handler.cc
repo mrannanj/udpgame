@@ -15,6 +15,20 @@ void InventoryHandler::tick(float, World& w) {
       inv.set_wielding(2);
     if (ic->actions() & ContinousAction::ITEM_3)
       inv.set_wielding(3);
+    if (ic->actions() & ContinousAction::ITEM_4)
+      inv.set_wielding(4);
+    if (ic->actions() & ContinousAction::ITEM_5)
+      inv.set_wielding(5);
+    if (ic->actions() & ContinousAction::ITEM_6)
+      inv.set_wielding(6);
+#if 0
+    if (ic->actions() & ContinousAction::ITEM_7)
+      inv.set_wielding(3);
+    if (ic->actions() & ContinousAction::ITEM_8)
+      inv.set_wielding(3);
+    if (ic->actions() & ContinousAction::ITEM_9)
+      inv.set_wielding(3);
+#endif
 
     PhysicsC* p = w.physics().get(inv.eid());
     assert(p != nullptr);

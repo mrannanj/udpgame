@@ -10,10 +10,16 @@ namespace ContinousAction {
     PLAYER_MODE = 32,
     FIRST = 64,
     SECOND = 128,
-    ITEM_1 = 256,
-    ITEM_2 = 512,
-    ITEM_3 = 1024,
-    SPAWN_MONSTER = 2048
+    ITEM_1 = 1 << 8,
+    ITEM_2 = 1 << 9,
+    ITEM_3 = 1 << 10,
+    ITEM_4 = 1 << 11,
+    ITEM_5 = 1 << 12,
+    ITEM_6 = 1 << 13,
+    ITEM_7 = 1 << 14,
+    ITEM_8 = 1 << 15,
+    ITEM_9 = 1 << 16,
+    SPAWN_MONSTER = 1 << 17
   };
 }
 

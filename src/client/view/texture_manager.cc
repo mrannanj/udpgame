@@ -1,8 +1,11 @@
-#include <assert.h>
-#include <SDL_image.h>
+
 #include <GL/glew.h>
 #include <GL/gl.h>
+#include <SDL_image.h>
+#include <cassert>
+#include <cstdio>
 
+#include "common/util/die.h"
 #include "client/view/texture_manager.h"
 
 TextureManager::TextureManager() {
@@ -23,12 +26,19 @@ void TextureManager::LoadTextures() {
   m_textures[Texture::FONT] = LoadTexture("resources/images/font.png");
   m_textures[Texture::FACE] = LoadTexture("resources/images/face.png");
   m_textures[Texture::HEAD] = LoadTexture("resources/images/head.png");
+  m_textures[Texture::SAND] = LoadTexture("resources/images/sand.png");
+  m_textures[Texture::ROCK] = LoadTexture("resources/images/rock.png");
+  m_textures[Texture::BW] = LoadTexture("resources/images/bw.png");
 }
 
 GLuint TextureManager::LoadTexture(const std::string& fn) {
-  SDL_Surface *tmp;
-  tmp = IMG_Load(fn.c_str());
-  assert(tmp);
+  SDL_Surface *tmp = IMG_Load(fn.c_str());
+
+  if (tmp == nullptr) {
+    fprintf(stderr, "IMG_Load: %s\n", SDL_GetError());
+    exit(EXIT_FAILURE);
+  }
+
   SDL_Surface *surface = SDL_DisplayFormatAlpha(tmp);
 
   GLuint texture;
