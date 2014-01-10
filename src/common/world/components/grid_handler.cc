@@ -23,34 +23,50 @@ void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
 
 void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
-    if (p.velocity[a] < 0.0f) {
-      ind[a][0] = (int)(p.next_bb_min[a]);
-      ind[a][1] = (int)(p.bb_max[a]);
-    } else {
-      ind[a][0] = (int)(p.bb_min[a]);
-      ind[a][1] = (int)(p.next_bb_max[a]);
-    }
+    ind[a][0] = (int)(p.next_bb_min[a]);
+    ind[a][1] = (int)(p.next_bb_max[a]);
   }
 }
 
 bool GridHandler::correct_one_hit(PhysicsC& p) const {
   int ind[3][2];
   overlapping_indices(p, ind);
-  for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
-    for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
+
+  float max_overlap = FLT_MIN;
+  unsigned max_axis = 4;
+  bool hit = false;
+
+  for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
+    for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
       for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
         if (mArr.get(x,y,z)) {
-          correct_position(p, x, y, z);
-          return true;
+          float overlap;
+          unsigned axis;
+          correct_position(p, x, y, z, overlap, axis);
+          if (fabsf(overlap) > fabsf(max_overlap)) {
+            max_overlap = overlap;
+            max_axis = axis;
+            hit = true;
+          }
         }
       }
     }
   }
-  return false;
+  if (hit) {
+    p.next_position[max_axis] += max_overlap * 1.1f;
+    p.velocity[max_axis] = 0.0f;
+    if (max_axis == 1) p.on_ground = true;
+
+    p.position = p.next_position;
+    p.update_bbs();
+    p.update_next_bbs();
+  }
+  return hit;
 }
 
 bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   p.next_position = p.position + p.velocity * dt;
+  p.position = p.next_position;
   p.update_bbs();
   p.update_next_bbs();
 
@@ -59,7 +75,21 @@ bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   return true;
 }
 
-void GridHandler::correct_position(PhysicsC& p, int x, int y, int z) const {
+int GridHandler::TestAABBAABB(PhysicsC& p, int x, int y, int z) const {
+  glm::vec3 block_min;
+  glm::vec3 block_max;
+  bb_min(x, y, z, block_min);
+  bb_max(x, y, z, block_max);
+  const glm::vec3& nbb_min = p.next_bb_min;
+  const glm::vec3& nbb_max = p.next_bb_max;
+  if (nbb_max[0] < block_min[0] || nbb_min[0] > block_max[0]) return 0;
+  if (nbb_max[1] < block_min[1] || nbb_min[1] > block_max[1]) return 0;
+  if (nbb_max[2] < block_min[2] || nbb_min[2] > block_max[2]) return 0;
+  return 1;
+}
+
+void GridHandler::correct_position(PhysicsC& p, int x, int y, int z,
+    float& min_overlap, unsigned& min_axis) const {
   glm::vec3 block_min;
   glm::vec3 block_max;
   bb_min(x, y, z, block_min);
@@ -87,13 +117,8 @@ void GridHandler::correct_position(PhysicsC& p, int x, int y, int z) const {
   }
   assert(axis != 4);
 
-  p.next_position[axis] += smallest_overlap * 1.1f;
-  p.velocity[axis] = 0.0f;
-  if (axis == 1) p.on_ground = true;
-
-  p.position = p.next_position;
-  p.update_bbs();
-  p.update_next_bbs();
+  min_overlap = smallest_overlap;
+  min_axis = axis;
 }
 
 void GridHandler::bb_min(int x, int y, int z, glm::vec3& bb) const {

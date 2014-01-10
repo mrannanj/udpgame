@@ -87,19 +87,6 @@ Connection::~Connection() {
   mBuf = nullptr;
 }
 
-void really_write(int fd, char* buf, ssize_t count) {
-  ssize_t nw;
-  for (ssize_t tw = 0; tw < count; tw += nw) {
-    nw = write(fd, &buf[tw], count - tw);
-    if (nw < 0) {
-      if (errno == EINTR)
-        continue;
-      else
-        die("write");
-    }
-  }
-}
-
 void Connection::sendMessage(const AMessage& a) {
   char buf[MAXMSG];
   int byteSize = a.ByteSize();

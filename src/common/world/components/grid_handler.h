@@ -15,7 +15,7 @@ struct GridHandler {
 
   bool handle_grid_collisions(PhysicsC&, float) const;
   bool check_collision(PhysicsC&, float) const;
-  void correct_position(PhysicsC&, int, int, int) const;
+  void correct_position(PhysicsC&, int, int, int, float&, unsigned&) const;
   void obey_lower_limits(PhysicsC&, const glm::vec3&) const;
   void obey_upper_limits(PhysicsC&, const glm::vec3&) const;
   void bb_min(int, int, int, glm::vec3&) const;
@@ -31,6 +31,7 @@ struct GridHandler {
       const glm::vec3&, const glm::vec3&, float&, int&, int&) const;
 
   bool belowBottom(const glm::vec3&) const;
+  int TestAABBAABB(PhysicsC& p, int x, int y, int z) const;
 
   void serialize(InitialState&) const;
   void deserialize(const InitialState&);

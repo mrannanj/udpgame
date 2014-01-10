@@ -1,16 +1,11 @@
 REFACTOR:
 - add Weffc++ warning
-- deglobalize menus and screens
 - AABB class
 - perspective is super ugly
 - cleanup gamesession
 - refactor object deletion for speed
 - grid position class
 - refactor input continous actions
-
-BUGS:
-- invisible walls
-- wall climb
 
 FEATURES:
 - support tick counter roll over
