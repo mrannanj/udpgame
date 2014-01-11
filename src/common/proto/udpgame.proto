@@ -90,15 +90,19 @@ message Lifetime {
   required float ttl = 2;
 }
 
+message Vec3f {
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
 message PhysicsData {
   required fixed32 eid = 1;
-  required float x = 2;
-  required float y = 3;
-  required float z = 4;
+  required Vec3f pos = 2;
+  required Vec3f vel = 3;
+  required Vec3f dim = 4;
   required float horizontal_angle = 5;
   required float vertical_angle = 6;
-  required float dim_x = 7;
-  required float dim_y = 8;
-  required float dim_z = 9;
-  required ObjectType type = 10;
+  required bool on_ground = 7;
+  required ObjectType type = 8;
 }

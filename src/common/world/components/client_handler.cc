@@ -56,18 +56,3 @@ void ClientHandler::removeByClient(int cid) {
 }
 
 void ClientHandler::remove(EntityId) {}
-
-void ClientHandler::serialize(
-    google::protobuf::RepeatedPtrField<ClientData>* r)
-{
-  for (const ClientData& c : mComponents)
-    r->Add()->CopyFrom(c);
-}
-
-void ClientHandler::deserialize(
-    const google::protobuf::RepeatedPtrField<ClientData>& r)
-{
-  mComponents.clear();
-  for (const ClientData& c : r)
-    mComponents.push_back(c);
-}

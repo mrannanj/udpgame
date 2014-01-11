@@ -42,6 +42,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Lifetime_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Lifetime_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Vec3f_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Vec3f_reflection_ = NULL;
 const ::google::protobuf::Descriptor* PhysicsData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PhysicsData_reflection_ = NULL;
@@ -218,17 +221,32 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Lifetime));
-  PhysicsData_descriptor_ = file->message_type(9);
-  static const int PhysicsData_offsets_[10] = {
+  Vec3f_descriptor_ = file->message_type(9);
+  static const int Vec3f_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, x_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, y_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, z_),
+  };
+  Vec3f_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Vec3f_descriptor_,
+      Vec3f::default_instance_,
+      Vec3f_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Vec3f));
+  PhysicsData_descriptor_ = file->message_type(10);
+  static const int PhysicsData_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, z_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, pos_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, vel_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, horizontal_angle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, vertical_angle_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_z_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, on_ground_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, type_),
   };
   PhysicsData_reflection_ =
@@ -277,6 +295,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Lifetime_descriptor_, &Lifetime::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Vec3f_descriptor_, &Vec3f::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PhysicsData_descriptor_, &PhysicsData::default_instance());
 }
 
@@ -301,6 +321,8 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete InitialState_reflection_;
   delete Lifetime::default_instance_;
   delete Lifetime_reflection_;
+  delete Vec3f::default_instance_;
+  delete Vec3f_reflection_;
   delete PhysicsData::default_instance_;
   delete PhysicsData_reflection_;
 }
@@ -335,21 +357,22 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "ata\022 \n\013client_data\030\006 \003(\0132\013.ClientData\022\"\n"
     "\014physics_data\030\007 \003(\0132\014.PhysicsData\022\033\n\010lif"
     "etime\030\010 \003(\0132\t.Lifetime\"$\n\010Lifetime\022\013\n\003ei"
-    "d\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"\265\001\n\013PhysicsData\022\013\n\003"
-    "eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002"
-    "(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical"
-    "_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002"
-    "(\002\022\r\n\005dim_z\030\t \002(\002\022\031\n\004type\030\n \002(\0162\013.Object"
-    "Type*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIA"
-    "L_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Texture\022"
-    "\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS\020\001\022\020\n\014"
-    "TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n\nTEXT"
-    "URE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXTURE_FA"
-    "CE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_SIZE\020\010"
-    "*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004R"
-    "OCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006*0\n\nC"
-    "lientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE_OBSER"
-    "VER\020\001", 1485);
+    "d\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"(\n\005Vec3f\022\t\n\001x\030\001 \002(\002"
+    "\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"\271\001\n\013PhysicsData\022\013"
+    "\n\003eid\030\001 \002(\007\022\023\n\003pos\030\002 \002(\0132\006.Vec3f\022\023\n\003vel\030"
+    "\003 \002(\0132\006.Vec3f\022\023\n\003dim\030\004 \002(\0132\006.Vec3f\022\030\n\020ho"
+    "rizontal_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006"
+    " \002(\002\022\021\n\ton_ground\030\007 \002(\010\022\031\n\004type\030\010 \002(\0162\013."
+    "ObjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\r"
+    "INITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Te"
+    "xture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS"
+    "\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016"
+    "\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXT"
+    "URE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_"
+    "SIZE\020\010*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020"
+    "\002\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020"
+    "\006*0\n\nClientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE"
+    "_OBSERVER\020\001", 1531);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -361,6 +384,7 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   ClientInput::default_instance_ = new ClientInput();
   InitialState::default_instance_ = new InitialState();
   Lifetime::default_instance_ = new Lifetime();
+  Vec3f::default_instance_ = new Vec3f();
   PhysicsData::default_instance_ = new PhysicsData();
   AMessage::default_instance_->InitAsDefaultInstance();
   ClientData::default_instance_->InitAsDefaultInstance();
@@ -371,6 +395,7 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   ClientInput::default_instance_->InitAsDefaultInstance();
   InitialState::default_instance_->InitAsDefaultInstance();
   Lifetime::default_instance_->InitAsDefaultInstance();
+  Vec3f::default_instance_->InitAsDefaultInstance();
   PhysicsData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto);
 }
@@ -3332,15 +3357,295 @@ void Lifetime::Swap(Lifetime* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int Vec3f::kXFieldNumber;
+const int Vec3f::kYFieldNumber;
+const int Vec3f::kZFieldNumber;
+#endif  // !_MSC_VER
+
+Vec3f::Vec3f()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Vec3f::InitAsDefaultInstance() {
+}
+
+Vec3f::Vec3f(const Vec3f& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Vec3f::SharedCtor() {
+  _cached_size_ = 0;
+  x_ = 0;
+  y_ = 0;
+  z_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Vec3f::~Vec3f() {
+  SharedDtor();
+}
+
+void Vec3f::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void Vec3f::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Vec3f::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Vec3f_descriptor_;
+}
+
+const Vec3f& Vec3f::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
+}
+
+Vec3f* Vec3f::default_instance_ = NULL;
+
+Vec3f* Vec3f::New() const {
+  return new Vec3f;
+}
+
+void Vec3f::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    x_ = 0;
+    y_ = 0;
+    z_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Vec3f::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required float x = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &x_)));
+          set_has_x();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(21)) goto parse_y;
+        break;
+      }
+      
+      // required float y = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_y:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &y_)));
+          set_has_y();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(29)) goto parse_z;
+        break;
+      }
+      
+      // required float z = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_z:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &z_)));
+          set_has_z();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Vec3f::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required float x = 1;
+  if (has_x()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->x(), output);
+  }
+  
+  // required float y = 2;
+  if (has_y()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->y(), output);
+  }
+  
+  // required float z = 3;
+  if (has_z()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->z(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Vec3f::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required float x = 1;
+  if (has_x()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x(), target);
+  }
+  
+  // required float y = 2;
+  if (has_y()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->y(), target);
+  }
+  
+  // required float z = 3;
+  if (has_z()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->z(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Vec3f::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required float x = 1;
+    if (has_x()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float y = 2;
+    if (has_y()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float z = 3;
+    if (has_z()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Vec3f::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Vec3f* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Vec3f*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Vec3f::MergeFrom(const Vec3f& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_x()) {
+      set_x(from.x());
+    }
+    if (from.has_y()) {
+      set_y(from.y());
+    }
+    if (from.has_z()) {
+      set_z(from.z());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Vec3f::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Vec3f::CopyFrom(const Vec3f& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vec3f::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  
+  return true;
+}
+
+void Vec3f::Swap(Vec3f* other) {
+  if (other != this) {
+    std::swap(x_, other->x_);
+    std::swap(y_, other->y_);
+    std::swap(z_, other->z_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Vec3f::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Vec3f_descriptor_;
+  metadata.reflection = Vec3f_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int PhysicsData::kEidFieldNumber;
-const int PhysicsData::kXFieldNumber;
-const int PhysicsData::kYFieldNumber;
-const int PhysicsData::kZFieldNumber;
+const int PhysicsData::kPosFieldNumber;
+const int PhysicsData::kVelFieldNumber;
+const int PhysicsData::kDimFieldNumber;
 const int PhysicsData::kHorizontalAngleFieldNumber;
 const int PhysicsData::kVerticalAngleFieldNumber;
-const int PhysicsData::kDimXFieldNumber;
-const int PhysicsData::kDimYFieldNumber;
-const int PhysicsData::kDimZFieldNumber;
+const int PhysicsData::kOnGroundFieldNumber;
 const int PhysicsData::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
@@ -3350,6 +3655,9 @@ PhysicsData::PhysicsData()
 }
 
 void PhysicsData::InitAsDefaultInstance() {
+  pos_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
+  vel_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
+  dim_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
 }
 
 PhysicsData::PhysicsData(const PhysicsData& from)
@@ -3361,14 +3669,12 @@ PhysicsData::PhysicsData(const PhysicsData& from)
 void PhysicsData::SharedCtor() {
   _cached_size_ = 0;
   eid_ = 0u;
-  x_ = 0;
-  y_ = 0;
-  z_ = 0;
+  pos_ = NULL;
+  vel_ = NULL;
+  dim_ = NULL;
   horizontal_angle_ = 0;
   vertical_angle_ = 0;
-  dim_x_ = 0;
-  dim_y_ = 0;
-  dim_z_ = 0;
+  on_ground_ = false;
   type_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -3379,6 +3685,9 @@ PhysicsData::~PhysicsData() {
 
 void PhysicsData::SharedDtor() {
   if (this != default_instance_) {
+    delete pos_;
+    delete vel_;
+    delete dim_;
   }
 }
 
@@ -3405,16 +3714,18 @@ PhysicsData* PhysicsData::New() const {
 void PhysicsData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eid_ = 0u;
-    x_ = 0;
-    y_ = 0;
-    z_ = 0;
+    if (has_pos()) {
+      if (pos_ != NULL) pos_->::Vec3f::Clear();
+    }
+    if (has_vel()) {
+      if (vel_ != NULL) vel_->::Vec3f::Clear();
+    }
+    if (has_dim()) {
+      if (dim_ != NULL) dim_->::Vec3f::Clear();
+    }
     horizontal_angle_ = 0;
     vertical_angle_ = 0;
-    dim_x_ = 0;
-    dim_y_ = 0;
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    dim_z_ = 0;
+    on_ground_ = false;
     type_ = 1;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3438,51 +3749,45 @@ bool PhysicsData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(21)) goto parse_x;
+        if (input->ExpectTag(18)) goto parse_pos;
         break;
       }
       
-      // required float x = 2;
+      // required .Vec3f pos = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_x:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &x_)));
-          set_has_x();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_pos:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_pos()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(29)) goto parse_y;
+        if (input->ExpectTag(26)) goto parse_vel;
         break;
       }
       
-      // required float y = 3;
+      // required .Vec3f vel = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_y:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &y_)));
-          set_has_y();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_vel:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_vel()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(37)) goto parse_z;
+        if (input->ExpectTag(34)) goto parse_dim;
         break;
       }
       
-      // required float z = 4;
+      // required .Vec3f dim = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_z:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &z_)));
-          set_has_z();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_dim:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_dim()));
         } else {
           goto handle_uninterpreted;
         }
@@ -3518,60 +3823,28 @@ bool PhysicsData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(61)) goto parse_dim_x;
+        if (input->ExpectTag(56)) goto parse_on_ground;
         break;
       }
       
-      // required float dim_x = 7;
+      // required bool on_ground = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_dim_x:
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_on_ground:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &dim_x_)));
-          set_has_dim_x();
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &on_ground_)));
+          set_has_on_ground();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(69)) goto parse_dim_y;
+        if (input->ExpectTag(64)) goto parse_type;
         break;
       }
       
-      // required float dim_y = 8;
+      // required .ObjectType type = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_dim_y:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &dim_y_)));
-          set_has_dim_y();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(77)) goto parse_dim_z;
-        break;
-      }
-      
-      // required float dim_z = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_dim_z:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &dim_z_)));
-          set_has_dim_z();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(80)) goto parse_type;
-        break;
-      }
-      
-      // required .ObjectType type = 10;
-      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_type:
@@ -3582,7 +3855,7 @@ bool PhysicsData::MergePartialFromCodedStream(
           if (ObjectType_IsValid(value)) {
             set_type(static_cast< ObjectType >(value));
           } else {
-            mutable_unknown_fields()->AddVarint(10, value);
+            mutable_unknown_fields()->AddVarint(8, value);
           }
         } else {
           goto handle_uninterpreted;
@@ -3614,19 +3887,22 @@ void PhysicsData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->eid(), output);
   }
   
-  // required float x = 2;
-  if (has_x()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->x(), output);
+  // required .Vec3f pos = 2;
+  if (has_pos()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->pos(), output);
   }
   
-  // required float y = 3;
-  if (has_y()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->y(), output);
+  // required .Vec3f vel = 3;
+  if (has_vel()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->vel(), output);
   }
   
-  // required float z = 4;
-  if (has_z()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->z(), output);
+  // required .Vec3f dim = 4;
+  if (has_dim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->dim(), output);
   }
   
   // required float horizontal_angle = 5;
@@ -3639,25 +3915,15 @@ void PhysicsData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->vertical_angle(), output);
   }
   
-  // required float dim_x = 7;
-  if (has_dim_x()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(7, this->dim_x(), output);
+  // required bool on_ground = 7;
+  if (has_on_ground()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->on_ground(), output);
   }
   
-  // required float dim_y = 8;
-  if (has_dim_y()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->dim_y(), output);
-  }
-  
-  // required float dim_z = 9;
-  if (has_dim_z()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->dim_z(), output);
-  }
-  
-  // required .ObjectType type = 10;
+  // required .ObjectType type = 8;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      10, this->type(), output);
+      8, this->type(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -3673,19 +3939,25 @@ void PhysicsData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->eid(), target);
   }
   
-  // required float x = 2;
-  if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->x(), target);
+  // required .Vec3f pos = 2;
+  if (has_pos()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->pos(), target);
   }
   
-  // required float y = 3;
-  if (has_y()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->y(), target);
+  // required .Vec3f vel = 3;
+  if (has_vel()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->vel(), target);
   }
   
-  // required float z = 4;
-  if (has_z()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->z(), target);
+  // required .Vec3f dim = 4;
+  if (has_dim()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->dim(), target);
   }
   
   // required float horizontal_angle = 5;
@@ -3698,25 +3970,15 @@ void PhysicsData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->vertical_angle(), target);
   }
   
-  // required float dim_x = 7;
-  if (has_dim_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->dim_x(), target);
+  // required bool on_ground = 7;
+  if (has_on_ground()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->on_ground(), target);
   }
   
-  // required float dim_y = 8;
-  if (has_dim_y()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->dim_y(), target);
-  }
-  
-  // required float dim_z = 9;
-  if (has_dim_z()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->dim_z(), target);
-  }
-  
-  // required .ObjectType type = 10;
+  // required .ObjectType type = 8;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      10, this->type(), target);
+      8, this->type(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3735,19 +3997,25 @@ int PhysicsData::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required float x = 2;
-    if (has_x()) {
-      total_size += 1 + 4;
+    // required .Vec3f pos = 2;
+    if (has_pos()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pos());
     }
     
-    // required float y = 3;
-    if (has_y()) {
-      total_size += 1 + 4;
+    // required .Vec3f vel = 3;
+    if (has_vel()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->vel());
     }
     
-    // required float z = 4;
-    if (has_z()) {
-      total_size += 1 + 4;
+    // required .Vec3f dim = 4;
+    if (has_dim()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->dim());
     }
     
     // required float horizontal_angle = 5;
@@ -3760,24 +4028,12 @@ int PhysicsData::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required float dim_x = 7;
-    if (has_dim_x()) {
-      total_size += 1 + 4;
+    // required bool on_ground = 7;
+    if (has_on_ground()) {
+      total_size += 1 + 1;
     }
     
-    // required float dim_y = 8;
-    if (has_dim_y()) {
-      total_size += 1 + 4;
-    }
-    
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required float dim_z = 9;
-    if (has_dim_z()) {
-      total_size += 1 + 4;
-    }
-    
-    // required .ObjectType type = 10;
+    // required .ObjectType type = 8;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -3813,14 +4069,14 @@ void PhysicsData::MergeFrom(const PhysicsData& from) {
     if (from.has_eid()) {
       set_eid(from.eid());
     }
-    if (from.has_x()) {
-      set_x(from.x());
+    if (from.has_pos()) {
+      mutable_pos()->::Vec3f::MergeFrom(from.pos());
     }
-    if (from.has_y()) {
-      set_y(from.y());
+    if (from.has_vel()) {
+      mutable_vel()->::Vec3f::MergeFrom(from.vel());
     }
-    if (from.has_z()) {
-      set_z(from.z());
+    if (from.has_dim()) {
+      mutable_dim()->::Vec3f::MergeFrom(from.dim());
     }
     if (from.has_horizontal_angle()) {
       set_horizontal_angle(from.horizontal_angle());
@@ -3828,16 +4084,8 @@ void PhysicsData::MergeFrom(const PhysicsData& from) {
     if (from.has_vertical_angle()) {
       set_vertical_angle(from.vertical_angle());
     }
-    if (from.has_dim_x()) {
-      set_dim_x(from.dim_x());
-    }
-    if (from.has_dim_y()) {
-      set_dim_y(from.dim_y());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_dim_z()) {
-      set_dim_z(from.dim_z());
+    if (from.has_on_ground()) {
+      set_on_ground(from.on_ground());
     }
     if (from.has_type()) {
       set_type(from.type());
@@ -3859,22 +4107,29 @@ void PhysicsData::CopyFrom(const PhysicsData& from) {
 }
 
 bool PhysicsData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000003ff) != 0x000003ff) return false;
+  if ((_has_bits_[0] & 0x000000ff) != 0x000000ff) return false;
   
+  if (has_pos()) {
+    if (!this->pos().IsInitialized()) return false;
+  }
+  if (has_vel()) {
+    if (!this->vel().IsInitialized()) return false;
+  }
+  if (has_dim()) {
+    if (!this->dim().IsInitialized()) return false;
+  }
   return true;
 }
 
 void PhysicsData::Swap(PhysicsData* other) {
   if (other != this) {
     std::swap(eid_, other->eid_);
-    std::swap(x_, other->x_);
-    std::swap(y_, other->y_);
-    std::swap(z_, other->z_);
+    std::swap(pos_, other->pos_);
+    std::swap(vel_, other->vel_);
+    std::swap(dim_, other->dim_);
     std::swap(horizontal_angle_, other->horizontal_angle_);
     std::swap(vertical_angle_, other->vertical_angle_);
-    std::swap(dim_x_, other->dim_x_);
-    std::swap(dim_y_, other->dim_y_);
-    std::swap(dim_z_, other->dim_z_);
+    std::swap(on_ground_, other->on_ground_);
     std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

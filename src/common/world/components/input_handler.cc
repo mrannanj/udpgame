@@ -24,11 +24,3 @@ FrameInput* InputHandler::getByClient(int clientId) {
       return &f;
   return nullptr;
 }
-
-void InputHandler::deserialize(
-    const google::protobuf::RepeatedPtrField<FrameInput>& invs)
-{
-  mComponents.clear();
-  for (const FrameInput& i : invs)
-    mComponents.push_back(i);
-}

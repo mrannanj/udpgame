@@ -8,18 +8,3 @@ void LifetimeHandler::tick(float dt, World& w) {
       w.mDeleteList.insert(l.eid());
   }
 }
-
-void LifetimeHandler::serialize(
-    google::protobuf::RepeatedPtrField<Lifetime>* ls)
-{
-  for (const Lifetime& l : mComponents)
-    ls->Add()->CopyFrom(l);
-}
-
-void LifetimeHandler::deserialize(
-    const google::protobuf::RepeatedPtrField<Lifetime>& ls)
-{
-  mComponents.clear();
-  for (const Lifetime& l : ls)
-    mComponents.push_back(l);
-}

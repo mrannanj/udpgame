@@ -82,19 +82,3 @@ void InventoryHandler::pickupItems(World& w) {
     }
   }
 }
-
-
-void InventoryHandler::serialize(
-    google::protobuf::RepeatedPtrField<InventoryData>* invs)
-{
-  for (const Inventory& i : mComponents)
-    invs->Add()->CopyFrom(i);
-}
-
-void InventoryHandler::deserialize(
-    const google::protobuf::RepeatedPtrField<InventoryData>& invs)
-{
-  mComponents.clear();
-  for (const Inventory& i : invs)
-    mComponents.push_back(i);
-}

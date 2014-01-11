@@ -6,8 +6,7 @@
 
 #include <vector>
 
-struct InputHandler : public WorldHandler<FrameInput> {
+struct InputHandler : public WorldHandler<FrameInput,FrameInput> {
   void tick(float, World&);
   FrameInput* getByClient(int);
-  void deserialize(const google::protobuf::RepeatedPtrField<FrameInput>&);
 };

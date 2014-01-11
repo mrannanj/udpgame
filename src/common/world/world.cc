@@ -44,6 +44,11 @@ void World::throw_object(const PhysicsC& o, ObjectType t) {
   p.velocity = o.look_direction() * 10.0f;
   p.type = t;
   mPhysicsHandler.add(p);
+
+  Lifetime l;
+  l.set_eid(eid);
+  l.set_ttl(10.0f);
+  mLifetime.add(l);
 }
 
 void World::onBlockDestruction(int x, int y, int z) {

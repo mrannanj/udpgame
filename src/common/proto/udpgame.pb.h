@@ -39,6 +39,7 @@ class FrameInput;
 class ClientInput;
 class InitialState;
 class Lifetime;
+class Vec3f;
 class PhysicsData;
 
 enum Type {
@@ -1135,6 +1136,108 @@ class Lifetime : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Vec3f : public ::google::protobuf::Message {
+ public:
+  Vec3f();
+  virtual ~Vec3f();
+  
+  Vec3f(const Vec3f& from);
+  
+  inline Vec3f& operator=(const Vec3f& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Vec3f& default_instance();
+  
+  void Swap(Vec3f* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Vec3f* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Vec3f& from);
+  void MergeFrom(const Vec3f& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required float x = 1;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 1;
+  inline float x() const;
+  inline void set_x(float value);
+  
+  // required float y = 2;
+  inline bool has_y() const;
+  inline void clear_y();
+  static const int kYFieldNumber = 2;
+  inline float y() const;
+  inline void set_y(float value);
+  
+  // required float z = 3;
+  inline bool has_z() const;
+  inline void clear_z();
+  static const int kZFieldNumber = 3;
+  inline float z() const;
+  inline void set_z(float value);
+  
+  // @@protoc_insertion_point(class_scope:Vec3f)
+ private:
+  inline void set_has_x();
+  inline void clear_has_x();
+  inline void set_has_y();
+  inline void clear_has_y();
+  inline void set_has_z();
+  inline void clear_has_z();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  float x_;
+  float y_;
+  float z_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static Vec3f* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class PhysicsData : public ::google::protobuf::Message {
  public:
   PhysicsData();
@@ -1196,26 +1299,29 @@ class PhysicsData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 eid() const;
   inline void set_eid(::google::protobuf::uint32 value);
   
-  // required float x = 2;
-  inline bool has_x() const;
-  inline void clear_x();
-  static const int kXFieldNumber = 2;
-  inline float x() const;
-  inline void set_x(float value);
+  // required .Vec3f pos = 2;
+  inline bool has_pos() const;
+  inline void clear_pos();
+  static const int kPosFieldNumber = 2;
+  inline const ::Vec3f& pos() const;
+  inline ::Vec3f* mutable_pos();
+  inline ::Vec3f* release_pos();
   
-  // required float y = 3;
-  inline bool has_y() const;
-  inline void clear_y();
-  static const int kYFieldNumber = 3;
-  inline float y() const;
-  inline void set_y(float value);
+  // required .Vec3f vel = 3;
+  inline bool has_vel() const;
+  inline void clear_vel();
+  static const int kVelFieldNumber = 3;
+  inline const ::Vec3f& vel() const;
+  inline ::Vec3f* mutable_vel();
+  inline ::Vec3f* release_vel();
   
-  // required float z = 4;
-  inline bool has_z() const;
-  inline void clear_z();
-  static const int kZFieldNumber = 4;
-  inline float z() const;
-  inline void set_z(float value);
+  // required .Vec3f dim = 4;
+  inline bool has_dim() const;
+  inline void clear_dim();
+  static const int kDimFieldNumber = 4;
+  inline const ::Vec3f& dim() const;
+  inline ::Vec3f* mutable_dim();
+  inline ::Vec3f* release_dim();
   
   // required float horizontal_angle = 5;
   inline bool has_horizontal_angle() const;
@@ -1231,31 +1337,17 @@ class PhysicsData : public ::google::protobuf::Message {
   inline float vertical_angle() const;
   inline void set_vertical_angle(float value);
   
-  // required float dim_x = 7;
-  inline bool has_dim_x() const;
-  inline void clear_dim_x();
-  static const int kDimXFieldNumber = 7;
-  inline float dim_x() const;
-  inline void set_dim_x(float value);
+  // required bool on_ground = 7;
+  inline bool has_on_ground() const;
+  inline void clear_on_ground();
+  static const int kOnGroundFieldNumber = 7;
+  inline bool on_ground() const;
+  inline void set_on_ground(bool value);
   
-  // required float dim_y = 8;
-  inline bool has_dim_y() const;
-  inline void clear_dim_y();
-  static const int kDimYFieldNumber = 8;
-  inline float dim_y() const;
-  inline void set_dim_y(float value);
-  
-  // required float dim_z = 9;
-  inline bool has_dim_z() const;
-  inline void clear_dim_z();
-  static const int kDimZFieldNumber = 9;
-  inline float dim_z() const;
-  inline void set_dim_z(float value);
-  
-  // required .ObjectType type = 10;
+  // required .ObjectType type = 8;
   inline bool has_type() const;
   inline void clear_type();
-  static const int kTypeFieldNumber = 10;
+  static const int kTypeFieldNumber = 8;
   inline ObjectType type() const;
   inline void set_type(ObjectType value);
   
@@ -1263,40 +1355,34 @@ class PhysicsData : public ::google::protobuf::Message {
  private:
   inline void set_has_eid();
   inline void clear_has_eid();
-  inline void set_has_x();
-  inline void clear_has_x();
-  inline void set_has_y();
-  inline void clear_has_y();
-  inline void set_has_z();
-  inline void clear_has_z();
+  inline void set_has_pos();
+  inline void clear_has_pos();
+  inline void set_has_vel();
+  inline void clear_has_vel();
+  inline void set_has_dim();
+  inline void clear_has_dim();
   inline void set_has_horizontal_angle();
   inline void clear_has_horizontal_angle();
   inline void set_has_vertical_angle();
   inline void clear_has_vertical_angle();
-  inline void set_has_dim_x();
-  inline void clear_has_dim_x();
-  inline void set_has_dim_y();
-  inline void clear_has_dim_y();
-  inline void set_has_dim_z();
-  inline void clear_has_dim_z();
+  inline void set_has_on_ground();
+  inline void clear_has_on_ground();
   inline void set_has_type();
   inline void clear_has_type();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
+  ::Vec3f* pos_;
+  ::Vec3f* vel_;
   ::google::protobuf::uint32 eid_;
-  float x_;
-  float y_;
-  float z_;
   float horizontal_angle_;
+  ::Vec3f* dim_;
   float vertical_angle_;
-  float dim_x_;
-  float dim_y_;
-  float dim_z_;
+  bool on_ground_;
   int type_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -2158,6 +2244,76 @@ inline void Lifetime::set_ttl(float value) {
 
 // -------------------------------------------------------------------
 
+// Vec3f
+
+// required float x = 1;
+inline bool Vec3f::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Vec3f::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Vec3f::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Vec3f::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline float Vec3f::x() const {
+  return x_;
+}
+inline void Vec3f::set_x(float value) {
+  set_has_x();
+  x_ = value;
+}
+
+// required float y = 2;
+inline bool Vec3f::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Vec3f::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Vec3f::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Vec3f::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline float Vec3f::y() const {
+  return y_;
+}
+inline void Vec3f::set_y(float value) {
+  set_has_y();
+  y_ = value;
+}
+
+// required float z = 3;
+inline bool Vec3f::has_z() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Vec3f::set_has_z() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Vec3f::clear_has_z() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Vec3f::clear_z() {
+  z_ = 0;
+  clear_has_z();
+}
+inline float Vec3f::z() const {
+  return z_;
+}
+inline void Vec3f::set_z(float value) {
+  set_has_z();
+  z_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // PhysicsData
 
 // required fixed32 eid = 1;
@@ -2182,70 +2338,91 @@ inline void PhysicsData::set_eid(::google::protobuf::uint32 value) {
   eid_ = value;
 }
 
-// required float x = 2;
-inline bool PhysicsData::has_x() const {
+// required .Vec3f pos = 2;
+inline bool PhysicsData::has_pos() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PhysicsData::set_has_x() {
+inline void PhysicsData::set_has_pos() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void PhysicsData::clear_has_x() {
+inline void PhysicsData::clear_has_pos() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void PhysicsData::clear_x() {
-  x_ = 0;
-  clear_has_x();
+inline void PhysicsData::clear_pos() {
+  if (pos_ != NULL) pos_->::Vec3f::Clear();
+  clear_has_pos();
 }
-inline float PhysicsData::x() const {
-  return x_;
+inline const ::Vec3f& PhysicsData::pos() const {
+  return pos_ != NULL ? *pos_ : *default_instance_->pos_;
 }
-inline void PhysicsData::set_x(float value) {
-  set_has_x();
-  x_ = value;
+inline ::Vec3f* PhysicsData::mutable_pos() {
+  set_has_pos();
+  if (pos_ == NULL) pos_ = new ::Vec3f;
+  return pos_;
+}
+inline ::Vec3f* PhysicsData::release_pos() {
+  clear_has_pos();
+  ::Vec3f* temp = pos_;
+  pos_ = NULL;
+  return temp;
 }
 
-// required float y = 3;
-inline bool PhysicsData::has_y() const {
+// required .Vec3f vel = 3;
+inline bool PhysicsData::has_vel() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void PhysicsData::set_has_y() {
+inline void PhysicsData::set_has_vel() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void PhysicsData::clear_has_y() {
+inline void PhysicsData::clear_has_vel() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void PhysicsData::clear_y() {
-  y_ = 0;
-  clear_has_y();
+inline void PhysicsData::clear_vel() {
+  if (vel_ != NULL) vel_->::Vec3f::Clear();
+  clear_has_vel();
 }
-inline float PhysicsData::y() const {
-  return y_;
+inline const ::Vec3f& PhysicsData::vel() const {
+  return vel_ != NULL ? *vel_ : *default_instance_->vel_;
 }
-inline void PhysicsData::set_y(float value) {
-  set_has_y();
-  y_ = value;
+inline ::Vec3f* PhysicsData::mutable_vel() {
+  set_has_vel();
+  if (vel_ == NULL) vel_ = new ::Vec3f;
+  return vel_;
+}
+inline ::Vec3f* PhysicsData::release_vel() {
+  clear_has_vel();
+  ::Vec3f* temp = vel_;
+  vel_ = NULL;
+  return temp;
 }
 
-// required float z = 4;
-inline bool PhysicsData::has_z() const {
+// required .Vec3f dim = 4;
+inline bool PhysicsData::has_dim() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PhysicsData::set_has_z() {
+inline void PhysicsData::set_has_dim() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void PhysicsData::clear_has_z() {
+inline void PhysicsData::clear_has_dim() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void PhysicsData::clear_z() {
-  z_ = 0;
-  clear_has_z();
+inline void PhysicsData::clear_dim() {
+  if (dim_ != NULL) dim_->::Vec3f::Clear();
+  clear_has_dim();
 }
-inline float PhysicsData::z() const {
-  return z_;
+inline const ::Vec3f& PhysicsData::dim() const {
+  return dim_ != NULL ? *dim_ : *default_instance_->dim_;
 }
-inline void PhysicsData::set_z(float value) {
-  set_has_z();
-  z_ = value;
+inline ::Vec3f* PhysicsData::mutable_dim() {
+  set_has_dim();
+  if (dim_ == NULL) dim_ = new ::Vec3f;
+  return dim_;
+}
+inline ::Vec3f* PhysicsData::release_dim() {
+  clear_has_dim();
+  ::Vec3f* temp = dim_;
+  dim_ = NULL;
+  return temp;
 }
 
 // required float horizontal_angle = 5;
@@ -2292,81 +2469,37 @@ inline void PhysicsData::set_vertical_angle(float value) {
   vertical_angle_ = value;
 }
 
-// required float dim_x = 7;
-inline bool PhysicsData::has_dim_x() const {
+// required bool on_ground = 7;
+inline bool PhysicsData::has_on_ground() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void PhysicsData::set_has_dim_x() {
+inline void PhysicsData::set_has_on_ground() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void PhysicsData::clear_has_dim_x() {
+inline void PhysicsData::clear_has_on_ground() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void PhysicsData::clear_dim_x() {
-  dim_x_ = 0;
-  clear_has_dim_x();
+inline void PhysicsData::clear_on_ground() {
+  on_ground_ = false;
+  clear_has_on_ground();
 }
-inline float PhysicsData::dim_x() const {
-  return dim_x_;
+inline bool PhysicsData::on_ground() const {
+  return on_ground_;
 }
-inline void PhysicsData::set_dim_x(float value) {
-  set_has_dim_x();
-  dim_x_ = value;
+inline void PhysicsData::set_on_ground(bool value) {
+  set_has_on_ground();
+  on_ground_ = value;
 }
 
-// required float dim_y = 8;
-inline bool PhysicsData::has_dim_y() const {
+// required .ObjectType type = 8;
+inline bool PhysicsData::has_type() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void PhysicsData::set_has_dim_y() {
+inline void PhysicsData::set_has_type() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void PhysicsData::clear_has_dim_y() {
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline void PhysicsData::clear_dim_y() {
-  dim_y_ = 0;
-  clear_has_dim_y();
-}
-inline float PhysicsData::dim_y() const {
-  return dim_y_;
-}
-inline void PhysicsData::set_dim_y(float value) {
-  set_has_dim_y();
-  dim_y_ = value;
-}
-
-// required float dim_z = 9;
-inline bool PhysicsData::has_dim_z() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
-}
-inline void PhysicsData::set_has_dim_z() {
-  _has_bits_[0] |= 0x00000100u;
-}
-inline void PhysicsData::clear_has_dim_z() {
-  _has_bits_[0] &= ~0x00000100u;
-}
-inline void PhysicsData::clear_dim_z() {
-  dim_z_ = 0;
-  clear_has_dim_z();
-}
-inline float PhysicsData::dim_z() const {
-  return dim_z_;
-}
-inline void PhysicsData::set_dim_z(float value) {
-  set_has_dim_z();
-  dim_z_ = value;
-}
-
-// required .ObjectType type = 10;
-inline bool PhysicsData::has_type() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
-}
-inline void PhysicsData::set_has_type() {
-  _has_bits_[0] |= 0x00000200u;
-}
 inline void PhysicsData::clear_has_type() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void PhysicsData::clear_type() {
   type_ = 1;

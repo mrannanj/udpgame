@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/world/entity_id.h"
+#include "common/proto/udpgame.pb.h"
 
 #include <algorithm>
 #include <vector>
@@ -8,7 +9,7 @@
 
 class World;
 
-template<typename T> class WorldHandler {
+template<typename T, typename D> class WorldHandler {
 public:
   T* get(EntityId);
   void add(const T&);
@@ -18,46 +19,66 @@ public:
   virtual void tick(float, World&);
   virtual ~WorldHandler();
 
+  void serialize(google::protobuf::RepeatedPtrField<D>*) const;
+  void deserialize(const google::protobuf::RepeatedPtrField<D>&);
+
   const std::vector<T>& components() const;
 
 protected:
   std::vector<T> mComponents;
 };
 
-template<typename T>
-void WorldHandler<T>::handleDead(const std::set<EntityId>& r) {
+template<typename T, typename D>
+void WorldHandler<T,D>::handleDead(const std::set<EntityId>& r) {
   for (EntityId id : r) remove(id);
 }
 
-template<typename T>
-void WorldHandler<T>::tick(float, World&) {
+template<typename T, typename D>
+void WorldHandler<T,D>::tick(float, World&) {
 }
 
-template<typename T>
-T* WorldHandler<T>::get(EntityId eid) {
+template<typename T, typename D>
+T* WorldHandler<T,D>::get(EntityId eid) {
   for (T& c : mComponents)
     if (c.eid() == eid)
       return &c;
   return nullptr;
 }
 
-template<typename T>
-void WorldHandler<T>::add(const T& c) {
+template<typename T, typename D>
+void WorldHandler<T,D>::add(const T& c) {
   mComponents.push_back(c);
 }
 
-template<typename T>
-WorldHandler<T>::~WorldHandler() {
+template<typename T, typename D>
+WorldHandler<T,D>::~WorldHandler() {
 }
 
-template<typename T>
-const std::vector<T>& WorldHandler<T>::components() const {
+template<typename T, typename D>
+const std::vector<T>& WorldHandler<T,D>::components() const {
   return mComponents;
 }
 
-template<typename T>
-void WorldHandler<T>::remove(EntityId eid) {
+template<typename T, typename D>
+void WorldHandler<T,D>::remove(EntityId eid) {
   mComponents.erase(std::remove_if(std::begin(mComponents),
     std::end(mComponents), [&](T& c) { return c.eid() == eid; }),
     std::end(mComponents));
+}
+
+template<typename T, typename D>
+void WorldHandler<T,D>::serialize(
+    google::protobuf::RepeatedPtrField<D>* ls) const
+{
+  for (const T& l : mComponents)
+    ls->Add()->CopyFrom(l);
+}
+
+template<typename T, typename D>
+void WorldHandler<T,D>::deserialize(
+    const google::protobuf::RepeatedPtrField<D>& ls)
+{
+  mComponents.clear();
+  for (const D& l : ls)
+    mComponents.push_back(l);
 }
