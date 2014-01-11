@@ -100,7 +100,7 @@ message PhysicsData {
   required fixed32 eid = 1;
   required Vec3f pos = 2;
   required Vec3f vel = 3;
-  required Vec3f dim = 4;
+  required Vec3f half_dim = 4;
   required float horizontal_angle = 5;
   required float vertical_angle = 6;
   required bool on_ground = 7;

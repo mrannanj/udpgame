@@ -19,7 +19,7 @@ constexpr float GRAVITY = 10.0f;
 using namespace std;
 
 void PhysicsHandler::tick(float dt, World& w) {
-  for (PhysicsC& p : mComponents) {
+  for (Physics& p : mComponents) {
     handleInput(p, w);
 
     p.velocity.y -= GRAVITY * dt;
@@ -30,7 +30,7 @@ void PhysicsHandler::tick(float dt, World& w) {
   }
 }
 
-void PhysicsHandler::handleInput(PhysicsC& p, World& w) {
+void PhysicsHandler::handleInput(Physics& p, World& w) {
   FrameInput* i = w.input().get(p.eid());
   if (!i) return;
 
@@ -68,7 +68,7 @@ void PhysicsHandler::handleInput(PhysicsC& p, World& w) {
 unsigned PhysicsHandler::hash() {
   unsigned long hash = 5381;
 
-  for (const PhysicsC& p : mComponents) {
+  for (const Physics& p : mComponents) {
     for (int a = 0; a < 3; ++a) {
       unsigned v;
       memcpy(&v, &p.position[a], sizeof(v));
@@ -77,3 +77,11 @@ unsigned PhysicsHandler::hash() {
   }
   return hash;
 }
+
+bool PhysicsHandler::canPlaceBlock(int f[3]) {
+  AABB a(f[0], f[1], f[2]);
+  for (Physics& p : mComponents)
+    if (AABBvsAABB(a, p.bb)) return false;
+  return true;
+}
+

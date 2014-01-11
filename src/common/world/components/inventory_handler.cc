@@ -31,7 +31,7 @@ void InventoryHandler::tick(float, World& w) {
       inv.set_wielding(3);
 #endif
 
-    PhysicsC* p = w.physics().get(inv.eid());
+    Physics* p = w.physics().get(inv.eid());
     assert(p != nullptr);
 
     if (ic->actions() & ContinousAction::THROW) {
@@ -50,15 +50,18 @@ void InventoryHandler::tick(float, World& w) {
       char* hitBlock;
       char* faceBlock;
       int b[3];
-      if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock, b)) {
+      int f[3];
+      if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock, b, f)) {
         if (ic->actions() & ContinousAction::FIRST and *hitBlock != 5) {
           w.onBlockDestruction(b[0], b[1], b[2]);
         }
-        if (ic->actions() & ContinousAction::SECOND and faceBlock != nullptr) {
-          if (inv.itemCount[inv.wielding] > 0) {
-            *faceBlock = inv.wielding;
-            inv.itemCount[inv.wielding] -= 1;
-          }
+        if (ic->actions() & ContinousAction::SECOND
+            and faceBlock != nullptr
+            and inv.itemCount[inv.wielding] > 0
+            and w.physics().canPlaceBlock(f))
+        {
+          *faceBlock = inv.wielding;
+          inv.itemCount[inv.wielding] -= 1;
         }
       }
     }
@@ -69,11 +72,11 @@ void InventoryHandler::tick(float, World& w) {
 void InventoryHandler::pickupItems(World& w) {
   for (size_t i = 0; i < mComponents.size(); ++i) {
     EntityId eid = mComponents[i].eid();
-    PhysicsC* p1 = w.physics().get(eid);
+    Physics* p1 = w.physics().get(eid);
     Inventory& inv = mComponents[i];
     if (!p1) continue;
     for (size_t j = 0; j < w.physics().components().size(); ++ j) {
-      const PhysicsC& p2 = w.physics().components()[j];
+      const Physics& p2 = w.physics().components()[j];
       if (eid == p2.entityid) continue;
       if (get(p2.entityid)) continue;
       if (!AABBvsAABB(p1->bb, p2.bb)) continue;

@@ -6,16 +6,16 @@
 #include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
 
-struct PhysicsC {
-  PhysicsC();
-  PhysicsC(const PhysicsData&);
+struct Physics {
+  Physics();
+  Physics(const PhysicsData&);
   operator PhysicsData() const;
 
   EntityId entityid;
   ObjectType type;
   glm::vec3 position;
   glm::vec3 velocity;
-  glm::vec3 dimensions;
+  glm::vec3 half_dim;
   float horizontal_angle;
   float vertical_angle;
   bool on_ground;

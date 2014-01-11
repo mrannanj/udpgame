@@ -1,49 +1,51 @@
 #include "common/world/components/physics.h"
 
-void PhysicsC::update_bbs() {
-  bb.max = position + dimensions;
-  bb.min = position - dimensions;
+void Physics::update_bbs() {
+  bb.max = position + half_dim;
+  bb.min = position - half_dim;
 }
 
-void PhysicsC::update_next_bbs() {
-  next_bb.max = next_position + dimensions;
-  next_bb.min = next_position - dimensions;
+void Physics::update_next_bbs() {
+  next_bb.max = next_position + half_dim;
+  next_bb.min = next_position - half_dim;
 }
 
-EntityId PhysicsC::eid() const {
+EntityId Physics::eid() const {
   return entityid;
 }
 
-glm::vec3 PhysicsC::eye_position() const {
+glm::vec3 Physics::eye_position() const {
   glm::vec3 eye_pos(position);
   eye_pos.y += 0.7f;
   return eye_pos;
 }
 
-glm::vec3 PhysicsC::look_direction() const {
+glm::vec3 Physics::look_direction() const {
   return glm::vec3(
           cos(vertical_angle) * sin(horizontal_angle),
           sin(vertical_angle),
           cos(vertical_angle) * cos(horizontal_angle));
 }
 
-PhysicsC::PhysicsC()
+Physics::Physics()
 {
 }
 
-PhysicsC::PhysicsC(const PhysicsData& pd):
+Physics::Physics(const PhysicsData& pd):
   entityid(pd.eid()),
   type(pd.type()),
   position(pd.pos().x(), pd.pos().y(), pd.pos().z()),
   velocity(pd.vel().x(), pd.vel().y(), pd.vel().z()),
-  dimensions(pd.dim().x(), pd.dim().y(), pd.dim().z()),
+  half_dim(pd.half_dim().x(), pd.half_dim().y(), pd.half_dim().z()),
   horizontal_angle(pd.horizontal_angle()),
   vertical_angle(pd.vertical_angle()),
   on_ground(pd.on_ground())
 {
+  update_bbs();
+  update_next_bbs();
 }
 
-PhysicsC::operator PhysicsData() const {
+Physics::operator PhysicsData() const {
   PhysicsData pd;
   pd.set_eid(entityid);
   pd.set_type(type);
@@ -53,9 +55,9 @@ PhysicsC::operator PhysicsData() const {
   pd.mutable_vel()->set_x(velocity.x);
   pd.mutable_vel()->set_y(velocity.y);
   pd.mutable_vel()->set_z(velocity.z);
-  pd.mutable_dim()->set_x(dimensions.x);
-  pd.mutable_dim()->set_y(dimensions.y);
-  pd.mutable_dim()->set_z(dimensions.z);
+  pd.mutable_half_dim()->set_x(half_dim.x);
+  pd.mutable_half_dim()->set_y(half_dim.y);
+  pd.mutable_half_dim()->set_z(half_dim.z);
   pd.set_horizontal_angle(horizontal_angle);
   pd.set_vertical_angle(vertical_angle);
   pd.set_on_ground(on_ground);

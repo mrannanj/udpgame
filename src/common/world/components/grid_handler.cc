@@ -27,7 +27,7 @@ void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
   }
 }
 
-void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
+void GridHandler::overlapping_indices(const Physics& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
     ind[a][0] = (int)(p.next_bb.min[a]);
     ind[a][1] = (int)(p.next_bb.max[a]);
@@ -45,7 +45,7 @@ void GridHandler::raycast_range(const vec3& p, const vec3& d, int ind[3][2])
   }
 }
 
-bool GridHandler::correct_one_hit(PhysicsC& p) const {
+bool GridHandler::correct_one_hit(Physics& p) const {
   int ind[3][2];
   overlapping_indices(p, ind);
 
@@ -81,7 +81,7 @@ bool GridHandler::correct_one_hit(PhysicsC& p) const {
   return hit;
 }
 
-bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
+bool GridHandler::handle_grid_collisions(Physics& p, float dt) const {
   p.next_position = p.position + p.velocity * dt;
   p.position = p.next_position;
   p.update_bbs();
@@ -92,7 +92,7 @@ bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   return true;
 }
 
-bool GridHandler::check_collision(PhysicsC& p, float dt) const {
+bool GridHandler::check_collision(Physics& p, float dt) const {
   bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
   if (belowBottom(p.position)) return false;
@@ -102,7 +102,7 @@ bool GridHandler::check_collision(PhysicsC& p, float dt) const {
 }
 
 bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
-    char** hitBlock, char** faceBlock, int b[3])
+    char** hitBlock, char** faceBlock, int b[3], int f[3])
 {
   distance = FLT_MAX;
   int baxis = 4;
@@ -126,16 +126,15 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
             baxis = tmp_axis;
             dir = tmp_dir;
             *hitBlock = &block;
-            b[0] = x;
-            b[1] = y;
-            b[2] = z;
-            b[baxis] += dir;
-            if (!mArr.outsideGrid(b[0], b[1], b[2])) {
-              *faceBlock = &mArr.getRef(b[0], b[1], b[2]);
+            b[0] = f[0] = x;
+            b[1] = f[1] = y;
+            b[2] = f[2] = z;
+            f[baxis] += dir;
+            if (!mArr.outsideGrid(f[0], f[1], f[2])) {
+              *faceBlock = &mArr.getRef(f[0], f[1], f[2]);
             } else {
               *faceBlock = nullptr;
             }
-            b[baxis] -= dir;
           }
         }
       }

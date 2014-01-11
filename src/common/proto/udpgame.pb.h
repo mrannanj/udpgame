@@ -1315,13 +1315,13 @@ class PhysicsData : public ::google::protobuf::Message {
   inline ::Vec3f* mutable_vel();
   inline ::Vec3f* release_vel();
   
-  // required .Vec3f dim = 4;
-  inline bool has_dim() const;
-  inline void clear_dim();
-  static const int kDimFieldNumber = 4;
-  inline const ::Vec3f& dim() const;
-  inline ::Vec3f* mutable_dim();
-  inline ::Vec3f* release_dim();
+  // required .Vec3f half_dim = 4;
+  inline bool has_half_dim() const;
+  inline void clear_half_dim();
+  static const int kHalfDimFieldNumber = 4;
+  inline const ::Vec3f& half_dim() const;
+  inline ::Vec3f* mutable_half_dim();
+  inline ::Vec3f* release_half_dim();
   
   // required float horizontal_angle = 5;
   inline bool has_horizontal_angle() const;
@@ -1359,8 +1359,8 @@ class PhysicsData : public ::google::protobuf::Message {
   inline void clear_has_pos();
   inline void set_has_vel();
   inline void clear_has_vel();
-  inline void set_has_dim();
-  inline void clear_has_dim();
+  inline void set_has_half_dim();
+  inline void clear_has_half_dim();
   inline void set_has_horizontal_angle();
   inline void clear_has_horizontal_angle();
   inline void set_has_vertical_angle();
@@ -1376,7 +1376,7 @@ class PhysicsData : public ::google::protobuf::Message {
   ::Vec3f* vel_;
   ::google::protobuf::uint32 eid_;
   float horizontal_angle_;
-  ::Vec3f* dim_;
+  ::Vec3f* half_dim_;
   float vertical_angle_;
   bool on_ground_;
   int type_;
@@ -2396,32 +2396,32 @@ inline ::Vec3f* PhysicsData::release_vel() {
   return temp;
 }
 
-// required .Vec3f dim = 4;
-inline bool PhysicsData::has_dim() const {
+// required .Vec3f half_dim = 4;
+inline bool PhysicsData::has_half_dim() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PhysicsData::set_has_dim() {
+inline void PhysicsData::set_has_half_dim() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void PhysicsData::clear_has_dim() {
+inline void PhysicsData::clear_has_half_dim() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void PhysicsData::clear_dim() {
-  if (dim_ != NULL) dim_->::Vec3f::Clear();
-  clear_has_dim();
+inline void PhysicsData::clear_half_dim() {
+  if (half_dim_ != NULL) half_dim_->::Vec3f::Clear();
+  clear_has_half_dim();
 }
-inline const ::Vec3f& PhysicsData::dim() const {
-  return dim_ != NULL ? *dim_ : *default_instance_->dim_;
+inline const ::Vec3f& PhysicsData::half_dim() const {
+  return half_dim_ != NULL ? *half_dim_ : *default_instance_->half_dim_;
 }
-inline ::Vec3f* PhysicsData::mutable_dim() {
-  set_has_dim();
-  if (dim_ == NULL) dim_ = new ::Vec3f;
-  return dim_;
+inline ::Vec3f* PhysicsData::mutable_half_dim() {
+  set_has_half_dim();
+  if (half_dim_ == NULL) half_dim_ = new ::Vec3f;
+  return half_dim_;
 }
-inline ::Vec3f* PhysicsData::release_dim() {
-  clear_has_dim();
-  ::Vec3f* temp = dim_;
-  dim_ = NULL;
+inline ::Vec3f* PhysicsData::release_half_dim() {
+  clear_has_half_dim();
+  ::Vec3f* temp = half_dim_;
+  half_dim_ = NULL;
   return temp;
 }
 

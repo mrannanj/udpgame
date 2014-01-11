@@ -32,15 +32,15 @@ void World::updateHash() {
   mHash = mPhysicsHandler.hash();
 }
 
-void World::throw_object(const PhysicsC& o, ObjectType t) {
+void World::throw_object(const Physics& o, ObjectType t) {
   EntityId eid = m_idgen.generateId();
 
-  PhysicsC p;
+  Physics p;
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = o.eye_position() + o.look_direction() * 2.0f;
-  p.dimensions = glm::vec3(0.2f, 0.2f, 0.2f);
+  p.half_dim = glm::vec3(0.2f, 0.2f, 0.2f);
   p.velocity = o.look_direction() * 10.0f;
   p.type = t;
   mPhysicsHandler.add(p);
@@ -56,12 +56,12 @@ void World::onBlockDestruction(int x, int y, int z) {
 
   EntityId eid = m_idgen.generateId();
 
-  PhysicsC p;
+  Physics p;
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = glm::vec3((float)x,(float)y,(float)z) + 0.5f;
-  p.dimensions = glm::vec3(0.2f, 0.2f, 0.2f);
+  p.half_dim = glm::vec3(0.2f, 0.2f, 0.2f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   p.type = (ObjectType)b;
   mPhysicsHandler.add(p);
@@ -76,12 +76,12 @@ void World::onBlockDestruction(int x, int y, int z) {
 void World::spawn_player(int clientid) {
   EntityId eid = m_idgen.generateId();
 
-  PhysicsC p;
+  Physics p;
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = mGrid.spawn_pos();
-  p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
+  p.half_dim = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
   p.type = ObjectType::PLAYER;
   mPhysicsHandler.add(p);

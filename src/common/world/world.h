@@ -19,7 +19,7 @@ public:
 
   void tick(const FrameInputs&);
   void spawn_player(int);
-  void throw_object(const PhysicsC&, ObjectType);
+  void throw_object(const Physics&, ObjectType);
   void onBlockDestruction(int, int, int);
 
   void removeDead();

@@ -12,4 +12,3 @@ public:
   ClientData* getByClient(int);
   void removeByClient(int);
 };
-

@@ -243,7 +243,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, pos_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, vel_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, half_dim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, horizontal_angle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, vertical_angle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, on_ground_),
@@ -358,21 +358,21 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\014physics_data\030\007 \003(\0132\014.PhysicsData\022\033\n\010lif"
     "etime\030\010 \003(\0132\t.Lifetime\"$\n\010Lifetime\022\013\n\003ei"
     "d\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"(\n\005Vec3f\022\t\n\001x\030\001 \002(\002"
-    "\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"\271\001\n\013PhysicsData\022\013"
+    "\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"\276\001\n\013PhysicsData\022\013"
     "\n\003eid\030\001 \002(\007\022\023\n\003pos\030\002 \002(\0132\006.Vec3f\022\023\n\003vel\030"
-    "\003 \002(\0132\006.Vec3f\022\023\n\003dim\030\004 \002(\0132\006.Vec3f\022\030\n\020ho"
-    "rizontal_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006"
-    " \002(\002\022\021\n\ton_ground\030\007 \002(\010\022\031\n\004type\030\010 \002(\0162\013."
-    "ObjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\r"
-    "INITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Te"
-    "xture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS"
-    "\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016"
-    "\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXT"
-    "URE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_"
-    "SIZE\020\010*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020"
-    "\002\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020"
-    "\006*0\n\nClientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE"
-    "_OBSERVER\020\001", 1531);
+    "\003 \002(\0132\006.Vec3f\022\030\n\010half_dim\030\004 \002(\0132\006.Vec3f\022"
+    "\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical_an"
+    "gle\030\006 \002(\002\022\021\n\ton_ground\030\007 \002(\010\022\031\n\004type\030\010 \002"
+    "(\0162\013.ObjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020"
+    "\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252"
+    "\001\n\007Texture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_"
+    "GRASS\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROC"
+    "K\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n"
+    "\014TEXTURE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEX"
+    "TURE_SIZE\020\010*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004"
+    "SAND\020\002\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PL"
+    "AYER\020\006*0\n\nClientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n"
+    "\rMODE_OBSERVER\020\001", 1536);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -3642,7 +3642,7 @@ void Vec3f::Swap(Vec3f* other) {
 const int PhysicsData::kEidFieldNumber;
 const int PhysicsData::kPosFieldNumber;
 const int PhysicsData::kVelFieldNumber;
-const int PhysicsData::kDimFieldNumber;
+const int PhysicsData::kHalfDimFieldNumber;
 const int PhysicsData::kHorizontalAngleFieldNumber;
 const int PhysicsData::kVerticalAngleFieldNumber;
 const int PhysicsData::kOnGroundFieldNumber;
@@ -3657,7 +3657,7 @@ PhysicsData::PhysicsData()
 void PhysicsData::InitAsDefaultInstance() {
   pos_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
   vel_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
-  dim_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
+  half_dim_ = const_cast< ::Vec3f*>(&::Vec3f::default_instance());
 }
 
 PhysicsData::PhysicsData(const PhysicsData& from)
@@ -3671,7 +3671,7 @@ void PhysicsData::SharedCtor() {
   eid_ = 0u;
   pos_ = NULL;
   vel_ = NULL;
-  dim_ = NULL;
+  half_dim_ = NULL;
   horizontal_angle_ = 0;
   vertical_angle_ = 0;
   on_ground_ = false;
@@ -3687,7 +3687,7 @@ void PhysicsData::SharedDtor() {
   if (this != default_instance_) {
     delete pos_;
     delete vel_;
-    delete dim_;
+    delete half_dim_;
   }
 }
 
@@ -3720,8 +3720,8 @@ void PhysicsData::Clear() {
     if (has_vel()) {
       if (vel_ != NULL) vel_->::Vec3f::Clear();
     }
-    if (has_dim()) {
-      if (dim_ != NULL) dim_->::Vec3f::Clear();
+    if (has_half_dim()) {
+      if (half_dim_ != NULL) half_dim_->::Vec3f::Clear();
     }
     horizontal_angle_ = 0;
     vertical_angle_ = 0;
@@ -3777,17 +3777,17 @@ bool PhysicsData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_dim;
+        if (input->ExpectTag(34)) goto parse_half_dim;
         break;
       }
       
-      // required .Vec3f dim = 4;
+      // required .Vec3f half_dim = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_dim:
+         parse_half_dim:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_dim()));
+               input, mutable_half_dim()));
         } else {
           goto handle_uninterpreted;
         }
@@ -3899,10 +3899,10 @@ void PhysicsData::SerializeWithCachedSizes(
       3, this->vel(), output);
   }
   
-  // required .Vec3f dim = 4;
-  if (has_dim()) {
+  // required .Vec3f half_dim = 4;
+  if (has_half_dim()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->dim(), output);
+      4, this->half_dim(), output);
   }
   
   // required float horizontal_angle = 5;
@@ -3953,11 +3953,11 @@ void PhysicsData::SerializeWithCachedSizes(
         3, this->vel(), target);
   }
   
-  // required .Vec3f dim = 4;
-  if (has_dim()) {
+  // required .Vec3f half_dim = 4;
+  if (has_half_dim()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->dim(), target);
+        4, this->half_dim(), target);
   }
   
   // required float horizontal_angle = 5;
@@ -4011,11 +4011,11 @@ int PhysicsData::ByteSize() const {
           this->vel());
     }
     
-    // required .Vec3f dim = 4;
-    if (has_dim()) {
+    // required .Vec3f half_dim = 4;
+    if (has_half_dim()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->dim());
+          this->half_dim());
     }
     
     // required float horizontal_angle = 5;
@@ -4075,8 +4075,8 @@ void PhysicsData::MergeFrom(const PhysicsData& from) {
     if (from.has_vel()) {
       mutable_vel()->::Vec3f::MergeFrom(from.vel());
     }
-    if (from.has_dim()) {
-      mutable_dim()->::Vec3f::MergeFrom(from.dim());
+    if (from.has_half_dim()) {
+      mutable_half_dim()->::Vec3f::MergeFrom(from.half_dim());
     }
     if (from.has_horizontal_angle()) {
       set_horizontal_angle(from.horizontal_angle());
@@ -4115,8 +4115,8 @@ bool PhysicsData::IsInitialized() const {
   if (has_vel()) {
     if (!this->vel().IsInitialized()) return false;
   }
-  if (has_dim()) {
-    if (!this->dim().IsInitialized()) return false;
+  if (has_half_dim()) {
+    if (!this->half_dim().IsInitialized()) return false;
   }
   return true;
 }
@@ -4126,7 +4126,7 @@ void PhysicsData::Swap(PhysicsData* other) {
     std::swap(eid_, other->eid_);
     std::swap(pos_, other->pos_);
     std::swap(vel_, other->vel_);
-    std::swap(dim_, other->dim_);
+    std::swap(half_dim_, other->half_dim_);
     std::swap(horizontal_angle_, other->horizontal_angle_);
     std::swap(vertical_angle_, other->vertical_angle_);
     std::swap(on_ground_, other->on_ground_);
