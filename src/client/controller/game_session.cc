@@ -94,19 +94,10 @@ void GameSession::sendFrameInput(Input& i) {
 }
 
 void GameSession::draw(const Renderer& r) {
-  r.text_renderer.On();
-  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f,
-    mPerspective.pos_string(), Green);
   glm::mat4 vp = mPerspective.get_view_projection_matrix();
   draw_grid(r, mWorld.grid(), vp, mPerspective.m_position);
   draw_units(r, mWorld.physics(), vp);
+  draw_hud(r, mWorld, mPerspective.m_follow_id, mPerspective);
 
-  float q[] = {
-    -0.005f, -0.005f, 0.005f, 0.005f,
-    -0.005f, 0.005f, 0.005f, -0.005f
-  };
-  r.quad_renderer.On();
-  set_color(r.quad_renderer.color_uni(), Blue, 1.0f);
-  r.quad_renderer.draw_quad(q);
   mRedraw = true;
 }

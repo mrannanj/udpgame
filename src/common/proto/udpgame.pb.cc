@@ -24,9 +24,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ObjectCount_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ObjectCount_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Inventory_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* InventoryData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  Inventory_reflection_ = NULL;
+  InventoryData_reflection_ = NULL;
 const ::google::protobuf::Descriptor* FrameInputs_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   FrameInputs_reflection_ = NULL;
@@ -39,6 +39,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* InitialState_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   InitialState_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Lifetime_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Lifetime_reflection_ = NULL;
 const ::google::protobuf::Descriptor* PhysicsData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PhysicsData_reflection_ = NULL;
@@ -108,23 +111,23 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectCount));
-  Inventory_descriptor_ = file->message_type(3);
-  static const int Inventory_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, eid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, wielding_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, count_),
+  InventoryData_descriptor_ = file->message_type(3);
+  static const int InventoryData_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InventoryData, eid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InventoryData, wielding_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InventoryData, count_),
   };
-  Inventory_reflection_ =
+  InventoryData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      Inventory_descriptor_,
-      Inventory::default_instance_,
-      Inventory_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, _unknown_fields_),
+      InventoryData_descriptor_,
+      InventoryData::default_instance_,
+      InventoryData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InventoryData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InventoryData, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Inventory));
+      sizeof(InventoryData));
   FrameInputs_descriptor_ = file->message_type(4);
   static const int FrameInputs_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameInputs, tick_number_),
@@ -178,7 +181,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientInput));
   InitialState_descriptor_ = file->message_type(7);
-  static const int InitialState_offsets_[7] = {
+  static const int InitialState_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, next_eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, client_id_),
@@ -186,6 +189,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, inventories_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, client_data_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, physics_data_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, lifetime_),
   };
   InitialState_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -198,7 +202,23 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(InitialState));
-  PhysicsData_descriptor_ = file->message_type(8);
+  Lifetime_descriptor_ = file->message_type(8);
+  static const int Lifetime_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Lifetime, eid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Lifetime, ttl_),
+  };
+  Lifetime_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Lifetime_descriptor_,
+      Lifetime::default_instance_,
+      Lifetime_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Lifetime, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Lifetime, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Lifetime));
+  PhysicsData_descriptor_ = file->message_type(9);
   static const int PhysicsData_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, x_),
@@ -245,7 +265,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ObjectCount_descriptor_, &ObjectCount::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Inventory_descriptor_, &Inventory::default_instance());
+    InventoryData_descriptor_, &InventoryData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     FrameInputs_descriptor_, &FrameInputs::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -254,6 +274,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     ClientInput_descriptor_, &ClientInput::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     InitialState_descriptor_, &InitialState::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Lifetime_descriptor_, &Lifetime::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PhysicsData_descriptor_, &PhysicsData::default_instance());
 }
@@ -267,8 +289,8 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete ClientData_reflection_;
   delete ObjectCount::default_instance_;
   delete ObjectCount_reflection_;
-  delete Inventory::default_instance_;
-  delete Inventory_reflection_;
+  delete InventoryData::default_instance_;
+  delete InventoryData_reflection_;
   delete FrameInputs::default_instance_;
   delete FrameInputs_reflection_;
   delete FrameInput::default_instance_;
@@ -277,6 +299,8 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete ClientInput_reflection_;
   delete InitialState::default_instance_;
   delete InitialState_reflection_;
+  delete Lifetime::default_instance_;
+  delete Lifetime_reflection_;
   delete PhysicsData::default_instance_;
   delete PhysicsData_reflection_;
 }
@@ -295,54 +319,58 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     ".FrameInputs\"R\n\nClientData\022\016\n\006client\030\001 \002"
     "(\017\022\031\n\004mode\030\002 \002(\0162\013.ClientMode\022\013\n\003eid\030\003 \002"
     "(\007\022\014\n\004dead\030\004 \002(\007\"7\n\013ObjectCount\022\031\n\004type\030"
-    "\001 \002(\0162\013.ObjectType\022\r\n\005count\030\002 \002(\007\"T\n\tInv"
-    "entory\022\013\n\003eid\030\001 \002(\007\022\035\n\010wielding\030\002 \002(\0162\013."
-    "ObjectType\022\033\n\005count\030\003 \003(\0132\014.ObjectCount\""
-    "E\n\013FrameInputs\022\023\n\013tick_number\030\001 \002(\007\022!\n\014f"
-    "rame_inputs\030\002 \003(\0132\013.FrameInput\"l\n\nFrameI"
-    "nput\022\016\n\006client\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007act"
-    "ions\030\003 \002(\007\022\030\n\020horizontal_delta\030\004 \002(\002\022\026\n\016"
-    "vertical_delta\030\005 \002(\002\"[\n\013ClientInput\022\023\n\013t"
-    "ick_number\030\001 \002(\007\022\025\n\rprevious_hash\030\002 \002(\007\022"
-    " \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\275\001\n\014In"
-    "itialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_"
-    "eid\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002"
-    "(\014\022\037\n\013inventories\030\005 \003(\0132\n.Inventory\022 \n\013c"
-    "lient_data\030\006 \003(\0132\013.ClientData\022\"\n\014physics"
-    "_data\030\007 \003(\0132\014.PhysicsData\"\265\001\n\013PhysicsDat"
-    "a\022\013\n\003eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001"
-    "z\030\004 \002(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016ver"
-    "tical_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_"
-    "y\030\010 \002(\002\022\r\n\005dim_z\030\t \002(\002\022\031\n\004type\030\n \002(\0162\013.O"
-    "bjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rI"
-    "NITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Tex"
-    "ture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS\020"
-    "\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n"
-    "\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXTU"
-    "RE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_S"
-    "IZE\020\010*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002"
-    "\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006"
-    "*0\n\nClientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE_"
-    "OBSERVER\020\001", 1410);
+    "\001 \002(\0162\013.ObjectType\022\r\n\005count\030\002 \002(\017\"X\n\rInv"
+    "entoryData\022\013\n\003eid\030\001 \002(\007\022\035\n\010wielding\030\002 \002("
+    "\0162\013.ObjectType\022\033\n\005count\030\003 \003(\0132\014.ObjectCo"
+    "unt\"E\n\013FrameInputs\022\023\n\013tick_number\030\001 \002(\007\022"
+    "!\n\014frame_inputs\030\002 \003(\0132\013.FrameInput\"l\n\nFr"
+    "ameInput\022\016\n\006client\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n"
+    "\007actions\030\003 \002(\007\022\030\n\020horizontal_delta\030\004 \002(\002"
+    "\022\026\n\016vertical_delta\030\005 \002(\002\"[\n\013ClientInput\022"
+    "\023\n\013tick_number\030\001 \002(\007\022\025\n\rprevious_hash\030\002 "
+    "\002(\007\022 \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\336\001"
+    "\n\014InitialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010n"
+    "ext_eid\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid"
+    "\030\004 \002(\014\022#\n\013inventories\030\005 \003(\0132\016.InventoryD"
+    "ata\022 \n\013client_data\030\006 \003(\0132\013.ClientData\022\"\n"
+    "\014physics_data\030\007 \003(\0132\014.PhysicsData\022\033\n\010lif"
+    "etime\030\010 \003(\0132\t.Lifetime\"$\n\010Lifetime\022\013\n\003ei"
+    "d\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"\265\001\n\013PhysicsData\022\013\n\003"
+    "eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002"
+    "(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical"
+    "_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002"
+    "(\002\022\r\n\005dim_z\030\t \002(\002\022\031\n\004type\030\n \002(\0162\013.Object"
+    "Type*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIA"
+    "L_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Texture\022"
+    "\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS\020\001\022\020\n\014"
+    "TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n\nTEXT"
+    "URE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXTURE_FA"
+    "CE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_SIZE\020\010"
+    "*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004R"
+    "OCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006*0\n\nC"
+    "lientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE_OBSER"
+    "VER\020\001", 1485);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
   ClientData::default_instance_ = new ClientData();
   ObjectCount::default_instance_ = new ObjectCount();
-  Inventory::default_instance_ = new Inventory();
+  InventoryData::default_instance_ = new InventoryData();
   FrameInputs::default_instance_ = new FrameInputs();
   FrameInput::default_instance_ = new FrameInput();
   ClientInput::default_instance_ = new ClientInput();
   InitialState::default_instance_ = new InitialState();
+  Lifetime::default_instance_ = new Lifetime();
   PhysicsData::default_instance_ = new PhysicsData();
   AMessage::default_instance_->InitAsDefaultInstance();
   ClientData::default_instance_->InitAsDefaultInstance();
   ObjectCount::default_instance_->InitAsDefaultInstance();
-  Inventory::default_instance_->InitAsDefaultInstance();
+  InventoryData::default_instance_->InitAsDefaultInstance();
   FrameInputs::default_instance_->InitAsDefaultInstance();
   FrameInput::default_instance_->InitAsDefaultInstance();
   ClientInput::default_instance_->InitAsDefaultInstance();
   InitialState::default_instance_->InitAsDefaultInstance();
+  Lifetime::default_instance_->InitAsDefaultInstance();
   PhysicsData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto);
 }
@@ -1133,7 +1161,7 @@ ObjectCount::ObjectCount(const ObjectCount& from)
 void ObjectCount::SharedCtor() {
   _cached_size_ = 0;
   type_ = 1;
-  count_ = 0u;
+  count_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1169,7 +1197,7 @@ ObjectCount* ObjectCount::New() const {
 void ObjectCount::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     type_ = 1;
-    count_ = 0u;
+    count_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1201,13 +1229,13 @@ bool ObjectCount::MergePartialFromCodedStream(
         break;
       }
       
-      // required fixed32 count = 2;
+      // required sfixed32 count = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
          parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_SFIXED32>(
                  input, &count_)));
           set_has_count();
         } else {
@@ -1241,9 +1269,9 @@ void ObjectCount::SerializeWithCachedSizes(
       1, this->type(), output);
   }
   
-  // required fixed32 count = 2;
+  // required sfixed32 count = 2;
   if (has_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->count(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteSFixed32(2, this->count(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1260,9 +1288,9 @@ void ObjectCount::SerializeWithCachedSizes(
       1, this->type(), target);
   }
   
-  // required fixed32 count = 2;
+  // required sfixed32 count = 2;
   if (has_count()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->count(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteSFixed32ToArray(2, this->count(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1282,7 +1310,7 @@ int ObjectCount::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
     
-    // required fixed32 count = 2;
+    // required sfixed32 count = 2;
     if (has_count()) {
       total_size += 1 + 4;
     }
@@ -1364,62 +1392,62 @@ void ObjectCount::Swap(ObjectCount* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Inventory::kEidFieldNumber;
-const int Inventory::kWieldingFieldNumber;
-const int Inventory::kCountFieldNumber;
+const int InventoryData::kEidFieldNumber;
+const int InventoryData::kWieldingFieldNumber;
+const int InventoryData::kCountFieldNumber;
 #endif  // !_MSC_VER
 
-Inventory::Inventory()
+InventoryData::InventoryData()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void Inventory::InitAsDefaultInstance() {
+void InventoryData::InitAsDefaultInstance() {
 }
 
-Inventory::Inventory(const Inventory& from)
+InventoryData::InventoryData(const InventoryData& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void Inventory::SharedCtor() {
+void InventoryData::SharedCtor() {
   _cached_size_ = 0;
   eid_ = 0u;
   wielding_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-Inventory::~Inventory() {
+InventoryData::~InventoryData() {
   SharedDtor();
 }
 
-void Inventory::SharedDtor() {
+void InventoryData::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void Inventory::SetCachedSize(int size) const {
+void InventoryData::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Inventory::descriptor() {
+const ::google::protobuf::Descriptor* InventoryData::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Inventory_descriptor_;
+  return InventoryData_descriptor_;
 }
 
-const Inventory& Inventory::default_instance() {
+const InventoryData& InventoryData::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
 }
 
-Inventory* Inventory::default_instance_ = NULL;
+InventoryData* InventoryData::default_instance_ = NULL;
 
-Inventory* Inventory::New() const {
-  return new Inventory;
+InventoryData* InventoryData::New() const {
+  return new InventoryData;
 }
 
-void Inventory::Clear() {
+void InventoryData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eid_ = 0u;
     wielding_ = 1;
@@ -1429,7 +1457,7 @@ void Inventory::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool Inventory::MergePartialFromCodedStream(
+bool InventoryData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -1502,7 +1530,7 @@ bool Inventory::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void Inventory::SerializeWithCachedSizes(
+void InventoryData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // required fixed32 eid = 1;
   if (has_eid()) {
@@ -1527,7 +1555,7 @@ void Inventory::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* Inventory::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* InventoryData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // required fixed32 eid = 1;
   if (has_eid()) {
@@ -1554,7 +1582,7 @@ void Inventory::SerializeWithCachedSizes(
   return target;
 }
 
-int Inventory::ByteSize() const {
+int InventoryData::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1589,10 +1617,10 @@ int Inventory::ByteSize() const {
   return total_size;
 }
 
-void Inventory::MergeFrom(const ::google::protobuf::Message& from) {
+void InventoryData::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const Inventory* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Inventory*>(
+  const InventoryData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const InventoryData*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1601,7 +1629,7 @@ void Inventory::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void Inventory::MergeFrom(const Inventory& from) {
+void InventoryData::MergeFrom(const InventoryData& from) {
   GOOGLE_CHECK_NE(&from, this);
   count_.MergeFrom(from.count_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1615,19 +1643,19 @@ void Inventory::MergeFrom(const Inventory& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void Inventory::CopyFrom(const ::google::protobuf::Message& from) {
+void InventoryData::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Inventory::CopyFrom(const Inventory& from) {
+void InventoryData::CopyFrom(const InventoryData& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Inventory::IsInitialized() const {
+bool InventoryData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
   for (int i = 0; i < count_size(); i++) {
@@ -1636,7 +1664,7 @@ bool Inventory::IsInitialized() const {
   return true;
 }
 
-void Inventory::Swap(Inventory* other) {
+void InventoryData::Swap(InventoryData* other) {
   if (other != this) {
     std::swap(eid_, other->eid_);
     std::swap(wielding_, other->wielding_);
@@ -1647,11 +1675,11 @@ void Inventory::Swap(Inventory* other) {
   }
 }
 
-::google::protobuf::Metadata Inventory::GetMetadata() const {
+::google::protobuf::Metadata InventoryData::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Inventory_descriptor_;
-  metadata.reflection = Inventory_reflection_;
+  metadata.descriptor = InventoryData_descriptor_;
+  metadata.reflection = InventoryData_reflection_;
   return metadata;
 }
 
@@ -2565,6 +2593,7 @@ const int InitialState::kGridFieldNumber;
 const int InitialState::kInventoriesFieldNumber;
 const int InitialState::kClientDataFieldNumber;
 const int InitialState::kPhysicsDataFieldNumber;
+const int InitialState::kLifetimeFieldNumber;
 #endif  // !_MSC_VER
 
 InitialState::InitialState()
@@ -2636,6 +2665,7 @@ void InitialState::Clear() {
   inventories_.Clear();
   client_data_.Clear();
   physics_data_.Clear();
+  lifetime_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -2707,7 +2737,7 @@ bool InitialState::MergePartialFromCodedStream(
         break;
       }
       
-      // repeated .Inventory inventories = 5;
+      // repeated .InventoryData inventories = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -2748,6 +2778,21 @@ bool InitialState::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(58)) goto parse_physics_data;
+        if (input->ExpectTag(66)) goto parse_lifetime;
+        break;
+      }
+      
+      // repeated .Lifetime lifetime = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_lifetime:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_lifetime()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(66)) goto parse_lifetime;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2791,7 +2836,7 @@ void InitialState::SerializeWithCachedSizes(
       4, this->grid(), output);
   }
   
-  // repeated .Inventory inventories = 5;
+  // repeated .InventoryData inventories = 5;
   for (int i = 0; i < this->inventories_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       5, this->inventories(i), output);
@@ -2807,6 +2852,12 @@ void InitialState::SerializeWithCachedSizes(
   for (int i = 0; i < this->physics_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       7, this->physics_data(i), output);
+  }
+  
+  // repeated .Lifetime lifetime = 8;
+  for (int i = 0; i < this->lifetime_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      8, this->lifetime(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -2839,7 +2890,7 @@ void InitialState::SerializeWithCachedSizes(
         4, this->grid(), target);
   }
   
-  // repeated .Inventory inventories = 5;
+  // repeated .InventoryData inventories = 5;
   for (int i = 0; i < this->inventories_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -2858,6 +2909,13 @@ void InitialState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         7, this->physics_data(i), target);
+  }
+  
+  // repeated .Lifetime lifetime = 8;
+  for (int i = 0; i < this->lifetime_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        8, this->lifetime(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -2894,7 +2952,7 @@ int InitialState::ByteSize() const {
     }
     
   }
-  // repeated .Inventory inventories = 5;
+  // repeated .InventoryData inventories = 5;
   total_size += 1 * this->inventories_size();
   for (int i = 0; i < this->inventories_size(); i++) {
     total_size +=
@@ -2916,6 +2974,14 @@ int InitialState::ByteSize() const {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->physics_data(i));
+  }
+  
+  // repeated .Lifetime lifetime = 8;
+  total_size += 1 * this->lifetime_size();
+  for (int i = 0; i < this->lifetime_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->lifetime(i));
   }
   
   if (!unknown_fields().empty()) {
@@ -2946,6 +3012,7 @@ void InitialState::MergeFrom(const InitialState& from) {
   inventories_.MergeFrom(from.inventories_);
   client_data_.MergeFrom(from.client_data_);
   physics_data_.MergeFrom(from.physics_data_);
+  lifetime_.MergeFrom(from.lifetime_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_tick_number()) {
       set_tick_number(from.tick_number());
@@ -2987,6 +3054,9 @@ bool InitialState::IsInitialized() const {
   for (int i = 0; i < physics_data_size(); i++) {
     if (!this->physics_data(i).IsInitialized()) return false;
   }
+  for (int i = 0; i < lifetime_size(); i++) {
+    if (!this->lifetime(i).IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -2999,6 +3069,7 @@ void InitialState::Swap(InitialState* other) {
     inventories_.Swap(&other->inventories_);
     client_data_.Swap(&other->client_data_);
     physics_data_.Swap(&other->physics_data_);
+    lifetime_.Swap(&other->lifetime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3010,6 +3081,250 @@ void InitialState::Swap(InitialState* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = InitialState_descriptor_;
   metadata.reflection = InitialState_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int Lifetime::kEidFieldNumber;
+const int Lifetime::kTtlFieldNumber;
+#endif  // !_MSC_VER
+
+Lifetime::Lifetime()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Lifetime::InitAsDefaultInstance() {
+}
+
+Lifetime::Lifetime(const Lifetime& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Lifetime::SharedCtor() {
+  _cached_size_ = 0;
+  eid_ = 0u;
+  ttl_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Lifetime::~Lifetime() {
+  SharedDtor();
+}
+
+void Lifetime::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void Lifetime::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Lifetime::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Lifetime_descriptor_;
+}
+
+const Lifetime& Lifetime::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
+}
+
+Lifetime* Lifetime::default_instance_ = NULL;
+
+Lifetime* Lifetime::New() const {
+  return new Lifetime;
+}
+
+void Lifetime::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    eid_ = 0u;
+    ttl_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Lifetime::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required fixed32 eid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &eid_)));
+          set_has_eid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(21)) goto parse_ttl;
+        break;
+      }
+      
+      // required float ttl = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_ttl:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &ttl_)));
+          set_has_ttl();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Lifetime::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required fixed32 eid = 1;
+  if (has_eid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->eid(), output);
+  }
+  
+  // required float ttl = 2;
+  if (has_ttl()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->ttl(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Lifetime::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required fixed32 eid = 1;
+  if (has_eid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->eid(), target);
+  }
+  
+  // required float ttl = 2;
+  if (has_ttl()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->ttl(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Lifetime::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required fixed32 eid = 1;
+    if (has_eid()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float ttl = 2;
+    if (has_ttl()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Lifetime::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Lifetime* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Lifetime*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Lifetime::MergeFrom(const Lifetime& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_eid()) {
+      set_eid(from.eid());
+    }
+    if (from.has_ttl()) {
+      set_ttl(from.ttl());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Lifetime::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Lifetime::CopyFrom(const Lifetime& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Lifetime::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  
+  return true;
+}
+
+void Lifetime::Swap(Lifetime* other) {
+  if (other != this) {
+    std::swap(eid_, other->eid_);
+    std::swap(ttl_, other->ttl_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Lifetime::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Lifetime_descriptor_;
+  metadata.reflection = Lifetime_reflection_;
   return metadata;
 }
 

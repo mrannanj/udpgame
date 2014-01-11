@@ -33,11 +33,12 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
 class AMessage;
 class ClientData;
 class ObjectCount;
-class Inventory;
+class InventoryData;
 class FrameInputs;
 class FrameInput;
 class ClientInput;
 class InitialState;
+class Lifetime;
 class PhysicsData;
 
 enum Type {
@@ -418,12 +419,12 @@ class ObjectCount : public ::google::protobuf::Message {
   inline ObjectType type() const;
   inline void set_type(ObjectType value);
   
-  // required fixed32 count = 2;
+  // required sfixed32 count = 2;
   inline bool has_count() const;
   inline void clear_count();
   static const int kCountFieldNumber = 2;
-  inline ::google::protobuf::uint32 count() const;
-  inline void set_count(::google::protobuf::uint32 value);
+  inline ::google::protobuf::int32 count() const;
+  inline void set_count(::google::protobuf::int32 value);
   
   // @@protoc_insertion_point(class_scope:ObjectCount)
  private:
@@ -435,7 +436,7 @@ class ObjectCount : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   int type_;
-  ::google::protobuf::uint32 count_;
+  ::google::protobuf::int32 count_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -449,14 +450,14 @@ class ObjectCount : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Inventory : public ::google::protobuf::Message {
+class InventoryData : public ::google::protobuf::Message {
  public:
-  Inventory();
-  virtual ~Inventory();
+  InventoryData();
+  virtual ~InventoryData();
   
-  Inventory(const Inventory& from);
+  InventoryData(const InventoryData& from);
   
-  inline Inventory& operator=(const Inventory& from) {
+  inline InventoryData& operator=(const InventoryData& from) {
     CopyFrom(from);
     return *this;
   }
@@ -470,17 +471,17 @@ class Inventory : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Inventory& default_instance();
+  static const InventoryData& default_instance();
   
-  void Swap(Inventory* other);
+  void Swap(InventoryData* other);
   
   // implements Message ----------------------------------------------
   
-  Inventory* New() const;
+  InventoryData* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Inventory& from);
-  void MergeFrom(const Inventory& from);
+  void CopyFrom(const InventoryData& from);
+  void MergeFrom(const InventoryData& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -529,7 +530,7 @@ class Inventory : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::ObjectCount >*
       mutable_count();
   
-  // @@protoc_insertion_point(class_scope:Inventory)
+  // @@protoc_insertion_point(class_scope:InventoryData)
  private:
   inline void set_has_eid();
   inline void clear_has_eid();
@@ -550,7 +551,7 @@ class Inventory : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
   
   void InitAsDefaultInstance();
-  static Inventory* default_instance_;
+  static InventoryData* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -960,16 +961,16 @@ class InitialState : public ::google::protobuf::Message {
   inline ::std::string* mutable_grid();
   inline ::std::string* release_grid();
   
-  // repeated .Inventory inventories = 5;
+  // repeated .InventoryData inventories = 5;
   inline int inventories_size() const;
   inline void clear_inventories();
   static const int kInventoriesFieldNumber = 5;
-  inline const ::Inventory& inventories(int index) const;
-  inline ::Inventory* mutable_inventories(int index);
-  inline ::Inventory* add_inventories();
-  inline const ::google::protobuf::RepeatedPtrField< ::Inventory >&
+  inline const ::InventoryData& inventories(int index) const;
+  inline ::InventoryData* mutable_inventories(int index);
+  inline ::InventoryData* add_inventories();
+  inline const ::google::protobuf::RepeatedPtrField< ::InventoryData >&
       inventories() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Inventory >*
+  inline ::google::protobuf::RepeatedPtrField< ::InventoryData >*
       mutable_inventories();
   
   // repeated .ClientData client_data = 6;
@@ -996,6 +997,18 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::PhysicsData >*
       mutable_physics_data();
   
+  // repeated .Lifetime lifetime = 8;
+  inline int lifetime_size() const;
+  inline void clear_lifetime();
+  static const int kLifetimeFieldNumber = 8;
+  inline const ::Lifetime& lifetime(int index) const;
+  inline ::Lifetime* mutable_lifetime(int index);
+  inline ::Lifetime* add_lifetime();
+  inline const ::google::protobuf::RepeatedPtrField< ::Lifetime >&
+      lifetime() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Lifetime >*
+      mutable_lifetime();
+  
   // @@protoc_insertion_point(class_scope:InitialState)
  private:
   inline void set_has_tick_number();
@@ -1012,13 +1025,14 @@ class InitialState : public ::google::protobuf::Message {
   ::google::protobuf::uint32 tick_number_;
   ::google::protobuf::uint32 next_eid_;
   ::std::string* grid_;
-  ::google::protobuf::RepeatedPtrField< ::Inventory > inventories_;
+  ::google::protobuf::RepeatedPtrField< ::InventoryData > inventories_;
   ::google::protobuf::RepeatedPtrField< ::ClientData > client_data_;
   ::google::protobuf::RepeatedPtrField< ::PhysicsData > physics_data_;
+  ::google::protobuf::RepeatedPtrField< ::Lifetime > lifetime_;
   ::google::protobuf::uint32 client_id_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1026,6 +1040,98 @@ class InitialState : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static InitialState* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Lifetime : public ::google::protobuf::Message {
+ public:
+  Lifetime();
+  virtual ~Lifetime();
+  
+  Lifetime(const Lifetime& from);
+  
+  inline Lifetime& operator=(const Lifetime& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Lifetime& default_instance();
+  
+  void Swap(Lifetime* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Lifetime* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Lifetime& from);
+  void MergeFrom(const Lifetime& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required fixed32 eid = 1;
+  inline bool has_eid() const;
+  inline void clear_eid();
+  static const int kEidFieldNumber = 1;
+  inline ::google::protobuf::uint32 eid() const;
+  inline void set_eid(::google::protobuf::uint32 value);
+  
+  // required float ttl = 2;
+  inline bool has_ttl() const;
+  inline void clear_ttl();
+  static const int kTtlFieldNumber = 2;
+  inline float ttl() const;
+  inline void set_ttl(float value);
+  
+  // @@protoc_insertion_point(class_scope:Lifetime)
+ private:
+  inline void set_has_eid();
+  inline void clear_has_eid();
+  inline void set_has_ttl();
+  inline void clear_has_ttl();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::google::protobuf::uint32 eid_;
+  float ttl_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static Lifetime* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1436,7 +1542,7 @@ inline void ObjectCount::set_type(ObjectType value) {
   type_ = value;
 }
 
-// required fixed32 count = 2;
+// required sfixed32 count = 2;
 inline bool ObjectCount::has_count() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1447,88 +1553,88 @@ inline void ObjectCount::clear_has_count() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void ObjectCount::clear_count() {
-  count_ = 0u;
+  count_ = 0;
   clear_has_count();
 }
-inline ::google::protobuf::uint32 ObjectCount::count() const {
+inline ::google::protobuf::int32 ObjectCount::count() const {
   return count_;
 }
-inline void ObjectCount::set_count(::google::protobuf::uint32 value) {
+inline void ObjectCount::set_count(::google::protobuf::int32 value) {
   set_has_count();
   count_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// Inventory
+// InventoryData
 
 // required fixed32 eid = 1;
-inline bool Inventory::has_eid() const {
+inline bool InventoryData::has_eid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Inventory::set_has_eid() {
+inline void InventoryData::set_has_eid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Inventory::clear_has_eid() {
+inline void InventoryData::clear_has_eid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Inventory::clear_eid() {
+inline void InventoryData::clear_eid() {
   eid_ = 0u;
   clear_has_eid();
 }
-inline ::google::protobuf::uint32 Inventory::eid() const {
+inline ::google::protobuf::uint32 InventoryData::eid() const {
   return eid_;
 }
-inline void Inventory::set_eid(::google::protobuf::uint32 value) {
+inline void InventoryData::set_eid(::google::protobuf::uint32 value) {
   set_has_eid();
   eid_ = value;
 }
 
 // required .ObjectType wielding = 2;
-inline bool Inventory::has_wielding() const {
+inline bool InventoryData::has_wielding() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Inventory::set_has_wielding() {
+inline void InventoryData::set_has_wielding() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Inventory::clear_has_wielding() {
+inline void InventoryData::clear_has_wielding() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Inventory::clear_wielding() {
+inline void InventoryData::clear_wielding() {
   wielding_ = 1;
   clear_has_wielding();
 }
-inline ObjectType Inventory::wielding() const {
+inline ObjectType InventoryData::wielding() const {
   return static_cast< ObjectType >(wielding_);
 }
-inline void Inventory::set_wielding(ObjectType value) {
+inline void InventoryData::set_wielding(ObjectType value) {
   GOOGLE_DCHECK(ObjectType_IsValid(value));
   set_has_wielding();
   wielding_ = value;
 }
 
 // repeated .ObjectCount count = 3;
-inline int Inventory::count_size() const {
+inline int InventoryData::count_size() const {
   return count_.size();
 }
-inline void Inventory::clear_count() {
+inline void InventoryData::clear_count() {
   count_.Clear();
 }
-inline const ::ObjectCount& Inventory::count(int index) const {
+inline const ::ObjectCount& InventoryData::count(int index) const {
   return count_.Get(index);
 }
-inline ::ObjectCount* Inventory::mutable_count(int index) {
+inline ::ObjectCount* InventoryData::mutable_count(int index) {
   return count_.Mutable(index);
 }
-inline ::ObjectCount* Inventory::add_count() {
+inline ::ObjectCount* InventoryData::add_count() {
   return count_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::ObjectCount >&
-Inventory::count() const {
+InventoryData::count() const {
   return count_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::ObjectCount >*
-Inventory::mutable_count() {
+InventoryData::mutable_count() {
   return &count_;
 }
 
@@ -1902,27 +2008,27 @@ inline ::std::string* InitialState::release_grid() {
   }
 }
 
-// repeated .Inventory inventories = 5;
+// repeated .InventoryData inventories = 5;
 inline int InitialState::inventories_size() const {
   return inventories_.size();
 }
 inline void InitialState::clear_inventories() {
   inventories_.Clear();
 }
-inline const ::Inventory& InitialState::inventories(int index) const {
+inline const ::InventoryData& InitialState::inventories(int index) const {
   return inventories_.Get(index);
 }
-inline ::Inventory* InitialState::mutable_inventories(int index) {
+inline ::InventoryData* InitialState::mutable_inventories(int index) {
   return inventories_.Mutable(index);
 }
-inline ::Inventory* InitialState::add_inventories() {
+inline ::InventoryData* InitialState::add_inventories() {
   return inventories_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Inventory >&
+inline const ::google::protobuf::RepeatedPtrField< ::InventoryData >&
 InitialState::inventories() const {
   return inventories_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Inventory >*
+inline ::google::protobuf::RepeatedPtrField< ::InventoryData >*
 InitialState::mutable_inventories() {
   return &inventories_;
 }
@@ -1975,6 +2081,79 @@ InitialState::physics_data() const {
 inline ::google::protobuf::RepeatedPtrField< ::PhysicsData >*
 InitialState::mutable_physics_data() {
   return &physics_data_;
+}
+
+// repeated .Lifetime lifetime = 8;
+inline int InitialState::lifetime_size() const {
+  return lifetime_.size();
+}
+inline void InitialState::clear_lifetime() {
+  lifetime_.Clear();
+}
+inline const ::Lifetime& InitialState::lifetime(int index) const {
+  return lifetime_.Get(index);
+}
+inline ::Lifetime* InitialState::mutable_lifetime(int index) {
+  return lifetime_.Mutable(index);
+}
+inline ::Lifetime* InitialState::add_lifetime() {
+  return lifetime_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Lifetime >&
+InitialState::lifetime() const {
+  return lifetime_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Lifetime >*
+InitialState::mutable_lifetime() {
+  return &lifetime_;
+}
+
+// -------------------------------------------------------------------
+
+// Lifetime
+
+// required fixed32 eid = 1;
+inline bool Lifetime::has_eid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Lifetime::set_has_eid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Lifetime::clear_has_eid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Lifetime::clear_eid() {
+  eid_ = 0u;
+  clear_has_eid();
+}
+inline ::google::protobuf::uint32 Lifetime::eid() const {
+  return eid_;
+}
+inline void Lifetime::set_eid(::google::protobuf::uint32 value) {
+  set_has_eid();
+  eid_ = value;
+}
+
+// required float ttl = 2;
+inline bool Lifetime::has_ttl() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Lifetime::set_has_ttl() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Lifetime::clear_has_ttl() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Lifetime::clear_ttl() {
+  ttl_ = 0;
+  clear_has_ttl();
+}
+inline float Lifetime::ttl() const {
+  return ttl_;
+}
+inline void Lifetime::set_ttl(float value) {
+  set_has_ttl();
+  ttl_ = value;
 }
 
 // -------------------------------------------------------------------

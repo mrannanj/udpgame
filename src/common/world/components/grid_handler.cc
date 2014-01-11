@@ -102,9 +102,8 @@ bool GridHandler::check_collision(PhysicsC& p, float dt) const {
 }
 
 bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
-    char** hitBlock, char** faceBlock)
+    char** hitBlock, char** faceBlock, int b[3])
 {
-  int b[3];
   distance = FLT_MAX;
   int baxis = 4;
   int dir = 0;
@@ -136,6 +135,7 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
             } else {
               *faceBlock = nullptr;
             }
+            b[baxis] -= dir;
           }
         }
       }

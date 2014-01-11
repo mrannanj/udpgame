@@ -1,4 +1,5 @@
 #include "common/world/components/inventory_handler.h"
+#include "common/world/components/collision.h"
 #include "common/world/world.h"
 #include "client/controller/input/input.h"
 
@@ -10,15 +11,15 @@ void InventoryHandler::tick(float, World& w) {
     if (ic == nullptr) continue;
 
     if (ic->actions() & ContinousAction::ITEM_1)
-      inv.set_wielding(ObjectType::GRASS);
+      inv.wielding = ObjectType::GRASS;
     if (ic->actions() & ContinousAction::ITEM_2)
-      inv.set_wielding(ObjectType::SAND);
+      inv.wielding = ObjectType::SAND;
     if (ic->actions() & ContinousAction::ITEM_3)
-      inv.set_wielding(ObjectType::ROCK);
+      inv.wielding = ObjectType::ROCK;
     if (ic->actions() & ContinousAction::ITEM_4)
-      inv.set_wielding(ObjectType::BW);
+      inv.wielding = ObjectType::BW;
     if (ic->actions() & ContinousAction::ITEM_5)
-      inv.set_wielding(ObjectType::FONT);
+      inv.wielding = ObjectType::FONT;
 #if 0
     if (ic->actions() & ContinousAction::ITEM_6)
       inv.set_wielding(6);
@@ -34,7 +35,10 @@ void InventoryHandler::tick(float, World& w) {
     assert(p != nullptr);
 
     if (ic->actions() & ContinousAction::THROW) {
-      w.throw_object(*p, inv.wielding());
+      if (inv.itemCount[inv.wielding] > 0) {
+        w.throw_object(*p, inv.wielding);
+        inv.itemCount[inv.wielding] -= 1;
+      }
     }
 
     if ((ic->actions() & ContinousAction::FIRST) or
@@ -45,27 +49,50 @@ void InventoryHandler::tick(float, World& w) {
       float distance;
       char* hitBlock;
       char* faceBlock;
-      if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock)) {
+      int b[3];
+      if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock, b)) {
         if (ic->actions() & ContinousAction::FIRST and *hitBlock != 5) {
-          *hitBlock = 0;
+          w.onBlockDestruction(b[0], b[1], b[2]);
         }
         if (ic->actions() & ContinousAction::SECOND and faceBlock != nullptr) {
-          *faceBlock = inv.wielding();
+          if (inv.itemCount[inv.wielding] > 0) {
+            *faceBlock = inv.wielding;
+            inv.itemCount[inv.wielding] -= 1;
+          }
         }
       }
     }
   }
+  pickupItems(w);
 }
 
+void InventoryHandler::pickupItems(World& w) {
+  for (size_t i = 0; i < mComponents.size(); ++i) {
+    EntityId eid = mComponents[i].eid();
+    PhysicsC* p1 = w.physics().get(eid);
+    Inventory& inv = mComponents[i];
+    if (!p1) continue;
+    for (size_t j = 0; j < w.physics().components().size(); ++ j) {
+      const PhysicsC& p2 = w.physics().components()[j];
+      if (eid == p2.entityid) continue;
+      if (get(p2.entityid)) continue;
+      if (!AABBvsAABB(p1->bb, p2.bb)) continue;
+      w.mDeleteList.insert(p2.entityid);
+      inv.itemCount[p2.type] += 1;
+    }
+  }
+}
+
+
 void InventoryHandler::serialize(
-    google::protobuf::RepeatedPtrField<Inventory>* invs)
+    google::protobuf::RepeatedPtrField<InventoryData>* invs)
 {
   for (const Inventory& i : mComponents)
     invs->Add()->CopyFrom(i);
 }
 
 void InventoryHandler::deserialize(
-    const google::protobuf::RepeatedPtrField<Inventory>& invs)
+    const google::protobuf::RepeatedPtrField<InventoryData>& invs)
 {
   mComponents.clear();
   for (const Inventory& i : invs)

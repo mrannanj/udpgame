@@ -17,7 +17,8 @@ struct GridHandler {
   void range_indices(const glm::vec3&, int[3][2]) const;
   void raycast_range(const glm::vec3&, const glm::vec3&, int[3][2]) const;
 
-  bool raycast(const glm::vec3&, const glm::vec3&, float&, char**, char**);
+  bool raycast(const glm::vec3&, const glm::vec3&, float&, char**, char**,
+      int[3]);
 
   bool belowBottom(const glm::vec3&) const;
   glm::vec3 spawn_pos();

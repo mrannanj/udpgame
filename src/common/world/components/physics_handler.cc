@@ -28,25 +28,6 @@ void PhysicsHandler::tick(float dt, World& w) {
     if (!w.grid().check_collision(p, dt))
       w.mDeleteList.insert(p.eid());
   }
-  checkCollisions(w);
-}
-
-void PhysicsHandler::checkCollisions(World& w) {
-  for (size_t i = 0; i < mComponents.size(); ++i) {
-    for (size_t j = i+1; j < mComponents.size(); ++j) {
-      PhysicsC& p1 = mComponents[i];
-      PhysicsC& p2 = mComponents[j];
-      if (AABBvsAABB(p1.bb, p2.bb)) {
-        Inventory* i1 = w.inventory().get(p1.eid());
-        Inventory* i2 = w.inventory().get(p2.eid());
-        if ((!i1 and !i2) or (i1 and i2)) continue;
-        if (i1)
-          w.mDeleteList.insert(p2.eid());
-        else
-          w.mDeleteList.insert(p1.eid());
-      }
-    }
-  }
 }
 
 void PhysicsHandler::handleInput(PhysicsC& p, World& w) {

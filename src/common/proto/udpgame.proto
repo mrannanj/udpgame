@@ -46,10 +46,10 @@ message ClientData {
 
 message ObjectCount {
   required ObjectType type = 1;
-  required fixed32 count = 2;
+  required sfixed32 count = 2;
 }
 
-message Inventory {
+message InventoryData {
   required fixed32 eid = 1;
   required ObjectType wielding = 2;
   repeated ObjectCount count = 3;
@@ -79,9 +79,15 @@ message InitialState {
   required fixed32 next_eid = 2;
   required fixed32 client_id = 3;
   required bytes grid = 4;
-  repeated Inventory inventories = 5;
+  repeated InventoryData inventories = 5;
   repeated ClientData client_data = 6;
   repeated PhysicsData physics_data = 7;
+  repeated Lifetime lifetime = 8;
+}
+
+message Lifetime {
+  required fixed32 eid = 1;
+  required float ttl = 2;
 }
 
 message PhysicsData {

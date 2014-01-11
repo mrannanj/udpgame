@@ -9,6 +9,7 @@
 #include "common/world/components/grid_handler.h"
 #include "common/world/components/inventory_handler.h"
 #include "common/world/components/client_handler.h"
+#include "common/world/components/lifetime_handler.h"
 #include "common/world/components/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -19,6 +20,7 @@ public:
   void tick(const FrameInputs&);
   void spawn_player(int);
   void throw_object(const PhysicsC&, ObjectType);
+  void onBlockDestruction(int, int, int);
 
   void removeDead();
 
@@ -49,4 +51,5 @@ private:
   InventoryHandler mInventory;
   ClientHandler mClient;
   GridHandler mGrid;
+  LifetimeHandler mLifetime;
 };

@@ -2,6 +2,10 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <sstream>
+
+#include "common/world/world.h"
+#include "common/world/components/inventory.h"
 
 void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
     const glm::vec3& center) {
@@ -44,4 +48,37 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
     model = glm::scale(model, p.dimensions);
     r.cube_renderer.DrawCube(vp * model);
   }
+}
+
+void draw_crosshair(const Renderer& r) {
+  float q[] = {
+    -0.005f, -0.005f, 0.005f, 0.005f,
+    -0.005f, 0.005f, 0.005f, -0.005f
+  };
+  r.quad_renderer.On();
+  set_color(r.quad_renderer.color_uni(), Blue, 1.0f);
+  r.quad_renderer.draw_quad(q);
+}
+
+void draw_position(const Renderer& r, Perspective& p) {
+  r.text_renderer.On();
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, p.pos_string(), Green);
+}
+
+void draw_inventory(const Renderer& r, World& w, EntityId id) {
+  Inventory* inv = w.inventory().get(id);
+  if (!inv) return;
+  std::stringstream ss;
+  ss << "w:" << inv->wielding;
+  for (const auto& p : inv->itemCount) {
+    ss << "," << p.first << ":" << p.second;
+  }
+  r.text_renderer.On();
+  r.text_renderer.DrawText(-1.0f, 1.0f, 0.08f, ss.str(), Blue);
+}
+
+void draw_hud(const Renderer& r, World& w, EntityId id, Perspective& p) {
+  draw_crosshair(r);
+  draw_position(r, p);
+  draw_inventory(r, w, id);
 }

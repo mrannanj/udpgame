@@ -46,6 +46,28 @@ void World::throw_object(const PhysicsC& o, ObjectType t) {
   mPhysicsHandler.add(p);
 }
 
+void World::onBlockDestruction(int x, int y, int z) {
+  char& b = mGrid.mArr.getRef(x,y,z);
+
+  EntityId eid = m_idgen.generateId();
+
+  PhysicsC p;
+  memset(&p, 0, sizeof(p));
+
+  p.entityid = eid;
+  p.position = glm::vec3((float)x,(float)y,(float)z) + 0.5f;
+  p.dimensions = glm::vec3(0.2f, 0.2f, 0.2f);
+  p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+  p.type = (ObjectType)b;
+  mPhysicsHandler.add(p);
+  b = 0;
+
+  Lifetime l;
+  l.set_eid(eid);
+  l.set_ttl(10.0f);
+  mLifetime.add(l);
+}
+
 void World::spawn_player(int clientid) {
   EntityId eid = m_idgen.generateId();
 
@@ -60,8 +82,8 @@ void World::spawn_player(int clientid) {
   mPhysicsHandler.add(p);
 
   Inventory i;
-  i.set_eid(eid);
-  i.set_wielding(ObjectType::GRASS);
+  i.entityid = eid;
+  i.wielding = ObjectType::GRASS;
   mInventory.add(i);
 
   ClientData* cd = mClient.getByClient(clientid);
@@ -81,6 +103,7 @@ void World::tick(const FrameInputs& fis) {
   mClient.tick(dt, *this);
   mPhysicsHandler.tick(dt, *this);
   mInventory.tick(dt, *this);
+  mLifetime.tick(dt, *this);
 
   removeDead();
   mTickNumber += 1;
@@ -119,6 +142,7 @@ InitialState World::getInitialState() {
   mClient.serialize(i.mutable_client_data());
   mInventory.serialize(i.mutable_inventories());
   mPhysicsHandler.serialize(i.mutable_physics_data());
+  mLifetime.serialize(i.mutable_lifetime());
   i.set_next_eid(m_idgen.getNext());
   i.set_tick_number(mTickNumber);
   return i;
@@ -129,6 +153,7 @@ void World::setInitialState(const InitialState& i) {
   mClient.deserialize(i.client_data());
   mInventory.deserialize(i.inventories());
   mPhysicsHandler.deserialize(i.physics_data());
+  mLifetime.deserialize(i.lifetime());
   m_idgen.setNext(i.next_eid());
   mTickNumber = i.tick_number();
   mInit = true;
