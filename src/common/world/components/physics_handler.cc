@@ -111,7 +111,7 @@ void PhysicsHandler::serialize(
     o->set_dim_x(p.dimensions.x);
     o->set_dim_y(p.dimensions.y);
     o->set_dim_z(p.dimensions.z);
-    o->set_texture(p.texture);
+    o->set_type(p.type);
   }
 }
 
@@ -131,7 +131,7 @@ void PhysicsHandler::deserialize(
     p.dimensions.x = pd.dim_x();
     p.dimensions.y = pd.dim_y();
     p.dimensions.z = pd.dim_z();
-    p.texture = pd.texture();
+    p.type = pd.type();
     p.update_bbs();
     add(p);
   }

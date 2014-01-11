@@ -37,7 +37,7 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
   r.cube_renderer.On();
 
   for (const PhysicsC& p : ps.components()) {
-    r.cube_renderer.SetTexture(r.texture_manager[p.texture]);
+    r.cube_renderer.SetTexture(r.texture_manager[p.type]);
     glm::mat4 model = glm::translate(glm::mat4(1.0f), p.position);
     model = glm::rotate(model, rad_to_degree(p.horizontal_angle),
       glm::vec3(0.0f, 1.0f, 0.0f));

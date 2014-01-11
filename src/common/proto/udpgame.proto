@@ -5,15 +5,24 @@ enum Type {
 }
 
 enum Texture {
-  NONE = 0;
+  TEXTURE_NONE = 0;
+  TEXTURE_GRASS = 1;
+  TEXTURE_SAND = 2;
+  TEXTURE_ROCK = 3;
+  TEXTURE_BW = 4;
+  TEXTURE_FONT = 5;
+  TEXTURE_FACE = 6;
+  TEXTURE_HEAD = 7;
+  TEXTURE_SIZE = 8;
+}
+
+enum ObjectType {
   GRASS = 1;
   SAND = 2;
   ROCK = 3;
   BW = 4;
   FONT = 5;
-  FACE = 6;
-  HEAD = 7;
-  SIZE = 8;
+  PLAYER = 6;
 }
 
 message AMessage {
@@ -24,8 +33,8 @@ message AMessage {
 }
 
 enum ClientMode {
-  PLAYER = 0;
-  OBSERVER = 1;
+  MODE_PLAYER = 0;
+  MODE_OBSERVER = 1;
 }
 
 message ClientData {
@@ -35,9 +44,15 @@ message ClientData {
   required fixed32 dead = 4;
 }
 
+message ObjectCount {
+  required ObjectType type = 1;
+  required fixed32 count = 2;
+}
+
 message Inventory {
   required fixed32 eid = 1;
-  required Texture wielding = 2;
+  required ObjectType wielding = 2;
+  repeated ObjectCount count = 3;
 }
 
 message FrameInputs {
@@ -79,5 +94,5 @@ message PhysicsData {
   required float dim_x = 7;
   required float dim_y = 8;
   required float dim_z = 9;
-  required Texture texture = 10;
+  required ObjectType type = 10;
 }

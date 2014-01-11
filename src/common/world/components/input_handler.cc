@@ -11,7 +11,7 @@ void InputHandler::tick(float, World& w) {
     if (w.client().getByClient(fi.client())) continue;
     ClientData cd;
     cd.set_dead(true);
-    cd.set_mode(ClientMode::PLAYER);
+    cd.set_mode(ClientMode::MODE_PLAYER);
     cd.set_client(fi.client());
     fi.set_eid(cd.eid());
     w.client().add(cd);

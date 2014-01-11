@@ -18,5 +18,5 @@ private:
   void LoadTextures();
   GLuint LoadTexture(const std::string&);
 
-  GLuint m_textures[Texture::SIZE];
+  GLuint mTextures[Texture::TEXTURE_SIZE];
 };

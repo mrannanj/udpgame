@@ -10,15 +10,15 @@ void InventoryHandler::tick(float, World& w) {
     if (ic == nullptr) continue;
 
     if (ic->actions() & ContinousAction::ITEM_1)
-      inv.set_wielding(Texture::GRASS);
+      inv.set_wielding(ObjectType::GRASS);
     if (ic->actions() & ContinousAction::ITEM_2)
-      inv.set_wielding(Texture::SAND);
+      inv.set_wielding(ObjectType::SAND);
     if (ic->actions() & ContinousAction::ITEM_3)
-      inv.set_wielding(Texture::ROCK);
+      inv.set_wielding(ObjectType::ROCK);
     if (ic->actions() & ContinousAction::ITEM_4)
-      inv.set_wielding(Texture::BW);
+      inv.set_wielding(ObjectType::BW);
     if (ic->actions() & ContinousAction::ITEM_5)
-      inv.set_wielding(Texture::FONT);
+      inv.set_wielding(ObjectType::FONT);
 #if 0
     if (ic->actions() & ContinousAction::ITEM_6)
       inv.set_wielding(6);

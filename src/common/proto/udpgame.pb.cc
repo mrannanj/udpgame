@@ -21,6 +21,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ClientData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ClientData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ObjectCount_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ObjectCount_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Inventory_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Inventory_reflection_ = NULL;
@@ -41,6 +44,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
   PhysicsData_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* Type_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* Texture_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* ObjectType_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientMode_descriptor_ = NULL;
 
 }  // namespace
@@ -88,10 +92,27 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientData));
-  Inventory_descriptor_ = file->message_type(2);
-  static const int Inventory_offsets_[2] = {
+  ObjectCount_descriptor_ = file->message_type(2);
+  static const int ObjectCount_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectCount, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectCount, count_),
+  };
+  ObjectCount_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ObjectCount_descriptor_,
+      ObjectCount::default_instance_,
+      ObjectCount_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectCount, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectCount, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ObjectCount));
+  Inventory_descriptor_ = file->message_type(3);
+  static const int Inventory_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, wielding_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Inventory, count_),
   };
   Inventory_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -104,7 +125,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Inventory));
-  FrameInputs_descriptor_ = file->message_type(3);
+  FrameInputs_descriptor_ = file->message_type(4);
   static const int FrameInputs_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameInputs, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameInputs, frame_inputs_),
@@ -120,7 +141,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FrameInputs));
-  FrameInput_descriptor_ = file->message_type(4);
+  FrameInput_descriptor_ = file->message_type(5);
   static const int FrameInput_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameInput, client_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameInput, eid_),
@@ -139,7 +160,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FrameInput));
-  ClientInput_descriptor_ = file->message_type(5);
+  ClientInput_descriptor_ = file->message_type(6);
   static const int ClientInput_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, previous_hash_),
@@ -156,7 +177,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientInput));
-  InitialState_descriptor_ = file->message_type(6);
+  InitialState_descriptor_ = file->message_type(7);
   static const int InitialState_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, next_eid_),
@@ -177,7 +198,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(InitialState));
-  PhysicsData_descriptor_ = file->message_type(7);
+  PhysicsData_descriptor_ = file->message_type(8);
   static const int PhysicsData_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, x_),
@@ -188,7 +209,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_z_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, texture_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, type_),
   };
   PhysicsData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -203,7 +224,8 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       sizeof(PhysicsData));
   Type_descriptor_ = file->enum_type(0);
   Texture_descriptor_ = file->enum_type(1);
-  ClientMode_descriptor_ = file->enum_type(2);
+  ObjectType_descriptor_ = file->enum_type(2);
+  ClientMode_descriptor_ = file->enum_type(3);
 }
 
 namespace {
@@ -220,6 +242,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     AMessage_descriptor_, &AMessage::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ClientData_descriptor_, &ClientData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ObjectCount_descriptor_, &ObjectCount::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Inventory_descriptor_, &Inventory::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -241,6 +265,8 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete AMessage_reflection_;
   delete ClientData::default_instance_;
   delete ClientData_reflection_;
+  delete ObjectCount::default_instance_;
+  delete ObjectCount_reflection_;
   delete Inventory::default_instance_;
   delete Inventory_reflection_;
   delete FrameInputs::default_instance_;
@@ -268,34 +294,41 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\0132\r.InitialState\022\"\n\014frame_inputs\030\004 \001(\0132\014"
     ".FrameInputs\"R\n\nClientData\022\016\n\006client\030\001 \002"
     "(\017\022\031\n\004mode\030\002 \002(\0162\013.ClientMode\022\013\n\003eid\030\003 \002"
-    "(\007\022\014\n\004dead\030\004 \002(\007\"4\n\tInventory\022\013\n\003eid\030\001 \002"
-    "(\007\022\032\n\010wielding\030\002 \002(\0162\010.Texture\"E\n\013FrameI"
-    "nputs\022\023\n\013tick_number\030\001 \002(\007\022!\n\014frame_inpu"
-    "ts\030\002 \003(\0132\013.FrameInput\"l\n\nFrameInput\022\016\n\006c"
-    "lient\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007actions\030\003 \002("
-    "\007\022\030\n\020horizontal_delta\030\004 \002(\002\022\026\n\016vertical_"
-    "delta\030\005 \002(\002\"[\n\013ClientInput\022\023\n\013tick_numbe"
-    "r\030\001 \002(\007\022\025\n\rprevious_hash\030\002 \002(\007\022 \n\013frame_"
-    "input\030\003 \002(\0132\013.FrameInput\"\275\001\n\014InitialStat"
-    "e\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_eid\030\002 \002(\007"
-    "\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014\022\037\n\013inv"
-    "entories\030\005 \003(\0132\n.Inventory\022 \n\013client_dat"
-    "a\030\006 \003(\0132\013.ClientData\022\"\n\014physics_data\030\007 \003"
-    "(\0132\014.PhysicsData\"\265\001\n\013PhysicsData\022\013\n\003eid\030"
-    "\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030"
-    "\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical_ang"
-    "le\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r"
-    "\n\005dim_z\030\t \002(\002\022\031\n\007texture\030\n \002(\0162\010.Texture"
-    "*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL_ST"
-    "ATE\020\002\022\020\n\014FRAME_INPUTS\020\003*b\n\007Texture\022\010\n\004NO"
-    "NE\020\000\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004ROCK\020\003\022\006\n\002B"
-    "W\020\004\022\010\n\004FONT\020\005\022\010\n\004FACE\020\006\022\010\n\004HEAD\020\007\022\010\n\004SIZ"
-    "E\020\010*&\n\nClientMode\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVE"
-    "R\020\001", 1163);
+    "(\007\022\014\n\004dead\030\004 \002(\007\"7\n\013ObjectCount\022\031\n\004type\030"
+    "\001 \002(\0162\013.ObjectType\022\r\n\005count\030\002 \002(\007\"T\n\tInv"
+    "entory\022\013\n\003eid\030\001 \002(\007\022\035\n\010wielding\030\002 \002(\0162\013."
+    "ObjectType\022\033\n\005count\030\003 \003(\0132\014.ObjectCount\""
+    "E\n\013FrameInputs\022\023\n\013tick_number\030\001 \002(\007\022!\n\014f"
+    "rame_inputs\030\002 \003(\0132\013.FrameInput\"l\n\nFrameI"
+    "nput\022\016\n\006client\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007act"
+    "ions\030\003 \002(\007\022\030\n\020horizontal_delta\030\004 \002(\002\022\026\n\016"
+    "vertical_delta\030\005 \002(\002\"[\n\013ClientInput\022\023\n\013t"
+    "ick_number\030\001 \002(\007\022\025\n\rprevious_hash\030\002 \002(\007\022"
+    " \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\275\001\n\014In"
+    "itialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_"
+    "eid\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002"
+    "(\014\022\037\n\013inventories\030\005 \003(\0132\n.Inventory\022 \n\013c"
+    "lient_data\030\006 \003(\0132\013.ClientData\022\"\n\014physics"
+    "_data\030\007 \003(\0132\014.PhysicsData\"\265\001\n\013PhysicsDat"
+    "a\022\013\n\003eid\030\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001"
+    "z\030\004 \002(\002\022\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016ver"
+    "tical_angle\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_"
+    "y\030\010 \002(\002\022\r\n\005dim_z\030\t \002(\002\022\031\n\004type\030\n \002(\0162\013.O"
+    "bjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rI"
+    "NITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\252\001\n\007Tex"
+    "ture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_GRASS\020"
+    "\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n"
+    "\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n\014TEXTU"
+    "RE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\020\n\014TEXTURE_S"
+    "IZE\020\010*I\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002"
+    "\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006"
+    "*0\n\nClientMode\022\017\n\013MODE_PLAYER\020\000\022\021\n\rMODE_"
+    "OBSERVER\020\001", 1410);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
   ClientData::default_instance_ = new ClientData();
+  ObjectCount::default_instance_ = new ObjectCount();
   Inventory::default_instance_ = new Inventory();
   FrameInputs::default_instance_ = new FrameInputs();
   FrameInput::default_instance_ = new FrameInput();
@@ -304,6 +337,7 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   PhysicsData::default_instance_ = new PhysicsData();
   AMessage::default_instance_->InitAsDefaultInstance();
   ClientData::default_instance_->InitAsDefaultInstance();
+  ObjectCount::default_instance_->InitAsDefaultInstance();
   Inventory::default_instance_->InitAsDefaultInstance();
   FrameInputs::default_instance_->InitAsDefaultInstance();
   FrameInput::default_instance_->InitAsDefaultInstance();
@@ -350,6 +384,24 @@ bool Texture_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* ObjectType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ObjectType_descriptor_;
+}
+bool ObjectType_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -1060,8 +1112,261 @@ void ClientData::Swap(ClientData* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int ObjectCount::kTypeFieldNumber;
+const int ObjectCount::kCountFieldNumber;
+#endif  // !_MSC_VER
+
+ObjectCount::ObjectCount()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void ObjectCount::InitAsDefaultInstance() {
+}
+
+ObjectCount::ObjectCount(const ObjectCount& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ObjectCount::SharedCtor() {
+  _cached_size_ = 0;
+  type_ = 1;
+  count_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ObjectCount::~ObjectCount() {
+  SharedDtor();
+}
+
+void ObjectCount::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void ObjectCount::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* ObjectCount::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ObjectCount_descriptor_;
+}
+
+const ObjectCount& ObjectCount::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
+}
+
+ObjectCount* ObjectCount::default_instance_ = NULL;
+
+ObjectCount* ObjectCount::New() const {
+  return new ObjectCount;
+}
+
+void ObjectCount::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    type_ = 1;
+    count_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ObjectCount::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .ObjectType type = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (ObjectType_IsValid(value)) {
+            set_type(static_cast< ObjectType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(1, value);
+          }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(21)) goto parse_count;
+        break;
+      }
+      
+      // required fixed32 count = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_count:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &count_)));
+          set_has_count();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ObjectCount::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .ObjectType type = 1;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
+  }
+  
+  // required fixed32 count = 2;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->count(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ObjectCount::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .ObjectType type = 1;
+  if (has_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
+  }
+  
+  // required fixed32 count = 2;
+  if (has_count()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->count(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ObjectCount::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .ObjectType type = 1;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+    
+    // required fixed32 count = 2;
+    if (has_count()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ObjectCount::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ObjectCount* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ObjectCount*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ObjectCount::MergeFrom(const ObjectCount& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_type()) {
+      set_type(from.type());
+    }
+    if (from.has_count()) {
+      set_count(from.count());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ObjectCount::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ObjectCount::CopyFrom(const ObjectCount& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ObjectCount::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  
+  return true;
+}
+
+void ObjectCount::Swap(ObjectCount* other) {
+  if (other != this) {
+    std::swap(type_, other->type_);
+    std::swap(count_, other->count_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ObjectCount::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ObjectCount_descriptor_;
+  metadata.reflection = ObjectCount_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int Inventory::kEidFieldNumber;
 const int Inventory::kWieldingFieldNumber;
+const int Inventory::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 Inventory::Inventory()
@@ -1081,7 +1386,7 @@ Inventory::Inventory(const Inventory& from)
 void Inventory::SharedCtor() {
   _cached_size_ = 0;
   eid_ = 0u;
-  wielding_ = 0;
+  wielding_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1117,8 +1422,9 @@ Inventory* Inventory::New() const {
 void Inventory::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eid_ = 0u;
-    wielding_ = 0;
+    wielding_ = 1;
   }
+  count_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1144,7 +1450,7 @@ bool Inventory::MergePartialFromCodedStream(
         break;
       }
       
-      // required .Texture wielding = 2;
+      // required .ObjectType wielding = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -1153,14 +1459,29 @@ bool Inventory::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (Texture_IsValid(value)) {
-            set_wielding(static_cast< Texture >(value));
+          if (ObjectType_IsValid(value)) {
+            set_wielding(static_cast< ObjectType >(value));
           } else {
             mutable_unknown_fields()->AddVarint(2, value);
           }
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(26)) goto parse_count;
+        break;
+      }
+      
+      // repeated .ObjectCount count = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_count:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_count()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_count;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1188,10 +1509,16 @@ void Inventory::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->eid(), output);
   }
   
-  // required .Texture wielding = 2;
+  // required .ObjectType wielding = 2;
   if (has_wielding()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->wielding(), output);
+  }
+  
+  // repeated .ObjectCount count = 3;
+  for (int i = 0; i < this->count_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->count(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1207,10 +1534,17 @@ void Inventory::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->eid(), target);
   }
   
-  // required .Texture wielding = 2;
+  // required .ObjectType wielding = 2;
   if (has_wielding()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->wielding(), target);
+  }
+  
+  // repeated .ObjectCount count = 3;
+  for (int i = 0; i < this->count_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->count(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1229,13 +1563,21 @@ int Inventory::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required .Texture wielding = 2;
+    // required .ObjectType wielding = 2;
     if (has_wielding()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->wielding());
     }
     
   }
+  // repeated .ObjectCount count = 3;
+  total_size += 1 * this->count_size();
+  for (int i = 0; i < this->count_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->count(i));
+  }
+  
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -1261,6 +1603,7 @@ void Inventory::MergeFrom(const ::google::protobuf::Message& from) {
 
 void Inventory::MergeFrom(const Inventory& from) {
   GOOGLE_CHECK_NE(&from, this);
+  count_.MergeFrom(from.count_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_eid()) {
       set_eid(from.eid());
@@ -1287,6 +1630,9 @@ void Inventory::CopyFrom(const Inventory& from) {
 bool Inventory::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
+  for (int i = 0; i < count_size(); i++) {
+    if (!this->count(i).IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -1294,6 +1640,7 @@ void Inventory::Swap(Inventory* other) {
   if (other != this) {
     std::swap(eid_, other->eid_);
     std::swap(wielding_, other->wielding_);
+    count_.Swap(&other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2679,7 +3026,7 @@ const int PhysicsData::kVerticalAngleFieldNumber;
 const int PhysicsData::kDimXFieldNumber;
 const int PhysicsData::kDimYFieldNumber;
 const int PhysicsData::kDimZFieldNumber;
-const int PhysicsData::kTextureFieldNumber;
+const int PhysicsData::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 PhysicsData::PhysicsData()
@@ -2707,7 +3054,7 @@ void PhysicsData::SharedCtor() {
   dim_x_ = 0;
   dim_y_ = 0;
   dim_z_ = 0;
-  texture_ = 0;
+  type_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2753,7 +3100,7 @@ void PhysicsData::Clear() {
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     dim_z_ = 0;
-    texture_ = 0;
+    type_ = 1;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2904,21 +3251,21 @@ bool PhysicsData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(80)) goto parse_texture;
+        if (input->ExpectTag(80)) goto parse_type;
         break;
       }
       
-      // required .Texture texture = 10;
+      // required .ObjectType type = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_texture:
+         parse_type:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (Texture_IsValid(value)) {
-            set_texture(static_cast< Texture >(value));
+          if (ObjectType_IsValid(value)) {
+            set_type(static_cast< ObjectType >(value));
           } else {
             mutable_unknown_fields()->AddVarint(10, value);
           }
@@ -2992,10 +3339,10 @@ void PhysicsData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->dim_z(), output);
   }
   
-  // required .Texture texture = 10;
-  if (has_texture()) {
+  // required .ObjectType type = 10;
+  if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      10, this->texture(), output);
+      10, this->type(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -3051,10 +3398,10 @@ void PhysicsData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->dim_z(), target);
   }
   
-  // required .Texture texture = 10;
-  if (has_texture()) {
+  // required .ObjectType type = 10;
+  if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      10, this->texture(), target);
+      10, this->type(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3115,10 +3462,10 @@ int PhysicsData::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required .Texture texture = 10;
-    if (has_texture()) {
+    // required .ObjectType type = 10;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->texture());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
     
   }
@@ -3177,8 +3524,8 @@ void PhysicsData::MergeFrom(const PhysicsData& from) {
     if (from.has_dim_z()) {
       set_dim_z(from.dim_z());
     }
-    if (from.has_texture()) {
-      set_texture(from.texture());
+    if (from.has_type()) {
+      set_type(from.type());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -3213,7 +3560,7 @@ void PhysicsData::Swap(PhysicsData* other) {
     std::swap(dim_x_, other->dim_x_);
     std::swap(dim_y_, other->dim_y_);
     std::swap(dim_z_, other->dim_z_);
-    std::swap(texture_, other->texture_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

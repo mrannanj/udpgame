@@ -13,17 +13,17 @@ void ClientHandler::tick(float, World& w) {
     if (ic != nullptr) {
       ic->set_eid(c.eid());
       if (ic->actions() & ContinousAction::PLAYER_MODE)
-        c.set_mode(c.mode() == ClientMode::PLAYER ?
-            ClientMode::PLAYER : ClientMode::OBSERVER);
+        c.set_mode(c.mode() == ClientMode::MODE_PLAYER ?
+            ClientMode::MODE_PLAYER : ClientMode::MODE_OBSERVER);
     } else {
       w.mDeleteList.insert(c.eid());
       it = mComponents.erase(it);
       continue;
     }
 
-    if (c.mode() == ClientMode::PLAYER and c.dead()) {
+    if (c.mode() == ClientMode::MODE_PLAYER and c.dead()) {
       w.spawn_player(c.client());
-    } else if (c.mode() == ClientMode::OBSERVER and !c.dead()) {
+    } else if (c.mode() == ClientMode::MODE_OBSERVER and !c.dead()) {
       w.mDeleteList.insert(c.eid());
     }
     ++it;

@@ -9,7 +9,7 @@
 struct PhysicsC {
   EntityId entityid;
 
-  Texture texture;
+  ObjectType type;
   glm::vec3 position;
   glm::vec3 velocity;
   float horizontal_angle;

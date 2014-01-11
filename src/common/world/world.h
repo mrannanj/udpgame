@@ -18,7 +18,7 @@ public:
 
   void tick(const FrameInputs&);
   void spawn_player(int);
-  void throw_object(const PhysicsC&, Texture);
+  void throw_object(const PhysicsC&, ObjectType);
 
   void removeDead();
 

@@ -32,6 +32,7 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
 
 class AMessage;
 class ClientData;
+class ObjectCount;
 class Inventory;
 class FrameInputs;
 class FrameInput;
@@ -60,19 +61,19 @@ inline bool Type_Parse(
     Type_descriptor(), name, value);
 }
 enum Texture {
-  NONE = 0,
-  GRASS = 1,
-  SAND = 2,
-  ROCK = 3,
-  BW = 4,
-  FONT = 5,
-  FACE = 6,
-  HEAD = 7,
-  SIZE = 8
+  TEXTURE_NONE = 0,
+  TEXTURE_GRASS = 1,
+  TEXTURE_SAND = 2,
+  TEXTURE_ROCK = 3,
+  TEXTURE_BW = 4,
+  TEXTURE_FONT = 5,
+  TEXTURE_FACE = 6,
+  TEXTURE_HEAD = 7,
+  TEXTURE_SIZE = 8
 };
 bool Texture_IsValid(int value);
-const Texture Texture_MIN = NONE;
-const Texture Texture_MAX = SIZE;
+const Texture Texture_MIN = TEXTURE_NONE;
+const Texture Texture_MAX = TEXTURE_SIZE;
 const int Texture_ARRAYSIZE = Texture_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Texture_descriptor();
@@ -85,13 +86,36 @@ inline bool Texture_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<Texture>(
     Texture_descriptor(), name, value);
 }
+enum ObjectType {
+  GRASS = 1,
+  SAND = 2,
+  ROCK = 3,
+  BW = 4,
+  FONT = 5,
+  PLAYER = 6
+};
+bool ObjectType_IsValid(int value);
+const ObjectType ObjectType_MIN = GRASS;
+const ObjectType ObjectType_MAX = PLAYER;
+const int ObjectType_ARRAYSIZE = ObjectType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ObjectType_descriptor();
+inline const ::std::string& ObjectType_Name(ObjectType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ObjectType_descriptor(), value);
+}
+inline bool ObjectType_Parse(
+    const ::std::string& name, ObjectType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ObjectType>(
+    ObjectType_descriptor(), name, value);
+}
 enum ClientMode {
-  PLAYER = 0,
-  OBSERVER = 1
+  MODE_PLAYER = 0,
+  MODE_OBSERVER = 1
 };
 bool ClientMode_IsValid(int value);
-const ClientMode ClientMode_MIN = PLAYER;
-const ClientMode ClientMode_MAX = OBSERVER;
+const ClientMode ClientMode_MIN = MODE_PLAYER;
+const ClientMode ClientMode_MAX = MODE_OBSERVER;
 const int ClientMode_ARRAYSIZE = ClientMode_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ClientMode_descriptor();
@@ -333,6 +357,98 @@ class ClientData : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ObjectCount : public ::google::protobuf::Message {
+ public:
+  ObjectCount();
+  virtual ~ObjectCount();
+  
+  ObjectCount(const ObjectCount& from);
+  
+  inline ObjectCount& operator=(const ObjectCount& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectCount& default_instance();
+  
+  void Swap(ObjectCount* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectCount* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectCount& from);
+  void MergeFrom(const ObjectCount& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .ObjectType type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ObjectType type() const;
+  inline void set_type(ObjectType value);
+  
+  // required fixed32 count = 2;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 2;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+  
+  // @@protoc_insertion_point(class_scope:ObjectCount)
+ private:
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_count();
+  inline void clear_has_count();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  int type_;
+  ::google::protobuf::uint32 count_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static ObjectCount* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Inventory : public ::google::protobuf::Message {
  public:
   Inventory();
@@ -394,12 +510,24 @@ class Inventory : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 eid() const;
   inline void set_eid(::google::protobuf::uint32 value);
   
-  // required .Texture wielding = 2;
+  // required .ObjectType wielding = 2;
   inline bool has_wielding() const;
   inline void clear_wielding();
   static const int kWieldingFieldNumber = 2;
-  inline Texture wielding() const;
-  inline void set_wielding(Texture value);
+  inline ObjectType wielding() const;
+  inline void set_wielding(ObjectType value);
+  
+  // repeated .ObjectCount count = 3;
+  inline int count_size() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 3;
+  inline const ::ObjectCount& count(int index) const;
+  inline ::ObjectCount* mutable_count(int index);
+  inline ::ObjectCount* add_count();
+  inline const ::google::protobuf::RepeatedPtrField< ::ObjectCount >&
+      count() const;
+  inline ::google::protobuf::RepeatedPtrField< ::ObjectCount >*
+      mutable_count();
   
   // @@protoc_insertion_point(class_scope:Inventory)
  private:
@@ -412,9 +540,10 @@ class Inventory : public ::google::protobuf::Message {
   
   ::google::protobuf::uint32 eid_;
   int wielding_;
+  ::google::protobuf::RepeatedPtrField< ::ObjectCount > count_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1017,12 +1146,12 @@ class PhysicsData : public ::google::protobuf::Message {
   inline float dim_z() const;
   inline void set_dim_z(float value);
   
-  // required .Texture texture = 10;
-  inline bool has_texture() const;
-  inline void clear_texture();
-  static const int kTextureFieldNumber = 10;
-  inline Texture texture() const;
-  inline void set_texture(Texture value);
+  // required .ObjectType type = 10;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 10;
+  inline ObjectType type() const;
+  inline void set_type(ObjectType value);
   
   // @@protoc_insertion_point(class_scope:PhysicsData)
  private:
@@ -1044,8 +1173,8 @@ class PhysicsData : public ::google::protobuf::Message {
   inline void clear_has_dim_y();
   inline void set_has_dim_z();
   inline void clear_has_dim_z();
-  inline void set_has_texture();
-  inline void clear_has_texture();
+  inline void set_has_type();
+  inline void clear_has_type();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -1058,7 +1187,7 @@ class PhysicsData : public ::google::protobuf::Message {
   float dim_x_;
   float dim_y_;
   float dim_z_;
-  int texture_;
+  int type_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
@@ -1282,6 +1411,55 @@ inline void ClientData::set_dead(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// ObjectCount
+
+// required .ObjectType type = 1;
+inline bool ObjectCount::has_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ObjectCount::set_has_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ObjectCount::clear_has_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ObjectCount::clear_type() {
+  type_ = 1;
+  clear_has_type();
+}
+inline ObjectType ObjectCount::type() const {
+  return static_cast< ObjectType >(type_);
+}
+inline void ObjectCount::set_type(ObjectType value) {
+  GOOGLE_DCHECK(ObjectType_IsValid(value));
+  set_has_type();
+  type_ = value;
+}
+
+// required fixed32 count = 2;
+inline bool ObjectCount::has_count() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ObjectCount::set_has_count() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ObjectCount::clear_has_count() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ObjectCount::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 ObjectCount::count() const {
+  return count_;
+}
+inline void ObjectCount::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // Inventory
 
 // required fixed32 eid = 1;
@@ -1306,7 +1484,7 @@ inline void Inventory::set_eid(::google::protobuf::uint32 value) {
   eid_ = value;
 }
 
-// required .Texture wielding = 2;
+// required .ObjectType wielding = 2;
 inline bool Inventory::has_wielding() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1317,16 +1495,41 @@ inline void Inventory::clear_has_wielding() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void Inventory::clear_wielding() {
-  wielding_ = 0;
+  wielding_ = 1;
   clear_has_wielding();
 }
-inline Texture Inventory::wielding() const {
-  return static_cast< Texture >(wielding_);
+inline ObjectType Inventory::wielding() const {
+  return static_cast< ObjectType >(wielding_);
 }
-inline void Inventory::set_wielding(Texture value) {
-  GOOGLE_DCHECK(Texture_IsValid(value));
+inline void Inventory::set_wielding(ObjectType value) {
+  GOOGLE_DCHECK(ObjectType_IsValid(value));
   set_has_wielding();
   wielding_ = value;
+}
+
+// repeated .ObjectCount count = 3;
+inline int Inventory::count_size() const {
+  return count_.size();
+}
+inline void Inventory::clear_count() {
+  count_.Clear();
+}
+inline const ::ObjectCount& Inventory::count(int index) const {
+  return count_.Get(index);
+}
+inline ::ObjectCount* Inventory::mutable_count(int index) {
+  return count_.Mutable(index);
+}
+inline ::ObjectCount* Inventory::add_count() {
+  return count_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::ObjectCount >&
+Inventory::count() const {
+  return count_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::ObjectCount >*
+Inventory::mutable_count() {
+  return &count_;
 }
 
 // -------------------------------------------------------------------
@@ -1976,27 +2179,27 @@ inline void PhysicsData::set_dim_z(float value) {
   dim_z_ = value;
 }
 
-// required .Texture texture = 10;
-inline bool PhysicsData::has_texture() const {
+// required .ObjectType type = 10;
+inline bool PhysicsData::has_type() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
-inline void PhysicsData::set_has_texture() {
+inline void PhysicsData::set_has_type() {
   _has_bits_[0] |= 0x00000200u;
 }
-inline void PhysicsData::clear_has_texture() {
+inline void PhysicsData::clear_has_type() {
   _has_bits_[0] &= ~0x00000200u;
 }
-inline void PhysicsData::clear_texture() {
-  texture_ = 0;
-  clear_has_texture();
+inline void PhysicsData::clear_type() {
+  type_ = 1;
+  clear_has_type();
 }
-inline Texture PhysicsData::texture() const {
-  return static_cast< Texture >(texture_);
+inline ObjectType PhysicsData::type() const {
+  return static_cast< ObjectType >(type_);
 }
-inline void PhysicsData::set_texture(Texture value) {
-  GOOGLE_DCHECK(Texture_IsValid(value));
-  set_has_texture();
-  texture_ = value;
+inline void PhysicsData::set_type(ObjectType value) {
+  GOOGLE_DCHECK(ObjectType_IsValid(value));
+  set_has_type();
+  type_ = value;
 }
 
 
@@ -2013,6 +2216,10 @@ inline const EnumDescriptor* GetEnumDescriptor< Type>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Texture>() {
   return Texture_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ObjectType>() {
+  return ObjectType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ClientMode>() {
