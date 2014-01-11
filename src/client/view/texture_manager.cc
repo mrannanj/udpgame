@@ -17,18 +17,24 @@ TextureManager::~TextureManager() {
     glDeleteTextures(1, &texture);
 }
 
-GLuint TextureManager::operator[](Texture::Enum texture) const {
+GLuint TextureManager::operator[](Texture texture) const {
   return m_textures[texture];
+}
+
+GLuint TextureManager::operator[](int t) const {
+  return m_textures[t];
 }
 
 void TextureManager::LoadTextures() {
   m_textures[Texture::GRASS] = LoadTexture("resources/images/grass.png");
   m_textures[Texture::FONT] = LoadTexture("resources/images/font.png");
-  m_textures[Texture::FACE] = LoadTexture("resources/images/face.png");
-  m_textures[Texture::HEAD] = LoadTexture("resources/images/head.png");
   m_textures[Texture::SAND] = LoadTexture("resources/images/sand.png");
   m_textures[Texture::ROCK] = LoadTexture("resources/images/rock.png");
   m_textures[Texture::BW] = LoadTexture("resources/images/bw.png");
+  m_textures[Texture::HEAD] = LoadTexture("resources/images/head.png");
+
+  // not used ATM
+  m_textures[Texture::FACE] = LoadTexture("resources/images/face.png");
 }
 
 GLuint TextureManager::LoadTexture(const std::string& fn) {

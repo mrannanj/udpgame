@@ -14,19 +14,7 @@ void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
       for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
         char block = g.mArr.get(x,y,z);
         if (block == 0) continue;
-
-        if (block == 1)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::GRASS]);
-        else if (block == 2)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::FACE]);
-        else if (block == 3)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::FONT]);
-        else if (block == 4)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::BW]);
-        else if (block == 5)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::SAND]);
-        else if (block == 6)
-          r.cube_renderer.SetTexture(r.texture_manager[Texture::ROCK]);
+        r.cube_renderer.SetTexture(r.texture_manager[block]);
 
         glm::mat4 model = glm::translate(glm::mat4(1.0f),
           glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)
@@ -47,9 +35,9 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
     const glm::mat4& vp)
 {
   r.cube_renderer.On();
-  r.cube_renderer.SetTexture(r.texture_manager[Texture::HEAD]);
 
   for (const PhysicsC& p : ps.components()) {
+    r.cube_renderer.SetTexture(r.texture_manager[p.texture]);
     glm::mat4 model = glm::translate(glm::mat4(1.0f), p.position);
     model = glm::rotate(model, rad_to_degree(p.horizontal_angle),
       glm::vec3(0.0f, 1.0f, 0.0f));

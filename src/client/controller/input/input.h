@@ -19,7 +19,8 @@ namespace ContinousAction {
     ITEM_7 = 1 << 14,
     ITEM_8 = 1 << 15,
     ITEM_9 = 1 << 16,
-    SPAWN_MONSTER = 1 << 17
+    SPAWN_MONSTER = 1 << 17,
+    THROW = 1 << 18
   };
 }
 

@@ -10,18 +10,18 @@ void InventoryHandler::tick(float, World& w) {
     if (ic == nullptr) continue;
 
     if (ic->actions() & ContinousAction::ITEM_1)
-      inv.set_wielding(1);
+      inv.set_wielding(Texture::GRASS);
     if (ic->actions() & ContinousAction::ITEM_2)
-      inv.set_wielding(2);
+      inv.set_wielding(Texture::SAND);
     if (ic->actions() & ContinousAction::ITEM_3)
-      inv.set_wielding(3);
+      inv.set_wielding(Texture::ROCK);
     if (ic->actions() & ContinousAction::ITEM_4)
-      inv.set_wielding(4);
+      inv.set_wielding(Texture::BW);
     if (ic->actions() & ContinousAction::ITEM_5)
-      inv.set_wielding(5);
+      inv.set_wielding(Texture::FONT);
+#if 0
     if (ic->actions() & ContinousAction::ITEM_6)
       inv.set_wielding(6);
-#if 0
     if (ic->actions() & ContinousAction::ITEM_7)
       inv.set_wielding(3);
     if (ic->actions() & ContinousAction::ITEM_8)
@@ -33,6 +33,10 @@ void InventoryHandler::tick(float, World& w) {
     PhysicsC* p = w.physics().get(inv.eid());
     assert(p != nullptr);
 
+    if (ic->actions() & ContinousAction::THROW) {
+      w.throw_object(*p, inv.wielding());
+    }
+
     if ((ic->actions() & ContinousAction::FIRST) or
         ic->actions() & ContinousAction::SECOND)
     {
@@ -42,7 +46,7 @@ void InventoryHandler::tick(float, World& w) {
       char* hitBlock;
       char* faceBlock;
       if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock)) {
-        if (ic->actions() & ContinousAction::FIRST and *hitBlock != 3) {
+        if (ic->actions() & ContinousAction::FIRST and *hitBlock != 5) {
           *hitBlock = 0;
         }
         if (ic->actions() & ContinousAction::SECOND and faceBlock != nullptr) {

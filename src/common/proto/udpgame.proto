@@ -4,6 +4,18 @@ enum Type {
   FRAME_INPUTS = 3;
 }
 
+enum Texture {
+  NONE = 0;
+  GRASS = 1;
+  SAND = 2;
+  ROCK = 3;
+  BW = 4;
+  FONT = 5;
+  FACE = 6;
+  HEAD = 7;
+  SIZE = 8;
+}
+
 message AMessage {
   required Type type = 1;
   optional ClientInput client_input = 2;
@@ -25,7 +37,7 @@ message ClientData {
 
 message Inventory {
   required fixed32 eid = 1;
-  required fixed32 wielding = 2;
+  required Texture wielding = 2;
 }
 
 message FrameInputs {
@@ -67,4 +79,5 @@ message PhysicsData {
   required float dim_x = 7;
   required float dim_y = 8;
   required float dim_z = 9;
+  required Texture texture = 10;
 }

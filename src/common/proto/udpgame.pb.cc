@@ -40,6 +40,7 @@ const ::google::protobuf::Descriptor* PhysicsData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PhysicsData_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* Type_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* Texture_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientMode_descriptor_ = NULL;
 
 }  // namespace
@@ -177,7 +178,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(InitialState));
   PhysicsData_descriptor_ = file->message_type(7);
-  static const int PhysicsData_offsets_[9] = {
+  static const int PhysicsData_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, y_),
@@ -187,6 +188,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, dim_z_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, texture_),
   };
   PhysicsData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -200,7 +202,8 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PhysicsData));
   Type_descriptor_ = file->enum_type(0);
-  ClientMode_descriptor_ = file->enum_type(1);
+  Texture_descriptor_ = file->enum_type(1);
+  ClientMode_descriptor_ = file->enum_type(2);
 }
 
 namespace {
@@ -265,26 +268,30 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\0132\r.InitialState\022\"\n\014frame_inputs\030\004 \001(\0132\014"
     ".FrameInputs\"R\n\nClientData\022\016\n\006client\030\001 \002"
     "(\017\022\031\n\004mode\030\002 \002(\0162\013.ClientMode\022\013\n\003eid\030\003 \002"
-    "(\007\022\014\n\004dead\030\004 \002(\007\"*\n\tInventory\022\013\n\003eid\030\001 \002"
-    "(\007\022\020\n\010wielding\030\002 \002(\007\"E\n\013FrameInputs\022\023\n\013t"
-    "ick_number\030\001 \002(\007\022!\n\014frame_inputs\030\002 \003(\0132\013"
-    ".FrameInput\"l\n\nFrameInput\022\016\n\006client\030\001 \001("
-    "\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007actions\030\003 \002(\007\022\030\n\020horiz"
-    "ontal_delta\030\004 \002(\002\022\026\n\016vertical_delta\030\005 \002("
-    "\002\"[\n\013ClientInput\022\023\n\013tick_number\030\001 \002(\007\022\025\n"
-    "\rprevious_hash\030\002 \002(\007\022 \n\013frame_input\030\003 \002("
-    "\0132\013.FrameInput\"\275\001\n\014InitialState\022\023\n\013tick_"
-    "number\030\001 \002(\007\022\020\n\010next_eid\030\002 \002(\007\022\021\n\tclient"
-    "_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014\022\037\n\013inventories\030\005"
-    " \003(\0132\n.Inventory\022 \n\013client_data\030\006 \003(\0132\013."
-    "ClientData\022\"\n\014physics_data\030\007 \003(\0132\014.Physi"
-    "csData\"\232\001\n\013PhysicsData\022\013\n\003eid\030\001 \002(\007\022\t\n\001x"
-    "\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030\n\020horizont"
-    "al_angle\030\005 \002(\002\022\026\n\016vertical_angle\030\006 \002(\002\022\r"
-    "\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r\n\005dim_z\030\t "
-    "\002(\002*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL"
-    "_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*&\n\nClientMode"
-    "\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVER\020\001", 1026);
+    "(\007\022\014\n\004dead\030\004 \002(\007\"4\n\tInventory\022\013\n\003eid\030\001 \002"
+    "(\007\022\032\n\010wielding\030\002 \002(\0162\010.Texture\"E\n\013FrameI"
+    "nputs\022\023\n\013tick_number\030\001 \002(\007\022!\n\014frame_inpu"
+    "ts\030\002 \003(\0132\013.FrameInput\"l\n\nFrameInput\022\016\n\006c"
+    "lient\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n\007actions\030\003 \002("
+    "\007\022\030\n\020horizontal_delta\030\004 \002(\002\022\026\n\016vertical_"
+    "delta\030\005 \002(\002\"[\n\013ClientInput\022\023\n\013tick_numbe"
+    "r\030\001 \002(\007\022\025\n\rprevious_hash\030\002 \002(\007\022 \n\013frame_"
+    "input\030\003 \002(\0132\013.FrameInput\"\275\001\n\014InitialStat"
+    "e\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010next_eid\030\002 \002(\007"
+    "\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid\030\004 \002(\014\022\037\n\013inv"
+    "entories\030\005 \003(\0132\n.Inventory\022 \n\013client_dat"
+    "a\030\006 \003(\0132\013.ClientData\022\"\n\014physics_data\030\007 \003"
+    "(\0132\014.PhysicsData\"\265\001\n\013PhysicsData\022\013\n\003eid\030"
+    "\001 \002(\007\022\t\n\001x\030\002 \002(\002\022\t\n\001y\030\003 \002(\002\022\t\n\001z\030\004 \002(\002\022\030"
+    "\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical_ang"
+    "le\030\006 \002(\002\022\r\n\005dim_x\030\007 \002(\002\022\r\n\005dim_y\030\010 \002(\002\022\r"
+    "\n\005dim_z\030\t \002(\002\022\031\n\007texture\030\n \002(\0162\010.Texture"
+    "*=\n\004Type\022\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL_ST"
+    "ATE\020\002\022\020\n\014FRAME_INPUTS\020\003*b\n\007Texture\022\010\n\004NO"
+    "NE\020\000\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004ROCK\020\003\022\006\n\002B"
+    "W\020\004\022\010\n\004FONT\020\005\022\010\n\004FACE\020\006\022\010\n\004HEAD\020\007\022\010\n\004SIZ"
+    "E\020\010*&\n\nClientMode\022\n\n\006PLAYER\020\000\022\014\n\010OBSERVE"
+    "R\020\001", 1163);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -322,6 +329,27 @@ bool Type_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* Texture_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Texture_descriptor_;
+}
+bool Texture_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
       return true;
     default:
       return false;
@@ -1053,7 +1081,7 @@ Inventory::Inventory(const Inventory& from)
 void Inventory::SharedCtor() {
   _cached_size_ = 0;
   eid_ = 0u;
-  wielding_ = 0u;
+  wielding_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1089,7 +1117,7 @@ Inventory* Inventory::New() const {
 void Inventory::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eid_ = 0u;
-    wielding_ = 0u;
+    wielding_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1112,19 +1140,24 @@ bool Inventory::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(21)) goto parse_wielding;
+        if (input->ExpectTag(16)) goto parse_wielding;
         break;
       }
       
-      // required fixed32 wielding = 2;
+      // required .Texture wielding = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_wielding:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
-                 input, &wielding_)));
-          set_has_wielding();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (Texture_IsValid(value)) {
+            set_wielding(static_cast< Texture >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(2, value);
+          }
         } else {
           goto handle_uninterpreted;
         }
@@ -1155,9 +1188,10 @@ void Inventory::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->eid(), output);
   }
   
-  // required fixed32 wielding = 2;
+  // required .Texture wielding = 2;
   if (has_wielding()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->wielding(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->wielding(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1173,9 +1207,10 @@ void Inventory::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->eid(), target);
   }
   
-  // required fixed32 wielding = 2;
+  // required .Texture wielding = 2;
   if (has_wielding()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->wielding(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      2, this->wielding(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1194,9 +1229,10 @@ int Inventory::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required fixed32 wielding = 2;
+    // required .Texture wielding = 2;
     if (has_wielding()) {
-      total_size += 1 + 4;
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->wielding());
     }
     
   }
@@ -2643,6 +2679,7 @@ const int PhysicsData::kVerticalAngleFieldNumber;
 const int PhysicsData::kDimXFieldNumber;
 const int PhysicsData::kDimYFieldNumber;
 const int PhysicsData::kDimZFieldNumber;
+const int PhysicsData::kTextureFieldNumber;
 #endif  // !_MSC_VER
 
 PhysicsData::PhysicsData()
@@ -2670,6 +2707,7 @@ void PhysicsData::SharedCtor() {
   dim_x_ = 0;
   dim_y_ = 0;
   dim_z_ = 0;
+  texture_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2715,6 +2753,7 @@ void PhysicsData::Clear() {
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     dim_z_ = 0;
+    texture_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2865,6 +2904,27 @@ bool PhysicsData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(80)) goto parse_texture;
+        break;
+      }
+      
+      // required .Texture texture = 10;
+      case 10: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_texture:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (Texture_IsValid(value)) {
+            set_texture(static_cast< Texture >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(10, value);
+          }
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2932,6 +2992,12 @@ void PhysicsData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->dim_z(), output);
   }
   
+  // required .Texture texture = 10;
+  if (has_texture()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      10, this->texture(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2983,6 +3049,12 @@ void PhysicsData::SerializeWithCachedSizes(
   // required float dim_z = 9;
   if (has_dim_z()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->dim_z(), target);
+  }
+  
+  // required .Texture texture = 10;
+  if (has_texture()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      10, this->texture(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3043,6 +3115,12 @@ int PhysicsData::ByteSize() const {
       total_size += 1 + 4;
     }
     
+    // required .Texture texture = 10;
+    if (has_texture()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->texture());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -3099,6 +3177,9 @@ void PhysicsData::MergeFrom(const PhysicsData& from) {
     if (from.has_dim_z()) {
       set_dim_z(from.dim_z());
     }
+    if (from.has_texture()) {
+      set_texture(from.texture());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -3116,7 +3197,7 @@ void PhysicsData::CopyFrom(const PhysicsData& from) {
 }
 
 bool PhysicsData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000001ff) != 0x000001ff) return false;
+  if ((_has_bits_[0] & 0x000003ff) != 0x000003ff) return false;
   
   return true;
 }
@@ -3132,6 +3213,7 @@ void PhysicsData::Swap(PhysicsData* other) {
     std::swap(dim_x_, other->dim_x_);
     std::swap(dim_y_, other->dim_y_);
     std::swap(dim_z_, other->dim_z_);
+    std::swap(texture_, other->texture_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

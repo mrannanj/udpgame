@@ -2,10 +2,12 @@
 
 #include <glm/glm.hpp>
 #include "common/world/entity_id.h"
+#include "common/proto/udpgame.pb.h"
 
 struct PhysicsC {
   EntityId entityid;
 
+  Texture texture;
   glm::vec3 position;
   glm::vec3 velocity;
   float horizontal_angle;

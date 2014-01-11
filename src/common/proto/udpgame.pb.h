@@ -59,6 +59,32 @@ inline bool Type_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<Type>(
     Type_descriptor(), name, value);
 }
+enum Texture {
+  NONE = 0,
+  GRASS = 1,
+  SAND = 2,
+  ROCK = 3,
+  BW = 4,
+  FONT = 5,
+  FACE = 6,
+  HEAD = 7,
+  SIZE = 8
+};
+bool Texture_IsValid(int value);
+const Texture Texture_MIN = NONE;
+const Texture Texture_MAX = SIZE;
+const int Texture_ARRAYSIZE = Texture_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Texture_descriptor();
+inline const ::std::string& Texture_Name(Texture value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Texture_descriptor(), value);
+}
+inline bool Texture_Parse(
+    const ::std::string& name, Texture* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Texture>(
+    Texture_descriptor(), name, value);
+}
 enum ClientMode {
   PLAYER = 0,
   OBSERVER = 1
@@ -368,12 +394,12 @@ class Inventory : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 eid() const;
   inline void set_eid(::google::protobuf::uint32 value);
   
-  // required fixed32 wielding = 2;
+  // required .Texture wielding = 2;
   inline bool has_wielding() const;
   inline void clear_wielding();
   static const int kWieldingFieldNumber = 2;
-  inline ::google::protobuf::uint32 wielding() const;
-  inline void set_wielding(::google::protobuf::uint32 value);
+  inline Texture wielding() const;
+  inline void set_wielding(Texture value);
   
   // @@protoc_insertion_point(class_scope:Inventory)
  private:
@@ -385,7 +411,7 @@ class Inventory : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::google::protobuf::uint32 eid_;
-  ::google::protobuf::uint32 wielding_;
+  int wielding_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -991,6 +1017,13 @@ class PhysicsData : public ::google::protobuf::Message {
   inline float dim_z() const;
   inline void set_dim_z(float value);
   
+  // required .Texture texture = 10;
+  inline bool has_texture() const;
+  inline void clear_texture();
+  static const int kTextureFieldNumber = 10;
+  inline Texture texture() const;
+  inline void set_texture(Texture value);
+  
   // @@protoc_insertion_point(class_scope:PhysicsData)
  private:
   inline void set_has_eid();
@@ -1011,6 +1044,8 @@ class PhysicsData : public ::google::protobuf::Message {
   inline void clear_has_dim_y();
   inline void set_has_dim_z();
   inline void clear_has_dim_z();
+  inline void set_has_texture();
+  inline void clear_has_texture();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -1023,9 +1058,10 @@ class PhysicsData : public ::google::protobuf::Message {
   float dim_x_;
   float dim_y_;
   float dim_z_;
+  int texture_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1270,7 +1306,7 @@ inline void Inventory::set_eid(::google::protobuf::uint32 value) {
   eid_ = value;
 }
 
-// required fixed32 wielding = 2;
+// required .Texture wielding = 2;
 inline bool Inventory::has_wielding() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1281,13 +1317,14 @@ inline void Inventory::clear_has_wielding() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void Inventory::clear_wielding() {
-  wielding_ = 0u;
+  wielding_ = 0;
   clear_has_wielding();
 }
-inline ::google::protobuf::uint32 Inventory::wielding() const {
-  return wielding_;
+inline Texture Inventory::wielding() const {
+  return static_cast< Texture >(wielding_);
 }
-inline void Inventory::set_wielding(::google::protobuf::uint32 value) {
+inline void Inventory::set_wielding(Texture value) {
+  GOOGLE_DCHECK(Texture_IsValid(value));
   set_has_wielding();
   wielding_ = value;
 }
@@ -1939,6 +1976,29 @@ inline void PhysicsData::set_dim_z(float value) {
   dim_z_ = value;
 }
 
+// required .Texture texture = 10;
+inline bool PhysicsData::has_texture() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void PhysicsData::set_has_texture() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void PhysicsData::clear_has_texture() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void PhysicsData::clear_texture() {
+  texture_ = 0;
+  clear_has_texture();
+}
+inline Texture PhysicsData::texture() const {
+  return static_cast< Texture >(texture_);
+}
+inline void PhysicsData::set_texture(Texture value) {
+  GOOGLE_DCHECK(Texture_IsValid(value));
+  set_has_texture();
+  texture_ = value;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -1949,6 +2009,10 @@ namespace protobuf {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Type>() {
   return Type_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< Texture>() {
+  return Texture_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ClientMode>() {

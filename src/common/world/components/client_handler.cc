@@ -12,8 +12,6 @@ void ClientHandler::tick(float, World& w) {
     FrameInput* ic = w.input().getByClient(c.client());
     if (ic != nullptr) {
       ic->set_eid(c.eid());
-      if (ic->actions() & ContinousAction::SPAWN_MONSTER)
-        w.spawn_monster();
       if (ic->actions() & ContinousAction::PLAYER_MODE)
         c.set_mode(c.mode() == ClientMode::PLAYER ?
             ClientMode::PLAYER : ClientMode::OBSERVER);

@@ -12,6 +12,8 @@ constexpr float HALF_PI = (float)M_PI/2.0f;
 constexpr float PI = (float)M_PI;
 constexpr float move_speed = 1.5f;
 constexpr float jump_velocity = 5.0f;
+constexpr float FRICTION = 0.85f;
+constexpr float GRAVITY = 10.0f;
 
 void PhysicsHandler::tick(float dt, World& w) {
   for (PhysicsC& p : mComponents) {
@@ -37,7 +39,6 @@ void PhysicsHandler::tick(float dt, World& w) {
         p.velocity += forward * move_speed;
       else if (i->actions() & ContinousAction::MOVE_BACK)
         p.velocity -= forward * move_speed;
-
       if (i->actions() & ContinousAction::MOVE_RIGHT)
         p.velocity += right * move_speed;
       else if (i->actions() & ContinousAction::MOVE_LEFT)
@@ -84,6 +85,7 @@ void PhysicsHandler::serialize(
     o->set_dim_x(p.dimensions.x);
     o->set_dim_y(p.dimensions.y);
     o->set_dim_z(p.dimensions.z);
+    o->set_texture(p.texture);
   }
 }
 
@@ -103,6 +105,7 @@ void PhysicsHandler::deserialize(
     p.dimensions.x = pd.dim_x();
     p.dimensions.y = pd.dim_y();
     p.dimensions.z = pd.dim_z();
+    p.texture = pd.texture();
     p.update_bbs();
     add(p);
   }

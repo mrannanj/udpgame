@@ -9,9 +9,6 @@
 #include <set>
 #include <glm/glm.hpp>
 
-#define FRICTION 0.8f
-#define GRAVITY 10.0f
-
 class World;
 
 class PhysicsHandler : public WorldHandler<PhysicsC> {

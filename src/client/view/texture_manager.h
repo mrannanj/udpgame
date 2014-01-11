@@ -4,25 +4,15 @@
 #include <string>
 #include <GL/gl.h>
 
-namespace Texture {
-  enum Enum {
-    GRASS,
-    FONT,
-    FACE,
-    HEAD,
-    BW,
-    ROCK,
-    SAND,
-    SIZE
-  };
-}
+#include "common/proto/udpgame.pb.h"
 
 class TextureManager {
 public:
   TextureManager();
   ~TextureManager();
 
-  GLuint operator[](Texture::Enum) const;
+  GLuint operator[](Texture) const;
+  GLuint operator[](int) const;
 
 private:
   void LoadTextures();

@@ -10,7 +10,7 @@ using namespace std;
 
 SDLKey binded_keys[] = {
   SDLK_w, SDLK_s, SDLK_d, SDLK_a, SDLK_SPACE, SDLK_1, SDLK_2, SDLK_3,
-  SDLK_4, SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9
+  SDLK_4, SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9, SDLK_t
 };
 
 InputManager::InputManager() {
@@ -31,6 +31,7 @@ void InputManager::init_key_to_action() {
   m_key_to_action[SDLK_s] = ContinousAction::MOVE_BACK;
   m_key_to_action[SDLK_d] = ContinousAction::MOVE_RIGHT;
   m_key_to_action[SDLK_a] = ContinousAction::MOVE_LEFT;
+  m_key_to_action[SDLK_t] = ContinousAction::THROW;
   m_key_to_action[SDLK_SPACE] = ContinousAction::JUMP;
   m_key_to_action[SDLK_1] = ContinousAction::ITEM_1;
   m_key_to_action[SDLK_2] = ContinousAction::ITEM_2;

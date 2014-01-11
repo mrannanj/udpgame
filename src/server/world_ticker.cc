@@ -3,6 +3,8 @@
 #include "server/world_ticker.h"
 #include "common/config.h"
 
+static constexpr int TIMEOUT = 20;
+
 using namespace std;
 
 const FrameInputs& WorldTicker::inputsForFrame(unsigned tick) {
@@ -27,7 +29,7 @@ void WorldTicker::fillMissingInputs(unsigned tick,
       ++c;
       continue;
     }
-    if (tick - c->mLastFrameOk >= 10) {
+    if (tick - c->mLastFrameOk >= TIMEOUT) {
       cout << *c << " timeouted" << endl;
       c = connections.erase(c);
       continue;

@@ -32,16 +32,17 @@ void World::updateHash() {
   mHash = mPhysicsHandler.hash();
 }
 
-void World::spawn_monster() {
+void World::throw_object(const PhysicsC& o, Texture t) {
   EntityId eid = m_idgen.generateId();
 
   PhysicsC p;
   memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
-  p.position = mGrid.spawn_pos();
-  p.dimensions = glm::vec3(0.4f, 0.2f, 0.4f);
-  p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+  p.position = o.eye_position() + o.look_direction() * 2.0f;
+  p.dimensions = glm::vec3(0.2f, 0.2f, 0.2f);
+  p.velocity = o.look_direction() * 10.0f;
+  p.texture = t;
   mPhysicsHandler.add(p);
 }
 
@@ -55,11 +56,12 @@ void World::spawn_player(int clientid) {
   p.position = mGrid.spawn_pos();
   p.dimensions = glm::vec3(0.4f, 0.9f, 0.4f);
   p.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+  p.texture = Texture::HEAD;
   mPhysicsHandler.add(p);
 
   Inventory i;
   i.set_eid(eid);
-  i.set_wielding(1);
+  i.set_wielding(Texture::GRASS);
   mInventory.add(i);
 
   ClientData* cd = mClient.getByClient(clientid);

@@ -22,10 +22,10 @@ size_t GridArray::i(int x, int y, int z) const {
 }
 
 char GridArray::heightToBlock(int z) {
-  if (z < 1) return 3;
+  if (z < 1) return 5;
   if (z < 35) return 4;
-  if (z < 45) return 5;
-  if (z < 65) return 6;
+  if (z < 45) return 3;
+  if (z < 65) return 2;
   return 1;
 }
 
