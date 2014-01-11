@@ -10,6 +10,7 @@
 #include "common/world/components/inventory_handler.h"
 #include "common/world/components/client_handler.h"
 #include "common/world/components/lifetime_handler.h"
+#include "common/world/components/ai_handler.h"
 #include "common/world/components/id_generator.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -21,6 +22,7 @@ public:
   void spawn_player(int);
   void throw_object(const Physics&, ObjectType);
   void onBlockDestruction(int, int, int);
+  void add_monster(const Physics&, EntityId);
 
   void removeDead();
 
@@ -52,4 +54,5 @@ private:
   ClientHandler mClient;
   GridHandler mGrid;
   LifetimeHandler mLifetime;
+  AiHandler mAi;
 };

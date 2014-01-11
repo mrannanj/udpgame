@@ -11,6 +11,7 @@ public:
   TextureManager();
   ~TextureManager();
 
+  GLuint operator[](ObjectType) const;
   GLuint operator[](Texture) const;
   GLuint operator[](int) const;
 
@@ -19,4 +20,5 @@ private:
   GLuint LoadTexture(const std::string&);
 
   GLuint mTextures[Texture::TEXTURE_SIZE];
+  Texture mTypeToTexture[Texture::TEXTURE_SIZE];
 };

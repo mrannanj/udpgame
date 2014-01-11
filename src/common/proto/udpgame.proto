@@ -13,7 +13,8 @@ enum Texture {
   TEXTURE_FONT = 5;
   TEXTURE_FACE = 6;
   TEXTURE_HEAD = 7;
-  TEXTURE_SIZE = 8;
+  TEXTURE_GRR = 8;
+  TEXTURE_SIZE = 9;
 }
 
 enum ObjectType {
@@ -23,6 +24,7 @@ enum ObjectType {
   BW = 4;
   FONT = 5;
   PLAYER = 6;
+  MONSTER = 7;
 }
 
 message AMessage {
@@ -83,6 +85,12 @@ message InitialState {
   repeated ClientData client_data = 6;
   repeated PhysicsData physics_data = 7;
   repeated Lifetime lifetime = 8;
+  repeated Ai ai = 9;
+}
+
+message Ai {
+  required fixed32 eid = 1;
+  required fixed32 follow_eid = 2;
 }
 
 message Lifetime {

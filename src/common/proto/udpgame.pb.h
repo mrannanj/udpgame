@@ -38,6 +38,7 @@ class FrameInputs;
 class FrameInput;
 class ClientInput;
 class InitialState;
+class Ai;
 class Lifetime;
 class Vec3f;
 class PhysicsData;
@@ -71,7 +72,8 @@ enum Texture {
   TEXTURE_FONT = 5,
   TEXTURE_FACE = 6,
   TEXTURE_HEAD = 7,
-  TEXTURE_SIZE = 8
+  TEXTURE_GRR = 8,
+  TEXTURE_SIZE = 9
 };
 bool Texture_IsValid(int value);
 const Texture Texture_MIN = TEXTURE_NONE;
@@ -94,11 +96,12 @@ enum ObjectType {
   ROCK = 3,
   BW = 4,
   FONT = 5,
-  PLAYER = 6
+  PLAYER = 6,
+  MONSTER = 7
 };
 bool ObjectType_IsValid(int value);
 const ObjectType ObjectType_MIN = GRASS;
-const ObjectType ObjectType_MAX = PLAYER;
+const ObjectType ObjectType_MAX = MONSTER;
 const int ObjectType_ARRAYSIZE = ObjectType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ObjectType_descriptor();
@@ -1010,6 +1013,18 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Lifetime >*
       mutable_lifetime();
   
+  // repeated .Ai ai = 9;
+  inline int ai_size() const;
+  inline void clear_ai();
+  static const int kAiFieldNumber = 9;
+  inline const ::Ai& ai(int index) const;
+  inline ::Ai* mutable_ai(int index);
+  inline ::Ai* add_ai();
+  inline const ::google::protobuf::RepeatedPtrField< ::Ai >&
+      ai() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Ai >*
+      mutable_ai();
+  
   // @@protoc_insertion_point(class_scope:InitialState)
  private:
   inline void set_has_tick_number();
@@ -1030,10 +1045,11 @@ class InitialState : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::ClientData > client_data_;
   ::google::protobuf::RepeatedPtrField< ::PhysicsData > physics_data_;
   ::google::protobuf::RepeatedPtrField< ::Lifetime > lifetime_;
+  ::google::protobuf::RepeatedPtrField< ::Ai > ai_;
   ::google::protobuf::uint32 client_id_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1041,6 +1057,98 @@ class InitialState : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static InitialState* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Ai : public ::google::protobuf::Message {
+ public:
+  Ai();
+  virtual ~Ai();
+  
+  Ai(const Ai& from);
+  
+  inline Ai& operator=(const Ai& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Ai& default_instance();
+  
+  void Swap(Ai* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Ai* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Ai& from);
+  void MergeFrom(const Ai& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required fixed32 eid = 1;
+  inline bool has_eid() const;
+  inline void clear_eid();
+  static const int kEidFieldNumber = 1;
+  inline ::google::protobuf::uint32 eid() const;
+  inline void set_eid(::google::protobuf::uint32 value);
+  
+  // required fixed32 follow_eid = 2;
+  inline bool has_follow_eid() const;
+  inline void clear_follow_eid();
+  static const int kFollowEidFieldNumber = 2;
+  inline ::google::protobuf::uint32 follow_eid() const;
+  inline void set_follow_eid(::google::protobuf::uint32 value);
+  
+  // @@protoc_insertion_point(class_scope:Ai)
+ private:
+  inline void set_has_eid();
+  inline void clear_has_eid();
+  inline void set_has_follow_eid();
+  inline void clear_has_follow_eid();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::google::protobuf::uint32 eid_;
+  ::google::protobuf::uint32 follow_eid_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static Ai* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2192,6 +2300,79 @@ InitialState::lifetime() const {
 inline ::google::protobuf::RepeatedPtrField< ::Lifetime >*
 InitialState::mutable_lifetime() {
   return &lifetime_;
+}
+
+// repeated .Ai ai = 9;
+inline int InitialState::ai_size() const {
+  return ai_.size();
+}
+inline void InitialState::clear_ai() {
+  ai_.Clear();
+}
+inline const ::Ai& InitialState::ai(int index) const {
+  return ai_.Get(index);
+}
+inline ::Ai* InitialState::mutable_ai(int index) {
+  return ai_.Mutable(index);
+}
+inline ::Ai* InitialState::add_ai() {
+  return ai_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Ai >&
+InitialState::ai() const {
+  return ai_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Ai >*
+InitialState::mutable_ai() {
+  return &ai_;
+}
+
+// -------------------------------------------------------------------
+
+// Ai
+
+// required fixed32 eid = 1;
+inline bool Ai::has_eid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Ai::set_has_eid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Ai::clear_has_eid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Ai::clear_eid() {
+  eid_ = 0u;
+  clear_has_eid();
+}
+inline ::google::protobuf::uint32 Ai::eid() const {
+  return eid_;
+}
+inline void Ai::set_eid(::google::protobuf::uint32 value) {
+  set_has_eid();
+  eid_ = value;
+}
+
+// required fixed32 follow_eid = 2;
+inline bool Ai::has_follow_eid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Ai::set_has_follow_eid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Ai::clear_has_follow_eid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Ai::clear_follow_eid() {
+  follow_eid_ = 0u;
+  clear_has_follow_eid();
+}
+inline ::google::protobuf::uint32 Ai::follow_eid() const {
+  return follow_eid_;
+}
+inline void Ai::set_follow_eid(::google::protobuf::uint32 value) {
+  set_has_follow_eid();
+  follow_eid_ = value;
 }
 
 // -------------------------------------------------------------------

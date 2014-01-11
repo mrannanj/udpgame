@@ -32,6 +32,35 @@ void World::updateHash() {
   mHash = mPhysicsHandler.hash();
 }
 
+void World::add_monster(const Physics& o, EntityId follow) {
+  EntityId eid = m_idgen.generateId();
+
+  Physics p;
+  memset(&p, 0, sizeof(p));
+
+  p.entityid = eid;
+  p.position = o.eye_position() + o.look_direction() * 2.0f;
+  p.half_dim = glm::vec3(0.3f, 0.8f, 0.3f);
+  p.velocity = o.look_direction() * 10.0f;
+  p.type = ObjectType::MONSTER;
+  mPhysicsHandler.add(p);
+
+  Inventory i;
+  i.entityid = eid;
+  i.wielding = ObjectType::MONSTER;
+  mInventory.add(i);
+
+  Ai a;
+  a.set_eid(eid);
+  a.set_follow_eid(follow);
+  mAi.add(a);
+
+  Lifetime l;
+  l.set_eid(eid);
+  l.set_ttl(60.0f);
+  mLifetime.add(l);
+}
+
 void World::throw_object(const Physics& o, ObjectType t) {
   EntityId eid = m_idgen.generateId();
 
@@ -109,6 +138,7 @@ void World::tick(const FrameInputs& fis) {
   mPhysicsHandler.tick(dt, *this);
   mInventory.tick(dt, *this);
   mLifetime.tick(dt, *this);
+  mAi.tick(dt, *this);
 
   removeDead();
   mTickNumber += 1;
@@ -119,6 +149,8 @@ void World::removeDead() {
   mClient.handleDead(mDeleteList);
   mPhysicsHandler.handleDead(mDeleteList);
   mInventory.handleDead(mDeleteList);
+  mLifetime.handleDead(mDeleteList);
+  mAi.handleDead(mDeleteList);
 }
 
 InventoryHandler& World::inventory() {
@@ -148,6 +180,7 @@ InitialState World::getInitialState() {
   mInventory.serialize(i.mutable_inventories());
   mPhysicsHandler.serialize(i.mutable_physics_data());
   mLifetime.serialize(i.mutable_lifetime());
+  mAi.serialize(i.mutable_ai());
   i.set_next_eid(m_idgen.getNext());
   i.set_tick_number(mTickNumber);
   return i;
@@ -159,6 +192,7 @@ void World::setInitialState(const InitialState& i) {
   mInventory.deserialize(i.inventories());
   mPhysicsHandler.deserialize(i.physics_data());
   mLifetime.deserialize(i.lifetime());
+  mAi.deserialize(i.ai());
   m_idgen.setNext(i.next_eid());
   mTickNumber = i.tick_number();
   mInit = true;

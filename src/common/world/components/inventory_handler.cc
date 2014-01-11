@@ -34,6 +34,9 @@ void InventoryHandler::tick(float, World& w) {
     Physics* p = w.physics().get(inv.eid());
     assert(p != nullptr);
 
+    if (ic->actions() & ContinousAction::ITEM_9)
+      w.add_monster(*p, inv.eid());
+
     if (ic->actions() & ContinousAction::THROW) {
       if (inv.itemCount[inv.wielding] > 0) {
         w.throw_object(*p, inv.wielding);

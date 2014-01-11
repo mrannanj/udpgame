@@ -10,11 +10,22 @@
 
 TextureManager::TextureManager() {
   LoadTextures();
+  mTypeToTexture[ObjectType::GRASS] = TEXTURE_GRASS;
+  mTypeToTexture[ObjectType::SAND] = TEXTURE_SAND;
+  mTypeToTexture[ObjectType::ROCK] = TEXTURE_ROCK;
+  mTypeToTexture[ObjectType::BW] = TEXTURE_BW;
+  mTypeToTexture[ObjectType::FONT] = TEXTURE_FONT;
+  mTypeToTexture[ObjectType::PLAYER] = TEXTURE_FACE;
+  mTypeToTexture[ObjectType::MONSTER] = TEXTURE_GRR;
 }
 
 TextureManager::~TextureManager() {
   for (GLuint texture: mTextures)
     glDeleteTextures(1, &texture);
+}
+
+GLuint TextureManager::operator[](ObjectType type) const {
+  return mTextures[mTypeToTexture[type]];
 }
 
 GLuint TextureManager::operator[](Texture texture) const {
@@ -32,6 +43,7 @@ void TextureManager::LoadTextures() {
   mTextures[Texture::TEXTURE_ROCK] = LoadTexture("resources/images/rock.png");
   mTextures[Texture::TEXTURE_BW] = LoadTexture("resources/images/bw.png");
   mTextures[Texture::TEXTURE_HEAD] = LoadTexture("resources/images/head.png");
+  mTextures[Texture::TEXTURE_GRR] = LoadTexture("resources/images/grr.png");
 
   // not used ATM
   mTextures[Texture::TEXTURE_FACE] = LoadTexture("resources/images/face.png");
