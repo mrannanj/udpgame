@@ -1,4 +1,6 @@
 #include "common/world/components/grid_handler.h"
+#include "common/world/components/AABB.h"
+#include "common/world/components/collision.h"
 
 #include <iostream>
 #include <cassert>
@@ -8,10 +10,7 @@ using glm::vec3;
 
 static constexpr size_t DRAW_RANGE = 12;
 static constexpr float RAYCAST_RANGE = 6.0f;
-
-GridHandler::GridHandler()
-{
-}
+static constexpr float BOTTOM = -20.0f;
 
 void GridHandler::defaultGrid() {
   mArr.makeFloor();
@@ -30,8 +29,8 @@ void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
 
 void GridHandler::overlapping_indices(const PhysicsC& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = (int)(p.next_bb_min[a]);
-    ind[a][1] = (int)(p.next_bb_max[a]);
+    ind[a][0] = (int)(p.next_bb.min[a]);
+    ind[a][1] = (int)(p.next_bb.max[a]);
   }
 }
 
@@ -41,8 +40,8 @@ void GridHandler::raycast_range(const vec3& p, const vec3& d, int ind[3][2])
   const glm::vec3 k = p + d * RAYCAST_RANGE;
 
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = min(p[a], k[a]);
-    ind[a][1] = max(p[a], k[a]);
+    ind[a][0] = max(0.0f, min(p[a], k[a]));
+    ind[a][1] = min((float)GRID_SIZE[a]-1, max(p[a], k[a]));
   }
 }
 
@@ -58,9 +57,9 @@ bool GridHandler::correct_one_hit(PhysicsC& p) const {
     for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
       for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
         if (mArr.get(x,y,z)) {
-          float overlap;
+          AABB block(x,y,z);
           unsigned axis;
-          correct_position(p, x, y, z, overlap, axis);
+          float overlap = AABBvsAABB_overlap(block, p.next_bb, axis);
           if (fabsf(overlap) > fabsf(max_overlap)) {
             max_overlap = overlap;
             max_axis = axis;
@@ -93,61 +92,6 @@ bool GridHandler::handle_grid_collisions(PhysicsC& p, float dt) const {
   return true;
 }
 
-int GridHandler::TestAABBAABB(PhysicsC& p, int x, int y, int z) const {
-  glm::vec3 block_min;
-  glm::vec3 block_max;
-  bb_min(x, y, z, block_min);
-  bb_max(x, y, z, block_max);
-  const glm::vec3& nbb_min = p.next_bb_min;
-  const glm::vec3& nbb_max = p.next_bb_max;
-  if (nbb_max[0] < block_min[0] || nbb_min[0] > block_max[0]) return 0;
-  if (nbb_max[1] < block_min[1] || nbb_min[1] > block_max[1]) return 0;
-  if (nbb_max[2] < block_min[2] || nbb_min[2] > block_max[2]) return 0;
-  return 1;
-}
-
-void GridHandler::correct_position(PhysicsC& p, int x, int y, int z,
-    float& min_overlap, unsigned& min_axis) const {
-  glm::vec3 block_min;
-  glm::vec3 block_max;
-  bb_min(x, y, z, block_min);
-  bb_max(x, y, z, block_max);
-
-  unsigned axis = 4;
-  float smallest_overlap = FLT_MAX;
-  float smallest_overlap_abs = FLT_MAX;
-  for (unsigned a = 0; a < 3; ++a) {
-    float overlap = block_max[a] - p.next_bb_min[a];
-    float overlap_abs = fabsf(overlap);
-    if (overlap_abs > 0.0f && smallest_overlap_abs > overlap_abs) {
-      smallest_overlap = overlap;
-      smallest_overlap_abs = overlap_abs;
-      axis = a;
-    }
-
-    overlap = block_min[a] - p.next_bb_max[a];
-    overlap_abs = fabsf(overlap);
-    if (overlap_abs > 0.0f && smallest_overlap_abs > overlap_abs) {
-      smallest_overlap = overlap;
-      smallest_overlap_abs = overlap_abs;
-      axis = a;
-    }
-  }
-  assert(axis != 4);
-
-  min_overlap = smallest_overlap;
-  min_axis = axis;
-}
-
-void GridHandler::bb_min(int x, int y, int z, glm::vec3& bb) const {
-  bb = glm::vec3((float)x, (float)y, (float)z);
-}
-
-void GridHandler::bb_max(int x, int y, int z, glm::vec3& bb) const {
-  bb = glm::vec3((float)x + BLOCK_SIZE, (float)y + BLOCK_SIZE,
-    (float)z + BLOCK_SIZE);
-}
-
 bool GridHandler::check_collision(PhysicsC& p, float dt) const {
   bool ret = handle_grid_collisions(p, dt);
   p.position = p.next_position;
@@ -157,52 +101,9 @@ bool GridHandler::check_collision(PhysicsC& p, float dt) const {
   return ret;
 }
 
-bool GridHandler::ray_block_collision(
-    int x, int y, int z,
-    const vec3& p, const vec3& d, float& tmin, int& axis, int& dir) const
-{
-  glm::vec3 block_min;
-  glm::vec3 block_max;
-  bb_min(x, y, z, block_min);
-  bb_max(x, y, z, block_max);
-  tmin = 0.0f;
-  float tmax = FLT_MAX;
-  axis = 4;
-  for (int i = 0; i < 3; i++) {
-    int swapped = 1;
-    if (fabsf(d[i]) < FLT_MIN) {
-      if (p[i] < block_min[i] || p[i] > block_max[i]) {
-        return false;
-      }
-    } else {
-      float div = 1.0f/d[i];
-      float t1 = (block_min[i] - p[i]) * div;
-      float t2 = (block_max[i] - p[i]) * div;
-
-      if (t1 > t2) {
-        swapped = -1;
-        swap(t1, t2);
-      }
-      if (t1 > tmin) {
-        tmin = t1;
-        axis = i;
-        dir = -1 * swapped;
-      }
-      if (tmax > t2) {
-        tmax = t2;
-      }
-      if (tmin > tmax) {
-        return false;
-      }
-    }
-  }
-  return axis != 4; // axis 4 up to no good
-}
-
 bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
     char** hitBlock, char** faceBlock)
 {
-  glm::vec3 dn = glm::normalize(d);
   int b[3];
   distance = FLT_MAX;
   int baxis = 4;
@@ -212,19 +113,19 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
   int ind[3][2];
   raycast_range(s, d, ind);
 
-  for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
-    for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
+  for (int x = ind[0][0]; x <= ind[0][1]; ++x) {
+    for (int y = ind[1][0]; y <= ind[1][1]; ++y) {
       for (int z = ind[2][0]; z <= ind[2][1]; ++z) {
+        AABB box(x, y, z);
         float t;
-        int a;
-        int d;
+        int tmp_axis, tmp_dir;
         char& block = mArr.getRef(x,y,z);
-        if (block and ray_block_collision(x, y, z, s, dn, t, a, d)) {
+        if (block and AABBvsRay(box, s, d, t, tmp_axis, tmp_dir)) {
           if (distance > t) {
             distance = t;
             hit = true;
-            baxis = a;
-            dir = d;
+            baxis = tmp_axis;
+            dir = tmp_dir;
             *hitBlock = &block;
             b[0] = x;
             b[1] = y;

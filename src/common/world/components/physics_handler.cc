@@ -17,44 +17,48 @@ constexpr float GRAVITY = 10.0f;
 
 void PhysicsHandler::tick(float dt, World& w) {
   for (PhysicsC& p : mComponents) {
-    FrameInput* i = w.input().get(p.eid());
-    if (i != nullptr) {
-      p.horizontal_angle -= i->horizontal_delta();
-      p.vertical_angle -= i->vertical_delta();
-      if (p.vertical_angle < -HALF_PI)
-        p.vertical_angle = -HALF_PI;
-      else if (p.vertical_angle > HALF_PI)
-        p.vertical_angle = HALF_PI;
-
-      glm::vec3 forward = glm::vec3(
-        sin(p.horizontal_angle), 0.0f, cos(p.horizontal_angle));
-
-      glm::vec3 right = glm::vec3(
-        sin(p.horizontal_angle - HALF_PI),
-        0.0f,
-        cos(p.horizontal_angle - HALF_PI)
-      );
-
-      if (i->actions() & ContinousAction::MOVE_FORWARD)
-        p.velocity += forward * move_speed;
-      else if (i->actions() & ContinousAction::MOVE_BACK)
-        p.velocity -= forward * move_speed;
-      if (i->actions() & ContinousAction::MOVE_RIGHT)
-        p.velocity += right * move_speed;
-      else if (i->actions() & ContinousAction::MOVE_LEFT)
-        p.velocity -= right * move_speed;
-
-      if (i->actions() & ContinousAction::JUMP && p.on_ground) {
-        p.velocity.y += jump_velocity;
-        p.on_ground = false;
-      }
-    }
+    handleInput(p, w);
 
     p.velocity.y -= GRAVITY * dt;
     p.velocity.x *= FRICTION;
     p.velocity.z *= FRICTION;
     if (!w.grid().check_collision(p, dt))
       w.mDeleteList.insert(p.eid());
+  }
+}
+
+void PhysicsHandler::handleInput(PhysicsC& p, World& w) {
+  FrameInput* i = w.input().get(p.eid());
+  if (!i) return;
+
+  p.horizontal_angle -= i->horizontal_delta();
+  p.vertical_angle -= i->vertical_delta();
+  if (p.vertical_angle < -HALF_PI)
+    p.vertical_angle = -HALF_PI;
+  else if (p.vertical_angle > HALF_PI)
+    p.vertical_angle = HALF_PI;
+
+  glm::vec3 forward = glm::vec3(
+    sin(p.horizontal_angle), 0.0f, cos(p.horizontal_angle));
+
+  glm::vec3 right = glm::vec3(
+    sin(p.horizontal_angle - HALF_PI),
+    0.0f,
+    cos(p.horizontal_angle - HALF_PI)
+  );
+
+  if (i->actions() & ContinousAction::MOVE_FORWARD)
+    p.velocity += forward * move_speed;
+  else if (i->actions() & ContinousAction::MOVE_BACK)
+    p.velocity -= forward * move_speed;
+  if (i->actions() & ContinousAction::MOVE_RIGHT)
+    p.velocity += right * move_speed;
+  else if (i->actions() & ContinousAction::MOVE_LEFT)
+    p.velocity -= right * move_speed;
+
+  if (i->actions() & ContinousAction::JUMP && p.on_ground) {
+    p.velocity.y += jump_velocity;
+    p.on_ground = false;
   }
 }
 

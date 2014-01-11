@@ -17,4 +17,6 @@ public:
   unsigned hash();
   void serialize(google::protobuf::RepeatedPtrField<PhysicsData>*);
   void deserialize(const google::protobuf::RepeatedPtrField<PhysicsData>&);
+private:
+  void handleInput(PhysicsC& p, World& w);
 };

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
+
+#include "common/world/components/AABB.h"
 #include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
 
@@ -14,13 +16,11 @@ struct PhysicsC {
   float vertical_angle;
   bool on_ground;
 
-  glm::vec3 next_position;
-  glm::vec3 next_bb_min;
-  glm::vec3 next_bb_max;
-
   glm::vec3 dimensions;
-  glm::vec3 bb_min;
-  glm::vec3 bb_max;
+  AABB bb;
+
+  glm::vec3 next_position;
+  AABB next_bb;
 
   void update_bbs();
   void update_next_bbs();
