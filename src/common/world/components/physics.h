@@ -20,13 +20,10 @@ struct Physics {
   float vertical_angle;
   bool on_ground;
 
-  // these are calculated, need not serialize
+  // this is calculated, no need to serialize
   AABB bb;
-  AABB next_bb;
-  glm::vec3 next_position;
 
-  void update_bbs();
-  void update_next_bbs();
+  void update_bb();
 
   EntityId eid() const;
   glm::vec3 eye_position() const;

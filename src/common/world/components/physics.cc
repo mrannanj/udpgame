@@ -1,13 +1,8 @@
 #include "common/world/components/physics.h"
 
-void Physics::update_bbs() {
+void Physics::update_bb() {
   bb.max = position + half_dim;
   bb.min = position - half_dim;
-}
-
-void Physics::update_next_bbs() {
-  next_bb.max = next_position + half_dim;
-  next_bb.min = next_position - half_dim;
 }
 
 EntityId Physics::eid() const {
@@ -41,8 +36,7 @@ Physics::Physics(const PhysicsData& pd):
   vertical_angle(pd.vertical_angle()),
   on_ground(pd.on_ground())
 {
-  update_bbs();
-  update_next_bbs();
+  update_bb();
 }
 
 Physics::operator PhysicsData() const {

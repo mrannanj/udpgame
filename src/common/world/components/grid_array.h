@@ -14,8 +14,8 @@ struct GridArray {
   GridArray(const GridArray&) = delete;
   GridArray& operator=(const GridArray&) = delete;
 
-  int heightFunction(int, int);
-  char heightToBlock(int);
+  int heightFunction(int, int) const;
+  char heightToBlock(int) const;
   void makeFloor();
   char get(int, int, int) const;
   bool outsideGrid(int, int, int) const;

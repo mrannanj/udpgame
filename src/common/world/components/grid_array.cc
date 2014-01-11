@@ -21,7 +21,7 @@ size_t GridArray::i(int x, int y, int z) const {
   return x * GRID_SIZE_Y * GRID_SIZE_Z + y * GRID_SIZE_Z + z;
 }
 
-char GridArray::heightToBlock(int z) {
+char GridArray::heightToBlock(int z) const {
   if (z < 1) return 5;
   if (z < 35) return 4;
   if (z < 45) return 3;
@@ -41,7 +41,7 @@ void GridArray::makeFloor() {
   }
 }
 
-int GridArray::heightFunction(int x, int z) {
+int GridArray::heightFunction(int x, int z) const {
   float fx = -1.0f + 2.0f*(x/(float)GRID_SIZE_X);
   float fz = -1.0f + 2.0f*(z/(float)GRID_SIZE_Z);
   return 90.0f * (sin(fx) + cos(fz) + 2.0f)/4;

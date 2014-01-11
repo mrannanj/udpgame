@@ -16,7 +16,7 @@ void GridHandler::defaultGrid() {
   mArr.makeFloor();
 }
 
-vec3 GridHandler::spawn_pos() {
+vec3 GridHandler::spawn_pos() const {
   return vec3(10.0f, mArr.heightFunction(10,10) + 3.0f, 10.0f);
 }
 
@@ -29,8 +29,8 @@ void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
 
 void GridHandler::overlapping_indices(const Physics& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = (int)(p.next_bb.min[a]);
-    ind[a][1] = (int)(p.next_bb.max[a]);
+    ind[a][0] = (int)(p.bb.min[a]);
+    ind[a][1] = (int)(p.bb.max[a]);
   }
 }
 
@@ -59,7 +59,7 @@ bool GridHandler::correct_one_hit(Physics& p) const {
         if (mArr.get(x,y,z)) {
           AABB block(x,y,z);
           unsigned axis;
-          float overlap = AABBvsAABB_overlap(block, p.next_bb, axis);
+          float overlap = AABBvsAABB_overlap(block, p.bb, axis);
           if (fabsf(overlap) > fabsf(max_overlap)) {
             max_overlap = overlap;
             max_axis = axis;
@@ -70,34 +70,25 @@ bool GridHandler::correct_one_hit(Physics& p) const {
     }
   }
   if (hit) {
-    p.next_position[max_axis] += max_overlap * 1.1f;
+    p.position[max_axis] += max_overlap * 1.1f;
     p.velocity[max_axis] = 0.0f;
     if (max_axis == 1) p.on_ground = true;
-
-    p.position = p.next_position;
-    p.update_bbs();
-    p.update_next_bbs();
+    p.update_bb();
   }
   return hit;
 }
 
-bool GridHandler::handle_grid_collisions(Physics& p, float dt) const {
-  p.next_position = p.position + p.velocity * dt;
-  p.position = p.next_position;
-  p.update_bbs();
-  p.update_next_bbs();
-
+bool GridHandler::handle_grid_collisions(Physics& p) const {
   for (int i = 0; correct_one_hit(p); ++i)
     if (i >= 8) return false;
   return true;
 }
 
 bool GridHandler::check_collision(Physics& p, float dt) const {
-  bool ret = handle_grid_collisions(p, dt);
-  p.position = p.next_position;
+  p.position = p.position + p.velocity * dt;
+  p.update_bb();
+  bool ret = handle_grid_collisions(p);
   if (belowBottom(p.position)) return false;
-  p.update_bbs();
-  p.update_next_bbs();
   return ret;
 }
 
