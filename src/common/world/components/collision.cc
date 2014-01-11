@@ -6,7 +6,7 @@ bool AABBvsAABB(const AABB& a, const AABB& b) {
   if (a.max[0] < b.min[0] || a.min[0] > b.min[0]) return false;
   if (a.max[1] < b.min[1] || a.min[1] > b.min[1]) return false;
   if (a.max[2] < b.min[2] || a.min[2] > b.min[2]) return false;
-  return false;
+  return true;
 }
 
 float AABBvsAABB_overlap(const AABB& a, const AABB& b, unsigned& axis) {

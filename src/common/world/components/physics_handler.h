@@ -19,4 +19,5 @@ public:
   void deserialize(const google::protobuf::RepeatedPtrField<PhysicsData>&);
 private:
   void handleInput(PhysicsC& p, World& w);
+  void checkCollisions(World& w);
 };

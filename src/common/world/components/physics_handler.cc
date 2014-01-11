@@ -1,5 +1,6 @@
 #include "common/world/components/physics_handler.h"
 #include "common/world/components/grid_handler.h"
+#include "common/world/components/collision.h"
 #include "common/world/world.h"
 #include "client/controller/input/input.h"
 
@@ -15,6 +16,8 @@ constexpr float jump_velocity = 5.0f;
 constexpr float FRICTION = 0.85f;
 constexpr float GRAVITY = 10.0f;
 
+using namespace std;
+
 void PhysicsHandler::tick(float dt, World& w) {
   for (PhysicsC& p : mComponents) {
     handleInput(p, w);
@@ -24,6 +27,25 @@ void PhysicsHandler::tick(float dt, World& w) {
     p.velocity.z *= FRICTION;
     if (!w.grid().check_collision(p, dt))
       w.mDeleteList.insert(p.eid());
+  }
+  checkCollisions(w);
+}
+
+void PhysicsHandler::checkCollisions(World& w) {
+  for (size_t i = 0; i < mComponents.size(); ++i) {
+    for (size_t j = i+1; j < mComponents.size(); ++j) {
+      PhysicsC& p1 = mComponents[i];
+      PhysicsC& p2 = mComponents[j];
+      if (AABBvsAABB(p1.bb, p2.bb)) {
+        Inventory* i1 = w.inventory().get(p1.eid());
+        Inventory* i2 = w.inventory().get(p2.eid());
+        if ((!i1 and !i2) or (i1 and i2)) continue;
+        if (i1)
+          w.mDeleteList.insert(p2.eid());
+        else
+          w.mDeleteList.insert(p1.eid());
+      }
+    }
   }
 }
 
