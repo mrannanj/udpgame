@@ -15,14 +15,18 @@ FEATURES:
 - skybox
 - server name resolving
 - ability to specify port
-- monsters that follow player
 - implement handle system for faster component lookups
-- maybe add team?
 - make possible to set one block per click
-- show wielded item in gui
 - show in gui if client is in observer or player mode
 - add screen that shows key bindings
 - named players
 - metaserver
 - chat
 - screenshot taking
+- connect/disconnect announcements for players
+- don't disconnect on esc
+- switch to sfml/glfw
+- hash all handlers separately to see which system originates the error
+- world persistance
+- block damage
+- wieldable item
