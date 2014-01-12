@@ -395,10 +395,10 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014T"
     "EXTURE_FONT\020\005\022\020\n\014TEXTURE_FACE\020\006\022\020\n\014TEXTU"
     "RE_HEAD\020\007\022\017\n\013TEXTURE_GRR\020\010\022\020\n\014TEXTURE_SI"
-    "ZE\020\t*V\n\nObjectType\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022"
-    "\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006\022"
-    "\013\n\007MONSTER\020\007*0\n\nClientMode\022\017\n\013MODE_PLAYE"
-    "R\020\000\022\021\n\rMODE_OBSERVER\020\001", 1622);
+    "ZE\020\t*`\n\nObjectType\022\010\n\004NONE\020\000\022\t\n\005GRASS\020\001\022"
+    "\010\n\004SAND\020\002\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n"
+    "\006PLAYER\020\006\022\013\n\007MONSTER\020\007*0\n\nClientMode\022\017\n\013"
+    "MODE_PLAYER\020\000\022\021\n\rMODE_OBSERVER\020\001", 1632);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -478,6 +478,7 @@ const ::google::protobuf::EnumDescriptor* ObjectType_descriptor() {
 }
 bool ObjectType_IsValid(int value) {
   switch(value) {
+    case 0:
     case 1:
     case 2:
     case 3:
@@ -1215,7 +1216,7 @@ ObjectCount::ObjectCount(const ObjectCount& from)
 
 void ObjectCount::SharedCtor() {
   _cached_size_ = 0;
-  type_ = 1;
+  type_ = 0;
   count_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1251,7 +1252,7 @@ ObjectCount* ObjectCount::New() const {
 
 void ObjectCount::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    type_ = 1;
+    type_ = 0;
     count_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1469,7 +1470,7 @@ InventoryData::InventoryData(const InventoryData& from)
 void InventoryData::SharedCtor() {
   _cached_size_ = 0;
   eid_ = 0u;
-  wielding_ = 1;
+  wielding_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1505,7 +1506,7 @@ InventoryData* InventoryData::New() const {
 void InventoryData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eid_ = 0u;
-    wielding_ = 1;
+    wielding_ = 0;
   }
   count_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3992,7 +3993,7 @@ void PhysicsData::SharedCtor() {
   horizontal_angle_ = 0;
   vertical_angle_ = 0;
   on_ground_ = false;
-  type_ = 1;
+  type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4043,7 +4044,7 @@ void PhysicsData::Clear() {
     horizontal_angle_ = 0;
     vertical_angle_ = 0;
     on_ground_ = false;
-    type_ = 1;
+    type_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();

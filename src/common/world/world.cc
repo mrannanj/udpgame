@@ -15,10 +15,20 @@
 
 using namespace std;
 
+
 World::World(bool init):
   mInit(init),
   mTickNumber(0),
-  mHash(0)
+  mDeleteList(),
+  mHash(0),
+  m_idgen(),
+  mInputHandler(),
+  mPhysicsHandler(),
+  mInventory(),
+  mClient(),
+  mGrid(),
+  mLifetime(),
+  mAi()
 {
   if (mInit) mGrid.defaultGrid();
   updateHash();

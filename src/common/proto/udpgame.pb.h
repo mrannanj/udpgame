@@ -91,6 +91,7 @@ inline bool Texture_Parse(
     Texture_descriptor(), name, value);
 }
 enum ObjectType {
+  NONE = 0,
   GRASS = 1,
   SAND = 2,
   ROCK = 3,
@@ -100,7 +101,7 @@ enum ObjectType {
   MONSTER = 7
 };
 bool ObjectType_IsValid(int value);
-const ObjectType ObjectType_MIN = GRASS;
+const ObjectType ObjectType_MIN = NONE;
 const ObjectType ObjectType_MAX = MONSTER;
 const int ObjectType_ARRAYSIZE = ObjectType_MAX + 1;
 
@@ -1724,7 +1725,7 @@ inline void ObjectCount::clear_has_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void ObjectCount::clear_type() {
-  type_ = 1;
+  type_ = 0;
   clear_has_type();
 }
 inline ObjectType ObjectCount::type() const {
@@ -1795,7 +1796,7 @@ inline void InventoryData::clear_has_wielding() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void InventoryData::clear_wielding() {
-  wielding_ = 1;
+  wielding_ = 0;
   clear_has_wielding();
 }
 inline ObjectType InventoryData::wielding() const {
@@ -2683,7 +2684,7 @@ inline void PhysicsData::clear_has_type() {
   _has_bits_[0] &= ~0x00000080u;
 }
 inline void PhysicsData::clear_type() {
-  type_ = 1;
+  type_ = 0;
   clear_has_type();
 }
 inline ObjectType PhysicsData::type() const {

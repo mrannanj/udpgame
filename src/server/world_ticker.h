@@ -9,6 +9,8 @@
 #define HASH_MAX 10
 
 struct WorldTicker {
+  WorldTicker();
+
   bool handleAMessage(const AMessage&, int);
   const FrameInputs& inputsForFrame(unsigned);
   void fillMissingInputs(unsigned, std::vector<Connection>&);

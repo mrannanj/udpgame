@@ -7,6 +7,13 @@ static constexpr int TIMEOUT = 60;
 
 using namespace std;
 
+WorldTicker::WorldTicker():
+  mCurrentTick(0),
+  mHashes(),
+  mInputMap()
+{
+}
+
 const FrameInputs& WorldTicker::inputsForFrame(unsigned tick) {
   return mInputMap[tick];
 }

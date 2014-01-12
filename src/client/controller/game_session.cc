@@ -12,16 +12,24 @@ using namespace std;
 using namespace std::chrono;
 
 GameSession::GameSession():
+  mClientId(-1),
   mInit(false),
-  mWorld(false)
+  mRedraw(false),
+  mConnection(),
+  mPerspective(),
+  mWorld(false),
+  mInput()
 {
 }
 
 GameSession::GameSession(const std::string& addr):
+  mClientId(-1),
   mInit(false),
+  mRedraw(false),
   mConnection(resolve_hostname(addr)),
   mPerspective(),
-  mWorld(false)
+  mWorld(false),
+  mInput()
 {
   if (addr.size() == 0) return;
   cout << "connected to " << mConnection << endl;

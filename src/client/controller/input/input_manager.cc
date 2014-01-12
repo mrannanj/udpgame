@@ -13,7 +13,11 @@ SDLKey binded_keys[] = {
   SDLK_4, SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9, SDLK_t
 };
 
-InputManager::InputManager() {
+InputManager::InputManager():
+  m_num_keys(0),
+  m_key_state(SDL_GetKeyState(&m_num_keys)),
+  m_key_to_action(nullptr)
+{
   m_key_state = SDL_GetKeyState(&m_num_keys);
   SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL*6);
   SDL_EnableUNICODE(1);

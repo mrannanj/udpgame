@@ -7,6 +7,9 @@ public:
   MmapHandle(const char*);
   ~MmapHandle();
 
+  MmapHandle(const MmapHandle&) = delete;
+  MmapHandle& operator=(const MmapHandle&) = delete;
+
   int fd() const;
   size_t size() const;
   void* ptr() const;

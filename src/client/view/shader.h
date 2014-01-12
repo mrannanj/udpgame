@@ -6,7 +6,7 @@
 class Shader {
 public:
   Shader(const std::string&, const std::string&);
-  ~Shader();
+  virtual ~Shader();
 
   void On() const;
 

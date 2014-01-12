@@ -2,7 +2,10 @@
 
 TextRenderer::TextRenderer(GLuint font_texture):
   Shader("resources/shaders/text.vert", "resources/shaders/text.frag"),
-  m_font_texture(font_texture)
+  m_font_texture(font_texture),
+  vertex_elem_size_(0),
+  bg_color_uni_(0),
+  bg_color_(nullptr)
 {
   glUseProgram(shader_program);
   glBindFragDataLocation(shader_program, 0, "frag_color");

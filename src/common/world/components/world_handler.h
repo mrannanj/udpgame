@@ -11,6 +11,8 @@ class World;
 
 template<typename T, typename D> class WorldHandler {
 public:
+  WorldHandler();
+
   T* get(EntityId);
   void add(const T&);
   virtual void remove(EntityId);
@@ -27,6 +29,12 @@ public:
 protected:
   std::vector<T> mComponents;
 };
+
+template<typename T, typename D>
+WorldHandler<T,D>::WorldHandler():
+  mComponents()
+{
+}
 
 template<typename T, typename D>
 void WorldHandler<T,D>::handleDead(const std::set<EntityId>& r) {

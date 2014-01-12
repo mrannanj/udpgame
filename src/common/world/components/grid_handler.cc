@@ -12,6 +12,12 @@ static constexpr size_t DRAW_RANGE = 12;
 static constexpr float RAYCAST_RANGE = 6.0f;
 static constexpr float BOTTOM = -20.0f;
 
+GridHandler::GridHandler():
+  mArr(),
+  mSpawn(.0f,.0f,.0f)
+{
+}
+
 void GridHandler::defaultGrid() {
   mArr.makeFloor();
 }

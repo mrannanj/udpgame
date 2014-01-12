@@ -3,7 +3,11 @@
 #include "common/util/tick_timer.h"
 #include "common/util/timespec.h"
 
-TickTimer::TickTimer(long tickTime) {
+TickTimer::TickTimer(long tickTime):
+  mStart(),
+  mTickTime(),
+  mTarget()
+{
   mTickTime.tv_sec = 0;
   mTickTime.tv_nsec = tickTime;
 }

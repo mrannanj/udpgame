@@ -9,7 +9,12 @@
 
 using namespace std;
 
-Shader::Shader(const string& vertex_file, const string& fragment_file)
+Shader::Shader(const string& vertex_file, const string& fragment_file):
+  vertex_array(),
+  vertex_buffer(),
+  vertex_shader(),
+  fragment_shader(),
+  shader_program()
 {
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);

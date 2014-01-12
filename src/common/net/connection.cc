@@ -14,6 +14,8 @@
 Connection::Connection():
   mPos(0),
   mSocket(-1),
+  mSockaddr(),
+  mLastFrameOk(),
   mBuf(nullptr)
 {
 }
@@ -21,6 +23,8 @@ Connection::Connection():
 Connection::Connection(const std::string& addr):
   mPos(0),
   mSocket(-1),
+  mSockaddr(),
+  mLastFrameOk(),
   mBuf(nullptr)
 {
   if (addr.size() == 0) return;
@@ -48,7 +52,9 @@ Connection::Connection(const std::string& addr):
 Connection::Connection(int socket, const sockaddr_in& sa):
   mPos(0),
   mSocket(socket),
-  mSockaddr(sa)
+  mSockaddr(sa),
+  mLastFrameOk(),
+  mBuf(nullptr)
 {
   mBuf = new char[MAXMSG];
   int flags = fcntl(mSocket, F_GETFL, 0);
@@ -62,6 +68,7 @@ Connection::Connection(Connection&& c):
   mPos(c.mPos),
   mSocket(c.mSocket),
   mSockaddr(c.mSockaddr),
+  mLastFrameOk(c.mLastFrameOk),
   mBuf(c.mBuf)
 {
   c.mSocket = -1;
@@ -72,6 +79,7 @@ Connection& Connection::operator=(Connection&& c) {
   mPos = c.mPos;
   mSocket = c.mSocket;
   mSockaddr = c.mSockaddr;
+  mLastFrameOk = c.mLastFrameOk;
   mBuf = c.mBuf;
   c.mSocket = -1;
   c.mBuf = nullptr;

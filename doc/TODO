@@ -1,5 +1,4 @@
 REFACTOR:
-- add Weffc++ warning
 - perspective is super ugly
 - cleanup gamesession
 - refactor object deletion for speed

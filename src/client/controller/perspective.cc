@@ -16,7 +16,11 @@ Perspective::Perspective():
   m_vertical_angle(0.0f),
   m_horizontal_angle(0.0f),
   m_position(2.0f, 5.0f, 2.0f),
-  m_up(0.0f, 1.0f, 0.0f)
+  m_direction(),
+  m_up(0.0f, 1.0f, 0.0f),
+  m_view(),
+  m_projection(),
+  m_view_projection()
 {
 }
 

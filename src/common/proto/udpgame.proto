@@ -18,6 +18,7 @@ enum Texture {
 }
 
 enum ObjectType {
+  NONE = 0;
   GRASS = 1;
   SAND = 2;
   ROCK = 3;

@@ -8,7 +8,9 @@ static GLuint elements[] = {
 };
 
 QuadRenderer::QuadRenderer():
-  Shader("resources/shaders/quad.vert", "resources/shaders/quad.frag")
+  Shader("resources/shaders/quad.vert", "resources/shaders/quad.frag"),
+  m_color_uni(),
+  m_element_buffer()
 {
   glUseProgram(shader_program);
   glBindFragDataLocation(shader_program, 0, "frag_color");

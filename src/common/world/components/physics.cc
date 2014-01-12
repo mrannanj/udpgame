@@ -22,7 +22,16 @@ glm::vec3 Physics::look_direction() const {
           cos(vertical_angle) * cos(horizontal_angle));
 }
 
-Physics::Physics()
+Physics::Physics():
+  entityid(0),
+  type(ObjectType::NONE),
+  position(0.0f, 0.0f, 0.0f),
+  velocity(0.0f, 0.0f, 0.0f),
+  half_dim(0.0f, 0.0f, 0.0f),
+  horizontal_angle(0.0f),
+  vertical_angle(0.0f),
+  on_ground(false),
+  bb()
 {
 }
 
@@ -34,7 +43,8 @@ Physics::Physics(const PhysicsData& pd):
   half_dim(pd.half_dim().x(), pd.half_dim().y(), pd.half_dim().z()),
   horizontal_angle(pd.horizontal_angle()),
   vertical_angle(pd.vertical_angle()),
-  on_ground(pd.on_ground())
+  on_ground(pd.on_ground()),
+  bb()
 {
   update_bb();
 }

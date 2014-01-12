@@ -1,6 +1,9 @@
 #include "common/world/components/inventory.h"
 
-Inventory::Inventory()
+Inventory::Inventory():
+  entityid(0),
+  wielding(ObjectType::NONE),
+  itemCount()
 {
 }
 

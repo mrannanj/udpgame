@@ -10,6 +10,8 @@ class TextRenderer : public Shader
 {
 public:
   TextRenderer(GLuint);
+  TextRenderer(const TextRenderer&) = delete;
+  TextRenderer& operator=(const TextRenderer&) = delete;
 
   void On() const;
   void DrawText(float, float, float, const std::string&, const Color&) const;

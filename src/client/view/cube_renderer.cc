@@ -48,7 +48,9 @@ float cube_vertices[] =
 };
 
 CubeRenderer::CubeRenderer():
-  Shader("resources/shaders/cube.vert", "resources/shaders/cube.frag")
+  Shader("resources/shaders/cube.vert", "resources/shaders/cube.frag"),
+  m_mvp_uniform(0),
+  m_texture_uniform(0)
 {
   Init();
 }

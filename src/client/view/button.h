@@ -1,5 +1,4 @@
-#ifndef CLIENT_VIEW_BUTTON_H
-#define CLIENT_VIEW_BUTTON_H
+#pragma once
 
 #include <string>
 
@@ -10,6 +9,8 @@ class Renderer;
 class Button {
 public:
   Button(float, float, float, const std::string&);
+  Button(const Button&) = delete;
+  Button& operator=(const Button&) = delete;
 
   bool Update(Input&);
   void Draw(const Renderer&) const;
@@ -23,5 +24,3 @@ private:
   std::string text_;
   Color* bg_color_;
 };
-
-#endif

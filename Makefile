@@ -23,7 +23,7 @@ TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-WARN := -pedantic -Wall -Wextra -Wno-unused-parameter
+WARN := -pedantic -Wall -Wextra -Wno-unused-parameter -Weffc++
 
 PKGS := glew SDL_image sdl glu protobuf
 
@@ -32,17 +32,24 @@ LIBS += $(shell pkg-config --libs $(PKGS))
 
 CXXFLAGS := -fno-exceptions
 CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
-CXXFLAGS += $(CFLAGS) -I$(SRC_DIR) $(WARN) -std=c++11 -g
+CXXFLAGS += $(CFLAGS) $(WARN) -std=c++11 -g -Werror
+
+INC := -I$(SRC_DIR)
 
 .PHONY: clean all proto install
 .SUFFIXES: .cc .cpp
 
 all: $(TARGETS)
 
+$(BUILD_DIR)/$(SRC_DIR)/common/proto/%.o: $(SRC_DIR)/common/proto/%.cc
+	echo CXX $@
+	mkdir -p $(@D)
+	$(CXX) $(INC) -MMD -MP -c $< -o $@
+
 $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	echo CXX $@
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+	$(CXX) $(INC) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 proto:
 	cd src; \

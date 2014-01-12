@@ -7,6 +7,8 @@
 #include "common/world/components/grid_array.h"
 
 struct GridHandler {
+  GridHandler();
+
   void defaultGrid();
 
   bool handle_grid_collisions(Physics&) const;

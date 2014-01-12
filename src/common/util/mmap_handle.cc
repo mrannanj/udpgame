@@ -10,6 +10,7 @@
 
 MmapHandle::MmapHandle(const char* filename):
   m_fd(-1),
+  m_size(0),
   m_ptr(nullptr)
 {
   m_fd = open(filename, 0, O_RDONLY);

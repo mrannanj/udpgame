@@ -3,6 +3,7 @@
 ScreenStack g_screen_stack;
 
 ScreenStack::ScreenStack():
+  m_screen_stack(),
   m_dirty(false)
 {
 }

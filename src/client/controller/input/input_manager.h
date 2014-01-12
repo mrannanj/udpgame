@@ -9,6 +9,9 @@ class InputManager {
     InputManager();
     ~InputManager();
 
+    InputManager(const InputManager&) = delete;
+    InputManager& operator=(const InputManager&) = delete;
+
     void read_input(Input&) const;
 
   private:
