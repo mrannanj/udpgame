@@ -5,15 +5,16 @@ REFACTOR:
 - refactor object deletion for speed
 - grid position class
 - refactor input continous actions
+- separate input and client, so ai can provide input
 
 BUGS:
+- system wide install does not find resource files
 - client freezes on timeout
 
 FEATURES:
 - support tick counter roll over
 - world size 100x100x100
 - skybox
-- server name resolving
 - ability to specify port
 - implement handle system for faster component lookups
 - make possible to set one block per click

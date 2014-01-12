@@ -2,6 +2,7 @@
 #include <chrono>
 
 #include "common/config.h"
+#include "common/net/dns.h"
 #include "common/proto/udpgame.pb.h"
 #include "client/controller/game_session.h"
 #include "client/controller/input/input.h"
@@ -18,7 +19,7 @@ GameSession::GameSession():
 
 GameSession::GameSession(const std::string& addr):
   mInit(false),
-  mConnection(addr),
+  mConnection(resolve_hostname(addr)),
   mPerspective(),
   mWorld(false)
 {
