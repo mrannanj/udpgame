@@ -24,7 +24,7 @@ void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
           glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)
         );
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-        r.cube_renderer.DrawCube(vp * model);
+        r.cube_renderer.DrawCube(vp, model);
       }
     }
   }
@@ -46,7 +46,7 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
     model = glm::rotate(model, rad_to_degree(p.horizontal_angle),
       glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::scale(model, p.half_dim);
-    r.cube_renderer.DrawCube(vp * model);
+    r.cube_renderer.DrawCube(vp, model);
   }
 }
 
