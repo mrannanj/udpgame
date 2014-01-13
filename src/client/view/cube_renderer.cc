@@ -49,7 +49,8 @@ float cube_vertices[] =
 
 CubeRenderer::CubeRenderer():
   Shader("resources/shaders/cube.vert", "resources/shaders/cube.frag"),
-  m_mvp_uniform(0),
+  m_vp_uniform(0),
+  m_m_uniform(0),
   m_texture_uniform(0)
 {
   Init();
@@ -75,7 +76,8 @@ void CubeRenderer::Init()
     (void*)(6*sizeof(float)));
   glEnableVertexAttribArray(tex_coord);
 
-  m_mvp_uniform = glGetUniformLocation(shader_program, "mvp");
+  m_m_uniform = glGetUniformLocation(shader_program, "m");
+  m_vp_uniform = glGetUniformLocation(shader_program, "vp");
   m_texture_uniform = glGetUniformLocation(shader_program, "texture");
   glUseProgram(0);
 }
@@ -87,9 +89,10 @@ void CubeRenderer::SetTexture(GLuint texture) const
   glUniform1i(m_texture_uniform, 0);
 }
 
-void CubeRenderer::DrawCube(const glm::mat4& mvp) const
+void CubeRenderer::DrawCube(const glm::mat4& vp, const glm::mat4& m) const
 {
-  glUniformMatrix4fv(m_mvp_uniform, 1, GL_FALSE, glm::value_ptr(mvp));
+  glUniformMatrix4fv(m_m_uniform, 1, GL_FALSE, glm::value_ptr(m));
+  glUniformMatrix4fv(m_vp_uniform, 1, GL_FALSE, glm::value_ptr(vp));
 
   glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36*8, cube_vertices, GL_STREAM_DRAW);
   glDrawArrays(GL_TRIANGLES, 0, 36);

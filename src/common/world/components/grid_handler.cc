@@ -23,7 +23,7 @@ void GridHandler::defaultGrid() {
 }
 
 vec3 GridHandler::spawn_pos() const {
-  return vec3(10.0f, mArr.heightFunction(10,10) + 3.0f, 10.0f);
+  return vec3(1.0f, mArr.heightFunction(1,1) + 2.0f, 1.0f);
 }
 
 void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
