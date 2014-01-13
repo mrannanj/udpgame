@@ -12,6 +12,7 @@
 #include "common/world/components/lifetime_handler.h"
 #include "common/world/components/ai_handler.h"
 #include "common/world/components/id_generator.h"
+#include "common/world/components/light_handler.h"
 #include "common/proto/udpgame.pb.h"
 
 class World {
@@ -22,7 +23,7 @@ public:
   void spawn_player(int);
   void throw_object(const Physics&, ObjectType);
   void onBlockDestruction(int, int, int);
-  void add_monster(const Physics&, EntityId);
+  void throw_torch(const Physics&);
 
   void removeDead();
 
@@ -39,6 +40,7 @@ public:
   GridHandler& grid();
   InventoryHandler& inventory();
   ClientHandler& client();
+  LightHandler& light();
 
   std::set<EntityId> mDeleteList;
 
@@ -55,4 +57,5 @@ private:
   GridHandler mGrid;
   LifetimeHandler mLifetime;
   AiHandler mAi;
+  LightHandler mLight;
 };

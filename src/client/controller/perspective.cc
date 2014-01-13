@@ -100,6 +100,14 @@ void Perspective::tick(World& w)
   m_view_projection = m_projection * m_view;
 }
 
+const glm::mat4& Perspective::view() const {
+  return m_view;
+}
+
+const glm::mat4& Perspective::projection() const {
+  return m_projection;
+}
+
 const glm::mat4& Perspective::get_view_projection_matrix() const {
   return m_view_projection;
 }

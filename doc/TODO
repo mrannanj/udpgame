@@ -5,6 +5,7 @@ REFACTOR:
 - grid position class
 - refactor input continous actions
 - separate input and client, so ai can provide input
+- add more const stuff to world
 
 BUGS:
 - system wide install does not find resource files

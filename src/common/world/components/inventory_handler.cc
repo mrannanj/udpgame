@@ -35,7 +35,7 @@ void InventoryHandler::tick(float, World& w) {
     assert(p != nullptr);
 
     if (ic->actions() & ContinousAction::ITEM_9)
-      w.add_monster(*p, inv.eid());
+      w.throw_torch(*p);
 
     if (ic->actions() & ContinousAction::THROW) {
       if (inv.itemCount[inv.wielding] > 0) {

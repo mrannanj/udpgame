@@ -3,13 +3,32 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <sstream>
+#include <algorithm>
+#include <iostream>
 
 #include "common/world/world.h"
 #include "common/world/components/inventory.h"
 
-void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
-    const glm::vec3& center) {
+void draw_grid(const Renderer& r, World& w, const glm::mat4& v,
+    const glm::mat4& p, const glm::vec3& center) {
   r.cube_renderer.On();
+
+  GridHandler& g = w.grid();
+  LightHandler& l = w.light();
+
+  constexpr size_t max_lights = 10;
+  size_t size = std::min(l.components().size(), (size_t)max_lights);
+  glUniform1i(r.cube_renderer.activeLights(), size);
+  GLfloat light_pos[max_lights][3];
+  for (size_t i = 0; i < size; ++i) {
+    const Light& lc = l.components().at(i);
+    Physics* p = w.physics().get(lc.eid());
+    assert(p);
+    light_pos[i][0] = p->position[0];
+    light_pos[i][1] = p->position[1];
+    light_pos[i][2] = p->position[2];
+  }
+  glUniform3fv(r.cube_renderer.lightPositions(), size, (float*)&light_pos[0]);
 
   int ind[3][2];
   g.range_indices(center, ind);
@@ -24,7 +43,7 @@ void draw_grid(const Renderer& r, const GridHandler& g, const glm::mat4& vp,
           glm::vec3((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f)
         );
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-        r.cube_renderer.DrawCube(vp, model);
+        r.cube_renderer.DrawCube(model, v, p);
       }
     }
   }
@@ -36,17 +55,17 @@ float rad_to_degree(float r) {
 }
 
 void draw_units(const Renderer& r, const PhysicsHandler& ps,
-    const glm::mat4& vp)
+    const glm::mat4& v, const glm::mat4& p)
 {
   r.cube_renderer.On();
 
-  for (const Physics& p : ps.components()) {
-    r.cube_renderer.SetTexture(r.texture_manager[p.type]);
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), p.position);
-    model = glm::rotate(model, rad_to_degree(p.horizontal_angle),
+  for (const Physics& pc : ps.components()) {
+    r.cube_renderer.SetTexture(r.texture_manager[pc.type]);
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), pc.position);
+    model = glm::rotate(model, rad_to_degree(pc.horizontal_angle),
       glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::scale(model, p.half_dim);
-    r.cube_renderer.DrawCube(vp, model);
+    model = glm::scale(model, pc.half_dim);
+    r.cube_renderer.DrawCube(model, v, p);
   }
 }
 

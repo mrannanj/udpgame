@@ -45,6 +45,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Lifetime_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Lifetime_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Light_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Light_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Vec3f_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Vec3f_reflection_ = NULL;
@@ -187,7 +190,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientInput));
   InitialState_descriptor_ = file->message_type(7);
-  static const int InitialState_offsets_[9] = {
+  static const int InitialState_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, tick_number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, next_eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, client_id_),
@@ -197,6 +200,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, physics_data_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, lifetime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, ai_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitialState, light_),
   };
   InitialState_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -241,7 +245,23 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Lifetime));
-  Vec3f_descriptor_ = file->message_type(10);
+  Light_descriptor_ = file->message_type(10);
+  static const int Light_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Light, eid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Light, intensity_),
+  };
+  Light_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Light_descriptor_,
+      Light::default_instance_,
+      Light_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Light, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Light, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Light));
+  Vec3f_descriptor_ = file->message_type(11);
   static const int Vec3f_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Vec3f, y_),
@@ -258,7 +278,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Vec3f));
-  PhysicsData_descriptor_ = file->message_type(11);
+  PhysicsData_descriptor_ = file->message_type(12);
   static const int PhysicsData_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, eid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PhysicsData, pos_),
@@ -317,6 +337,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Lifetime_descriptor_, &Lifetime::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Light_descriptor_, &Light::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Vec3f_descriptor_, &Vec3f::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PhysicsData_descriptor_, &PhysicsData::default_instance());
@@ -345,6 +367,8 @@ void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto() {
   delete Ai_reflection_;
   delete Lifetime::default_instance_;
   delete Lifetime_reflection_;
+  delete Light::default_instance_;
+  delete Light_reflection_;
   delete Vec3f::default_instance_;
   delete Vec3f_reflection_;
   delete PhysicsData::default_instance_;
@@ -374,31 +398,33 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\007actions\030\003 \002(\007\022\030\n\020horizontal_delta\030\004 \002(\002"
     "\022\026\n\016vertical_delta\030\005 \002(\002\"[\n\013ClientInput\022"
     "\023\n\013tick_number\030\001 \002(\007\022\025\n\rprevious_hash\030\002 "
-    "\002(\007\022 \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\357\001"
+    "\002(\007\022 \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\206\002"
     "\n\014InitialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010n"
     "ext_eid\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid"
     "\030\004 \002(\014\022#\n\013inventories\030\005 \003(\0132\016.InventoryD"
     "ata\022 \n\013client_data\030\006 \003(\0132\013.ClientData\022\"\n"
     "\014physics_data\030\007 \003(\0132\014.PhysicsData\022\033\n\010lif"
-    "etime\030\010 \003(\0132\t.Lifetime\022\017\n\002ai\030\t \003(\0132\003.Ai\""
-    "%\n\002Ai\022\013\n\003eid\030\001 \002(\007\022\022\n\nfollow_eid\030\002 \002(\007\"$"
-    "\n\010Lifetime\022\013\n\003eid\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"(\n\005"
-    "Vec3f\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"\276"
-    "\001\n\013PhysicsData\022\013\n\003eid\030\001 \002(\007\022\023\n\003pos\030\002 \002(\013"
-    "2\006.Vec3f\022\023\n\003vel\030\003 \002(\0132\006.Vec3f\022\030\n\010half_di"
-    "m\030\004 \002(\0132\006.Vec3f\022\030\n\020horizontal_angle\030\005 \002("
-    "\002\022\026\n\016vertical_angle\030\006 \002(\002\022\021\n\ton_ground\030\007"
-    " \002(\010\022\031\n\004type\030\010 \002(\0162\013.ObjectType*=\n\004Type\022"
-    "\020\n\014CLIENT_INPUT\020\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014"
-    "FRAME_INPUTS\020\003*\273\001\n\007Texture\022\020\n\014TEXTURE_NO"
-    "NE\020\000\022\021\n\rTEXTURE_GRASS\020\001\022\020\n\014TEXTURE_SAND\020"
-    "\002\022\020\n\014TEXTURE_ROCK\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014T"
-    "EXTURE_FONT\020\005\022\020\n\014TEXTURE_FACE\020\006\022\020\n\014TEXTU"
-    "RE_HEAD\020\007\022\017\n\013TEXTURE_GRR\020\010\022\020\n\014TEXTURE_SI"
-    "ZE\020\t*`\n\nObjectType\022\010\n\004NONE\020\000\022\t\n\005GRASS\020\001\022"
-    "\010\n\004SAND\020\002\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n"
-    "\006PLAYER\020\006\022\013\n\007MONSTER\020\007*0\n\nClientMode\022\017\n\013"
-    "MODE_PLAYER\020\000\022\021\n\rMODE_OBSERVER\020\001", 1632);
+    "etime\030\010 \003(\0132\t.Lifetime\022\017\n\002ai\030\t \003(\0132\003.Ai\022"
+    "\025\n\005light\030\n \003(\0132\006.Light\"%\n\002Ai\022\013\n\003eid\030\001 \002("
+    "\007\022\022\n\nfollow_eid\030\002 \002(\007\"$\n\010Lifetime\022\013\n\003eid"
+    "\030\001 \002(\007\022\013\n\003ttl\030\002 \002(\002\"\'\n\005Light\022\013\n\003eid\030\001 \002("
+    "\007\022\021\n\tintensity\030\002 \002(\002\"(\n\005Vec3f\022\t\n\001x\030\001 \002(\002"
+    "\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\"\276\001\n\013PhysicsData\022\013"
+    "\n\003eid\030\001 \002(\007\022\023\n\003pos\030\002 \002(\0132\006.Vec3f\022\023\n\003vel\030"
+    "\003 \002(\0132\006.Vec3f\022\030\n\010half_dim\030\004 \002(\0132\006.Vec3f\022"
+    "\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical_an"
+    "gle\030\006 \002(\002\022\021\n\ton_ground\030\007 \002(\010\022\031\n\004type\030\010 \002"
+    "(\0162\013.ObjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020"
+    "\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\273"
+    "\001\n\007Texture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_"
+    "GRASS\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROC"
+    "K\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n"
+    "\014TEXTURE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\017\n\013TEX"
+    "TURE_GRR\020\010\022\020\n\014TEXTURE_SIZE\020\t*k\n\nObjectTy"
+    "pe\022\010\n\004NONE\020\000\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004ROC"
+    "K\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006\022\013\n\007MON"
+    "STER\020\007\022\t\n\005TORCH\020\010*0\n\nClientMode\022\017\n\013MODE_"
+    "PLAYER\020\000\022\021\n\rMODE_OBSERVER\020\001", 1707);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -411,6 +437,7 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   InitialState::default_instance_ = new InitialState();
   Ai::default_instance_ = new Ai();
   Lifetime::default_instance_ = new Lifetime();
+  Light::default_instance_ = new Light();
   Vec3f::default_instance_ = new Vec3f();
   PhysicsData::default_instance_ = new PhysicsData();
   AMessage::default_instance_->InitAsDefaultInstance();
@@ -423,6 +450,7 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   InitialState::default_instance_->InitAsDefaultInstance();
   Ai::default_instance_->InitAsDefaultInstance();
   Lifetime::default_instance_->InitAsDefaultInstance();
+  Light::default_instance_->InitAsDefaultInstance();
   Vec3f::default_instance_->InitAsDefaultInstance();
   PhysicsData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto);
@@ -486,6 +514,7 @@ bool ObjectType_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
       return true;
     default:
       return false;
@@ -2651,6 +2680,7 @@ const int InitialState::kClientDataFieldNumber;
 const int InitialState::kPhysicsDataFieldNumber;
 const int InitialState::kLifetimeFieldNumber;
 const int InitialState::kAiFieldNumber;
+const int InitialState::kLightFieldNumber;
 #endif  // !_MSC_VER
 
 InitialState::InitialState()
@@ -2724,6 +2754,7 @@ void InitialState::Clear() {
   physics_data_.Clear();
   lifetime_.Clear();
   ai_.Clear();
+  light_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -2866,6 +2897,21 @@ bool InitialState::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(74)) goto parse_ai;
+        if (input->ExpectTag(82)) goto parse_light;
+        break;
+      }
+      
+      // repeated .Light light = 10;
+      case 10: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_light:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_light()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(82)) goto parse_light;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2939,6 +2985,12 @@ void InitialState::SerializeWithCachedSizes(
       9, this->ai(i), output);
   }
   
+  // repeated .Light light = 10;
+  for (int i = 0; i < this->light_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      10, this->light(i), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -3002,6 +3054,13 @@ void InitialState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         9, this->ai(i), target);
+  }
+  
+  // repeated .Light light = 10;
+  for (int i = 0; i < this->light_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        10, this->light(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3078,6 +3137,14 @@ int InitialState::ByteSize() const {
         this->ai(i));
   }
   
+  // repeated .Light light = 10;
+  total_size += 1 * this->light_size();
+  for (int i = 0; i < this->light_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->light(i));
+  }
+  
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -3108,6 +3175,7 @@ void InitialState::MergeFrom(const InitialState& from) {
   physics_data_.MergeFrom(from.physics_data_);
   lifetime_.MergeFrom(from.lifetime_);
   ai_.MergeFrom(from.ai_);
+  light_.MergeFrom(from.light_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_tick_number()) {
       set_tick_number(from.tick_number());
@@ -3155,6 +3223,9 @@ bool InitialState::IsInitialized() const {
   for (int i = 0; i < ai_size(); i++) {
     if (!this->ai(i).IsInitialized()) return false;
   }
+  for (int i = 0; i < light_size(); i++) {
+    if (!this->light(i).IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -3169,6 +3240,7 @@ void InitialState::Swap(InitialState* other) {
     physics_data_.Swap(&other->physics_data_);
     lifetime_.Swap(&other->lifetime_);
     ai_.Swap(&other->ai_);
+    light_.Swap(&other->light_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3668,6 +3740,250 @@ void Lifetime::Swap(Lifetime* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = Lifetime_descriptor_;
   metadata.reflection = Lifetime_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int Light::kEidFieldNumber;
+const int Light::kIntensityFieldNumber;
+#endif  // !_MSC_VER
+
+Light::Light()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Light::InitAsDefaultInstance() {
+}
+
+Light::Light(const Light& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Light::SharedCtor() {
+  _cached_size_ = 0;
+  eid_ = 0u;
+  intensity_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Light::~Light() {
+  SharedDtor();
+}
+
+void Light::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void Light::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Light::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Light_descriptor_;
+}
+
+const Light& Light::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();  return *default_instance_;
+}
+
+Light* Light::default_instance_ = NULL;
+
+Light* Light::New() const {
+  return new Light;
+}
+
+void Light::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    eid_ = 0u;
+    intensity_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Light::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required fixed32 eid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, &eid_)));
+          set_has_eid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(21)) goto parse_intensity;
+        break;
+      }
+      
+      // required float intensity = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_intensity:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &intensity_)));
+          set_has_intensity();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Light::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required fixed32 eid = 1;
+  if (has_eid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->eid(), output);
+  }
+  
+  // required float intensity = 2;
+  if (has_intensity()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->intensity(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Light::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required fixed32 eid = 1;
+  if (has_eid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->eid(), target);
+  }
+  
+  // required float intensity = 2;
+  if (has_intensity()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->intensity(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Light::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required fixed32 eid = 1;
+    if (has_eid()) {
+      total_size += 1 + 4;
+    }
+    
+    // required float intensity = 2;
+    if (has_intensity()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Light::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Light* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Light*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Light::MergeFrom(const Light& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_eid()) {
+      set_eid(from.eid());
+    }
+    if (from.has_intensity()) {
+      set_intensity(from.intensity());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Light::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Light::CopyFrom(const Light& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Light::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  
+  return true;
+}
+
+void Light::Swap(Light* other) {
+  if (other != this) {
+    std::swap(eid_, other->eid_);
+    std::swap(intensity_, other->intensity_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Light::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Light_descriptor_;
+  metadata.reflection = Light_reflection_;
   return metadata;
 }
 
