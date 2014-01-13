@@ -40,6 +40,7 @@ class ClientInput;
 class InitialState;
 class Ai;
 class Lifetime;
+class Light;
 class Vec3f;
 class PhysicsData;
 
@@ -98,11 +99,12 @@ enum ObjectType {
   BW = 4,
   FONT = 5,
   PLAYER = 6,
-  MONSTER = 7
+  MONSTER = 7,
+  TORCH = 8
 };
 bool ObjectType_IsValid(int value);
 const ObjectType ObjectType_MIN = NONE;
-const ObjectType ObjectType_MAX = MONSTER;
+const ObjectType ObjectType_MAX = TORCH;
 const int ObjectType_ARRAYSIZE = ObjectType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ObjectType_descriptor();
@@ -1026,6 +1028,18 @@ class InitialState : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Ai >*
       mutable_ai();
   
+  // repeated .Light light = 10;
+  inline int light_size() const;
+  inline void clear_light();
+  static const int kLightFieldNumber = 10;
+  inline const ::Light& light(int index) const;
+  inline ::Light* mutable_light(int index);
+  inline ::Light* add_light();
+  inline const ::google::protobuf::RepeatedPtrField< ::Light >&
+      light() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Light >*
+      mutable_light();
+  
   // @@protoc_insertion_point(class_scope:InitialState)
  private:
   inline void set_has_tick_number();
@@ -1047,10 +1061,11 @@ class InitialState : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::PhysicsData > physics_data_;
   ::google::protobuf::RepeatedPtrField< ::Lifetime > lifetime_;
   ::google::protobuf::RepeatedPtrField< ::Ai > ai_;
+  ::google::protobuf::RepeatedPtrField< ::Light > light_;
   ::google::protobuf::uint32 client_id_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
   
   friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
   friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
@@ -1242,6 +1257,98 @@ class Lifetime : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static Lifetime* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Light : public ::google::protobuf::Message {
+ public:
+  Light();
+  virtual ~Light();
+  
+  Light(const Light& from);
+  
+  inline Light& operator=(const Light& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Light& default_instance();
+  
+  void Swap(Light* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Light* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Light& from);
+  void MergeFrom(const Light& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required fixed32 eid = 1;
+  inline bool has_eid() const;
+  inline void clear_eid();
+  static const int kEidFieldNumber = 1;
+  inline ::google::protobuf::uint32 eid() const;
+  inline void set_eid(::google::protobuf::uint32 value);
+  
+  // required float intensity = 2;
+  inline bool has_intensity() const;
+  inline void clear_intensity();
+  static const int kIntensityFieldNumber = 2;
+  inline float intensity() const;
+  inline void set_intensity(float value);
+  
+  // @@protoc_insertion_point(class_scope:Light)
+ private:
+  inline void set_has_eid();
+  inline void clear_has_eid();
+  inline void set_has_intensity();
+  inline void clear_has_intensity();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::google::protobuf::uint32 eid_;
+  float intensity_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto();
+  friend void protobuf_ShutdownFile_common_2fproto_2fudpgame_2eproto();
+  
+  void InitAsDefaultInstance();
+  static Light* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2328,6 +2435,31 @@ InitialState::mutable_ai() {
   return &ai_;
 }
 
+// repeated .Light light = 10;
+inline int InitialState::light_size() const {
+  return light_.size();
+}
+inline void InitialState::clear_light() {
+  light_.Clear();
+}
+inline const ::Light& InitialState::light(int index) const {
+  return light_.Get(index);
+}
+inline ::Light* InitialState::mutable_light(int index) {
+  return light_.Mutable(index);
+}
+inline ::Light* InitialState::add_light() {
+  return light_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Light >&
+InitialState::light() const {
+  return light_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Light >*
+InitialState::mutable_light() {
+  return &light_;
+}
+
 // -------------------------------------------------------------------
 
 // Ai
@@ -2422,6 +2554,54 @@ inline float Lifetime::ttl() const {
 inline void Lifetime::set_ttl(float value) {
   set_has_ttl();
   ttl_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// Light
+
+// required fixed32 eid = 1;
+inline bool Light::has_eid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Light::set_has_eid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Light::clear_has_eid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Light::clear_eid() {
+  eid_ = 0u;
+  clear_has_eid();
+}
+inline ::google::protobuf::uint32 Light::eid() const {
+  return eid_;
+}
+inline void Light::set_eid(::google::protobuf::uint32 value) {
+  set_has_eid();
+  eid_ = value;
+}
+
+// required float intensity = 2;
+inline bool Light::has_intensity() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Light::set_has_intensity() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Light::clear_has_intensity() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Light::clear_intensity() {
+  intensity_ = 0;
+  clear_has_intensity();
+}
+inline float Light::intensity() const {
+  return intensity_;
+}
+inline void Light::set_intensity(float value) {
+  set_has_intensity();
+  intensity_ = value;
 }
 
 // -------------------------------------------------------------------

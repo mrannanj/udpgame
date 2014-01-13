@@ -2,6 +2,7 @@
 #include "common/world/world.h"
 #include "common/world/components/physics.h"
 #include "common/world/components/grid_handler.h"
+#include "common/world/components/light_handler.h"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -15,7 +16,6 @@
 
 using namespace std;
 
-
 World::World(bool init):
   mInit(init),
   mTickNumber(0),
@@ -28,7 +28,8 @@ World::World(bool init):
   mClient(),
   mGrid(),
   mLifetime(),
-  mAi()
+  mAi(),
+  mLight()
 {
   if (mInit) mGrid.defaultGrid();
   updateHash();
@@ -42,7 +43,7 @@ void World::updateHash() {
   mHash = mPhysicsHandler.hash();
 }
 
-void World::add_monster(const Physics& o, EntityId follow) {
+void World::throw_torch(const Physics& o) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
@@ -50,25 +51,25 @@ void World::add_monster(const Physics& o, EntityId follow) {
 
   p.entityid = eid;
   p.position = o.eye_position() + o.look_direction() * 2.0f;
-  p.half_dim = glm::vec3(0.3f, 0.8f, 0.3f);
+  p.half_dim = glm::vec3(0.3f, 0.3f, 0.3f);
   p.velocity = o.look_direction() * 10.0f;
-  p.type = ObjectType::MONSTER;
+  p.type = ObjectType::TORCH;
   mPhysicsHandler.add(p);
 
   Inventory i;
   i.entityid = eid;
-  i.wielding = ObjectType::MONSTER;
+  i.wielding = ObjectType::NONE;
   mInventory.add(i);
 
-  Ai a;
-  a.set_eid(eid);
-  a.set_follow_eid(follow);
-  mAi.add(a);
+  Lifetime ttl;
+  ttl.set_eid(eid);
+  ttl.set_ttl(10.0f);
+  mLifetime.add(ttl);
 
-  Lifetime l;
+  Light l;
   l.set_eid(eid);
-  l.set_ttl(60.0f);
-  mLifetime.add(l);
+  l.set_intensity(10.0f);
+  mLight.add(l);
 }
 
 void World::throw_object(const Physics& o, ObjectType t) {
@@ -161,6 +162,7 @@ void World::removeDead() {
   mInventory.handleDead(mDeleteList);
   mLifetime.handleDead(mDeleteList);
   mAi.handleDead(mDeleteList);
+  mLight.handleDead(mDeleteList);
 }
 
 InventoryHandler& World::inventory() {
@@ -183,6 +185,10 @@ InputHandler& World::input() {
   return mInputHandler;
 }
 
+LightHandler& World::light() {
+  return mLight;
+}
+
 InitialState World::getInitialState() {
   InitialState i;
   mGrid.serialize(i);
@@ -191,6 +197,7 @@ InitialState World::getInitialState() {
   mPhysicsHandler.serialize(i.mutable_physics_data());
   mLifetime.serialize(i.mutable_lifetime());
   mAi.serialize(i.mutable_ai());
+  mLight.serialize(i.mutable_light());
   i.set_next_eid(m_idgen.getNext());
   i.set_tick_number(mTickNumber);
   return i;
@@ -203,6 +210,7 @@ void World::setInitialState(const InitialState& i) {
   mPhysicsHandler.deserialize(i.physics_data());
   mLifetime.deserialize(i.lifetime());
   mAi.deserialize(i.ai());
+  mLight.deserialize(i.light());
   m_idgen.setNext(i.next_eid());
   mTickNumber = i.tick_number();
   mInit = true;

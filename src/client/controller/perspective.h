@@ -16,6 +16,8 @@ public:
   void handle_input(Input&);
   void tick(World&);
   const glm::mat4& get_view_projection_matrix() const;
+  const glm::mat4& view() const;
+  const glm::mat4& projection() const;
   std::string pos_string() const;
   void handle_freelook_input(const Input&);
 

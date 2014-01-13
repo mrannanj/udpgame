@@ -103,9 +103,10 @@ void GameSession::sendFrameInput(Input& i) {
 }
 
 void GameSession::draw(const Renderer& r) {
-  glm::mat4 vp = mPerspective.get_view_projection_matrix();
-  draw_grid(r, mWorld.grid(), vp, mPerspective.m_position);
-  draw_units(r, mWorld.physics(), vp);
+  const glm::mat4& v = mPerspective.view();
+  const glm::mat4& p = mPerspective.projection();
+  draw_grid(r, mWorld, v, p, mPerspective.m_position);
+  draw_units(r, mWorld.physics(), v, p);
   draw_hud(r, mWorld, mPerspective.m_follow_id, mPerspective);
 
   mRedraw = true;

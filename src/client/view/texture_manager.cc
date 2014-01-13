@@ -17,6 +17,7 @@ TextureManager::TextureManager() {
   mTypeToTexture[ObjectType::FONT] = TEXTURE_FONT;
   mTypeToTexture[ObjectType::PLAYER] = TEXTURE_FACE;
   mTypeToTexture[ObjectType::MONSTER] = TEXTURE_GRR;
+  mTypeToTexture[ObjectType::TORCH] = TEXTURE_GRR;
 }
 
 TextureManager::~TextureManager() {

@@ -26,6 +26,7 @@ enum ObjectType {
   FONT = 5;
   PLAYER = 6;
   MONSTER = 7;
+  TORCH = 8;
 }
 
 message AMessage {
@@ -87,6 +88,7 @@ message InitialState {
   repeated PhysicsData physics_data = 7;
   repeated Lifetime lifetime = 8;
   repeated Ai ai = 9;
+  repeated Light light = 10;
 }
 
 message Ai {
@@ -97,6 +99,11 @@ message Ai {
 message Lifetime {
   required fixed32 eid = 1;
   required float ttl = 2;
+}
+
+message Light {
+  required fixed32 eid = 1;
+  required float intensity = 2;
 }
 
 message Vec3f {
