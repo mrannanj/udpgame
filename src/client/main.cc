@@ -6,6 +6,7 @@
 #include <string>
 
 #include "common/config.h"
+#include "common/resource_locator.h"
 #include "client/view/window.h"
 #include "client/controller/input/input_manager.h"
 #include "client/controller/screen/screen_stack.h"
@@ -16,9 +17,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  if (strcmp(argv[0], "/usr/bin/udpgame_client") == 0)
-    chdir("/usr/share/udpgame");
-
   bool fullscreen = false;
   string server_address = "";
   int opt;

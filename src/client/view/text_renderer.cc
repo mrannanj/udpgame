@@ -1,7 +1,7 @@
 #include "client/view/text_renderer.h"
 
-TextRenderer::TextRenderer(GLuint font_texture):
-  Shader("resources/shaders/text.vert", "resources/shaders/text.frag"),
+TextRenderer::TextRenderer(const ResourceLocator& rl, GLuint font_texture):
+  Shader(rl, "resources/shaders/text.vert", "resources/shaders/text.frag"),
   m_font_texture(font_texture),
   vertex_elem_size_(0),
   bg_color_uni_(0),

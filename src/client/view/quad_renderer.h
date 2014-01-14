@@ -5,7 +5,7 @@
 class QuadRenderer : public Shader
 {
 public:
-  QuadRenderer();
+  QuadRenderer(const ResourceLocator&);
 
   void draw_quad(float*) const;
   GLint color_uni() const;

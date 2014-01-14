@@ -9,7 +9,7 @@
 class TextRenderer : public Shader
 {
 public:
-  TextRenderer(GLuint);
+  TextRenderer(const ResourceLocator&, GLuint);
   TextRenderer(const TextRenderer&) = delete;
   TextRenderer& operator=(const TextRenderer&) = delete;
 

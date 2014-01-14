@@ -8,7 +8,6 @@ REFACTOR:
 - add more const stuff to world
 
 BUGS:
-- system wide install does not find resource files
 - client freezes on timeout
 
 FEATURES:

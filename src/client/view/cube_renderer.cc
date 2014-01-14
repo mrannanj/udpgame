@@ -46,8 +46,8 @@ float cube_vertices[] = {
   -1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
 };
 
-CubeRenderer::CubeRenderer():
-  Shader("resources/shaders/cube.vert", "resources/shaders/cube.frag"),
+CubeRenderer::CubeRenderer(const ResourceLocator& rl):
+  Shader(rl, "resources/shaders/cube.vert", "resources/shaders/cube.frag"),
   m_p_uniform(0),
   m_v_uniform(0),
   m_m_uniform(0),
