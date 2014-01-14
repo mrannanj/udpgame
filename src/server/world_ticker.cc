@@ -3,7 +3,7 @@
 #include "server/world_ticker.h"
 #include "common/config.h"
 
-static constexpr int TIMEOUT = 60;
+static constexpr unsigned TIMEOUT = 60;
 
 using namespace std;
 

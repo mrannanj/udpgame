@@ -24,6 +24,7 @@ TARGETS := udpgame_server udpgame_client
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
 WARN := -pedantic -Wall -Wextra -Wno-unused-parameter -Weffc++
+WARN += -Wnon-virtual-dtor -Wsign-compare -Werror
 
 PKGS := glew SDL_image sdl glu protobuf
 
@@ -32,7 +33,7 @@ LIBS += $(shell pkg-config --libs $(PKGS))
 
 CXXFLAGS := -fno-exceptions
 CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
-CXXFLAGS += $(CFLAGS) $(WARN) -std=c++11 -g -Werror
+CXXFLAGS += $(CFLAGS) $(WARN) -std=c++11 -g
 
 INC := -I$(SRC_DIR)
 

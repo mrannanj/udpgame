@@ -8,7 +8,7 @@
 using namespace std;
 using glm::vec3;
 
-static constexpr size_t DRAW_RANGE = 12;
+static constexpr unsigned DRAW_RANGE = 12;
 static constexpr float RAYCAST_RANGE = 6.0f;
 static constexpr float BOTTOM = -20.0f;
 
@@ -28,8 +28,8 @@ vec3 GridHandler::spawn_pos() const {
 
 void GridHandler::range_indices(const vec3& p, int ind[3][2]) const {
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = max(0, (int)(p[a] - DRAW_RANGE));
-    ind[a][1] = min(GRID_SIZE[a] - 1, (int)(p[a] + DRAW_RANGE));
+    ind[a][0] = (int)max(0, (int)(p[a] - DRAW_RANGE));
+    ind[a][1] = min((int)(GRID_SIZE[a] - 1), (int)(p[a] + DRAW_RANGE));
   }
 }
 
@@ -46,8 +46,8 @@ void GridHandler::raycast_range(const vec3& p, const vec3& d, int ind[3][2])
   const glm::vec3 k = p + d * RAYCAST_RANGE;
 
   for (unsigned a = 0; a < 3; ++a) {
-    ind[a][0] = max(0.0f, min(p[a], k[a]));
-    ind[a][1] = min((float)GRID_SIZE[a]-1, max(p[a], k[a]));
+    ind[a][0] = (int)max(0.0f, min(p[a], k[a]));
+    ind[a][1] = (int)min((float)GRID_SIZE[a]-1.0f, max(p[a], k[a]));
   }
 }
 

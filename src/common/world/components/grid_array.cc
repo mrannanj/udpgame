@@ -41,7 +41,7 @@ void GridArray::makeFloor() {
   }
 }
 
-int GridArray::heightFunction(int x, int z) const {
+unsigned GridArray::heightFunction(int x, int z) const {
   float fx = -1.0f + 2.0f*(x/(float)GRID_SIZE_X);
   float fz = -1.0f + 2.0f*(z/(float)GRID_SIZE_Z);
   return 90.0f * (sin(fx) + cos(fz) + 2.0f)/4;
@@ -49,7 +49,7 @@ int GridArray::heightFunction(int x, int z) const {
 
 bool GridArray::outsideGrid(int x, int y, int z) const {
   return x < 0 or y < 0 or z < 0 or
-      x >= GRID_SIZE_X or y >= GRID_SIZE_Y or z >= GRID_SIZE_Z;
+      x >= (int)GRID_SIZE_X or y >= (int)GRID_SIZE_Y or z >= (int)GRID_SIZE_Z;
 }
 
 char& GridArray::getRef(int x, int y, int z) {
