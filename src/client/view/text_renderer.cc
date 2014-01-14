@@ -28,7 +28,7 @@ TextRenderer::TextRenderer(const ResourceLocator& rl, GLuint font_texture):
   glUniform4f(bg_color_uni_, 0.3f, 0.3f, 0.0f, 0.5f);
 
   GLint texture_uniform = glGetUniformLocation(shader_program, "texture");
-  glUniform1i(texture_uniform, GL_TEXTURE0);
+  glUniform1i(texture_uniform, 0);
 }
 
 void TextRenderer::On() const
