@@ -1,15 +1,20 @@
 
 #include <SDL.h>
 #include <GL/glew.h>
-#include <assert.h>
+#include <cassert>
 #include <iostream>
+#include <sstream>
+#include <unistd.h>
 
 #include "client/view/shader.h"
 #include "common/util/mmap_handle.h"
+#include "common/resource_locator.h"
 
 using namespace std;
 
-Shader::Shader(const string& vertex_file, const string& fragment_file):
+Shader::Shader(const ResourceLocator& resourceLocator,
+    const string& vertex_file, const string& fragment_file):
+  mResourceLocator(resourceLocator),
   vertex_array(),
   vertex_buffer(),
   vertex_shader(),
@@ -22,7 +27,23 @@ Shader::Shader(const string& vertex_file, const string& fragment_file):
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
-  LoadShader(vertex_file.c_str(), fragment_file.c_str());
+  for (const std::string& prefix : mResourceLocator.pathPrefix()) {
+    std::stringstream vertexPath;
+    vertexPath << prefix << "/" << vertex_file;
+    if (-1 == access(vertexPath.str().c_str(), F_OK | R_OK))
+      continue;
+
+    std::stringstream fragmentPath;
+    fragmentPath << prefix << "/" << fragment_file;
+    if (-1 == access(fragmentPath.str().c_str(), F_OK | R_OK))
+      continue;
+
+    LoadShader(vertexPath.str().c_str(), fragmentPath.str().c_str());
+    return;
+  }
+  std::cerr << "Failed to load " << vertex_file << " or " << fragment_file
+    << std::endl;
+  exit(EXIT_FAILURE);
 }
 
 Shader::~Shader() {
@@ -49,8 +70,7 @@ GLuint Shader::AddShaderSource(const char* filename, int type) {
   return shader;
 }
 
-void Shader::LoadShader(const char* vertexFile, const char* fragFile)
-{
+void Shader::LoadShader(const char* vertexFile, const char* fragFile) {
   GLint status;
 
   vertex_shader = AddShaderSource(vertexFile, GL_VERTEX_SHADER);

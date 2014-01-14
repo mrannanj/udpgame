@@ -5,10 +5,11 @@
 #include <GL/gl.h>
 
 #include "common/proto/udpgame.pb.h"
+#include "common/resource_locator.h"
 
 class TextureManager {
 public:
-  TextureManager();
+  TextureManager(const ResourceLocator&);
   ~TextureManager();
 
   GLuint operator[](ObjectType) const;
@@ -17,8 +18,11 @@ public:
 
 private:
   void LoadTextures();
-  GLuint LoadTexture(const std::string&);
 
+  GLuint loadTexture(const std::string&);
+  bool tryLoadTexture(const std::string&, GLuint&);
+
+  ResourceLocator mResourceLocator;
   GLuint mTextures[Texture::TEXTURE_SIZE];
   Texture mTypeToTexture[Texture::TEXTURE_SIZE];
 };

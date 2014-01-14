@@ -6,7 +6,7 @@
 
 class CubeRenderer : public Shader {
 public:
-  CubeRenderer();
+  CubeRenderer(const ResourceLocator&);
 
   void DrawCube(const glm::mat4&, const glm::mat4&, const glm::mat4&) const;
   void SetTexture(GLuint) const;

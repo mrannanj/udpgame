@@ -3,14 +3,17 @@
 #include <GL/glew.h>
 #include <string>
 
+#include "common/resource_locator.h"
+
 class Shader {
 public:
-  Shader(const std::string&, const std::string&);
+  Shader(const ResourceLocator&, const std::string&, const std::string&);
   virtual ~Shader();
 
   void On() const;
 
 protected:
+  ResourceLocator mResourceLocator;
   GLuint vertex_array;
   GLuint vertex_buffer;
   GLuint vertex_shader;

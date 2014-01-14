@@ -7,8 +7,8 @@ static GLuint elements[] = {
   0, 3, 1
 };
 
-QuadRenderer::QuadRenderer():
-  Shader("resources/shaders/quad.vert", "resources/shaders/quad.frag"),
+QuadRenderer::QuadRenderer(const ResourceLocator& rl):
+  Shader(rl, "resources/shaders/quad.vert", "resources/shaders/quad.frag"),
   m_color_uni(),
   m_element_buffer()
 {

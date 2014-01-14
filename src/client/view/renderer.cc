@@ -1,10 +1,11 @@
 #include "client/view/renderer.h"
 
 Renderer::Renderer():
-  texture_manager(),
-  text_renderer(texture_manager[Texture::TEXTURE_FONT]),
-  cube_renderer(),
-  quad_renderer()
+  resourceLocator(),
+  texture_manager(resourceLocator),
+  text_renderer(resourceLocator, texture_manager[Texture::TEXTURE_FONT]),
+  cube_renderer(resourceLocator),
+  quad_renderer(resourceLocator)
 {
 }
 
