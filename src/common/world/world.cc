@@ -20,7 +20,6 @@ World::World(bool init):
   mInit(init),
   mTickNumber(0),
   mDeleteList(),
-  mHash(0),
   m_idgen(),
   mInputHandler(),
   mPhysicsHandler(),
@@ -35,12 +34,17 @@ World::World(bool init):
   updateHash();
 }
 
-unsigned World::hash() const {
-  return mHash;
+const uint32_t* World::hashes() const {
+  return mHashes;
 }
 
 void World::updateHash() {
-  mHash = mPhysicsHandler.hash();
+  mHashes[HANDLER_PHYSICS] = mPhysicsHandler.hash();
+  mHashes[HANDLER_CLIENT] = mClient.hash();
+  mHashes[HANDLER_INVENTORY] = mInventory.hash();
+  mHashes[HANDLER_LIFETIME] = mLifetime.hash();
+  mHashes[HANDLER_AI] = mAi.hash();
+  mHashes[HANDLER_LIGHT] = mLight.hash();
 }
 
 void World::throw_torch(const Physics& o) {
@@ -215,4 +219,11 @@ void World::setInitialState(const InitialState& i) {
   mTickNumber = i.tick_number();
   mInit = true;
   updateHash();
+}
+
+void World::serializeHashes(
+    google::protobuf::RepeatedField<uint32_t>* hashes) const
+{
+  for (int i = 0; i < HANDLER_COUNT; ++i)
+    *(hashes->Add()) = mHashes[i];
 }

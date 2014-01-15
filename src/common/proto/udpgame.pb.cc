@@ -54,9 +54,10 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PhysicsData_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PhysicsData_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* Type_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* Texture_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ObjectType_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* Handler_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientMode_descriptor_ = NULL;
 
 }  // namespace
@@ -175,7 +176,7 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
   ClientInput_descriptor_ = file->message_type(6);
   static const int ClientInput_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, tick_number_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, previous_hash_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, hashes_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientInput, frame_input_),
   };
   ClientInput_reflection_ =
@@ -300,10 +301,11 @@ void protobuf_AssignDesc_common_2fproto_2fudpgame_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PhysicsData));
-  Type_descriptor_ = file->enum_type(0);
+  MessageType_descriptor_ = file->enum_type(0);
   Texture_descriptor_ = file->enum_type(1);
   ObjectType_descriptor_ = file->enum_type(2);
-  ClientMode_descriptor_ = file->enum_type(3);
+  Handler_descriptor_ = file->enum_type(3);
+  ClientMode_descriptor_ = file->enum_type(4);
 }
 
 namespace {
@@ -382,23 +384,23 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\032common/proto/udpgame.proto\"\215\001\n\010AMessag"
-    "e\022\023\n\004type\030\001 \002(\0162\005.Type\022\"\n\014client_input\030\002"
-    " \001(\0132\014.ClientInput\022$\n\rinitial_state\030\003 \001("
-    "\0132\r.InitialState\022\"\n\014frame_inputs\030\004 \001(\0132\014"
-    ".FrameInputs\"R\n\nClientData\022\016\n\006client\030\001 \002"
-    "(\017\022\031\n\004mode\030\002 \002(\0162\013.ClientMode\022\013\n\003eid\030\003 \002"
-    "(\007\022\014\n\004dead\030\004 \002(\007\"7\n\013ObjectCount\022\031\n\004type\030"
-    "\001 \002(\0162\013.ObjectType\022\r\n\005count\030\002 \002(\017\"X\n\rInv"
-    "entoryData\022\013\n\003eid\030\001 \002(\007\022\035\n\010wielding\030\002 \002("
-    "\0162\013.ObjectType\022\033\n\005count\030\003 \003(\0132\014.ObjectCo"
-    "unt\"E\n\013FrameInputs\022\023\n\013tick_number\030\001 \002(\007\022"
-    "!\n\014frame_inputs\030\002 \003(\0132\013.FrameInput\"l\n\nFr"
-    "ameInput\022\016\n\006client\030\001 \001(\017\022\013\n\003eid\030\002 \001(\007\022\017\n"
-    "\007actions\030\003 \002(\007\022\030\n\020horizontal_delta\030\004 \002(\002"
-    "\022\026\n\016vertical_delta\030\005 \002(\002\"[\n\013ClientInput\022"
-    "\023\n\013tick_number\030\001 \002(\007\022\025\n\rprevious_hash\030\002 "
-    "\002(\007\022 \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\206\002"
+    "\n\032common/proto/udpgame.proto\"\224\001\n\010AMessag"
+    "e\022\032\n\004type\030\001 \002(\0162\014.MessageType\022\"\n\014client_"
+    "input\030\002 \001(\0132\014.ClientInput\022$\n\rinitial_sta"
+    "te\030\003 \001(\0132\r.InitialState\022\"\n\014frame_inputs\030"
+    "\004 \001(\0132\014.FrameInputs\"R\n\nClientData\022\016\n\006cli"
+    "ent\030\001 \002(\017\022\031\n\004mode\030\002 \002(\0162\013.ClientMode\022\013\n\003"
+    "eid\030\003 \002(\007\022\014\n\004dead\030\004 \002(\007\"7\n\013ObjectCount\022\031"
+    "\n\004type\030\001 \002(\0162\013.ObjectType\022\r\n\005count\030\002 \002(\017"
+    "\"X\n\rInventoryData\022\013\n\003eid\030\001 \002(\007\022\035\n\010wieldi"
+    "ng\030\002 \002(\0162\013.ObjectType\022\033\n\005count\030\003 \003(\0132\014.O"
+    "bjectCount\"E\n\013FrameInputs\022\023\n\013tick_number"
+    "\030\001 \002(\007\022!\n\014frame_inputs\030\002 \003(\0132\013.FrameInpu"
+    "t\"l\n\nFrameInput\022\016\n\006client\030\001 \001(\017\022\013\n\003eid\030\002"
+    " \001(\007\022\017\n\007actions\030\003 \002(\007\022\030\n\020horizontal_delt"
+    "a\030\004 \002(\002\022\026\n\016vertical_delta\030\005 \002(\002\"T\n\013Clien"
+    "tInput\022\023\n\013tick_number\030\001 \002(\007\022\016\n\006hashes\030\002 "
+    "\003(\007\022 \n\013frame_input\030\003 \002(\0132\013.FrameInput\"\206\002"
     "\n\014InitialState\022\023\n\013tick_number\030\001 \002(\007\022\020\n\010n"
     "ext_eid\030\002 \002(\007\022\021\n\tclient_id\030\003 \002(\007\022\014\n\004grid"
     "\030\004 \002(\014\022#\n\013inventories\030\005 \003(\0132\016.InventoryD"
@@ -414,17 +416,21 @@ void protobuf_AddDesc_common_2fproto_2fudpgame_2eproto() {
     "\003 \002(\0132\006.Vec3f\022\030\n\010half_dim\030\004 \002(\0132\006.Vec3f\022"
     "\030\n\020horizontal_angle\030\005 \002(\002\022\026\n\016vertical_an"
     "gle\030\006 \002(\002\022\021\n\ton_ground\030\007 \002(\010\022\031\n\004type\030\010 \002"
-    "(\0162\013.ObjectType*=\n\004Type\022\020\n\014CLIENT_INPUT\020"
-    "\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INPUTS\020\003*\273"
-    "\001\n\007Texture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rTEXTURE_"
-    "GRASS\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXTURE_ROC"
-    "K\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FONT\020\005\022\020\n"
-    "\014TEXTURE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007\022\017\n\013TEX"
-    "TURE_GRR\020\010\022\020\n\014TEXTURE_SIZE\020\t*k\n\nObjectTy"
-    "pe\022\010\n\004NONE\020\000\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002\022\010\n\004ROC"
-    "K\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006\022\013\n\007MON"
-    "STER\020\007\022\t\n\005TORCH\020\010*0\n\nClientMode\022\017\n\013MODE_"
-    "PLAYER\020\000\022\021\n\rMODE_OBSERVER\020\001", 1707);
+    "(\0162\013.ObjectType*D\n\013MessageType\022\020\n\014CLIENT"
+    "_INPUT\020\001\022\021\n\rINITIAL_STATE\020\002\022\020\n\014FRAME_INP"
+    "UTS\020\003*\273\001\n\007Texture\022\020\n\014TEXTURE_NONE\020\000\022\021\n\rT"
+    "EXTURE_GRASS\020\001\022\020\n\014TEXTURE_SAND\020\002\022\020\n\014TEXT"
+    "URE_ROCK\020\003\022\016\n\nTEXTURE_BW\020\004\022\020\n\014TEXTURE_FO"
+    "NT\020\005\022\020\n\014TEXTURE_FACE\020\006\022\020\n\014TEXTURE_HEAD\020\007"
+    "\022\017\n\013TEXTURE_GRR\020\010\022\020\n\014TEXTURE_SIZE\020\t*k\n\nO"
+    "bjectType\022\010\n\004NONE\020\000\022\t\n\005GRASS\020\001\022\010\n\004SAND\020\002"
+    "\022\010\n\004ROCK\020\003\022\006\n\002BW\020\004\022\010\n\004FONT\020\005\022\n\n\006PLAYER\020\006"
+    "\022\013\n\007MONSTER\020\007\022\t\n\005TORCH\020\010*\225\001\n\007Handler\022\023\n\017"
+    "HANDLER_PHYSICS\020\000\022\022\n\016HANDLER_CLIENT\020\001\022\025\n"
+    "\021HANDLER_INVENTORY\020\002\022\024\n\020HANDLER_LIFETIME"
+    "\020\003\022\016\n\nHANDLER_AI\020\004\022\021\n\rHANDLER_LIGHT\020\005\022\021\n"
+    "\rHANDLER_COUNT\020\006*0\n\nClientMode\022\017\n\013MODE_P"
+    "LAYER\020\000\022\021\n\rMODE_OBSERVER\020\001", 1866);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common/proto/udpgame.proto", &protobuf_RegisterTypes);
   AMessage::default_instance_ = new AMessage();
@@ -463,11 +469,11 @@ struct StaticDescriptorInitializer_common_2fproto_2fudpgame_2eproto {
   }
 } static_descriptor_initializer_common_2fproto_2fudpgame_2eproto_;
 
-const ::google::protobuf::EnumDescriptor* Type_descriptor() {
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Type_descriptor_;
+  return MessageType_descriptor_;
 }
-bool Type_IsValid(int value) {
+bool MessageType_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
@@ -515,6 +521,25 @@ bool ObjectType_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* Handler_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Handler_descriptor_;
+}
+bool Handler_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -626,7 +651,7 @@ bool AMessage::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Type type = 1;
+      // required .MessageType type = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -634,8 +659,8 @@ bool AMessage::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (Type_IsValid(value)) {
-            set_type(static_cast< Type >(value));
+          if (MessageType_IsValid(value)) {
+            set_type(static_cast< MessageType >(value));
           } else {
             mutable_unknown_fields()->AddVarint(1, value);
           }
@@ -706,7 +731,7 @@ bool AMessage::MergePartialFromCodedStream(
 
 void AMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required .Type type = 1;
+  // required .MessageType type = 1;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
@@ -738,7 +763,7 @@ void AMessage::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* AMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Type type = 1;
+  // required .MessageType type = 1;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
@@ -776,7 +801,7 @@ int AMessage::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Type type = 1;
+    // required .MessageType type = 1;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -2380,7 +2405,7 @@ void FrameInput::Swap(FrameInput* other) {
 
 #ifndef _MSC_VER
 const int ClientInput::kTickNumberFieldNumber;
-const int ClientInput::kPreviousHashFieldNumber;
+const int ClientInput::kHashesFieldNumber;
 const int ClientInput::kFrameInputFieldNumber;
 #endif  // !_MSC_VER
 
@@ -2402,7 +2427,6 @@ ClientInput::ClientInput(const ClientInput& from)
 void ClientInput::SharedCtor() {
   _cached_size_ = 0;
   tick_number_ = 0u;
-  previous_hash_ = 0u;
   frame_input_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2440,11 +2464,11 @@ ClientInput* ClientInput::New() const {
 void ClientInput::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     tick_number_ = 0u;
-    previous_hash_ = 0u;
     if (has_frame_input()) {
       if (frame_input_ != NULL) frame_input_->::FrameInput::Clear();
     }
   }
+  hashes_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -2466,22 +2490,28 @@ bool ClientInput::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(21)) goto parse_previous_hash;
+        if (input->ExpectTag(21)) goto parse_hashes;
         break;
       }
       
-      // required fixed32 previous_hash = 2;
+      // repeated fixed32 hashes = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_previous_hash:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+         parse_hashes:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
-                 input, &previous_hash_)));
-          set_has_previous_hash();
+                 1, 21, input, this->mutable_hashes())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, this->mutable_hashes())));
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(21)) goto parse_hashes;
         if (input->ExpectTag(26)) goto parse_frame_input;
         break;
       }
@@ -2523,9 +2553,10 @@ void ClientInput::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(1, this->tick_number(), output);
   }
   
-  // required fixed32 previous_hash = 2;
-  if (has_previous_hash()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->previous_hash(), output);
+  // repeated fixed32 hashes = 2;
+  for (int i = 0; i < this->hashes_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(
+      2, this->hashes(i), output);
   }
   
   // required .FrameInput frame_input = 3;
@@ -2547,9 +2578,10 @@ void ClientInput::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(1, this->tick_number(), target);
   }
   
-  // required fixed32 previous_hash = 2;
-  if (has_previous_hash()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->previous_hash(), target);
+  // repeated fixed32 hashes = 2;
+  for (int i = 0; i < this->hashes_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteFixed32ToArray(2, this->hashes(i), target);
   }
   
   // required .FrameInput frame_input = 3;
@@ -2575,11 +2607,6 @@ int ClientInput::ByteSize() const {
       total_size += 1 + 4;
     }
     
-    // required fixed32 previous_hash = 2;
-    if (has_previous_hash()) {
-      total_size += 1 + 4;
-    }
-    
     // required .FrameInput frame_input = 3;
     if (has_frame_input()) {
       total_size += 1 +
@@ -2588,6 +2615,13 @@ int ClientInput::ByteSize() const {
     }
     
   }
+  // repeated fixed32 hashes = 2;
+  {
+    int data_size = 0;
+    data_size = 4 * this->hashes_size();
+    total_size += 1 * this->hashes_size() + data_size;
+  }
+  
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -2613,12 +2647,10 @@ void ClientInput::MergeFrom(const ::google::protobuf::Message& from) {
 
 void ClientInput::MergeFrom(const ClientInput& from) {
   GOOGLE_CHECK_NE(&from, this);
+  hashes_.MergeFrom(from.hashes_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_tick_number()) {
       set_tick_number(from.tick_number());
-    }
-    if (from.has_previous_hash()) {
-      set_previous_hash(from.previous_hash());
     }
     if (from.has_frame_input()) {
       mutable_frame_input()->::FrameInput::MergeFrom(from.frame_input());
@@ -2640,7 +2672,7 @@ void ClientInput::CopyFrom(const ClientInput& from) {
 }
 
 bool ClientInput::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
   
   if (has_frame_input()) {
     if (!this->frame_input().IsInitialized()) return false;
@@ -2651,7 +2683,7 @@ bool ClientInput::IsInitialized() const {
 void ClientInput::Swap(ClientInput* other) {
   if (other != this) {
     std::swap(tick_number_, other->tick_number_);
-    std::swap(previous_hash_, other->previous_hash_);
+    hashes_.Swap(&other->hashes_);
     std::swap(frame_input_, other->frame_input_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

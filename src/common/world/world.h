@@ -30,7 +30,8 @@ public:
   InitialState getInitialState();
   void setInitialState(const InitialState&);
 
-  unsigned hash() const;
+  void serializeHashes(google::protobuf::RepeatedField<uint32_t>*) const;
+  const uint32_t* hashes() const;
 
   bool mInit;
   unsigned mTickNumber;
@@ -47,8 +48,6 @@ public:
 private:
   void updateHash();
 
-  unsigned mHash;
-
   IdGenerator m_idgen;
   InputHandler mInputHandler;
   PhysicsHandler mPhysicsHandler;
@@ -58,4 +57,6 @@ private:
   LifetimeHandler mLifetime;
   AiHandler mAi;
   LightHandler mLight;
+
+  uint32_t mHashes[Handler::HANDLER_COUNT];
 };

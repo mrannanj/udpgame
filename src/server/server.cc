@@ -52,7 +52,7 @@ void Server::init() {
 
 void Server::distributeInputs(unsigned tick) {
   AMessage a;
-  a.set_type(Type::FRAME_INPUTS);
+  a.set_type(MessageType::FRAME_INPUTS);
   a.mutable_frame_inputs()->
     CopyFrom(mWorldTicker.inputsForFrame(tick));
   a.mutable_frame_inputs()->set_tick_number(tick);
@@ -63,7 +63,7 @@ void Server::distributeInputs(unsigned tick) {
 
 void Server::sendInitialState(Connection& c) {
   AMessage a;
-  a.set_type(Type::INITIAL_STATE);
+  a.set_type(MessageType::INITIAL_STATE);
   a.mutable_initial_state()->CopyFrom(mWorld.getInitialState());
   a.mutable_initial_state()->set_client_id(c.mSocket);
   c.sendMessage(a);
@@ -74,24 +74,27 @@ void Server::serve() {
   TickTimer timer(ns_per_tick);
   timespec max_sleep;
   timer.newTick(max_sleep);
-  mWorldTicker.setHash(mWorld.mTickNumber, mWorld.hash());
+  mWorldTicker.setHashes(mWorld.mTickNumber, mWorld.hashes());
   do {
     int nfds = mkFDSet(&fds);
-    if (-1 == pselect(nfds, &fds, nullptr, nullptr, &max_sleep, nullptr))
-      die("select");
+    if (-1 == pselect(nfds, &fds, nullptr, nullptr, &max_sleep, nullptr)) {
+      if (errno != EINTR)
+        die("select");
+      FD_ZERO(&fds);
+    }
     acceptNewClient(fds);
     checkClientInput(fds);
-
     if (timer.isTickTime(max_sleep)) {
       unsigned tickNum = mWorld.mTickNumber + 1;
       mWorldTicker.fillMissingInputs(tickNum, mClients);
       mWorld.tick(mWorldTicker.inputsForFrame(tickNum));
-      mWorldTicker.setHash(tickNum, mWorld.hash());
+      mWorldTicker.setHashes(tickNum, mWorld.hashes());
       distributeInputs(tickNum);
       mWorldTicker.setCurrentTick(tickNum);
       timer.newTick(max_sleep);
     }
   } while(!FD_ISSET(mQuit, &fds));
+  cout << "quitting" << endl;
 }
 
 void Server::acceptNewClient(const fd_set& fds) {

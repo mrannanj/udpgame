@@ -1,4 +1,4 @@
-enum Type {
+enum MessageType {
   CLIENT_INPUT = 1;
   INITIAL_STATE = 2;
   FRAME_INPUTS = 3;
@@ -29,16 +29,26 @@ enum ObjectType {
   TORCH = 8;
 }
 
-message AMessage {
-  required Type type = 1;
-  optional ClientInput client_input = 2;
-  optional InitialState initial_state = 3;
-  optional FrameInputs frame_inputs = 4;
+enum Handler {
+  HANDLER_PHYSICS = 0;
+  HANDLER_CLIENT = 1;
+  HANDLER_INVENTORY = 2;
+  HANDLER_LIFETIME = 3;
+  HANDLER_AI = 4;
+  HANDLER_LIGHT = 5;
+  HANDLER_COUNT = 6;
 }
 
 enum ClientMode {
   MODE_PLAYER = 0;
   MODE_OBSERVER = 1;
+}
+
+message AMessage {
+  required MessageType type = 1;
+  optional ClientInput client_input = 2;
+  optional InitialState initial_state = 3;
+  optional FrameInputs frame_inputs = 4;
 }
 
 message ClientData {
@@ -74,7 +84,7 @@ message FrameInput {
 
 message ClientInput {
   required fixed32 tick_number = 1;
-  required fixed32 previous_hash = 2;
+  repeated fixed32 hashes = 2;
   required FrameInput frame_input = 3;
 }
 

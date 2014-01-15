@@ -44,25 +44,25 @@ class Light;
 class Vec3f;
 class PhysicsData;
 
-enum Type {
+enum MessageType {
   CLIENT_INPUT = 1,
   INITIAL_STATE = 2,
   FRAME_INPUTS = 3
 };
-bool Type_IsValid(int value);
-const Type Type_MIN = CLIENT_INPUT;
-const Type Type_MAX = FRAME_INPUTS;
-const int Type_ARRAYSIZE = Type_MAX + 1;
+bool MessageType_IsValid(int value);
+const MessageType MessageType_MIN = CLIENT_INPUT;
+const MessageType MessageType_MAX = FRAME_INPUTS;
+const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* Type_descriptor();
-inline const ::std::string& Type_Name(Type value) {
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
+inline const ::std::string& MessageType_Name(MessageType value) {
   return ::google::protobuf::internal::NameOfEnum(
-    Type_descriptor(), value);
+    MessageType_descriptor(), value);
 }
-inline bool Type_Parse(
-    const ::std::string& name, Type* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<Type>(
-    Type_descriptor(), name, value);
+inline bool MessageType_Parse(
+    const ::std::string& name, MessageType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MessageType>(
+    MessageType_descriptor(), name, value);
 }
 enum Texture {
   TEXTURE_NONE = 0,
@@ -116,6 +116,30 @@ inline bool ObjectType_Parse(
     const ::std::string& name, ObjectType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ObjectType>(
     ObjectType_descriptor(), name, value);
+}
+enum Handler {
+  HANDLER_PHYSICS = 0,
+  HANDLER_CLIENT = 1,
+  HANDLER_INVENTORY = 2,
+  HANDLER_LIFETIME = 3,
+  HANDLER_AI = 4,
+  HANDLER_LIGHT = 5,
+  HANDLER_COUNT = 6
+};
+bool Handler_IsValid(int value);
+const Handler Handler_MIN = HANDLER_PHYSICS;
+const Handler Handler_MAX = HANDLER_COUNT;
+const int Handler_ARRAYSIZE = Handler_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Handler_descriptor();
+inline const ::std::string& Handler_Name(Handler value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Handler_descriptor(), value);
+}
+inline bool Handler_Parse(
+    const ::std::string& name, Handler* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Handler>(
+    Handler_descriptor(), name, value);
 }
 enum ClientMode {
   MODE_PLAYER = 0,
@@ -192,12 +216,12 @@ class AMessage : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Type type = 1;
+  // required .MessageType type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
-  inline Type type() const;
-  inline void set_type(Type value);
+  inline MessageType type() const;
+  inline void set_type(MessageType value);
   
   // optional .ClientInput client_input = 2;
   inline bool has_client_input() const;
@@ -840,12 +864,17 @@ class ClientInput : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 tick_number() const;
   inline void set_tick_number(::google::protobuf::uint32 value);
   
-  // required fixed32 previous_hash = 2;
-  inline bool has_previous_hash() const;
-  inline void clear_previous_hash();
-  static const int kPreviousHashFieldNumber = 2;
-  inline ::google::protobuf::uint32 previous_hash() const;
-  inline void set_previous_hash(::google::protobuf::uint32 value);
+  // repeated fixed32 hashes = 2;
+  inline int hashes_size() const;
+  inline void clear_hashes();
+  static const int kHashesFieldNumber = 2;
+  inline ::google::protobuf::uint32 hashes(int index) const;
+  inline void set_hashes(int index, ::google::protobuf::uint32 value);
+  inline void add_hashes(::google::protobuf::uint32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      hashes() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_hashes();
   
   // required .FrameInput frame_input = 3;
   inline bool has_frame_input() const;
@@ -859,16 +888,14 @@ class ClientInput : public ::google::protobuf::Message {
  private:
   inline void set_has_tick_number();
   inline void clear_has_tick_number();
-  inline void set_has_previous_hash();
-  inline void clear_has_previous_hash();
   inline void set_has_frame_input();
   inline void clear_has_frame_input();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
-  ::google::protobuf::uint32 tick_number_;
-  ::google::protobuf::uint32 previous_hash_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > hashes_;
   ::FrameInput* frame_input_;
+  ::google::protobuf::uint32 tick_number_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1614,7 +1641,7 @@ class PhysicsData : public ::google::protobuf::Message {
 
 // AMessage
 
-// required .Type type = 1;
+// required .MessageType type = 1;
 inline bool AMessage::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1628,11 +1655,11 @@ inline void AMessage::clear_type() {
   type_ = 1;
   clear_has_type();
 }
-inline Type AMessage::type() const {
-  return static_cast< Type >(type_);
+inline MessageType AMessage::type() const {
+  return static_cast< MessageType >(type_);
 }
-inline void AMessage::set_type(Type value) {
-  GOOGLE_DCHECK(Type_IsValid(value));
+inline void AMessage::set_type(MessageType value) {
+  GOOGLE_DCHECK(MessageType_IsValid(value));
   set_has_type();
   type_ = value;
 }
@@ -2131,26 +2158,29 @@ inline void ClientInput::set_tick_number(::google::protobuf::uint32 value) {
   tick_number_ = value;
 }
 
-// required fixed32 previous_hash = 2;
-inline bool ClientInput::has_previous_hash() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+// repeated fixed32 hashes = 2;
+inline int ClientInput::hashes_size() const {
+  return hashes_.size();
 }
-inline void ClientInput::set_has_previous_hash() {
-  _has_bits_[0] |= 0x00000002u;
+inline void ClientInput::clear_hashes() {
+  hashes_.Clear();
 }
-inline void ClientInput::clear_has_previous_hash() {
-  _has_bits_[0] &= ~0x00000002u;
+inline ::google::protobuf::uint32 ClientInput::hashes(int index) const {
+  return hashes_.Get(index);
 }
-inline void ClientInput::clear_previous_hash() {
-  previous_hash_ = 0u;
-  clear_has_previous_hash();
+inline void ClientInput::set_hashes(int index, ::google::protobuf::uint32 value) {
+  hashes_.Set(index, value);
 }
-inline ::google::protobuf::uint32 ClientInput::previous_hash() const {
-  return previous_hash_;
+inline void ClientInput::add_hashes(::google::protobuf::uint32 value) {
+  hashes_.Add(value);
 }
-inline void ClientInput::set_previous_hash(::google::protobuf::uint32 value) {
-  set_has_previous_hash();
-  previous_hash_ = value;
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ClientInput::hashes() const {
+  return hashes_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ClientInput::mutable_hashes() {
+  return &hashes_;
 }
 
 // required .FrameInput frame_input = 3;
@@ -2884,8 +2914,8 @@ namespace google {
 namespace protobuf {
 
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< Type>() {
-  return Type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< MessageType>() {
+  return MessageType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Texture>() {
@@ -2894,6 +2924,10 @@ inline const EnumDescriptor* GetEnumDescriptor< Texture>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ObjectType>() {
   return ObjectType_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< Handler>() {
+  return Handler_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ClientMode>() {

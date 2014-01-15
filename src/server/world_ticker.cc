@@ -1,7 +1,10 @@
 #include <iostream>
+#include <cstring>
+#include <google/protobuf/descriptor.h>
 
 #include "server/world_ticker.h"
 #include "common/config.h"
+#include "common/proto/udpgame.pb.h"
 
 static constexpr unsigned TIMEOUT = 60;
 
@@ -52,15 +55,14 @@ void WorldTicker::fillMissingInputs(unsigned tick,
 
 void WorldTicker::removeOldFrame(unsigned tick) {
   mInputMap.erase(tick);
+  if (tick >= TIMEOUT)
+    mHashes.erase(tick - TIMEOUT);
 }
 
 bool WorldTicker::handleAMessage(const AMessage& a, int clientid) {
   unsigned tick = a.client_input().tick_number();
-  if (getHash(tick) != a.client_input().previous_hash()) {
-    cout << "hash expected: " << getHash(tick) << endl;
-    cout << "hash was: " << a.client_input().previous_hash() << endl;
-    return false;
-  }
+  if (!compareHashes(tick, a.client_input().hashes()))
+      return false;
   if (tick <= mCurrentTick) return true;
   FrameInputs& fis = mInputMap[tick];
   FrameInput* fi = fis.add_frame_inputs();
@@ -69,12 +71,34 @@ bool WorldTicker::handleAMessage(const AMessage& a, int clientid) {
   return true;
 }
 
-unsigned WorldTicker::getHash(unsigned tick) {
-  return mHashes[(tick-STATIC_FRAME_DELTA)%HASH_MAX];
+bool WorldTicker::compareHashes(unsigned tick,
+    const google::protobuf::RepeatedField<uint32_t>& clientHashes)
+{
+  if (tick < STATIC_FRAME_DELTA) {
+    cout << "tick should be more than " << STATIC_FRAME_DELTA << endl;
+    return false;
+  }
+  bool retval = true;
+  auto& serverHashes = mHashes[tick-STATIC_FRAME_DELTA];
+  for (int i = 0; i < HANDLER_COUNT; ++i) {
+    uint32_t ch = clientHashes.Get(i);
+    uint32_t sh = serverHashes[i];
+    if (sh != ch) {
+      const google::protobuf::EnumDescriptor* hd = Handler_descriptor();
+      cout << "hash mismatch for frame " << tick << ", handler "
+        << hd->value(i)->name() << endl;
+      cout << "client: " << ch << endl;
+      cout << "server: " << sh << endl;
+      retval = false;
+    }
+  }
+  return retval;
 }
 
-void WorldTicker::setHash(unsigned tick, unsigned h) {
-  mHashes[tick%HASH_MAX] = h;
+void WorldTicker::setHashes(unsigned tick, const uint32_t* h) {
+  std::array<uint32_t, HANDLER_COUNT> a;
+  memcpy(&a[0], h, HANDLER_COUNT*sizeof(uint32_t));
+  mHashes[tick] = a;
 }
 
 void WorldTicker::setCurrentTick(unsigned tick) {

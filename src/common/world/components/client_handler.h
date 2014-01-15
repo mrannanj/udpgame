@@ -12,3 +12,11 @@ public:
   ClientData* getByClient(int);
   void removeByClient(int);
 };
+
+template<>
+uint32_t inline thash<ClientData>(const ClientData& cd) {
+  return thash(cd.client())
+    ^ thash(cd.mode())
+    ^ thash(cd.eid())
+    ^ thash(cd.dead());
+}

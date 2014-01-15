@@ -58,13 +58,13 @@ void GameSession::tick(Input& input, bool haveFocus) {
 bool GameSession::handleAMessage(const AMessage& a, int) {
   ClientData* cd;
   switch (a.type()) {
-    case Type::INITIAL_STATE:
+    case MessageType::INITIAL_STATE:
       mWorld.setInitialState(a.initial_state());
       mClientId = a.initial_state().client_id();
       sendFrameInput(mInput);
       mRedraw = true;
       return true;
-    case Type::FRAME_INPUTS:
+    case MessageType::FRAME_INPUTS:
       mWorld.tick(a.frame_inputs());
       cd = mWorld.client().getByClient(mClientId);
       if (cd) {
@@ -92,12 +92,12 @@ void GameSession::sendFrameInput(Input& i) {
   fi.set_horizontal_delta((float)i.mouse_delta_x * 0.01f);
 
   ClientInput ci;
-  ci.set_previous_hash(mWorld.hash());
+  mWorld.serializeHashes(ci.mutable_hashes());
   ci.set_tick_number(mWorld.mTickNumber + STATIC_FRAME_DELTA);
   ci.mutable_frame_input()->CopyFrom(fi);
 
   AMessage a;
-  a.set_type(Type::CLIENT_INPUT);
+  a.set_type(MessageType::CLIENT_INPUT);
   a.mutable_client_input()->CopyFrom(ci);
   mConnection.sendMessage(a);
 }

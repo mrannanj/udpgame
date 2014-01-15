@@ -2,6 +2,7 @@
 
 #include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
+#include "common/util/hash.h"
 
 #include <algorithm>
 #include <vector>
@@ -9,7 +10,8 @@
 
 class World;
 
-template<typename T, typename D> class WorldHandler {
+template<typename T, typename D>
+class WorldHandler {
 public:
   WorldHandler();
 
@@ -25,6 +27,7 @@ public:
   void deserialize(const google::protobuf::RepeatedPtrField<D>&);
 
   const std::vector<T>& components() const;
+  uint32_t hash() const;
 
 protected:
   std::vector<T> mComponents;
@@ -89,4 +92,12 @@ void WorldHandler<T,D>::deserialize(
   mComponents.clear();
   for (const D& l : ls)
     mComponents.push_back(l);
+}
+
+template<typename T, typename D>
+uint32_t WorldHandler<T,D>::hash() const {
+  uint32_t h = 5381;
+  for (const T& c: mComponents)
+    h ^= thash(c);
+  return h;
 }

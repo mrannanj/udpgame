@@ -6,6 +6,7 @@ REFACTOR:
 - refactor input continous actions
 - separate input and client, so ai can provide input
 - add more const stuff to world
+- make worldticker use arrays instead of maps
 
 BUGS:
 - client freezes on timeout

@@ -9,7 +9,7 @@ int quitPipe[2];
 
 void handle_sigint(int) {
   char c = 'q';
-  write(quitPipe[1], &c, 1);
+  if (-1 == write(quitPipe[1], &c, 1)) die("write");
 }
 
 int main(void) {

@@ -1,4 +1,5 @@
 #include "common/world/components/physics.h"
+#include "common/util/hash.h"
 
 void Physics::update_bb() {
   bb.max = position + half_dim;
@@ -33,6 +34,7 @@ Physics::Physics():
   on_ground(false),
   bb()
 {
+  update_bb();
 }
 
 Physics::Physics(const PhysicsData& pd):

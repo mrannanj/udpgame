@@ -5,8 +5,7 @@
 
 #include <vector>
 #include <map>
-
-#define HASH_MAX 10
+#include <array>
 
 struct WorldTicker {
   WorldTicker();
@@ -15,11 +14,12 @@ struct WorldTicker {
   const FrameInputs& inputsForFrame(unsigned);
   void fillMissingInputs(unsigned, std::vector<Connection>&);
   void removeOldFrame(unsigned);
-  void setHash(unsigned, unsigned);
+  void setHashes(unsigned, const uint32_t*);
   void setCurrentTick(unsigned);
-  unsigned getHash(unsigned);
+  bool compareHashes(unsigned,
+      const google::protobuf::RepeatedField<uint32_t>&);
 
   unsigned mCurrentTick;
-  unsigned mHashes[HASH_MAX];
+  std::map<unsigned, std::array<uint32_t, HANDLER_COUNT>> mHashes;
   std::map<unsigned, FrameInputs> mInputMap;
 };

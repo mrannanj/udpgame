@@ -1,5 +1,7 @@
 #pragma once
 
+#include "common/util/hash.h"
+
 #include <glm/glm.hpp>
 
 struct AABB {
@@ -10,3 +12,8 @@ struct AABB {
   glm::vec3 min;
   glm::vec3 max;
 };
+
+template<>
+uint32_t inline thash<AABB>(const AABB& p) {
+  return thash(p.min) ^ thash(p.max);
+}

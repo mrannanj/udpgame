@@ -65,19 +65,6 @@ void PhysicsHandler::handleInput(Physics& p, World& w) {
   }
 }
 
-unsigned PhysicsHandler::hash() {
-  unsigned long hash = 5381;
-
-  for (const Physics& p : mComponents) {
-    for (int a = 0; a < 3; ++a) {
-      unsigned v;
-      memcpy(&v, &p.position[a], sizeof(v));
-      hash = ((hash << 5) + hash) + v;
-    }
-  }
-  return hash;
-}
-
 bool PhysicsHandler::canPlaceBlock(int f[3]) {
   AABB a(f[0], f[1], f[2]);
   for (Physics& p : mComponents)

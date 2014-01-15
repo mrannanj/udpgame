@@ -8,7 +8,7 @@
 using namespace std;
 using glm::vec3;
 
-static constexpr unsigned DRAW_RANGE = 12;
+static constexpr unsigned DRAW_RANGE = 8;
 static constexpr float RAYCAST_RANGE = 6.0f;
 static constexpr float BOTTOM = -20.0f;
 

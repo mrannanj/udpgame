@@ -5,6 +5,7 @@
 #include "common/world/components/AABB.h"
 #include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
+#include "common/util/hash.h"
 
 struct Physics {
   Physics();
@@ -29,3 +30,15 @@ struct Physics {
   glm::vec3 eye_position() const;
   glm::vec3 look_direction() const;
 };
+
+template<>
+uint32_t inline thash<Physics>(const Physics& p) {
+  return thash(p.entityid)
+    ^ thash(p.type)
+    ^ thash(p.position)
+    ^ thash(p.velocity)
+    ^ thash(p.half_dim)
+    ^ thash(p.horizontal_angle)
+    ^ thash(p.vertical_angle)
+    ^ thash(p.on_ground);
+}

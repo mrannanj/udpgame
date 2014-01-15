@@ -14,7 +14,6 @@ class World;
 class PhysicsHandler : public WorldHandler<Physics, PhysicsData> {
 public:
   void tick(float, World&);
-  unsigned hash();
   bool canPlaceBlock(int[3]);
 private:
   void handleInput(Physics& p, World& w);
