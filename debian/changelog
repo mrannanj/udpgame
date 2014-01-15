@@ -1,3 +1,9 @@
+udpgame (0.0.10) saucy; urgency=low
+
+  * Bump
+
+ -- Martti Rannanjärvi <martti.rannanjarvi@iki.fi>  Thu, 15 Jan 2014 10:43:00 +0200
+
 udpgame (0.0.9) saucy; urgency=low
 
   * Bump
