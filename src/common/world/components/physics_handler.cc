@@ -10,7 +10,6 @@
 #include <cstdio>
 
 constexpr float HALF_PI = (float)M_PI/2.0f;
-constexpr float PI = (float)M_PI;
 constexpr float move_speed = 1.5f;
 constexpr float jump_velocity = 5.0f;
 constexpr float FRICTION = 0.85f;

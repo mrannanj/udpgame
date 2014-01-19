@@ -59,3 +59,11 @@ int ts_comp(timespec& lhs, timespec& rhs) {
 bool operator<(timespec& lhs, timespec& rhs) {
   return ts_comp(lhs, rhs) == -1;
 }
+
+timespec from_duration(const std::chrono::duration<long, std::nano>& d) {
+  timespec t;
+  t.tv_sec = 0;
+  t.tv_nsec = d.count();
+  normalize(t);
+  return t;
+}

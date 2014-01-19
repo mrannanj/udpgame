@@ -1,6 +1,8 @@
 #pragma once
 
 #include <ctime>
+#include <chrono>
+#include <ratio>
 
 class TickTimer {
 public:
@@ -10,7 +12,8 @@ public:
   bool isTickTime(timespec&);
 
 private:
-  timespec mStart;
-  timespec mTickTime;
-  timespec mTarget;
+  std::chrono::high_resolution_clock mClock;
+  std::chrono::time_point<std::chrono::high_resolution_clock> mStart;
+  std::chrono::time_point<std::chrono::high_resolution_clock> mTarget;
+  std::chrono::duration<long, std::nano> mTickTime;
 };

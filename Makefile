@@ -1,4 +1,4 @@
-MAKEFLAGS := -j4 -s
+MAKEFLAGS := -j4
 BUILD_DIR := build
 SRC_DIR := src
 
@@ -12,8 +12,12 @@ CLIENT_DIR := $(SRC_DIR)/client
 CLIENT_SRCS := $(shell find $(CLIENT_DIR) -name "*.cc")
 CLIENT_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(CLIENT_SRCS))
 
+PROTO_SRC := $(SRC_DIR)/common/proto/udpgame.pb.cc
+PROTO_OBJ := $(BUILD_DIR)/$(SRC_DIR)/common/proto/udpgame.pb.o
+
 COMMON_DIR := $(SRC_DIR)/common
-COMMON_SRCS := $(shell find $(COMMON_DIR) -name "*.cc")
+COMMON_SRCS := $(PROTO_SRC)
+COMMON_SRCS += $(shell find $(COMMON_DIR) -name "*.cc")
 COMMON_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 
 DEPS := $(COMMON_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d) $(SERVER_OBJS:.o=.d)
@@ -23,49 +27,65 @@ TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-WARN := -pedantic -Wall -Wextra -Wno-unused-parameter -Weffc++
-WARN += -Wnon-virtual-dtor -Wsign-compare -Werror
+PKGS := glew SDL_image sdl protobuf
 
-PKGS := glew SDL_image sdl glu protobuf
-
-LIBS := -lpthread -lm -lrt
-LIBS += $(shell pkg-config --libs $(PKGS))
-
-INC := -I$(SRC_DIR)
+LDFLAGS := -lm $(shell pkg-config --libs $(PKGS))
+LDFLAGS += -g -std=c++11
 
 CXXFLAGS := -fno-exceptions
 CXXFLAGS += $(shell pkg-config --cflags $(PKGS))
-CXXFLAGS += $(INC) -std=c++11 -g
+CXXFLAGS += -I$(SRC_DIR) -g -std=c++11
 
-.PHONY: clean all proto install
+UNAME := $(shell uname -s)
+ifeq ($(UNAME),Linux)
+  WARN := -pedantic -Wall -Wextra -Wno-unused-parameter -Weffc++
+  WARN += -Wnon-virtual-dtor -Wsign-compare -Werror
+  CXXFLAGS += $(shell pkg-config --cflags glu)
+  LDFLAGS += $(shell pkg-config --libs glu)
+endif
+ifeq ($(UNAME),Darwin)
+  LDFLAGS += -framework GLUT -framework OpenGL
+endif
+
+.PHONY: clean all install env
 .SUFFIXES: .cc .cpp
 
 all: $(TARGETS)
 
-$(BUILD_DIR)/$(SRC_DIR)/common/proto/%.o: $(SRC_DIR)/common/proto/%.cc
-	echo CXX $@
-	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+env:
+	@echo "CXX = $(CXX)"
+	@echo "CXXFLAGS = $(CXXFLAGS)"
+	@echo "LDFLAGS = $(LDFLAGS)"
+	@echo "WARN = $(WARN)"
+	$(CXX) --version
+
+$(SRC_DIR)/common/proto/udpgame.pb.cc: $(SRC_DIR)/common/proto/udpgame.proto
+	@echo "PROCOC $@ <- $<"
+	@cd src; \
+	 protoc --cpp_out=./ common/proto/udpgame.proto
+
+$(PROTO_OBJ): $(SRC_DIR)/common/proto/udpgame.pb.cc
+	@echo "CXX $@ <- $<"
+	@mkdir -p $(@D)
+	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 $(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
-	echo CXX $@
-	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(WARN) -MMD -MP -c $< -o $@
-
-proto:
-	cd src; \
-	protoc --cpp_out=./ common/proto/udpgame.proto
+	@echo "CXX $@ <- $<"
+	@mkdir -p $(@D)
+	@$(CXX) $(CXXFLAGS) $(WARN) -MMD -MP -c $< -o $@
 
 udpgame_server: $(SERVER_OBJS) $(COMMON_OBJS)
-	echo LN $@
-	$(CXX) $^ -o $@ $(LIBS)
+	@echo "LN $@ <- $^"
+	@$(CXX) -o $@ $^ $(LDFLAGS)
 
 udpgame_client: $(CLIENT_OBJS) $(COMMON_OBJS)
-	echo LN $@
-	$(CXX) $^ -o $@ $(LIBS)
+	@echo "LN $@ <- $^"
+	@$(CXX) -o $@ $^ $(LDFLAGS)
 
 clean:
 	$(RM) -r $(OUTPUT)
+	$(RM) -r $(SRC_DIR)/common/proto/udpgame.pb.cc
+	$(RM) -r $(SRC_DIR)/common/proto/udpgame.pb.h
 
 install: udpgame_client udpgame_server
 	mkdir -p $(PREFIX)/bin

@@ -1,8 +1,9 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <glm/glm.hpp>
+#include "common/platform.h"
 #include "client/view/shader.h"
+
+#include "common/include/glm.h"
 
 class CubeRenderer : public Shader {
 public:
@@ -12,10 +13,9 @@ public:
   void SetTexture(GLuint) const;
   GLint lightPositions() const;
   GLint activeLights() const;
+  void On() const;
 
 private:
-  void Init();
-
   GLint m_p_uniform;
   GLint m_v_uniform;
   GLint m_m_uniform;

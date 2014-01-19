@@ -1,8 +1,8 @@
-#version 130
+#version 110
 
-in vec2 position;
-in vec2 tex_coord_;
-out vec2 tex_coord;
+attribute vec2 position;
+attribute vec2 tex_coord_;
+varying vec2 tex_coord;
 
 void main() {
   tex_coord = tex_coord_;

@@ -1,11 +1,11 @@
 
 #include <SDL.h>
-#include <GL/glew.h>
 #include <cassert>
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
 
+#include "common/platform.h"
 #include "client/view/shader.h"
 #include "common/util/mmap_handle.h"
 #include "common/resource_locator.h"
@@ -15,15 +15,11 @@ using namespace std;
 Shader::Shader(const ResourceLocator& resourceLocator,
     const string& vertex_file, const string& fragment_file):
   mResourceLocator(resourceLocator),
-  vertex_array(),
   vertex_buffer(),
   vertex_shader(),
   fragment_shader(),
   shader_program()
 {
-  glGenVertexArrays(1, &vertex_array);
-  glBindVertexArray(vertex_array);
-
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
@@ -51,12 +47,10 @@ Shader::~Shader() {
   glDeleteShader(fragment_shader);
   glDeleteShader(vertex_shader);
   glDeleteBuffers(1, &vertex_buffer);
-  glDeleteVertexArrays(1, &vertex_array);
 }
 
 void Shader::On() const {
   glUseProgram(shader_program);
-  glBindVertexArray(vertex_array);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 }
 

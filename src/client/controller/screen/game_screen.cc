@@ -7,7 +7,7 @@
 #include "common/world/components/grid_handler.h"
 #include "common/proto/udpgame.pb.h"
 
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 #include <iostream>
 #include <unistd.h>
 #include <cstring>

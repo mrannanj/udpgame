@@ -27,6 +27,7 @@ public:
   void deserialize(const google::protobuf::RepeatedPtrField<D>&);
 
   const std::vector<T>& components() const;
+  std::vector<T>& components();
   uint32_t hash() const;
 
 protected:
@@ -63,6 +64,11 @@ void WorldHandler<T,D>::add(const T& c) {
 
 template<typename T, typename D>
 WorldHandler<T,D>::~WorldHandler() {
+}
+
+template<typename T, typename D>
+std::vector<T>& WorldHandler<T,D>::components() {
+  return mComponents;
 }
 
 template<typename T, typename D>

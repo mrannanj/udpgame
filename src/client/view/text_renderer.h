@@ -1,13 +1,12 @@
 #pragma once
 
 #include <string>
-#include <GL/glew.h>
 
+#include "common/platform.h"
 #include "client/view/color.h"
 #include "client/view/shader.h"
 
-class TextRenderer : public Shader
-{
+class TextRenderer : public Shader {
 public:
   TextRenderer(const ResourceLocator&, GLuint);
   TextRenderer(const TextRenderer&) = delete;
@@ -20,5 +19,4 @@ private:
   GLuint m_font_texture;
   size_t vertex_elem_size_;
   GLint bg_color_uni_;
-  Color* bg_color_;
 };

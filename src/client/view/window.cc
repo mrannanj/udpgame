@@ -1,6 +1,6 @@
 #include <SDL.h>
-#include <GL/glew.h>
 
+#include "common/platform.h"
 #include "client/view/window.h"
 
 int window_width = 0;

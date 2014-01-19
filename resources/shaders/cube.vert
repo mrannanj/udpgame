@@ -1,18 +1,18 @@
-#version 130
+#version 110
 
 uniform mat4 m;
 uniform mat4 v;
 uniform mat4 p;
 
-in vec3 position_modelspace_;
-in vec3 normal_modelspace_;
-in vec3 color_;
-in vec2 tex_coord_;
+attribute vec3 position_modelspace_;
+attribute vec3 normal_modelspace_;
+attribute vec3 color_;
+attribute vec2 tex_coord_;
 
-out vec3 normal_cameraspace;
-out vec3 position_cameraspace;
-out vec3 color;
-out vec2 tex_coord;
+varying vec3 normal_cameraspace;
+varying vec3 position_cameraspace;
+varying vec3 color;
+varying vec2 tex_coord;
 
 void main()
 {

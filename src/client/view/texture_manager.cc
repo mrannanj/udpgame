@@ -1,11 +1,10 @@
 
-#include <GL/glew.h>
-#include <GL/gl.h>
 #include <SDL_image.h>
 #include <cassert>
 #include <iostream>
 #include <sstream>
 
+#include "common/platform.h"
 #include "common/util/die.h"
 #include "client/view/texture_manager.h"
 

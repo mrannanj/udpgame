@@ -1,6 +1,6 @@
 #include "client/view/world_renderer.h"
 
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <sstream>
 #include <algorithm>
@@ -62,7 +62,7 @@ void draw_units(const Renderer& r, const PhysicsHandler& ps,
   for (const Physics& pc : ps.components()) {
     r.cube_renderer.SetTexture(r.texture_manager[pc.type]);
     glm::mat4 model = glm::translate(glm::mat4(1.0f), pc.position);
-    model = glm::rotate(model, rad_to_degree(pc.horizontal_angle),
+    model = glm::rotate(model, pc.horizontal_angle,
       glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::scale(model, pc.half_dim);
     r.cube_renderer.DrawCube(model, v, p);

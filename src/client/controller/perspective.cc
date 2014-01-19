@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#define GLM_FORCE_RADIANS 1
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "client/view/window.h"

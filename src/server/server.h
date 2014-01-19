@@ -16,8 +16,8 @@ struct Server {
 
   int mkFDSet(fd_set*);
   void disconnectSlowClients();
-  void checkClientInput(const fd_set&);
-  void acceptNewClient(const fd_set&);
+  void checkClientInput(fd_set&);
+  void acceptNewClient(fd_set&);
   void sendInitialState(Connection&);
   void distributeInputs(unsigned);
 

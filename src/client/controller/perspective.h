@@ -1,13 +1,13 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 
 #include "common/world/entity_id.h"
 #include "common/proto/udpgame.pb.h"
 
 struct Input;
-struct World;
+class World;
 
 class Perspective {
 public:

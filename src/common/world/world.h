@@ -13,6 +13,8 @@
 #include "common/world/components/ai_handler.h"
 #include "common/world/components/id_generator.h"
 #include "common/world/components/light_handler.h"
+#include "common/world/components/health_handler.h"
+#include "common/world/components/damage_handler.h"
 #include "common/proto/udpgame.pb.h"
 
 class World {
@@ -23,7 +25,7 @@ public:
   void spawn_player(int);
   void throw_object(const Physics&, ObjectType);
   void onBlockDestruction(int, int, int);
-  void throw_torch(const Physics&);
+  void spawn_monster(const Physics&);
 
   void removeDead();
 
@@ -42,6 +44,8 @@ public:
   InventoryHandler& inventory();
   ClientHandler& client();
   LightHandler& light();
+  HealthHandler& health();
+  DamageHandler& damage();
 
   std::set<EntityId> mDeleteList;
 
@@ -57,6 +61,8 @@ private:
   LifetimeHandler mLifetime;
   AiHandler mAi;
   LightHandler mLight;
+  HealthHandler mHealth;
+  DamageHandler mDamage;
 
   uint32_t mHashes[Handler::HANDLER_COUNT];
 };

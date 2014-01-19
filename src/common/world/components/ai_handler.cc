@@ -1,8 +1,6 @@
 #include "common/world/components/ai_handler.h"
 #include "common/world/world.h"
 
-constexpr float ai_speed = 10.0f;
-
 void AiHandler::tick(float dt, World& w) {
   for (Ai& a : mComponents) {
     Physics* p1 = w.physics().get(a.eid());

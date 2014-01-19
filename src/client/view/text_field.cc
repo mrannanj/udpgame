@@ -14,7 +14,6 @@ TextField::TextField(float left_x, float top_y, float right_x, float font_size, 
   m_font_size(font_size),
   m_text_length((unsigned)((right_x-left_x)/font_size)),
   m_text(text),
-  m_fg_color(Green),
   m_bg_color(Blue)
 {
   assert(m_left_x < m_right_x);

@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <set>
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 
 class World;
 

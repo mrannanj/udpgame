@@ -1,11 +1,11 @@
 #include "common/config.h"
+#include "common/platform.h"
 #include "common/world/world.h"
 #include "common/world/components/physics.h"
 #include "common/world/components/grid_handler.h"
 #include "common/world/components/light_handler.h"
 
 #include <SDL.h>
-#include <GL/glew.h>
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
@@ -28,7 +28,9 @@ World::World(bool init):
   mGrid(),
   mLifetime(),
   mAi(),
-  mLight()
+  mLight(),
+  mHealth(),
+  mDamage()
 {
   if (mInit) mGrid.defaultGrid();
   updateHash();
@@ -45,9 +47,11 @@ void World::updateHash() {
   mHashes[HANDLER_LIFETIME] = mLifetime.hash();
   mHashes[HANDLER_AI] = mAi.hash();
   mHashes[HANDLER_LIGHT] = mLight.hash();
+  mHashes[HANDLER_HEALTH] = mHealth.hash();
+  mHashes[HANDLER_DAMAGE] = mDamage.hash();
 }
 
-void World::throw_torch(const Physics& o) {
+void World::spawn_monster(const Physics& o) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
@@ -55,7 +59,7 @@ void World::throw_torch(const Physics& o) {
 
   p.entityid = eid;
   p.position = o.eye_position() + o.look_direction() * 2.0f;
-  p.half_dim = glm::vec3(0.3f, 0.3f, 0.3f);
+  p.half_dim = glm::vec3(0.4f, 0.4f, 0.4f);
   p.velocity = o.look_direction() * 10.0f;
   p.type = ObjectType::TORCH;
   mPhysicsHandler.add(p);
@@ -65,15 +69,11 @@ void World::throw_torch(const Physics& o) {
   i.wielding = ObjectType::NONE;
   mInventory.add(i);
 
-  Lifetime ttl;
-  ttl.set_eid(eid);
-  ttl.set_ttl(10.0f);
-  mLifetime.add(ttl);
-
-  Light l;
-  l.set_eid(eid);
-  l.set_intensity(10.0f);
-  mLight.add(l);
+  Health h;
+  h.set_eid(eid);
+  h.set_max_hp(100);
+  h.set_cur_hp(100);
+  mHealth.add(h);
 }
 
 void World::throw_object(const Physics& o, ObjectType t) {
@@ -93,6 +93,11 @@ void World::throw_object(const Physics& o, ObjectType t) {
   l.set_eid(eid);
   l.set_ttl(10.0f);
   mLifetime.add(l);
+
+  Damage d;
+  d.set_eid(eid);
+  d.set_damage(30);
+  mDamage.add(d);
 }
 
 void World::onBlockDestruction(int x, int y, int z) {
@@ -154,6 +159,8 @@ void World::tick(const FrameInputs& fis) {
   mInventory.tick(dt, *this);
   mLifetime.tick(dt, *this);
   mAi.tick(dt, *this);
+  mHealth.tick(dt, *this);
+  mDamage.tick(dt, *this);
 
   removeDead();
   mTickNumber += 1;
@@ -167,6 +174,8 @@ void World::removeDead() {
   mLifetime.handleDead(mDeleteList);
   mAi.handleDead(mDeleteList);
   mLight.handleDead(mDeleteList);
+  mHealth.handleDead(mDeleteList);
+  mDamage.handleDead(mDeleteList);
 }
 
 InventoryHandler& World::inventory() {
@@ -193,6 +202,14 @@ LightHandler& World::light() {
   return mLight;
 }
 
+HealthHandler& World::health() {
+  return mHealth;
+}
+
+DamageHandler& World::damage() {
+  return mDamage;
+}
+
 InitialState World::getInitialState() {
   InitialState i;
   mGrid.serialize(i);
@@ -202,6 +219,8 @@ InitialState World::getInitialState() {
   mLifetime.serialize(i.mutable_lifetime());
   mAi.serialize(i.mutable_ai());
   mLight.serialize(i.mutable_light());
+  mHealth.serialize(i.mutable_health());
+  mDamage.serialize(i.mutable_damage());
   i.set_next_eid(m_idgen.getNext());
   i.set_tick_number(mTickNumber);
   return i;
@@ -215,6 +234,8 @@ void World::setInitialState(const InitialState& i) {
   mLifetime.deserialize(i.lifetime());
   mAi.deserialize(i.ai());
   mLight.deserialize(i.light());
+  mHealth.deserialize(i.health());
+  mDamage.deserialize(i.damage());
   m_idgen.setNext(i.next_eid());
   mTickNumber = i.tick_number();
   mInit = true;

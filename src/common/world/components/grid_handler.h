@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 
 #include "common/proto/udpgame.pb.h"
 #include "common/world/components/physics.h"

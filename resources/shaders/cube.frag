@@ -1,20 +1,18 @@
-#version 130
+#version 110
 
 uniform mat4 v;
 uniform sampler2D texture;
 uniform vec3 lightPosition[10];
 uniform int activeLights;
 
-in vec3 position_cameraspace;
-in vec3 normal_cameraspace;
-in vec3 color;
-in vec2 tex_coord;
-
-out vec4 frag_color;
+varying vec3 position_cameraspace;
+varying vec3 normal_cameraspace;
+varying vec3 color;
+varying vec2 tex_coord;
 
 void main()
 {
-  float brightness = 0.4;
+  float brightness = 0.8;
   for (int i = 0; i < activeLights; ++i) {
     vec3 light_cameraspace = (v * vec4(lightPosition[i], 1.0)).xyz;
 
@@ -26,5 +24,5 @@ void main()
     vec3 l = normalize(lightdir_camspace);
     brightness += clamp(dot(n, l), 0.0, 1.0)/len;
   }
-  frag_color = vec4(color, 1.0) * texture2D(texture, tex_coord) * brightness;
+  gl_FragColor = vec4(color, 1.0) * texture2D(texture, tex_coord) * brightness;
 }

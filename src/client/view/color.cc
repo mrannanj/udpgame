@@ -1,5 +1,4 @@
-#include <GL/glew.h>
-
+#include "common/platform.h"
 #include "client/view/color.h"
 
 Color Red(1.0f, 0.0f, 0.0f);

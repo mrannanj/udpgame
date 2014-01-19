@@ -1,7 +1,6 @@
-#ifndef CLIENT_VIEW_COLOR_H
-#define CLIENT_VIEW_COLOR_H
+#pragma once
 
-#include <GL/gl.h>
+#include "common/platform.h"
 
 struct Color {
   Color(float r_, float g_, float b_): r(r_), g(g_), b(b_) {}
@@ -15,5 +14,3 @@ void set_color(GLint, const Color&, float);
 extern Color Red;
 extern Color Green;
 extern Color Blue;
-
-#endif

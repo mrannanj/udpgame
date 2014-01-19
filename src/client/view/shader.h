@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GL/glew.h>
 #include <string>
 
+#include "common/platform.h"
 #include "common/resource_locator.h"
 
 class Shader {
@@ -10,11 +10,10 @@ public:
   Shader(const ResourceLocator&, const std::string&, const std::string&);
   virtual ~Shader();
 
-  void On() const;
+  virtual void On() const;
 
 protected:
   ResourceLocator mResourceLocator;
-  GLuint vertex_array;
   GLuint vertex_buffer;
   GLuint vertex_shader;
   GLuint fragment_shader;

@@ -42,7 +42,7 @@ void Server::init() {
   if (0 != setsockopt(mListenFD, IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)))
     die("setsockopt");
 
-  if (0 != bind(mListenFD, (const sockaddr*)&mListenSA, sizeof(mListenSA)))
+  if (0 != ::bind(mListenFD, (sockaddr*)&mListenSA, sizeof(mListenSA)))
     die("bind");
   if (0 != listen(mListenFD, 10))
     die("listen");
@@ -97,7 +97,7 @@ void Server::serve() {
   cout << "quitting" << endl;
 }
 
-void Server::acceptNewClient(const fd_set& fds) {
+void Server::acceptNewClient(fd_set& fds) {
   if (FD_ISSET(mListenFD, &fds)) {
     sockaddr_in sa;
     socklen_t sa_len;
@@ -112,7 +112,7 @@ void Server::acceptNewClient(const fd_set& fds) {
   }
 }
 
-void Server::checkClientInput(const fd_set& fds) {
+void Server::checkClientInput(fd_set& fds) {
   for (auto c = mClients.begin(); c != mClients.end();) {
     if (!FD_ISSET(c->mSocket, &fds)) {
       ++c;

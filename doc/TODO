@@ -7,11 +7,16 @@ REFACTOR:
 - separate input and client, so ai can provide input
 - add more const stuff to world
 - make worldticker use arrays instead of maps
+- connection has unrelated crap
 
 BUGS:
 - client freezes on timeout
 
 FEATURES:
+- dvorak support
+- move to SFML
+- protect spawn area
+- separately draw each face of the blocks
 - support tick counter roll over
 - world size 100x100x100
 - skybox
@@ -26,8 +31,6 @@ FEATURES:
 - screenshot taking
 - connect/disconnect announcements for players
 - don't disconnect on esc
-- switch to sfml/glfw
-- hash all handlers separately to see which system originates the error
 - world persistance
 - block damage
 - wieldable item

@@ -2,8 +2,8 @@
 
 #include <map>
 #include <string>
-#include <GL/gl.h>
 
+#include "common/platform.h"
 #include "common/proto/udpgame.pb.h"
 #include "common/resource_locator.h"
 

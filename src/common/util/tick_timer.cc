@@ -3,27 +3,26 @@
 #include "common/util/tick_timer.h"
 #include "common/util/timespec.h"
 
+using namespace std::chrono;
+
 TickTimer::TickTimer(long tickTime):
+  mClock(),
   mStart(),
-  mTickTime(),
-  mTarget()
+  mTarget(),
+  mTickTime(nanoseconds(tickTime))
 {
-  mTickTime.tv_sec = 0;
-  mTickTime.tv_nsec = tickTime;
 }
 
 void TickTimer::newTick(timespec& moarSleep) {
-  clock_gettime(CLOCK_MONOTONIC, &mStart);
-  moarSleep = mTickTime;
+  mStart = mClock.now();
+  moarSleep = from_duration(mTickTime);
 }
 
 bool TickTimer::isTickTime(timespec& moarSleep) {
-  timespec now;
-  clock_gettime(CLOCK_MONOTONIC, &now);
-  timespec passedTime = now - mStart;
+  duration<long, std::nano> timePassed = mClock.now() - mStart;
 
-  if (mTickTime < passedTime)
+  if (mTickTime < timePassed)
     return true;
-  moarSleep = mTickTime - passedTime;
+  moarSleep = from_duration(mTickTime - timePassed);
   return false;
 }

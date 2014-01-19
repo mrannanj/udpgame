@@ -1,4 +1,4 @@
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "client/view/cube_renderer.h"
 
@@ -55,14 +55,26 @@ CubeRenderer::CubeRenderer(const ResourceLocator& rl):
   m_light_positions(0),
   m_active_lights(0)
 {
-  Init();
+  m_m_uniform = glGetUniformLocation(shader_program, "m");
+  m_p_uniform = glGetUniformLocation(shader_program, "p");
+  m_v_uniform = glGetUniformLocation(shader_program, "v");
+  m_texture_uniform = glGetUniformLocation(shader_program, "texture");
+  m_light_positions = glGetUniformLocation(shader_program, "lightPosition");
+  m_active_lights = glGetUniformLocation(shader_program, "activeLights");
 }
 
-void CubeRenderer::Init() {
-  size_t vertex_element_size = 11 * sizeof(float);
-  glUseProgram(shader_program);
-  glBindFragDataLocation(shader_program, 0, "frag_color");
+GLint CubeRenderer::lightPositions() const {
+  return m_light_positions;
+}
 
+GLint CubeRenderer::activeLights() const {
+  return m_active_lights;
+}
+
+void CubeRenderer::On() const {
+  Shader::On();
+
+  size_t vertex_element_size = 11 * sizeof(float);
   GLint position = glGetAttribLocation(shader_program, "position_modelspace_");
   glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, vertex_element_size, 0);
   glEnableVertexAttribArray(position);
@@ -81,22 +93,6 @@ void CubeRenderer::Init() {
   glVertexAttribPointer(normal, 3, GL_FLOAT, GL_FALSE, vertex_element_size,
     (void*)(8*sizeof(float)));
   glEnableVertexAttribArray(normal);
-
-  m_m_uniform = glGetUniformLocation(shader_program, "m");
-  m_p_uniform = glGetUniformLocation(shader_program, "p");
-  m_v_uniform = glGetUniformLocation(shader_program, "v");
-  m_texture_uniform = glGetUniformLocation(shader_program, "texture");
-  m_light_positions = glGetUniformLocation(shader_program, "lightPosition");
-  m_active_lights = glGetUniformLocation(shader_program, "activeLights");
-  glUseProgram(0);
-}
-
-GLint CubeRenderer::lightPositions() const {
-  return m_light_positions;
-}
-
-GLint CubeRenderer::activeLights() const {
-  return m_active_lights;
 }
 
 void CubeRenderer::SetTexture(GLuint texture) const {

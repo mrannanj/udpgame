@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 
 #include "common/world/components/AABB.h"
 #include "common/world/entity_id.h"

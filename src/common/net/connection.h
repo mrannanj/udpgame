@@ -10,9 +10,6 @@
 
 constexpr ssize_t MAXMSG = 1000000;
 
-using std::cout;
-using std::endl;
-
 struct Connection {
   Connection();
   Connection(int, const sockaddr_in&);
@@ -56,7 +53,7 @@ ssize_t Connection::checkMessages(T& handler) {
         memmove(mBuf, &mBuf[mPos-overPos], overPos);
         mPos -= tsize;
       } else {
-        cout << "Invalid message" << endl;
+        std::cout << "Invalid message" << std::endl;
         return -1;
       }
     } else {

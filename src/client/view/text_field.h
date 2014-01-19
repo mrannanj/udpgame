@@ -1,5 +1,4 @@
-#ifndef CLIENT_VIEW_TEXT_FIELD_H
-#define CLIENT_VIEW_TEXT_FIELD_H
+#pragma once
 
 #include <string>
 
@@ -25,11 +24,5 @@ private:
   float m_font_size;
   unsigned m_text_length;
   std::string m_text;
-  Color& m_fg_color;
   Color& m_bg_color;
 };
-
-
-
-
-#endif

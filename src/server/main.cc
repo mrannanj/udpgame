@@ -13,7 +13,9 @@ void handle_sigint(int) {
 }
 
 int main(void) {
-  if (-1 == pipe2(quitPipe, O_NONBLOCK)) die("pipe");
+  if (-1 == pipe(quitPipe)) die("pipe");
+  if (-1 == fcntl(quitPipe[0], F_SETFL,
+        fcntl(quitPipe[0], F_GETFL) | O_NONBLOCK)) die("fcntl");
   if (SIG_ERR == signal(SIGINT, handle_sigint)) die("signal");
 
   Server server(quitPipe[0]);

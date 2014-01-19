@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <cstddef>
-#include <glm/glm.hpp>
+#include "common/include/glm.h"
 
 template<typename T>
 uint32_t thash(const T& p) {

@@ -3,8 +3,6 @@
 #include "common/world/world.h"
 #include "client/controller/input/input.h"
 
-using google::protobuf::RepeatedPtrField;
-
 void InventoryHandler::tick(float, World& w) {
   for (Inventory& inv : mComponents) {
     FrameInput* ic = w.input().get(inv.eid());
@@ -35,7 +33,7 @@ void InventoryHandler::tick(float, World& w) {
     assert(p != nullptr);
 
     if (ic->actions() & ContinousAction::ITEM_9)
-      w.throw_torch(*p);
+      w.spawn_monster(*p);
 
     if (ic->actions() & ContinousAction::THROW) {
       if (inv.itemCount[inv.wielding] > 0) {

@@ -36,7 +36,9 @@ enum Handler {
   HANDLER_LIFETIME = 3;
   HANDLER_AI = 4;
   HANDLER_LIGHT = 5;
-  HANDLER_COUNT = 6;
+  HANDLER_HEALTH = 6;
+  HANDLER_DAMAGE = 7;
+  HANDLER_COUNT = 8;
 }
 
 enum ClientMode {
@@ -99,6 +101,19 @@ message InitialState {
   repeated Lifetime lifetime = 8;
   repeated Ai ai = 9;
   repeated Light light = 10;
+  repeated Health health = 11;
+  repeated Damage damage = 12;
+}
+
+message Health {
+  required fixed32 eid = 1;
+  required fixed32 cur_hp = 2;
+  required fixed32 max_hp = 3;
+}
+
+message Damage {
+  required fixed32 eid = 1;
+  required fixed32 damage = 2;
 }
 
 message Ai {

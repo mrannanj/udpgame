@@ -1,16 +1,19 @@
 #include "client/view/text_renderer.h"
+#include <alloca.h>
 
 TextRenderer::TextRenderer(const ResourceLocator& rl, GLuint font_texture):
   Shader(rl, "resources/shaders/text.vert", "resources/shaders/text.frag"),
   m_font_texture(font_texture),
-  vertex_elem_size_(0),
-  bg_color_uni_(0),
-  bg_color_(nullptr)
+  vertex_elem_size_(4 * sizeof(float)),
+  bg_color_uni_(0)
 {
-  glUseProgram(shader_program);
-  glBindFragDataLocation(shader_program, 0, "frag_color");
+}
 
-  vertex_elem_size_ = 4 * sizeof(float);
+void TextRenderer::On() const {
+  glUseProgram(shader_program);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, m_font_texture);
 
   GLint posAttrib = glGetAttribLocation(shader_program, "position");
   glEnableVertexAttribArray(posAttrib);
@@ -24,20 +27,10 @@ TextRenderer::TextRenderer(const ResourceLocator& rl, GLuint font_texture):
   GLint fg_color = glGetUniformLocation(shader_program, "fg_color");
   glUniform4f(fg_color, 1.0f, 1.0f, 1.0f, 1.0f);
 
-  bg_color_uni_ = glGetUniformLocation(shader_program, "bg_color");
   glUniform4f(bg_color_uni_, 0.3f, 0.3f, 0.0f, 0.5f);
 
   GLint texture_uniform = glGetUniformLocation(shader_program, "texture");
   glUniform1i(texture_uniform, 0);
-}
-
-void TextRenderer::On() const
-{
-  glUseProgram(shader_program);
-  glBindVertexArray(vertex_array);
-  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, m_font_texture);
 }
 
 void TextRenderer::DrawText(float top_x, float top_y, float size,

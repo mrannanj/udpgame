@@ -1,0 +1,15 @@
+language: cpp
+before_install: source script/travis.sh
+script:
+  - make env
+  - make
+compiler:
+  - g++
+  - clang++
+notifications:
+  email: false
+  irc:
+    channels:
+      - "irc.atw-inter.net#udpgame"
+    use_notice: true
+    skip_join: true
