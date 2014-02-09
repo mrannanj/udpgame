@@ -9,10 +9,7 @@
 
 #include "common/include/glm.h"
 #include <iostream>
-#include <unistd.h>
 #include <cstring>
-#include <arpa/inet.h>
-#include <fcntl.h>
 
 using namespace std;
 
@@ -37,7 +34,7 @@ void GameScreen::Update(GameSession&, Input& input) {
 }
 
 void GameScreen::Draw(GameSession& gs, const Renderer& r) {
-  if (gs.mInit and gs.mRedraw) gs.draw(r);
+  if (gs.mInit && gs.mRedraw) gs.draw(r);
 }
 
 bool GameScreen::redraw(GameSession& gs) {

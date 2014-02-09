@@ -2,28 +2,34 @@
 
 #include <set>
 #include <vector>
-#include <netinet/in.h>
 
+#include <SFML/Network/SocketSelector.hpp>
+#include <SFML/Network/TcpListener.hpp>
+
+#include "common/util/id_generator.h"
 #include "common/net/connection.h"
 #include "common/world/world.h"
 #include "server/world_ticker.h"
 
 struct Server {
-  Server(int);
+  Server();
 
-  void init();
   void serve();
 
-  int mkFDSet(fd_set*);
+  int mkFDSet();
   void disconnectSlowClients();
-  void checkClientInput(fd_set&);
-  void acceptNewClient(fd_set&);
+  void checkClientInput();
+  void acceptNewClient();
   void sendInitialState(Connection&);
   void distributeInputs(unsigned);
 
-  int mQuit;
-  sockaddr_in mListenSA;
-  int mListenFD;
+  sf::SocketSelector mSelector;
+  sf::TcpListener mListener;
+  IdGen<int> mIdGen;
+
+//  int mQuit;
+//  sockaddr_in mListenSA;
+//  int mListenFD;
   std::vector<Connection> mClients;
   World mWorld;
   WorldTicker mWorldTicker;

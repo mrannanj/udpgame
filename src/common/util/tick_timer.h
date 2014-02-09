@@ -4,16 +4,19 @@
 #include <chrono>
 #include <ratio>
 
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Clock.hpp>
+
 class TickTimer {
 public:
-  TickTimer(long);
+  TickTimer(sf::Int64);
 
-  void newTick(timespec&);
-  bool isTickTime(timespec&);
+  void newTick(sf::Time&);
+  bool isTickTime(sf::Time&);
 
 private:
-  std::chrono::high_resolution_clock mClock;
-  std::chrono::time_point<std::chrono::high_resolution_clock> mStart;
-  std::chrono::time_point<std::chrono::high_resolution_clock> mTarget;
-  std::chrono::duration<long, std::nano> mTickTime;
+  sf::Clock mClock;
+  sf::Time mStart;
+  sf::Time mTarget;
+  sf::Time mTickTime;
 };

@@ -133,7 +133,7 @@ void InputManager::mouse_motion(const SDL_Event& e, Input &i) const {
 }
 
 void InputManager::check_keyboard(Input& i) const {
-  constexpr size_t n = sizeof(binded_keys)/sizeof(SDLKey);
+  const size_t n = sizeof(binded_keys)/sizeof(SDLKey);
   for (unsigned k = 0; k < n; ++k) {
     SDLKey key = binded_keys[k];
     if (m_key_state[key])

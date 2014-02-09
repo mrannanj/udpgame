@@ -55,7 +55,7 @@ void TextField::Draw(const Renderer& r) const
   };
   r.quad_renderer.draw_quad(q);
   r.text_renderer.On();
-  r.text_renderer.DrawText(m_left_x, m_top_y, m_font_size, m_text.substr(0, (size_t)m_text_length), m_bg_color);
+  r.text_renderer.drawText(m_left_x, m_top_y, m_font_size, m_text.substr(0, (size_t)m_text_length), m_bg_color);
 }
 
 bool TextField::MouseOver(float x, float y)

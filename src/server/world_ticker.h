@@ -10,7 +10,7 @@
 struct WorldTicker {
   WorldTicker();
 
-  bool handleAMessage(const AMessage&, int);
+  bool handleAMessage(const AMessage&, const Connection&);
   const FrameInputs& inputsForFrame(unsigned);
   void fillMissingInputs(unsigned, std::vector<Connection>&);
   void removeOldFrame(unsigned);

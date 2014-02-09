@@ -14,7 +14,7 @@ struct GameSession {
 
   void tick(Input&, bool);
   void sendFrameInput(Input&);
-  bool handleAMessage(const AMessage&, int);
+  bool handleAMessage(const AMessage&, const Connection&);
   void draw(const Renderer&);
   Input zeroInput();
 

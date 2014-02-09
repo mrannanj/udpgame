@@ -1,3 +1,5 @@
+#if 0
+
 #include "common/net/dns.h"
 #include "common/util/die.h"
 
@@ -33,3 +35,5 @@ std::string resolve_hostname(const std::string& h)  {
   freeaddrinfo(result);
   return ipstr;
 }
+
+#endif

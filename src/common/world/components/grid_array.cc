@@ -45,12 +45,12 @@ void GridArray::makeFloor() {
 unsigned GridArray::heightFunction(int x, int z) const {
   float fx = -1.0f + 2.0f*(x/(float)GRID_SIZE_X);
   float fz = -1.0f + 2.0f*(z/(float)GRID_SIZE_Z);
-  return 90.0f * (sin(fx) + cos(fz) + 2.0f)/4;
+  return (unsigned)(90.0f * (sin(fx) + cos(fz) + 2.0f)/4);
 }
 
 bool GridArray::outsideGrid(int x, int y, int z) const {
-  return x < 0 or y < 0 or z < 0 or
-      x >= (int)GRID_SIZE_X or y >= (int)GRID_SIZE_Y or z >= (int)GRID_SIZE_Z;
+  return x < 0 || y < 0 || z < 0 ||
+      x >= (int)GRID_SIZE_X || y >= (int)GRID_SIZE_Y || z >= (int)GRID_SIZE_Z;
 }
 
 char& GridArray::getRef(int x, int y, int z) {

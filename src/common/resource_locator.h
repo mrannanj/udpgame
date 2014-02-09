@@ -7,7 +7,7 @@ class ResourceLocator {
 public:
   ResourceLocator();
 
-  void print();
+  std::string getPath(const std::string&);
   const std::vector<std::string>& pathPrefix();
 private:
   std::vector<std::string> mPathPrefix;

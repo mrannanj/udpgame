@@ -3,118 +3,53 @@
 #include "common/util/die.h"
 #include "common/proto/udpgame.pb.h"
 
-#include <fcntl.h>
-#include <unistd.h>
 #include <cstring>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/tcp.h>
-#include <netinet/in.h>
+
+#include <SFML/Network/IpAddress.hpp>
 
 Connection::Connection():
+  mId(),
   mPos(0),
-  mSocket(-1),
-  mSockaddr(),
-  mLastFrameOk(),
-  mBuf(nullptr)
+  mSocket(new sf::TcpSocket()),
+  mBuf(MAXMSG),
+  mLastFrameOk(0)
 {
-}
-
-Connection::Connection(const std::string& addr):
-  mPos(0),
-  mSocket(-1),
-  mSockaddr(),
-  mLastFrameOk(),
-  mBuf(nullptr)
-{
-  if (addr.size() == 0) return;
-
-  mBuf = new char[MAXMSG];
-  memset(&mSockaddr, 0, sizeof(mSockaddr));
-  mSockaddr.sin_family = AF_INET;
-  inet_aton(addr.c_str(), &mSockaddr.sin_addr);
-  mSockaddr.sin_port = htons(SERVER_PORT);
-
-  mSocket = socket(AF_INET, SOCK_STREAM, 0);
-  if (mSocket == -1) die("socket");
-
-  int on = 1;
-  setsockopt(mSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&on, sizeof(int));
-
-  if (-1 == connect(mSocket, (sockaddr*)&mSockaddr, sizeof(mSockaddr)))
-    die("connect");
-
-  int flags = fcntl(mSocket, F_GETFL, 0);
-  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
-    die("fcntl");
-}
-
-Connection::Connection(int socket, const sockaddr_in& sa):
-  mPos(0),
-  mSocket(socket),
-  mSockaddr(sa),
-  mLastFrameOk(),
-  mBuf(nullptr)
-{
-  mBuf = new char[MAXMSG];
-  int flags = fcntl(mSocket, F_GETFL, 0);
-  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
-    die("fcntl");
-  int on = 1;
-  setsockopt(mSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&on, sizeof(int));
 }
 
 Connection::Connection(Connection&& c):
+  mId(c.mId),
   mPos(c.mPos),
-  mSocket(c.mSocket),
-  mSockaddr(c.mSockaddr),
-  mLastFrameOk(c.mLastFrameOk),
-  mBuf(c.mBuf)
+  mSocket(std::move(c.mSocket)),
+  mBuf(std::move(c.mBuf)),
+  mLastFrameOk(c.mLastFrameOk)
 {
-  c.mSocket = -1;
-  c.mBuf = nullptr;
 }
 
 Connection& Connection::operator=(Connection&& c) {
+  mId = c.mId;
   mPos = c.mPos;
-  mSocket = c.mSocket;
-  mSockaddr = c.mSockaddr;
+  mSocket = std::move(c.mSocket);
+  mBuf = std::move(c.mBuf);
   mLastFrameOk = c.mLastFrameOk;
-  mBuf = c.mBuf;
-  c.mSocket = -1;
-  c.mBuf = nullptr;
   return *this;
-}
-
-Connection::~Connection() {
-  if (mSocket != -1)
-    close(mSocket);
-  mSocket = -1;
-  if (mBuf != nullptr)
-    delete[] mBuf;
-  mBuf = nullptr;
 }
 
 void Connection::sendMessage(const AMessage& a) {
   char buf[MAXMSG];
   int byteSize = a.ByteSize();
-  assert(MAXMSG >= byteSize);
-  ssize_t count = byteSize + sizeof(int);
+  assert(byteSize > 0);
+  assert(MAXMSG >= (size_t)byteSize);
+  int count = byteSize + sizeof(int);
   int netSize = htonl(byteSize);
   memcpy(buf, &netSize, sizeof(int));
   a.SerializeToArray(&buf[sizeof(int)], byteSize);
 
-  int flags = fcntl(mSocket, F_GETFL, 0);
-  if (-1 == fcntl(mSocket, F_SETFL, flags & ~O_NONBLOCK))
-    die("fcntl");
-  ssize_t nwrote = write(mSocket, buf, count);
-  assert(nwrote == count);
-  if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
-    die("fcntl");
+  auto st = mSocket->send(buf, count);
+  assert(st == sf::Socket::Status::Done);
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c) {
-  char* addr = inet_ntoa(c.mSockaddr.sin_addr);
-  uint16_t port = ntohs(c.mSockaddr.sin_port);
-  return os << "fd: " << c.mSocket << ", addr: " << addr << ":" << port;
+  auto addr = c.mSocket->getRemoteAddress();
+  uint16_t port = c.mSocket->getRemotePort();
+  return os << "id: " << c.mId << " addr: " << addr << ":" << port;
 }

@@ -1,3 +1,4 @@
+#if 0
 #include <assert.h>
 #include <fcntl.h>
 
@@ -37,3 +38,4 @@ size_t MmapHandle::size() const {
 void* MmapHandle::ptr() const {
   return m_ptr;
 }
+#endif

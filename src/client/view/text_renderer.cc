@@ -1,5 +1,8 @@
 #include "client/view/text_renderer.h"
+
+#ifndef _WIN32
 #include <alloca.h>
+#endif
 
 TextRenderer::TextRenderer(const ResourceLocator& rl, GLuint font_texture):
   Shader(rl, "resources/shaders/text.vert", "resources/shaders/text.frag"),
@@ -33,7 +36,7 @@ void TextRenderer::On() const {
   glUniform1i(texture_uniform, 0);
 }
 
-void TextRenderer::DrawText(float top_x, float top_y, float size,
+void TextRenderer::drawText(float top_x, float top_y, float size,
   const std::string& s, const Color& bg) const
 {
   glUniform4f(bg_color_uni_, bg.r, bg.g, bg.b, 0.5f);

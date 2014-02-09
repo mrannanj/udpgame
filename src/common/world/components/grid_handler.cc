@@ -8,9 +8,9 @@
 using namespace std;
 using glm::vec3;
 
-static constexpr unsigned DRAW_RANGE = 8;
-static constexpr float RAYCAST_RANGE = 6.0f;
-static constexpr float BOTTOM = -20.0f;
+static const unsigned DRAW_RANGE = 8;
+static const float RAYCAST_RANGE = 6.0f;
+static const float BOTTOM = -20.0f;
 
 GridHandler::GridHandler():
   mArr(),
@@ -116,7 +116,7 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
         float t;
         int tmp_axis, tmp_dir;
         char& block = mArr.getRef(x,y,z);
-        if (block and AABBvsRay(box, s, d, t, tmp_axis, tmp_dir)) {
+        if (block && AABBvsRay(box, s, d, t, tmp_axis, tmp_dir)) {
           if (distance > t) {
             distance = t;
             hit = true;

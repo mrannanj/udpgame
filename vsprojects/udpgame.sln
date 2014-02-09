@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2687B093-E05C-49AC-A307-A07892F5C8CF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "common.vcxproj", "{593EC8B9-8745-497B-8D9A-1E01CD2D41A9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client.vcxproj", "{11ED30BE-B4AA-4B26-BA65-0A660CED1CF5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{593EC8B9-8745-497B-8D9A-1E01CD2D41A9} = {593EC8B9-8745-497B-8D9A-1E01CD2D41A9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server.vcxproj", "{15887DEE-7A9E-4A18-A480-77E825738B28}"
+	ProjectSection(ProjectDependencies) = postProject
+		{593EC8B9-8745-497B-8D9A-1E01CD2D41A9} = {593EC8B9-8745-497B-8D9A-1E01CD2D41A9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "deploy", "deploy.vcxproj", "{398E9EE9-9FBE-4975-A01C-CCEA5834CA65}"
+	ProjectSection(ProjectDependencies) = postProject
+		{593EC8B9-8745-497B-8D9A-1E01CD2D41A9} = {593EC8B9-8745-497B-8D9A-1E01CD2D41A9}
+		{11ED30BE-B4AA-4B26-BA65-0A660CED1CF5} = {11ED30BE-B4AA-4B26-BA65-0A660CED1CF5}
+		{15887DEE-7A9E-4A18-A480-77E825738B28} = {15887DEE-7A9E-4A18-A480-77E825738B28}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{593EC8B9-8745-497B-8D9A-1E01CD2D41A9}.Release|x64.ActiveCfg = Release|x64
+		{593EC8B9-8745-497B-8D9A-1E01CD2D41A9}.Release|x64.Build.0 = Release|x64
+		{11ED30BE-B4AA-4B26-BA65-0A660CED1CF5}.Release|x64.ActiveCfg = Release|x64
+		{11ED30BE-B4AA-4B26-BA65-0A660CED1CF5}.Release|x64.Build.0 = Release|x64
+		{15887DEE-7A9E-4A18-A480-77E825738B28}.Release|x64.ActiveCfg = Release|x64
+		{15887DEE-7A9E-4A18-A480-77E825738B28}.Release|x64.Build.0 = Release|x64
+		{398E9EE9-9FBE-4975-A01C-CCEA5834CA65}.Release|x64.ActiveCfg = Release|x64
+		{398E9EE9-9FBE-4975-A01C-CCEA5834CA65}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

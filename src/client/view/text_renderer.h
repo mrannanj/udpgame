@@ -13,7 +13,7 @@ public:
   TextRenderer& operator=(const TextRenderer&) = delete;
 
   void On() const;
-  void DrawText(float, float, float, const std::string&, const Color&) const;
+  void drawText(float, float, float, const std::string&, const Color&) const;
 
 private:
   GLuint m_font_texture;

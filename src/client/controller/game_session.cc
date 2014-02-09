@@ -1,6 +1,8 @@
 #include <iostream>
 #include <chrono>
 
+#include <SFML/Network/IpAddress.hpp>
+
 #include "common/config.h"
 #include "common/net/dns.h"
 #include "common/proto/udpgame.pb.h"
@@ -26,12 +28,13 @@ GameSession::GameSession(const std::string& addr):
   mClientId(-1),
   mInit(false),
   mRedraw(false),
-  mConnection(resolve_hostname(addr)),
+  mConnection(),
   mPerspective(),
   mWorld(false),
   mInput()
 {
   if (addr.size() == 0) return;
+  mConnection.mSocket->connect(addr, SERVER_PORT);
   cout << "connected to " << mConnection << endl;
   system_clock::time_point t1 = system_clock::now();
   while (!mWorld.mInit) {
@@ -55,7 +58,7 @@ void GameSession::tick(Input& input, bool haveFocus) {
   mPerspective.tick(mWorld);
 }
 
-bool GameSession::handleAMessage(const AMessage& a, int) {
+bool GameSession::handleAMessage(const AMessage& a, const Connection& c) {
   ClientData* cd;
   switch (a.type()) {
     case MessageType::INITIAL_STATE:

@@ -8,12 +8,13 @@
 #include <cassert>
 #include <algorithm>
 #include <cstdio>
+#include <cmath>
 
-constexpr float HALF_PI = (float)M_PI/2.0f;
-constexpr float move_speed = 1.5f;
-constexpr float jump_velocity = 5.0f;
-constexpr float FRICTION = 0.85f;
-constexpr float GRAVITY = 10.0f;
+const float HALF_PI = PI/2.0f;
+const float move_speed = 1.5f;
+const float jump_velocity = 5.8f;
+const float FRICTION = 0.75f;
+const float GRAVITY = 14.0f;
 
 using namespace std;
 

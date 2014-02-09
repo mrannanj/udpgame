@@ -29,7 +29,7 @@ bool Button::Update(Input& i) {
 
 void Button::Draw(const Renderer& r) const {
   r.text_renderer.On();
-  r.text_renderer.DrawText(x_, y_, size_, text_, *bg_color_);
+  r.text_renderer.drawText(x_, y_, size_, text_, *bg_color_);
 }
 
 bool Button::MouseOver(float x, float y) {

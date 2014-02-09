@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <netinet/in.h>
 
 #include "client/controller/screen/screen.h"
 #include "client/controller/perspective.h"
