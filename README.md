@@ -1,7 +1,9 @@
 #udpgame
-Windows build: [![Windows](https://ci-beta.appveyor.com/api/projects/status/mpi5pj7tjf574ahy)](https://ci-beta.appveyor.com/project/mrannanj/udpgame)
 
-Linux build: [![Linux](https://travis-ci.org/mrannanj/udpgame.png?branch=master)](https://travis-ci.org/mrannanj/udpgame)
+![Screenshot](https://raw.github.com/mrannanj/udpgame/master/doc/udpgame.png)
 
-[![Video](https://raw.github.com/mrannanj/udpgame/master/doc/udpgame.png)](
-http://www.cs.helsinki.fi/u/mrannanj/udpgame.mkv)
+See a [video of the game](http://www.cs.helsinki.fi/u/mrannanj/udpgame.mkv).
+
+[![Windows](https://ci.appveyor.com/api/projects/status/huflr3oltkt7rnkl)](https://ci.appveyor.com/project/mrannanj/udpgame)
+[![Linux](https://travis-ci.org/mrannanj/udpgame.png?branch=master)](https://travis-ci.org/mrannanj/udpgame)
+[![Coverity](https://scan.coverity.com/projects/1552/badge.svg)](https://scan.coverity.com/projects/1552)
