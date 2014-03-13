@@ -57,6 +57,7 @@
     <Linkage-protobuf-vc100>static</Linkage-protobuf-vc100>
     <Linkage-SDL>static</Linkage-SDL>
     <Linkage-SDL_image>static</Linkage-SDL_image>
+    <IntDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

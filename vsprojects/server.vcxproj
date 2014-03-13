@@ -49,6 +49,7 @@
     <Linkage-libpng>static</Linkage-libpng>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <Linkage-glew>
     </Linkage-glew>

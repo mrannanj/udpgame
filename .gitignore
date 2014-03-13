@@ -15,6 +15,7 @@
 /vsprojects/tools
 /vsprojects/tmp
 /vsprojects/udpgame
+/vsprojects/build
 /udpgame.zip
 
 /src/common/proto/udpgame.pb.cc
