@@ -55,7 +55,6 @@ void World::spawn_monster(const Physics& o) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
-  memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = o.eye_position() + o.look_direction() * 2.0f;
@@ -80,7 +79,6 @@ void World::throw_object(const Physics& o, ObjectType t) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
-  memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = o.eye_position() + o.look_direction() * 2.0f;
@@ -106,7 +104,6 @@ void World::onBlockDestruction(int x, int y, int z) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
-  memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = glm::vec3((float)x,(float)y,(float)z) + 0.5f;
@@ -126,7 +123,6 @@ void World::spawn_player(int clientid) {
   EntityId eid = m_idgen.generateId();
 
   Physics p;
-  memset(&p, 0, sizeof(p));
 
   p.entityid = eid;
   p.position = mGrid.spawn_pos();
