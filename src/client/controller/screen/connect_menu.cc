@@ -38,7 +38,7 @@ void ConnectMenu::Draw(GameSession&, const Renderer& r) {
   m_cancel.Draw(r);
   m_address.Draw(r);
   r.text_renderer.On();
-  r.text_renderer.drawText(-1.0f, -0.9f, 0.1f, "UDP Game", Blue);
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game", Blue);
 }
 
 void ConnectMenu::Activate() {

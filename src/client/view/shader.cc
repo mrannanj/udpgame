@@ -3,10 +3,11 @@
 #include <cassert>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+#include <unistd.h>
 
 #include "common/platform.h"
 #include "client/view/shader.h"
+#include "common/util/mmap_handle.h"
 #include "common/resource_locator.h"
 
 using namespace std;
@@ -22,20 +23,20 @@ Shader::Shader(const ResourceLocator& resourceLocator,
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
-  //for (const std::string& prefix : mResourceLocator.pathPrefix()) {
-    std::string vp = mResourceLocator.getPath(vertex_file);
-    std::string fp = mResourceLocator.getPath(fragment_file);
-
-#if 0
+  for (const std::string& prefix : mResourceLocator.pathPrefix()) {
+    std::stringstream vertexPath;
+    vertexPath << prefix << "/" << vertex_file;
     if (-1 == access(vertexPath.str().c_str(), F_OK | R_OK))
       continue;
+
+    std::stringstream fragmentPath;
+    fragmentPath << prefix << "/" << fragment_file;
     if (-1 == access(fragmentPath.str().c_str(), F_OK | R_OK))
       continue;
-#endif
 
-    LoadShader(vp.c_str(), fp.c_str());
+    LoadShader(vertexPath.str().c_str(), fragmentPath.str().c_str());
     return;
-  //}
+  }
   std::cerr << "Failed to load " << vertex_file << " or " << fragment_file
     << std::endl;
   exit(EXIT_FAILURE);
@@ -57,14 +58,8 @@ GLuint Shader::AddShaderSource(const char* filename, int type) {
   assert(type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER);
 
   GLuint shader = glCreateShader(type);
-
-  ifstream ifs(filename);
-  ostringstream oss;
-  oss << ifs.rdbuf();
-  string input = oss.str();
-  //MmapHandle f(filename);
-  //const char* p = (const char*) f.ptr();
-  const char* p = (const char*)input.c_str();
+  MmapHandle f(filename);
+  const char* p = (const char*) f.ptr();
   glShaderSource(shader, 1, &p, nullptr);
   return shader;
 }

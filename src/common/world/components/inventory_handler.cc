@@ -42,7 +42,7 @@ void InventoryHandler::tick(float, World& w) {
       }
     }
 
-    if ((ic->actions() & ContinousAction::FIRST) ||
+    if ((ic->actions() & ContinousAction::FIRST) or
         ic->actions() & ContinousAction::SECOND)
     {
       glm::vec3 pos = p->eye_position();
@@ -53,13 +53,13 @@ void InventoryHandler::tick(float, World& w) {
       int b[3];
       int f[3];
       if (w.grid().raycast(pos, dir, distance, &hitBlock, &faceBlock, b, f)) {
-        if (ic->actions() & ContinousAction::FIRST && *hitBlock != 5) {
+        if (ic->actions() & ContinousAction::FIRST and *hitBlock != 5) {
           w.onBlockDestruction(b[0], b[1], b[2]);
         }
         if (ic->actions() & ContinousAction::SECOND
-            && faceBlock != nullptr
-            && inv.itemCount[inv.wielding] > 0
-            && w.physics().canPlaceBlock(f))
+            and faceBlock != nullptr
+            and inv.itemCount[inv.wielding] > 0
+            and w.physics().canPlaceBlock(f))
         {
           *faceBlock = inv.wielding;
           inv.itemCount[inv.wielding] -= 1;

@@ -6,7 +6,7 @@
 #include "common/config.h"
 #include "common/proto/udpgame.pb.h"
 
-static const unsigned TIMEOUT = 60;
+static constexpr unsigned TIMEOUT = 60;
 
 using namespace std;
 
@@ -29,7 +29,7 @@ void WorldTicker::fillMissingInputs(unsigned tick,
     bool found = false;
     for (int i = 0; i < fis.frame_inputs_size(); ++i) {
       const FrameInput& fi = fis.frame_inputs(i);
-      if (c->mId == fi.client()) {
+      if (c->mSocket == fi.client()) {
         found = true;
         c->mLastFrameOk = tick;
         break;
@@ -45,7 +45,7 @@ void WorldTicker::fillMissingInputs(unsigned tick,
       continue;
     }
     FrameInput* fi = fis.add_frame_inputs();
-    fi->set_client(c->mId);
+    fi->set_client(c->mSocket);
     fi->set_actions(0);
     fi->set_horizontal_delta(0.0f);
     fi->set_vertical_delta(0.0f);
@@ -59,7 +59,7 @@ void WorldTicker::removeOldFrame(unsigned tick) {
     mHashes.erase(tick - TIMEOUT);
 }
 
-bool WorldTicker::handleAMessage(const AMessage& a, const Connection& c) {
+bool WorldTicker::handleAMessage(const AMessage& a, int clientid) {
   unsigned tick = a.client_input().tick_number();
   if (!compareHashes(tick, a.client_input().hashes()))
       return false;
@@ -67,7 +67,7 @@ bool WorldTicker::handleAMessage(const AMessage& a, const Connection& c) {
   FrameInputs& fis = mInputMap[tick];
   FrameInput* fi = fis.add_frame_inputs();
   fi->CopyFrom(a.client_input().frame_input());
-  fi->set_client(c.mId);
+  fi->set_client(clientid);
   return true;
 }
 

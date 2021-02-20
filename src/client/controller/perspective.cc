@@ -30,7 +30,7 @@ void Perspective::handle_input(Input& i) {
     handle_freelook_input(i);
 }
 
-// FIXME: how to avoid duplicate code here && in input manager
+// FIXME: how to avoid duplicate code here and in input manager
 void Perspective::handle_freelook_input(const Input& input) {
   float move_speed = 0.1f;
   m_vertical_angle -= (float)input.mouse_delta_y * 0.01f;
@@ -91,8 +91,8 @@ void Perspective::tick(World& w)
     }
   }
   if (fabsf(m_direction.x) <= FLT_MIN
-      || fabsf(m_direction.y) <= FLT_MIN
-      || fabsf(m_direction.z) <= FLT_MIN)
+      or fabsf(m_direction.y) <= FLT_MIN
+      or fabsf(m_direction.z) <= FLT_MIN)
   {
     m_direction = glm::vec3(1.0, 1.0, 1.0);
   }

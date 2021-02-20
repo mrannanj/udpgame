@@ -1,6 +1,6 @@
 #include "common/world/components/AABB.h"
 
-static const float BLOCK_SIZE = 1.0f;
+static constexpr float BLOCK_SIZE = 1.0f;
 
 AABB::AABB():
   min(),

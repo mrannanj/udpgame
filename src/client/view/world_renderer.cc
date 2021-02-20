@@ -16,7 +16,7 @@ void draw_grid(const Renderer& r, World& w, const glm::mat4& v,
   GridHandler& g = w.grid();
   LightHandler& l = w.light();
 
-  const size_t max_lights = 10;
+  constexpr size_t max_lights = 10;
   size_t size = std::min(l.components().size(), (size_t)max_lights);
   glUniform1i(r.cube_renderer.activeLights(), size);
   GLfloat light_pos[max_lights][3];
@@ -49,9 +49,8 @@ void draw_grid(const Renderer& r, World& w, const glm::mat4& v,
   }
 }
 
-
-
 float rad_to_degree(float r) {
+  constexpr float rad_in_degrees = (180.0f/(float)M_PI);
   return rad_in_degrees * r;
 }
 
@@ -82,7 +81,7 @@ void draw_crosshair(const Renderer& r) {
 
 void draw_position(const Renderer& r, Perspective& p) {
   r.text_renderer.On();
-  r.text_renderer.drawText(-1.0f, -0.9f, 0.1f, p.pos_string(), Green);
+  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, p.pos_string(), Green);
 }
 
 void draw_inventory(const Renderer& r, World& w, EntityId id) {
@@ -94,7 +93,7 @@ void draw_inventory(const Renderer& r, World& w, EntityId id) {
     ss << "," << p.first << ":" << p.second;
   }
   r.text_renderer.On();
-  r.text_renderer.drawText(-1.0f, 1.0f, 0.08f, ss.str(), Blue);
+  r.text_renderer.DrawText(-1.0f, 1.0f, 0.08f, ss.str(), Blue);
 }
 
 void draw_hud(const Renderer& r, World& w, EntityId id, Perspective& p) {

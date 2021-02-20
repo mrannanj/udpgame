@@ -3,20 +3,5 @@
 /udpgame_client
 /.ycm_extra_conf.pyc
 
-/vsprojects/*.opensdf
-/vsprojects/*.sdf
-/vsprojects/*.suo
-/vsprojects/*.user
-/vsprojects/*.filters
-/vsprojects/packages
-/vsprojects/Release
-/vsprojects/Debug
-/vsprojects/x64
-/vsprojects/tools
-/vsprojects/tmp
-/vsprojects/udpgame
-/vsprojects/build
-/udpgame.zip
-
 /src/common/proto/udpgame.pb.cc
 /src/common/proto/udpgame.pb.h

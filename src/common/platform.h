@@ -5,14 +5,9 @@
 #include <OpenGL/glu.h>
 #include <OpenGL/glext.h>
 #include <GLUT/glut.h>
-#elif __linux__
+#else
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
-#elif _WIN32
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 #endif

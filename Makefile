@@ -27,7 +27,7 @@ TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-PKGS := glew SDL_image sdl protobuf sfml-network
+PKGS := glew SDL_image sdl protobuf
 
 LDFLAGS := -lm $(shell pkg-config --libs $(PKGS))
 LDFLAGS += -g -std=c++11
@@ -40,12 +40,11 @@ UNAME := $(shell uname -s)
 ifeq ($(UNAME),Linux)
   WARN := -pedantic -Wall -Wextra -Wno-unused-parameter -Weffc++
   WARN += -Wnon-virtual-dtor -Wsign-compare -Werror
-  #WARN += -Weverything -Wno-c++98-compat -Wno-padded -Wno-documentation
   CXXFLAGS += $(shell pkg-config --cflags glu)
   LDFLAGS += $(shell pkg-config --libs glu)
 endif
 ifeq ($(UNAME),Darwin)
-  LDFLAGS += -framework GLUT -framework OpenGL -framework SFML
+  LDFLAGS += -framework GLUT -framework OpenGL
 endif
 
 .PHONY: clean all install env
@@ -71,16 +70,16 @@ $(PROTO_OBJ): $(SRC_DIR)/common/proto/udpgame.pb.cc
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc $(PROTO_OBJ)
+$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	@echo "CXX $@ <- $<"
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) $(WARN) -MMD -MP -c $< -o $@
 
-udpgame_server: $(COMMON_OBJS) $(SERVER_OBJS)
+udpgame_server: $(SERVER_OBJS) $(COMMON_OBJS)
 	@echo "LN $@ <- $^"
 	@$(CXX) -o $@ $^ $(LDFLAGS)
 
-udpgame_client: $(COMMON_OBJS) $(CLIENT_OBJS)
+udpgame_client: $(CLIENT_OBJS) $(COMMON_OBJS)
 	@echo "LN $@ <- $^"
 	@$(CXX) -o $@ $^ $(LDFLAGS)
 
