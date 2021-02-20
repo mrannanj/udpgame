@@ -2,10 +2,10 @@
 
 #include <cstddef>
 
-const unsigned GRID_SIZE_X = 90;
-const unsigned GRID_SIZE_Y = 90;
-const unsigned GRID_SIZE_Z = 90;
-const unsigned GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
+constexpr unsigned GRID_SIZE_X = 90;
+constexpr unsigned GRID_SIZE_Y = 90;
+constexpr unsigned GRID_SIZE_Z = 90;
+constexpr unsigned GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
 
 struct GridArray {
   GridArray();

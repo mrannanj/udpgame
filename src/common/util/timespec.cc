@@ -1,8 +1,6 @@
 #include "common/util/timespec.h"
 #include "common/config.h"
 
-#if 0
-
 std::ostream& operator<<(std::ostream& out, const timespec& ts) {
   long t = (ts.tv_sec * GIGA + ts.tv_nsec)/MEGA;
   return out << t;
@@ -62,10 +60,6 @@ bool operator<(timespec& lhs, timespec& rhs) {
   return ts_comp(lhs, rhs) == -1;
 }
 
-sf::Time from_duration(const std::chrono::duration<sf::Int64, std::micro>& d) {
-  return sf::microseconds(d.count());
-}
-
 timespec from_duration(const std::chrono::duration<long, std::nano>& d) {
   timespec t;
   t.tv_sec = 0;
@@ -73,4 +67,3 @@ timespec from_duration(const std::chrono::duration<long, std::nano>& d) {
   normalize(t);
   return t;
 }
-#endif

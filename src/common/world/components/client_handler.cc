@@ -21,9 +21,9 @@ void ClientHandler::tick(float, World& w) {
       continue;
     }
 
-    if (c.mode() == ClientMode::MODE_PLAYER && c.dead()) {
+    if (c.mode() == ClientMode::MODE_PLAYER and c.dead()) {
       w.spawn_player(c.client());
-    } else if (c.mode() == ClientMode::MODE_OBSERVER && !c.dead()) {
+    } else if (c.mode() == ClientMode::MODE_OBSERVER and !c.dead()) {
       w.mDeleteList.insert(c.eid());
     }
     ++it;

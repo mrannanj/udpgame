@@ -1,6 +1,5 @@
 #pragma once
 
-#if 0
 #include <stddef.h>
 
 class MmapHandle {
@@ -20,4 +19,3 @@ private:
   size_t m_size;
   void* m_ptr;
 };
-#endif

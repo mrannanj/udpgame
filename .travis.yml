@@ -1,8 +1,7 @@
 dist: focal
 language: cpp
-before_install: source travis/setup.sh
+before_install: source script/travis.sh
 script:
-  - export PKG_CONFIG_PATH="travis/pc"
   - make env
   - make
 compiler:
@@ -15,6 +14,3 @@ notifications:
       - "irc.atw-inter.net#udpgame"
     use_notice: true
     skip_join: true
-    template: "%{message} %{build_url}"
-    on_success: change
-    on_failure: change
