@@ -3,20 +3,9 @@
 set -x
 
 function linux_before_install() {
-  sudo add-apt-repository ppa:sonkun/sfml-development -y
-  sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  sudo add-apt-repository ppa:h-rayflood/llvm -y
   sudo apt-get update -qq
-  if [ "${CXX}" = "g++" ]; then
-    sudo apt-get install -qq g++-4.8
-    export CXX="g++-4.8"
-  elif [ "${CXX}" = "clang++" ]; then
-    sudo apt-get install -qq llvm-3.4 clang-3.4 libclang-3.4-dev \
-      llvm-3.4-dev libc++-dev
-    export CXX="clang++-3.4"
-  fi
   sudo apt-get install -qq libglew-dev libsdl-image1.2-dev libglm-dev \
-    libprotobuf-dev protobuf-compiler libsfml libsfml-dev
+    libprotobuf-dev protobuf-compiler libsfml-dev
 }
 
 function osx_before_install() {
