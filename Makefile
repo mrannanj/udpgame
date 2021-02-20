@@ -62,7 +62,7 @@ env:
 
 .SECONDARY:
 $(SRC_DIR)/%.pb.h $(SRC_DIR)/%.pb.cc: $(SRC_DIR)/%.proto
-	@echo "PROCOC $@ <- $<"
+	@echo "PROTOC $@ <- $<"
 	@cd src; \
 	 protoc --cpp_out=./ common/proto/udpgame.proto
 
