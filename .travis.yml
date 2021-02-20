@@ -1,3 +1,4 @@
+dist: focal
 language: cpp
 before_install: source travis/setup.sh
 script:
