@@ -14,7 +14,6 @@ BUGS:
 
 FEATURES:
 - dvorak support
-- move to SFML
 - protect spawn area
 - separately draw each face of the blocks
 - support tick counter roll over
