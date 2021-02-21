@@ -5,7 +5,7 @@ set -x
 function linux_before_install() {
   sudo apt-get update -qq
   sudo apt-get install -qq libglew-dev libsdl-image1.2-dev libglm-dev \
-    libprotobuf-dev protobuf-compiler libsfml-dev
+    libprotobuf-dev protobuf-compiler
 }
 
 function osx_before_install() {
