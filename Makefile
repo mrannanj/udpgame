@@ -43,9 +43,6 @@ ifeq ($(UNAME),Linux)
   CXXFLAGS += $(shell pkg-config --cflags glu)
   LDFLAGS += $(shell pkg-config --libs glu)
 endif
-ifeq ($(UNAME),Darwin)
-  LDFLAGS += -framework GLUT -framework OpenGL
-endif
 
 .PHONY: clean all install env
 .SUFFIXES: .cc .cpp
