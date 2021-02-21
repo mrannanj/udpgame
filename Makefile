@@ -27,7 +27,7 @@ TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-PKGS := glew SDL_image sdl protobuf
+PKGS := glew SDL_image sdl protobuf freetype2
 
 LDFLAGS := -lm $(shell pkg-config --libs $(PKGS))
 LDFLAGS += -g -std=c++11
