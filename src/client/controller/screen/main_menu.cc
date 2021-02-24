@@ -29,8 +29,8 @@ void MainMenu::Update(GameSession&, Input& input) {
 void MainMenu::Draw(GameSession&, const Renderer& r) {
   m_quit.Draw(r);
   m_connect.Draw(r);
-  r.text_renderer.On();
-  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP game", Blue);
+  r.ft_renderer.On();
+  r.ft_renderer.DrawText(-0.95f, -0.95f, 0.002f, "UDP game", Blue);
 }
 
 void MainMenu::Activate() {
