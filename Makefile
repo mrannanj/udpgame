@@ -67,7 +67,7 @@ $(PROTO_OBJ): $(SRC_DIR)/common/proto/udpgame.pb.cc
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
+$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc $(SRC_DIR)/common/proto/udpgame.pb.h
 	@echo "CXX $@ <- $<"
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) $(WARN) -MMD -MP -c $< -o $@
