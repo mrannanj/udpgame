@@ -8,8 +8,8 @@
 
 ConnectMenu::ConnectMenu():
   m_address(-0.9f, 0.7f, 0.9f, 0.08f, "127.0.0.1"),
-  m_go(-0.2f, 0.5f, 0.1f, "go"),
-  m_cancel(-0.2f, 0.3f, 0.1f, "cancel")
+  m_go(-0.2f, 0.5f, 0.002f, "go"),
+  m_cancel(-0.2f, 0.3f, 0.002f, "cancel")
 {
 }
 
@@ -37,8 +37,8 @@ void ConnectMenu::Draw(GameSession&, const Renderer& r) {
   m_go.Draw(r);
   m_cancel.Draw(r);
   m_address.Draw(r);
-  r.text_renderer.On();
-  r.text_renderer.DrawText(-1.0f, -0.9f, 0.1f, "UDP Game", Blue);
+  r.ft_renderer.On();
+  r.ft_renderer.DrawText(-0.95f, -0.95f, 0.002f, "UDP game", Blue);
 }
 
 void ConnectMenu::Activate() {
