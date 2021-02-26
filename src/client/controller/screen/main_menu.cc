@@ -7,8 +7,8 @@
 #include "client/controller/screen/game_screen.h"
 
 MainMenu::MainMenu():
-  m_quit(-0.2f, 0.3f, 0.1f, "quit"),
-  m_connect(-0.2f, 0.5f, 0.1f, "connect")
+  m_quit(-0.2f, 0.3f, 0.002f, "quit"),
+  m_connect(-0.2f, 0.5f, 0.002f, "connect")
 {
 }
 
