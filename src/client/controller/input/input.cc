@@ -22,7 +22,8 @@ void Input::clear_consumables()
 {
 	mouse_click = 0;
 	keypress = 0;
-	keydown_symbol = -1;
+	keydown_scancode = SDL_SCANCODE_UNKNOWN;
+	keydown_symbol = SDLK_UNKNOWN;
 	mouse_delta_x = 0;
 	mouse_delta_y = 0;
 	continous_actions = 0;

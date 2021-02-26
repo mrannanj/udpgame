@@ -77,12 +77,10 @@ GLuint TextureManager::loadTexture(const std::string& fn)
 bool TextureManager::tryLoadTexture(const std::string& fn,
 				    GLuint& texture)
 {
-	SDL_Surface *tmp = IMG_Load(fn.c_str());
+	SDL_Surface *surface = IMG_Load(fn.c_str());
 
-	if (!tmp)
+	if (surface == nullptr)
 		return false;
-
-	SDL_Surface *surface = SDL_DisplayFormatAlpha(tmp);
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -97,6 +95,5 @@ bool TextureManager::tryLoadTexture(const std::string& fn,
 	}
 
 	SDL_FreeSurface(surface);
-	SDL_FreeSurface(tmp);
 	return true;
 }
