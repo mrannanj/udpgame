@@ -11,8 +11,3 @@ const std::vector<std::string>& ResourceLocator::pathPrefix()
 {
 	return mPathPrefix;
 }
-
-void ResourceLocator::print()
-{
-	std::cout << mPathPrefix[0] << ", " << mPathPrefix[1] << std::endl;
-}
