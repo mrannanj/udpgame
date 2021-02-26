@@ -63,9 +63,14 @@ FtRenderer::FtRenderer(const ResourceLocator& rl):
 void FtRenderer::On() const {
 }
 
-void FtRenderer::DrawText(float x, float y, float scale,
-                          const std::string& text, const Color& color) const
+struct Hitbox2D FtRenderer::DrawText(float x, float y, float scale,
+                                     const std::string& text,
+                                     const Color& color) const
 {
+  struct Hitbox2D box;
+  box.left = x;
+  box.bot = y;
+
   glEnable(GL_CULL_FACE);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -117,9 +122,14 @@ void FtRenderer::DrawText(float x, float y, float scale,
     // (note that advance is number of 1/64 pixels)
     // bitshift by 6 to get value in pixels (2^6 = 64)
     x += (ch.advance >> 6) * scale;
+
+    box.right = x;
+    box.top = ypos + h;
   }
   glBindVertexArray(0);
   glBindTexture(GL_TEXTURE_2D, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  return box;
 }
 

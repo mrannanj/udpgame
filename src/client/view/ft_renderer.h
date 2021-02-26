@@ -7,6 +7,7 @@
 #include "common/platform.h"
 #include "client/view/color.h"
 #include "client/view/shader.h"
+#include "client/view/hitbox_2d.h"
 
 struct CharGlyph {
   unsigned int textureID; // ID handle of the glyph texture
@@ -22,7 +23,8 @@ public:
   FtRenderer& operator=(const FtRenderer&) = delete;
 
   void On() const;
-  void DrawText(float, float, float, const std::string&, const Color&) const;
+  struct Hitbox2D DrawText(float, float, float, const std::string&,
+                           const Color&) const;
 
 private:
   std::map<char, CharGlyph> m_chars;
