@@ -3,7 +3,8 @@
 
 #include "common/util/die.h"
 
-void die(const char* s) {
-  perror(s);
-  exit(EXIT_FAILURE);
+void die(const char *s)
+{
+	perror(s);
+	exit(EXIT_FAILURE);
 }

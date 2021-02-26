@@ -6,7 +6,7 @@
 
 #include <vector>
 
-struct InputHandler : public WorldHandler<FrameInput,FrameInput> {
-  void tick(float, World&);
-  FrameInput* getByClient(int);
+struct InputHandler: public WorldHandler <FrameInput, FrameInput> {
+	void tick(float, World&);
+	FrameInput *getByClient(int);
 };

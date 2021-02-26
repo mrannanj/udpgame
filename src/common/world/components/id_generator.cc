@@ -1,18 +1,21 @@
 #include "common/world/components/id_generator.h"
 
 IdGenerator::IdGenerator():
-  mNext(1)
+	mNext(1)
 {
 }
 
-EntityId IdGenerator::generateId() {
-  return mNext++;
+EntityId IdGenerator::generateId()
+{
+	return mNext++;
 }
 
-void IdGenerator::setNext(EntityId next) {
-  mNext = next;
+void IdGenerator::setNext(EntityId next)
+{
+	mNext = next;
 }
 
-EntityId IdGenerator::getNext() {
-  return mNext;
+EntityId IdGenerator::getNext()
+{
+	return mNext;
 }

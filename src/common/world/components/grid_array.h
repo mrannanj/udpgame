@@ -8,25 +8,25 @@ constexpr unsigned GRID_SIZE_Z = 90;
 constexpr unsigned GRID_SIZE[] = {GRID_SIZE_X, GRID_SIZE_Y, GRID_SIZE_Z};
 
 struct GridArray {
-  GridArray();
-  ~GridArray();
+	GridArray();
+	~GridArray();
 
-  GridArray(const GridArray&) = delete;
-  GridArray& operator=(const GridArray&) = delete;
+	GridArray(const GridArray&) = delete;
+	GridArray& operator=(const GridArray&) = delete;
 
-  unsigned heightFunction(int, int) const;
-  char heightToBlock(int) const;
-  void makeFloor();
-  char get(int, int, int) const;
-  bool outsideGrid(int, int, int) const;
-  char& getRef(int x, int y, int z);
-  void set(int, int, int, char);
-  size_t size() const;
+	unsigned heightFunction(int, int) const;
+	char heightToBlock(int) const;
+	void makeFloor();
+	char get(int, int, int) const;
+	bool outsideGrid(int, int, int) const;
+	char &getRef(int x, int y, int z);
+	void set(int, int, int, char);
+	size_t size() const;
 
-  size_t i(int x, int y, int z) const;
+	size_t i(int x, int y, int z) const;
 
-  char* mData;
+	char *mData;
 
 private:
-  size_t mSize;
+	size_t mSize;
 };

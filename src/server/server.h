@@ -9,22 +9,22 @@
 #include "server/world_ticker.h"
 
 struct Server {
-  Server(int);
+	Server(int);
 
-  void init();
-  void serve();
+	void init();
+	void serve();
 
-  int mkFDSet(fd_set*);
-  void disconnectSlowClients();
-  void checkClientInput(fd_set&);
-  void acceptNewClient(fd_set&);
-  void sendInitialState(Connection&);
-  void distributeInputs(unsigned);
+	int mkFDSet(fd_set*);
+	void disconnectSlowClients();
+	void checkClientInput(fd_set&);
+	void acceptNewClient(fd_set&);
+	void sendInitialState(Connection&);
+	void distributeInputs(unsigned);
 
-  int mQuit;
-  sockaddr_in mListenSA;
-  int mListenFD;
-  std::vector<Connection> mClients;
-  World mWorld;
-  WorldTicker mWorldTicker;
+	int mQuit;
+	sockaddr_in mListenSA;
+	int mListenFD;
+	std::vector<Connection> mClients;
+	World mWorld;
+	WorldTicker mWorldTicker;
 };

@@ -4,13 +4,12 @@
 
 class IdGenerator {
 public:
-  IdGenerator();
-  EntityId generateId();
+	IdGenerator();
+	EntityId generateId();
 
-  void setNext(EntityId);
-  EntityId getNext();
+	void setNext(EntityId);
+	EntityId getNext();
 
 private:
-  EntityId mNext;
+	 EntityId mNext;
 };
-

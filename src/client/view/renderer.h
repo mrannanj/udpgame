@@ -9,12 +9,12 @@
 
 class Renderer {
 public:
-  Renderer();
+	Renderer();
 
-  ResourceLocator resourceLocator;
-  TextureManager texture_manager;
-  TextRenderer text_renderer;
-  CubeRenderer cube_renderer;
-  QuadRenderer quad_renderer;
-  FtRenderer ft_renderer;
+	ResourceLocator resourceLocator;
+	TextureManager texture_manager;
+	TextRenderer text_renderer;
+	CubeRenderer cube_renderer;
+	QuadRenderer quad_renderer;
+	FtRenderer ft_renderer;
 };

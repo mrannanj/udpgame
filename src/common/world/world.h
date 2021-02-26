@@ -19,50 +19,50 @@
 
 class World {
 public:
-  World(bool);
+	World(bool);
 
-  void tick(const FrameInputs&);
-  void spawn_player(int);
-  void throw_object(const Physics&, ObjectType);
-  void onBlockDestruction(int, int, int);
-  void spawn_monster(const Physics&);
+	void tick(const FrameInputs&);
+	void spawn_player(int);
+	void throw_object(const Physics&, ObjectType);
+	void onBlockDestruction(int, int, int);
+	void spawn_monster(const Physics&);
 
-  void removeDead();
+	void removeDead();
 
-  InitialState getInitialState();
-  void setInitialState(const InitialState&);
+	InitialState getInitialState();
+	void setInitialState(const InitialState&);
 
-  void serializeHashes(google::protobuf::RepeatedField<uint32_t>*) const;
-  const uint32_t* hashes() const;
+	void serializeHashes(google::protobuf::RepeatedField<uint32_t>*) const;
+	const uint32_t *hashes() const;
 
-  bool mInit;
-  unsigned mTickNumber;
+	bool mInit;
+	unsigned mTickNumber;
 
-  InputHandler& input();
-  PhysicsHandler& physics();
-  GridHandler& grid();
-  InventoryHandler& inventory();
-  ClientHandler& client();
-  LightHandler& light();
-  HealthHandler& health();
-  DamageHandler& damage();
+	InputHandler& input();
+	PhysicsHandler& physics();
+	GridHandler& grid();
+	InventoryHandler& inventory();
+	ClientHandler& client();
+	LightHandler& light();
+	HealthHandler& health();
+	DamageHandler& damage();
 
-  std::set<EntityId> mDeleteList;
+	std::set<EntityId> mDeleteList;
 
 private:
-  void updateHash();
+	void updateHash();
 
-  IdGenerator m_idgen;
-  InputHandler mInputHandler;
-  PhysicsHandler mPhysicsHandler;
-  InventoryHandler mInventory;
-  ClientHandler mClient;
-  GridHandler mGrid;
-  LifetimeHandler mLifetime;
-  AiHandler mAi;
-  LightHandler mLight;
-  HealthHandler mHealth;
-  DamageHandler mDamage;
+	IdGenerator m_idgen;
+	InputHandler mInputHandler;
+	PhysicsHandler mPhysicsHandler;
+	InventoryHandler mInventory;
+	ClientHandler mClient;
+	GridHandler mGrid;
+	LifetimeHandler mLifetime;
+	AiHandler mAi;
+	LightHandler mLight;
+	HealthHandler mHealth;
+	DamageHandler mDamage;
 
-  uint32_t mHashes[Handler::HANDLER_COUNT];
+	uint32_t mHashes[Handler::HANDLER_COUNT];
 };

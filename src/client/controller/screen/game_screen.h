@@ -10,11 +10,11 @@
 #include "common/config.h"
 
 struct GameScreen : public Screen {
-  GameScreen();
-  void Update(GameSession&, Input&);
-  void Draw(GameSession&, const Renderer&);
-  void Activate();
-  bool redraw(GameSession&);
+	GameScreen();
+	void Update(GameSession&, Input&);
+	void Draw(GameSession&, const Renderer&);
+	void Activate();
+	bool redraw(GameSession&);
 };
 
 extern GameScreen g_game_screen;

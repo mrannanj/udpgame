@@ -11,10 +11,10 @@
 
 class World;
 
-class PhysicsHandler : public WorldHandler<Physics, PhysicsData> {
+class PhysicsHandler: public WorldHandler<Physics, PhysicsData> {
 public:
-  void tick(float, World&);
-  bool canPlaceBlock(int[3]);
+	void tick(float, World&);
+	bool canPlaceBlock(int[3]);
 private:
-  void handleInput(Physics& p, World& w);
+	void handleInput(Physics& p, World& w);
 };
