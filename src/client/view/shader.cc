@@ -24,24 +24,9 @@ Shader::Shader(const ResourceLocator& resourceLocator,
 	glGenBuffers(1, &vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 
-	for (const std::string & prefix:mResourceLocator.pathPrefix()) {
-		std::stringstream vertexPath;
-		vertexPath << prefix << "/" << vertex_file;
-		if (-1 == access(vertexPath.str().c_str(), F_OK | R_OK))
-			continue;
-
-		std::stringstream fragmentPath;
-		fragmentPath << prefix << "/" << fragment_file;
-		if (-1 == access(fragmentPath.str().c_str(), F_OK | R_OK))
-			continue;
-
-		LoadShader(vertexPath.str().c_str(),
-			   fragmentPath.str().c_str());
-		return;
-	}
-	std::cerr << "Failed to load " << vertex_file << " or "
-		  << fragment_file << std::endl;
-	exit(EXIT_FAILURE);
+	string vertex_path = mResourceLocator.findResource(vertex_file);
+	string fragment_path = mResourceLocator.findResource(fragment_file);
+	LoadShader(vertex_path.c_str(), fragment_path.c_str());
 }
 
 Shader::~Shader()

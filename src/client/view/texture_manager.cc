@@ -65,16 +65,13 @@ void TextureManager::LoadTextures()
 
 GLuint TextureManager::loadTexture(const std::string& fn)
 {
-	for (const std::string& prefix : mResourceLocator.pathPrefix()) {
-		std::stringstream ss;
-		ss << prefix << "/" << fn;
-		GLuint texture;
-		if (tryLoadTexture(ss.str(), texture))
-			return texture;
-	}
+	std::string texture_path = mResourceLocator.findResource(fn);
+	GLuint texture;
+	if (tryLoadTexture(texture_path, texture))
+		return texture;
+
 	std::cerr << "Failed to load " << fn << std::endl;
 	exit(EXIT_FAILURE);
-	return -1;
 }
 
 bool TextureManager::tryLoadTexture(const std::string& fn,
