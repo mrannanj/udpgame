@@ -5,15 +5,15 @@
 
 class MainMenu: public Screen {
 public:
-  MainMenu();
-  void Update(GameSession&, Input&);
-  void Draw(GameSession&, const Renderer&);
-  void Activate();
-  bool redraw(GameSession&);
+	MainMenu();
+	void Update(GameSession&, Input&);
+	void Draw(GameSession&, const Renderer&);
+	void Activate();
+	bool redraw(GameSession&);
 
 private:
-  Button m_quit;
-  Button m_connect;
+	Button m_quit;
+	Button m_connect;
 };
 
 extern MainMenu g_main_menu;

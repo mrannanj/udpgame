@@ -4,9 +4,9 @@
 #include "common/world/components/inventory.h"
 #include "common/proto/udpgame.pb.h"
 
-class InventoryHandler : public WorldHandler<Inventory, InventoryData> {
+class InventoryHandler: public WorldHandler<Inventory, InventoryData> {
 public:
-  void tick(float, World&);
+	void tick(float, World&);
 private:
-  void pickupItems(World&);
+	void pickupItems(World&);
 };

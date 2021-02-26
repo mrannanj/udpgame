@@ -9,20 +9,20 @@
 
 class TextureManager {
 public:
-  TextureManager(const ResourceLocator&);
-  ~TextureManager();
+	TextureManager(const ResourceLocator&);
+	~TextureManager();
 
-  GLuint operator[](ObjectType) const;
-  GLuint operator[](Texture) const;
-  GLuint operator[](int) const;
+	GLuint operator[](ObjectType) const;
+	GLuint operator[](Texture) const;
+	GLuint operator[](int) const;
 
 private:
-  void LoadTextures();
+	void LoadTextures();
 
-  GLuint loadTexture(const std::string&);
-  bool tryLoadTexture(const std::string&, GLuint&);
+	GLuint loadTexture(const std::string&);
+	bool tryLoadTexture(const std::string&, GLuint&);
 
-  ResourceLocator mResourceLocator;
-  GLuint mTextures[Texture::TEXTURE_SIZE];
-  Texture mTypeToTexture[Texture::TEXTURE_SIZE];
+	ResourceLocator mResourceLocator;
+	GLuint mTextures[Texture::TEXTURE_SIZE];
+	Texture mTypeToTexture[Texture::TEXTURE_SIZE];
 };

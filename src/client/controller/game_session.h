@@ -9,21 +9,20 @@
 #include <string>
 
 struct GameSession {
-  GameSession();
-  GameSession(const std::string&);
+	GameSession();
+	GameSession(const std::string&);
 
-  void tick(Input&, bool);
-  void sendFrameInput(Input&);
-  bool handleAMessage(const AMessage&, int);
-  void draw(const Renderer&);
-  Input zeroInput();
+	void tick(Input&, bool);
+	void sendFrameInput(Input&);
+	bool handleAMessage(const AMessage&, int);
+	void draw(const Renderer&);
+	Input zeroInput();
 
-  int mClientId;
-  bool mInit;
-  bool mRedraw;
-  Connection mConnection;
-  Perspective mPerspective;
-  World mWorld;
-  Input mInput;
+	int mClientId;
+	bool mInit;
+	bool mRedraw;
+	Connection mConnection;
+	Perspective mPerspective;
+	World mWorld;
+	Input mInput;
 };
-

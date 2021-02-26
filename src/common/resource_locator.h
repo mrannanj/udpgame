@@ -5,10 +5,10 @@
 
 class ResourceLocator {
 public:
-  ResourceLocator();
+	ResourceLocator();
 
-  void print();
-  const std::vector<std::string>& pathPrefix();
+	void print();
+	const std::vector<std::string>& pathPrefix();
 private:
-  std::vector<std::string> mPathPrefix;
+	 std::vector<std::string> mPathPrefix;
 };

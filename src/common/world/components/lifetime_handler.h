@@ -4,12 +4,11 @@
 #include "common/proto/udpgame.pb.h"
 #include "common/util/hash.h"
 
-class LifetimeHandler : public WorldHandler<Lifetime, Lifetime> {
+class LifetimeHandler: public WorldHandler<Lifetime, Lifetime> {
 public:
-  void tick(float, World&);
+	void tick(float, World &);
 };
 
-template<>
-uint32_t inline thash<Lifetime>(const Lifetime& l) {
-  return thash(l.eid()) ^ thash(l.ttl());
+template <> uint32_t inline thash<Lifetime> (const Lifetime& l) {
+	return thash(l.eid()) ^ thash(l.ttl());
 }
