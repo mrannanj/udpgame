@@ -93,6 +93,7 @@ void CubeRenderer::On() const {
   glVertexAttribPointer(normal, 3, GL_FLOAT, GL_FALSE, vertex_element_size,
     (void*)(8*sizeof(float)));
   glEnableVertexAttribArray(normal);
+  glDisable(GL_BLEND);
 }
 
 void CubeRenderer::SetTexture(GLuint texture) const {
