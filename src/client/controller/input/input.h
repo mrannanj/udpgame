@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+
 namespace ContinousAction {
 	enum Enum : unsigned {
 		MOVE_LEFT = 1,
@@ -43,7 +45,8 @@ struct Input {
 	unsigned mouse_click;
 	unsigned continous_actions;
 	unsigned keypress;
-	int keydown_symbol;
+	SDL_Scancode keydown_scancode;
+	SDL_Keycode keydown_symbol;
 	unsigned mouse_buttons;
 	int mouse_x;
 	int mouse_y;

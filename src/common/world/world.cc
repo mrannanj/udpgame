@@ -5,7 +5,7 @@
 #include "common/world/components/grid_handler.h"
 #include "common/world/components/light_handler.h"
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <cstdlib>
 #include <cstring>
 #include <cassert>

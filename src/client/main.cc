@@ -1,7 +1,7 @@
 #include <signal.h>
 #include <cstring>
 #include <unistd.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <string>
 
@@ -35,7 +35,10 @@ int main(int argc, char **argv)
 			return EXIT_SUCCESS;
 		}
 	}
-	open_window(fullscreen);
+
+	SDL_Window *sdl_window;
+	SDL_Renderer *sdl_renderer;
+	open_window(fullscreen, &sdl_window, &sdl_renderer);
 
 	GameSession gameSession(server_address);
 	InputManager input_manager;
@@ -59,7 +62,7 @@ int main(int argc, char **argv)
 		if (screen->redraw(gameSession)) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			screen->Draw(gameSession, renderer);
-			SDL_GL_SwapBuffers();
+			SDL_GL_SwapWindow(sdl_window);
 		}
 	}
 

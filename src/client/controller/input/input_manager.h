@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 struct Input;
 
@@ -24,6 +24,6 @@ private:
 	void check_mouse(Input&) const;
 
 	int m_num_keys;
-	Uint8 *m_key_state;
+	const Uint8 *m_key_state;
 	unsigned *m_key_to_action;
 };
