@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "client/view/hitbox_2d.h"
 
 struct Color;
 struct Input;
@@ -13,7 +14,7 @@ public:
   Button& operator=(const Button&) = delete;
 
   bool Update(Input&);
-  void Draw(const Renderer&) const;
+  void Draw(const Renderer&);
 
 private:
   bool MouseOver(float, float);
@@ -21,6 +22,7 @@ private:
   float x_;
   float y_;
   float size_;
+  Hitbox2D hitbox_;
   std::string text_;
   Color* bg_color_;
 };
