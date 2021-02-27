@@ -110,6 +110,9 @@ void InputManager::handle_window_event(const SDL_WindowEvent& w) const
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		break;
+	case SDL_WINDOWEVENT_CLOSE:
+		SDL_Quit();
+		exit(0);
 	}
 }
 
