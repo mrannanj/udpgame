@@ -91,10 +91,26 @@ void InputManager::read_input(Input& i) const
 		case SDL_MOUSEBUTTONUP:
 			mouse_button_up(e, i);
 			break;
+		case SDL_WINDOWEVENT:
+			handle_window_event(e.window);
+			break;
 		}
 	}
 	check_keyboard(i);
 	check_mouse(i);
+}
+
+void InputManager::handle_window_event(const SDL_WindowEvent& w) const
+{
+	switch (w.event) {
+	case SDL_WINDOWEVENT_SIZE_CHANGED:
+		window_width = w.data1;
+		window_height = w.data2;
+		glViewport(0, 0, window_width, window_height);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		break;
+	}
 }
 
 void InputManager::mouse_button_up(const SDL_Event& e, Input& i) const

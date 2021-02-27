@@ -22,6 +22,7 @@ private:
 	void keyup(const SDL_Event&, Input&) const;
 	void check_keyboard(Input&) const;
 	void check_mouse(Input&) const;
+	void handle_window_event(const SDL_WindowEvent&) const;
 
 	int m_num_keys;
 	const Uint8 *m_key_state;
