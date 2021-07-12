@@ -1,7 +1,6 @@
 #pragma once
 
 #include "common/world/entity_id.h"
-#include "common/proto/udpgame.pb.h"
 #include "common/util/hash.h"
 
 #include <algorithm>
@@ -21,9 +20,6 @@ public:
 
 	virtual void tick(float, World&);
 	virtual ~WorldHandler();
-
-	void serialize(google::protobuf::RepeatedPtrField<D>*) const;
-	void deserialize(const google::protobuf::RepeatedPtrField<D>&);
 
 	const std::vector<T>& components() const;
 	std::vector<T>& components();
@@ -77,30 +73,6 @@ template <typename T, typename D>
 const std::vector<T>& WorldHandler<T, D>::components() const
 {
 	return mComponents;
-}
-
-template <typename T, typename D>
-void WorldHandler<T, D>::remove(EntityId eid)
-{
-	mComponents.erase(std::remove_if(std::begin(mComponents),
-					 std::end(mComponents),[&](T & c)
-					 { return c.eid() == eid; }),
-			  std::end(mComponents));
-}
-
-template <typename T, typename D> void
-WorldHandler<T, D>::serialize(google::protobuf::RepeatedPtrField<D> *ls) const
-{
-	for (const T& l : mComponents)
-		ls->Add()->CopyFrom(l);
-}
-
-template <typename T, typename D> void
-WorldHandler<T, D>::deserialize(const google::protobuf::RepeatedPtrField<D> &ls)
-{
-	mComponents.clear();
-	for (const D& l : ls)
-		mComponents.push_back(l);
 }
 
 template <typename T, typename D> uint32_t WorldHandler <T, D>::hash() const

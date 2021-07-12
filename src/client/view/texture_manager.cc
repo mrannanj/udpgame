@@ -12,14 +12,6 @@ TextureManager::TextureManager(const ResourceLocator& resourceLocator):
 	mResourceLocator(resourceLocator)
 {
 	LoadTextures();
-	mTypeToTexture[ObjectType::GRASS] = TEXTURE_GRASS;
-	mTypeToTexture[ObjectType::SAND] = TEXTURE_SAND;
-	mTypeToTexture[ObjectType::ROCK] = TEXTURE_ROCK;
-	mTypeToTexture[ObjectType::BW] = TEXTURE_BW;
-	mTypeToTexture[ObjectType::FONT] = TEXTURE_FONT;
-	mTypeToTexture[ObjectType::PLAYER] = TEXTURE_FACE;
-	mTypeToTexture[ObjectType::MONSTER] = TEXTURE_GRR;
-	mTypeToTexture[ObjectType::TORCH] = TEXTURE_GRR;
 }
 
 TextureManager::~TextureManager()
@@ -28,39 +20,22 @@ TextureManager::~TextureManager()
 		glDeleteTextures(1, &texture);
 }
 
-GLuint TextureManager::operator[] (ObjectType type) const {
-	return mTextures[mTypeToTexture[type]];
-}
-
-GLuint TextureManager::operator[] (Texture texture) const
-{
-	return mTextures[texture];
-}
-
 GLuint TextureManager::operator[] (int t) const {
     return mTextures[t];
 }
 
 void TextureManager::LoadTextures()
 {
-	mTextures[Texture::TEXTURE_GRASS] =
-		loadTexture("resources/images/grass.png");
-	mTextures[Texture::TEXTURE_FONT] =
-		loadTexture("resources/images/font.png");
-	mTextures[Texture::TEXTURE_SAND] =
-		loadTexture("resources/images/sand.png");
-	mTextures[Texture::TEXTURE_ROCK] =
-		loadTexture("resources/images/rock.png");
-	mTextures[Texture::TEXTURE_BW] =
-		loadTexture("resources/images/bw.png");
-	mTextures[Texture::TEXTURE_HEAD] =
-		loadTexture("resources/images/head.png");
-	mTextures[Texture::TEXTURE_GRR] =
-		loadTexture("resources/images/grr.png");
+	mTextures[Texture::GRASS] = loadTexture("resources/images/grass.png");
+	mTextures[Texture::FONT] = loadTexture("resources/images/font.png");
+	mTextures[Texture::SAND] = loadTexture("resources/images/sand.png");
+	mTextures[Texture::ROCK] = loadTexture("resources/images/rock.png");
+	mTextures[Texture::BW] = loadTexture("resources/images/bw.png");
+	mTextures[Texture::HEAD] = loadTexture("resources/images/head.png");
+	mTextures[Texture::GRR] = loadTexture("resources/images/grr.png");
 
 	// not used ATM
-	mTextures[Texture::TEXTURE_FACE] =
-		loadTexture("resources/images/face.png");
+	mTextures[Texture::FACE] = loadTexture("resources/images/face.png");
 }
 
 GLuint TextureManager::loadTexture(const std::string& fn)

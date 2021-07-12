@@ -154,16 +154,6 @@ bool GridHandler::raycast(const vec3& s, const vec3& d, float& distance,
 	return hit;
 }
 
-void GridHandler::deserialize(const InitialState& i)
-{
-	memcpy(mArr.mData, i.grid().c_str(), mArr.size());
-}
-
-void GridHandler::serialize(InitialState& i) const
-{
-	i.set_grid(mArr.mData, mArr.size());
-}
-
 bool GridHandler::belowBottom(const glm::vec3& p) const
 {
 	return p.y < BOTTOM;

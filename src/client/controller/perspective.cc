@@ -9,10 +9,8 @@
 
 #include "common/world/world.h"
 #include "common/world/components/grid_handler.h"
-#include "common/world/components/physics_handler.h"
 
 Perspective::Perspective():
-	mClientMode(ClientMode::MODE_OBSERVER),
 	m_follow_id(0),
 	m_vertical_angle(0.0f),
 	m_horizontal_angle(0.0f),
@@ -25,63 +23,11 @@ Perspective::Perspective():
 {
 }
 
-void Perspective::handle_input(Input& i)
-{
-	if (mClientMode == ClientMode::MODE_OBSERVER)
-		handle_freelook_input(i);
-}
-
-// FIXME: how to avoid duplicate code here and in input manager
-void Perspective::handle_freelook_input(const Input& input)
-{
-	float move_speed = 0.1f;
-	m_vertical_angle -= (float) input.mouse_delta_y * 0.01f;
-	m_horizontal_angle -= (float) input.mouse_delta_x * 0.01f;
-
-	m_direction =
-		glm::vec3(cos(m_vertical_angle) * sin(m_horizontal_angle),
-				sin(m_vertical_angle),
-				cos(m_vertical_angle) * cos(m_horizontal_angle)
-			 );
-
-	glm::vec3 right = glm::vec3(sin(m_horizontal_angle - 3.14f / 2.0f),
-			0, cos(m_horizontal_angle - 3.14f / 2.0f)
-			);
-	m_up = glm::cross(right, m_direction);
-
-	if (input.continous_actions & ContinousAction::MOVE_FORWARD) {
-		m_position += m_direction * move_speed;
-	} else if (input.continous_actions & ContinousAction::MOVE_BACK) {
-		m_position -= m_direction * move_speed;
-	}
-	if (input.continous_actions & ContinousAction::MOVE_RIGHT) {
-		m_position += right * move_speed;
-	} else if (input.continous_actions & ContinousAction::MOVE_LEFT) {
-		m_position -= right * move_speed;
-	}
-	if (input.continous_actions & ContinousAction::JUMP) {
-		m_position.y += move_speed;
-	}
-}
-
 void Perspective::tick(World& w)
 {
 	m_projection = glm::perspective(45.0f,
 			(float) window_width / window_height,
 			0.1f, 100.0f);
-	if (mClientMode == ClientMode::MODE_PLAYER) {
-		Physics *p = (Physics *) w.physics().get(m_follow_id);
-		if (p) {
-			m_horizontal_angle = p->horizontal_angle;
-			m_vertical_angle = p->vertical_angle;
-			m_position = p->eye_position();
-			m_direction = p->look_direction();
-			glm::vec3 right =
-				glm::vec3(sin(m_horizontal_angle - 3.14f / 2.0f),
-					  0, cos(m_horizontal_angle - 3.14f / 2.0f));
-			m_up = glm::cross(right, m_direction);
-		}
-	}
 	if (fabsf(m_direction.x) <= FLT_MIN
 	    or fabsf(m_direction.y) <= FLT_MIN
 	    or fabsf(m_direction.z) <= FLT_MIN) {

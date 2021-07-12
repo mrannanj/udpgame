@@ -1,6 +1,3 @@
 /build
 /udpgame_server
 /udpgame_client
-
-/src/common/proto/udpgame.pb.cc
-/src/common/proto/udpgame.pb.h

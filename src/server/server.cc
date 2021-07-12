@@ -3,7 +3,6 @@
 #include "common/util/die.h"
 #include "common/util/timespec.h"
 #include "common/util/tick_timer.h"
-#include "common/proto/udpgame.pb.h"
 
 #include <netinet/tcp.h>
 #include <iostream>
@@ -52,31 +51,11 @@ void Server::init() {
 		die("fcntl");
 }
 
-void Server::distributeInputs(unsigned tick) {
-	AMessage a;
-	a.set_type(MessageType::FRAME_INPUTS);
-	a.mutable_frame_inputs()->
-		CopyFrom(mWorldTicker.inputsForFrame(tick));
-	a.mutable_frame_inputs()->set_tick_number(tick);
-	for (Connection& c : mClients)
-		c.sendMessage(a);
-	mWorldTicker.removeOldFrame(tick);
-}
-
-void Server::sendInitialState(Connection& c) {
-	AMessage a;
-	a.set_type(MessageType::INITIAL_STATE);
-	a.mutable_initial_state()->CopyFrom(mWorld.getInitialState());
-	a.mutable_initial_state()->set_client_id(c.mSocket);
-	c.sendMessage(a);
-}
-
 void Server::serve() {
 	fd_set fds;
 	TickTimer timer(ns_per_tick);
 	timespec max_sleep;
 	timer.newTick(max_sleep);
-	mWorldTicker.setHashes(mWorld.mTickNumber, mWorld.hashes());
 	do {
 		int nfds = mkFDSet(&fds);
 		if (-1 == pselect(nfds, &fds, nullptr, nullptr,
@@ -89,10 +68,6 @@ void Server::serve() {
 		checkClientInput(fds);
 		if (timer.isTickTime(max_sleep)) {
 			unsigned tickNum = mWorld.mTickNumber + 1;
-			mWorldTicker.fillMissingInputs(tickNum, mClients);
-			mWorld.tick(mWorldTicker.inputsForFrame(tickNum));
-			mWorldTicker.setHashes(tickNum, mWorld.hashes());
-			distributeInputs(tickNum);
 			mWorldTicker.setCurrentTick(tickNum);
 			timer.newTick(max_sleep);
 		}
@@ -110,7 +85,6 @@ void Server::acceptNewClient(fd_set& fds) {
 			Connection& c = mClients.back();
 			c.mLastFrameOk = mWorld.mTickNumber;
 			cout << c << " connected" << endl;
-			sendInitialState(c);
 		}
 	}
 }

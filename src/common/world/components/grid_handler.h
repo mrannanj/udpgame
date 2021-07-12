@@ -2,7 +2,6 @@
 
 #include "common/include/glm.h"
 
-#include "common/proto/udpgame.pb.h"
 #include "common/world/components/physics.h"
 #include "common/world/components/grid_array.h"
 
@@ -25,9 +24,6 @@ struct GridHandler {
 
 	bool belowBottom(const glm::vec3&) const;
 	glm::vec3 spawn_pos() const;
-
-	void serialize(InitialState&) const;
-	void deserialize(const InitialState&);
 
 	GridArray mArr;
 	glm::vec3 mSpawn;

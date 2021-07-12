@@ -1,7 +1,6 @@
 #include "common/net/connection.h"
 #include "common/config.h"
 #include "common/util/die.h"
-#include "common/proto/udpgame.pb.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -97,25 +96,6 @@ Connection::~Connection()
 	if (mBuf != nullptr)
 		delete[] mBuf;
 	mBuf = nullptr;
-}
-
-void Connection::sendMessage(const AMessage& a)
-{
-	char buf[MAXMSG];
-	int byteSize = a.ByteSize();
-	assert(MAXMSG >= byteSize);
-	ssize_t count = byteSize + sizeof(int);
-	int netSize = htonl(byteSize);
-	memcpy(buf, &netSize, sizeof(int));
-	a.SerializeToArray(&buf[sizeof(int)], byteSize);
-
-	int flags = fcntl(mSocket, F_GETFL, 0);
-	if (-1 == fcntl(mSocket, F_SETFL, flags & ~O_NONBLOCK))
-		die("fcntl");
-	ssize_t nwrote = write(mSocket, buf, count);
-	assert(nwrote == count);
-	if (-1 == fcntl(mSocket, F_SETFL, flags | O_NONBLOCK))
-		die("fcntl");
 }
 
 std::ostream& operator<<(std::ostream& os, const Connection& c)

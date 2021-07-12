@@ -4,16 +4,12 @@
 
 #include "common/world/components/AABB.h"
 #include "common/world/entity_id.h"
-#include "common/proto/udpgame.pb.h"
 #include "common/util/hash.h"
 
 struct Physics {
 	Physics();
-	Physics(const PhysicsData&);
-	operator PhysicsData() const;
 
 	EntityId entityid;
-	ObjectType type;
 	glm::vec3 position;
 	glm::vec3 velocity;
 	glm::vec3 half_dim;
@@ -33,7 +29,6 @@ struct Physics {
 
 template <> uint32_t inline thash<Physics> (const Physics& p) {
 	return thash(p.entityid)
-	       ^ thash(p.type)
 	       ^ thash(p.position)
 	       ^ thash(p.velocity)
 	       ^ thash(p.half_dim)

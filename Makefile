@@ -12,11 +12,7 @@ CLIENT_DIR := $(SRC_DIR)/client
 CLIENT_SRCS := $(shell find $(CLIENT_DIR) -name "*.cc")
 CLIENT_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(CLIENT_SRCS))
 
-PROTO_SRC := $(SRC_DIR)/common/proto/udpgame.pb.cc
-PROTO_OBJ := $(BUILD_DIR)/$(SRC_DIR)/common/proto/udpgame.pb.o
-
 COMMON_DIR := $(SRC_DIR)/common
-COMMON_SRCS := $(PROTO_SRC)
 COMMON_SRCS += $(shell find $(COMMON_DIR) -name "*.cc")
 COMMON_OBJS := $(patsubst %.cc, $(BUILD_DIR)/%.o, $(COMMON_SRCS))
 
@@ -27,7 +23,7 @@ TARGETS := udpgame_server udpgame_client
 
 OUTPUT := $(TARGETS) $(BUILD_DIR)
 
-PKGS := glew SDL2_image sdl2 protobuf freetype2
+PKGS := glew SDL2_image sdl2 freetype2
 
 LDFLAGS := -lm $(shell pkg-config --libs $(PKGS))
 LDFLAGS += -g -std=c++11
@@ -56,18 +52,7 @@ env:
 	@echo "WARN = $(WARN)"
 	$(CXX) --version
 
-.SECONDARY:
-$(SRC_DIR)/%.pb.h $(SRC_DIR)/%.pb.cc: $(SRC_DIR)/%.proto
-	@echo "PROTOC $@ <- $<"
-	@cd src; \
-	 protoc --cpp_out=./ common/proto/udpgame.proto
-
-$(PROTO_OBJ): $(SRC_DIR)/common/proto/udpgame.pb.cc
-	@echo "CXX $@ <- $<"
-	@mkdir -p $(@D)
-	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
-
-$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc $(SRC_DIR)/common/proto/udpgame.pb.h
+$(BUILD_DIR)/$(SRC_DIR)/%.o: $(SRC_DIR)/%.cc
 	@echo "CXX $@ <- $<"
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) $(WARN) -MMD -MP -c $< -o $@
@@ -82,8 +67,6 @@ udpgame_client: $(CLIENT_OBJS) $(COMMON_OBJS)
 
 clean:
 	$(RM) -r $(OUTPUT)
-	$(RM) -r $(SRC_DIR)/common/proto/udpgame.pb.cc
-	$(RM) -r $(SRC_DIR)/common/proto/udpgame.pb.h
 
 install: udpgame_client udpgame_server
 	mkdir -p $(PREFIX)/bin

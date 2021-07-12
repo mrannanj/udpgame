@@ -5,7 +5,6 @@
 #include "client/controller/screen/main_menu.h"
 #include "client/controller/input/input.h"
 #include "common/world/components/grid_handler.h"
-#include "common/proto/udpgame.pb.h"
 
 #include "common/include/glm.h"
 #include <iostream>

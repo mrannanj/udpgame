@@ -4,7 +4,6 @@
 #include "common/include/glm.h"
 
 #include "common/world/entity_id.h"
-#include "common/proto/udpgame.pb.h"
 
 struct Input;
 class World;
@@ -21,7 +20,6 @@ public:
 	std::string pos_string() const;
 	void handle_freelook_input(const Input&);
 
-	ClientMode mClientMode;
 	EntityId m_follow_id;
 
 	float m_vertical_angle;

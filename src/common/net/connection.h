@@ -1,7 +1,5 @@
 #pragma once
 
-#include "common/proto/udpgame.pb.h"
-
 #include <arpa/inet.h>
 #include <string>
 #include <cstring>
@@ -22,7 +20,7 @@ struct Connection {
 	Connection(const Connection&) = delete;
 	~Connection();
 
-	void sendMessage(const AMessage&);
+	void sendMessage();
 	template <class T> ssize_t checkMessages(T&);
 
 	ssize_t mPos;
@@ -48,21 +46,6 @@ template <class T> ssize_t Connection::checkMessages(T& handler)
 		int tsize = size + sizeof(int);
 		if (tsize > MAXMSG)
 			return -1;
-		if ((size_t)mPos >= size + sizeof(int)) {
-			AMessage a;
-			if (a.ParseFromArray(&mBuf[sizeof(int)], size)) {
-				if (!handler.handleAMessage(a, mSocket))
-					return -1;
-				size_t overPos = mPos - tsize;
-				memmove(mBuf, &mBuf[mPos - overPos], overPos);
-				mPos -= tsize;
-			} else {
-				std::cout << "Invalid message" << std::endl;
-				return -1;
-			}
-		} else {
-			break;
-		}
 	}
 	return nread;
 }
