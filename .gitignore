@@ -1,7 +1,6 @@
 /build
 /udpgame_server
 /udpgame_client
-/.ycm_extra_conf.pyc
 
 /src/common/proto/udpgame.pb.cc
 /src/common/proto/udpgame.pb.h
