@@ -102,7 +102,7 @@ Connection::~Connection()
 void Connection::sendMessage(const AMessage& a)
 {
 	char buf[MAXMSG];
-	int byteSize = a.ByteSize();
+	int byteSize = a.ByteSizeLong();
 	assert(MAXMSG >= byteSize);
 	ssize_t count = byteSize + sizeof(int);
 	int netSize = htonl(byteSize);
