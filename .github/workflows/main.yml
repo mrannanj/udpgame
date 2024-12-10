@@ -1,0 +1,19 @@
+name: Compile udpgame
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: sudo apt-get install -qq libglew-dev libsdl2-image-dev libglm-dev
+             libprotobuf-dev protobuf-compiler libfreetype-dev libsdl2-dev
+
+      - name: Build udpgame
+        run: make -j $(getconf _NPROCESSORS_ONLN)
